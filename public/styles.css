@@ -390,3 +390,141 @@
   .nav a,.products-menu summary{color:#383c37}
   .nav-cta{color:#fffaf1 !important}
 }
+
+
+/* Luxe header + verified emblem */
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  min-height:94px;
+  padding:14px clamp(24px,4vw,64px);
+  display:grid;
+  grid-template-columns:72px 1fr;
+  align-items:center;
+  gap:22px;
+  background:
+    linear-gradient(180deg,rgba(23,50,42,.98),rgba(11,24,20,.98) 58%,rgba(5,10,8,.99)),
+    radial-gradient(circle at 50% -70%,rgba(232,225,213,.08),transparent 60%);
+  border-top:1px solid rgba(232,225,213,.10);
+  border-bottom:1px solid rgba(110,168,146,.34);
+  box-shadow:0 12px 30px rgba(0,0,0,.22);
+}
+.site-header::after{
+  content:"";
+  position:absolute;
+  left:16%;
+  right:16%;
+  bottom:-1px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(110,168,146,.25),rgba(232,225,213,.42),rgba(110,168,146,.25),transparent);
+  pointer-events:none;
+}
+.brand{
+  width:58px;
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  border:0;
+  background:url('/assets/yoru-emblem-header.png') center/contain no-repeat !important;
+  box-shadow:none;
+}
+.brand-mark{
+  width:58px;
+  height:58px;
+  display:block;
+  object-fit:contain;
+  content:url('/assets/yoru-emblem-header.png') !important;
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  filter:none !important;
+  opacity:1 !important;
+}
+.nav{
+  width:100%;
+  max-width:1120px;
+  justify-self:end;
+  display:grid;
+  grid-template-columns:repeat(6,minmax(max-content,1fr));
+  align-items:center;
+  gap:10px;
+  color:#d8d0c4;
+  font-family:"Cormorant Garamond",serif;
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:.015em;
+  text-align:center;
+}
+.nav>a,.products-menu summary{
+  position:relative;
+  padding:13px 10px;
+  color:#d8d0c4;
+  transition:color .2s ease,transform .2s ease,background .2s ease;
+}
+.nav>a:not(.nav-cta):after,
+.products-menu>summary:before{
+  content:"";
+  position:absolute;
+  left:28%;
+  right:28%;
+  bottom:6px;
+  height:1px;
+  background:var(--patina2);
+  transform:scaleX(0);
+  transform-origin:center;
+  transition:transform .2s ease;
+}
+.nav>a:not(.nav-cta):hover:after,
+.nav>a.active:not(.nav-cta):after,
+.products-menu:hover>summary:before,
+.products-menu.active>summary:before{
+  transform:scaleX(1);
+}
+.nav>a:hover,.products-menu summary:hover,.nav>a.active,.products-menu.active>summary{
+  color:#f3ede4;
+}
+.products-menu summary:after{
+  color:#7fb29f;
+}
+.nav-cta{
+  border:1px solid rgba(232,225,213,.74);
+  border-radius:8px;
+  background:linear-gradient(180deg,#f0e9df,#ded4c5);
+  color:#173a31 !important;
+  box-shadow:0 8px 22px rgba(0,0,0,.16);
+}
+.nav-cta:hover{
+  background:#f4eee5;
+  color:#102b24 !important;
+  transform:translateY(-1px);
+}
+.products-dropdown{
+  background:#eee7dc;
+  color:#26342f;
+  border:1px solid rgba(49,95,82,.25);
+  box-shadow:0 24px 60px rgba(0,0,0,.28);
+}
+.products-dropdown a{color:#3c4742}
+.products-dropdown a:hover{background:#ddd3c5;color:#173a31}
+.mega-col>span{color:#315f52}
+.mega-col small{color:#766f66}
+
+@media(max-width:860px){
+  .site-header{grid-template-columns:56px 1fr;min-height:82px;padding:12px 18px}
+  .brand,.brand-mark{width:48px;height:48px}
+  .nav{
+    top:82px;
+    left:18px;
+    right:18px;
+    max-width:none;
+    background:linear-gradient(180deg,#10231d,#08110e);
+    border:1px solid rgba(110,168,146,.34);
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
+    text-align:left;
+  }
+  .nav a,.products-menu summary{color:#ddd5ca}
+  .nav-cta{color:#173a31 !important}
+}
