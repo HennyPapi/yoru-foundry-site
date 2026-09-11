@@ -834,3 +834,22 @@ body{
   .showpiece-specs{grid-template-columns:1fr}
   .showpiece-specs span{border-right:0;border-bottom:1px solid rgba(232,225,213,.10)}
 }
+
+
+/* Fix Products mega-menu overlap with decorative header rules */
+.site-header::before,
+.site-header::after{
+  z-index:0;
+}
+.site-header>.brand,
+.site-header>.menu-toggle,
+.site-header>.nav{
+  position:relative;
+  z-index:2;
+}
+.products-menu{
+  z-index:5;
+}
+.products-dropdown{
+  z-index:50;
+}
