@@ -1722,3 +1722,64 @@ a[href*="commission"]:not(.nav-cta):not(.button){
   box-shadow:none!important;
   outline:0!important;
 }
+
+
+/* ===== DARK SURFACES — SUBTLE ANODIZED ALUMINUM TEXTURE =====
+   Material-luxury treatment: microscopic grain + satin tonal variation.
+   Intentionally restrained so the page still reads as clean charcoal at normal distance. */
+:root{
+  --yf-dark-metal-base:#1F2120;
+  --yf-dark-metal-deep:#1B1D1C;
+  --yf-dark-metal-hi:rgba(255,255,255,.018);
+}
+
+/* Large structural dark fields only — not media/photo placeholders. */
+body,
+.home-hero,
+.page-main,
+.gallery-hero,
+.page-hero,
+.standards-section,
+.layout-preview,
+.compare-lab,
+.materials-section,
+.commission-flow,
+.pricing-philosophy{
+  background-color:var(--yf-dark-metal-base)!important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' seed='23' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.028'/%3E%3C/svg%3E"),
+    linear-gradient(118deg,rgba(255,255,255,.012) 0%,rgba(255,255,255,0) 34%,rgba(0,0,0,.028) 66%,rgba(255,255,255,.010) 100%),
+    linear-gradient(180deg,var(--yf-dark-metal-base),var(--yf-dark-metal-deep))!important;
+  background-repeat:repeat,no-repeat,no-repeat!important;
+  background-size:140px 140px,100% 100%,100% 100%!important;
+  background-position:0 0,center,center!important;
+}
+
+/* Keep dark media areas deliberately matte and cleaner than the surrounding metal surface. */
+.hero-showpiece-frame,
+.featured-photo,
+.commission-hero-media,
+.commission-media-grid div,
+.story-media,
+.sample-image,
+.audio-placeholder,
+.media-placeholder,
+.layout-tile .keyboard-diagram,
+.archive-entry .media-placeholder,
+.build-card .media-placeholder,
+.founder-photo{
+  background-image:linear-gradient(145deg,#222423,#181A19)!important;
+  background-color:#1B1D1C!important;
+}
+
+/* Modals get a whisper of the same finish, but remain visually quieter than full sections. */
+.story-panel,
+.modal-panel,
+.modal-content,
+.story-modal .modal-content{
+  background-color:#1F2120!important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='3' seed='31' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.018'/%3E%3C/svg%3E"),
+    linear-gradient(135deg,rgba(255,255,255,.008),rgba(0,0,0,.020))!important;
+  background-size:150px 150px,100% 100%!important;
+}
