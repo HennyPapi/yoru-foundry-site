@@ -90,3 +90,4 @@ function fill(side){
 ["A","B"].forEach(side=>{const type=document.getElementById("compareType"+side);if(type){type.onchange=()=>fill(side);fill(side)}})
 })();
 ;(()=>{document.querySelectorAll("img.brand-mark").forEach(img=>{img.src="/assets/yoru-emblem.webp";img.removeAttribute("srcset")})})();
+;(()=>{document.querySelectorAll("img.brand-mark").forEach(img=>{img.src="/assets/yoru-emblem-header.png";img.removeAttribute("srcset");img.style.display="block";img.style.opacity="1";});})();
