@@ -25,7 +25,7 @@ document.getElementById("buildForm").addEventListener("submit", (event) => {
     `Name: ${data.get("name")}`,
     `Email: ${data.get("email")}`,
     `Preferred layout: ${data.get("layout")}`,
-    `Budget: ${data.get("budget")}`,
+    `Budget range: ${data.get("budget")}`,
     `Switch feel: ${data.get("feel")}`,
     `Sound preference: ${data.get("sound")}`,
     "",
