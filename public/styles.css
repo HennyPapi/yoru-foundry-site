@@ -1087,3 +1087,182 @@ body{
     min-width:54px!important;
   }
 }
+
+
+/* ===== MONO-INDUSTRIAL COLOR TEST ===== */
+:root{
+  --mi-nav:#F4F4F3;
+  --mi-bg:#16161A;
+  --mi-bg-2:#1C1C20;
+  --mi-white:#FFFFFF;
+  --mi-off:#EBEBEB;
+  --mi-silver:#8E9294;
+  --mi-silver-dark:#676B6E;
+  --mi-card:#EAEAEA;
+  --mi-card-text:#16161A;
+  --mi-line:rgba(142,146,148,.28);
+}
+
+/* Global canvas */
+body{
+  background:var(--mi-bg)!important;
+  color:var(--mi-off)!important;
+}
+.home-hero,.page-main,.standards-section,.layout-preview,.compare-lab,.materials-section,.commission-flow,.pricing-philosophy{
+  background:var(--mi-bg)!important;
+}
+
+/* Navigation */
+.site-header{
+  background:var(--mi-nav)!important;
+  border-top:1px solid rgba(0,0,0,.08)!important;
+  border-bottom:1px solid rgba(0,0,0,.16)!important;
+  box-shadow:0 10px 26px rgba(0,0,0,.10)!important;
+}
+.site-header:before{
+  background:linear-gradient(90deg,transparent,rgba(0,0,0,.12),transparent)!important;
+}
+.site-header:after{
+  background:linear-gradient(90deg,transparent,rgba(142,146,148,.30),transparent)!important;
+}
+.nav,.nav>a,.products-menu summary{
+  color:#202024!important;
+}
+.nav>a:hover,.products-menu summary:hover,.nav>a.active,.products-menu.active>summary{
+  color:#000!important;
+}
+.nav>a:not(.nav-cta):after,.products-menu>summary:before{
+  background:var(--mi-silver)!important;
+}
+.products-menu summary:after{color:#5F6366!important}
+.nav>a.nav-cta{
+  background:#000!important;
+  color:#fff!important;
+  border-color:#000!important;
+}
+.nav>a.nav-cta:hover{
+  background:#232326!important;
+  color:#fff!important;
+}
+
+/* Dropdown */
+.products-dropdown{
+  background:#F2F2F1!important;
+  color:#16161A!important;
+  border-color:rgba(0,0,0,.12)!important;
+  box-shadow:0 24px 55px rgba(0,0,0,.16)!important;
+}
+.products-dropdown a{color:#303034!important}
+.products-dropdown a:hover{background:#E5E5E4!important;color:#000!important}
+.mega-col>span{color:#666A6C!important}
+.mega-col small{color:#8E9294!important}
+
+/* Hero */
+.gallery-hero{
+  background:
+    radial-gradient(circle at 78% 28%,rgba(255,255,255,.035),transparent 28rem),
+    linear-gradient(180deg,#1C1C20 0%,var(--mi-bg) 72%)!important;
+}
+.gallery-hero h1,.home-hero h1,.page-hero h1{
+  color:var(--mi-white)!important;
+}
+.gallery-hero .kicker,.kicker,.eyebrow,.tag{
+  color:var(--mi-silver)!important;
+}
+.gallery-hero .manifesto,.manifesto,.page-hero>p:last-child{
+  color:#D8D8DA!important;
+}
+.hero-micro{color:#9A9A9D!important}
+.hero-micro span+span:before{color:var(--mi-silver)!important}
+
+/* Hero media / product showroom */
+.hero-showpiece-frame{
+  background:
+    linear-gradient(180deg,rgba(22,22,26,.02),rgba(22,22,26,.46)),
+    radial-gradient(circle at 60% 30%,rgba(255,255,255,.05),transparent 30%),
+    linear-gradient(135deg,#242428 0%,#17171A 58%,#0F0F11 100%)!important;
+  border-color:rgba(235,235,235,.18)!important;
+}
+.hero-showpiece-frame:before{border-color:rgba(142,146,148,.22)!important}
+.showpiece-index{color:#C7C9CA!important}
+.showpiece-caption,.showpiece-specs span{color:#A8AAAC!important}
+.showpiece-specs{border-color:rgba(235,235,235,.15)!important}
+.showpiece-specs span{border-color:rgba(235,235,235,.10)!important}
+
+/* Buttons */
+.button.primary{
+  background:var(--mi-silver)!important;
+  color:#111!important;
+  box-shadow:0 14px 30px rgba(0,0,0,.24)!important;
+}
+.button.primary:hover{background:#A3A6A8!important}
+.button.secondary{
+  background:#000!important;
+  border-color:var(--mi-silver)!important;
+  color:#fff!important;
+}
+
+/* Structural cards */
+.portal-card,.layout-tile,.story-tile,.education-tile,.compare-side,.materials-grid article,
+.standards-grid article,.flow-grid li,.why-grid article,.journal-grid article,.archive-entry,
+.build-card,.commission-detail-grid article,.mini-layout,.build-form{
+  background:var(--mi-card)!important;
+  color:var(--mi-card-text)!important;
+  border-color:rgba(0,0,0,.12)!important;
+  box-shadow:0 16px 38px rgba(0,0,0,.12)!important;
+}
+.portal-card h2,.layout-tile h2,.story-tile h2,.education-tile h2,.materials-grid h3,
+.standards-grid h3,.flow-grid h3,.why-grid h2,.journal-grid h2,.archive-entry h2,
+.build-card h2,.mini-layout strong{
+  color:#16161A!important;
+}
+.portal-card p,.layout-tile p,.story-tile p,.education-tile p,.materials-grid p,
+.standards-grid p,.flow-grid p,.why-grid p,.journal-grid p,.archive-entry p,.build-card p,
+.mini-layout small,.compare-desc{
+  color:#55575A!important;
+}
+.portal-card span,.layout-tile .status.live,.story-tile span,.education-tile span,
+.standards-grid span,.flow-grid span,.why-grid span,.journal-grid span,.archive-entry span,
+.commission-detail-grid span,.mini-layout span,.compare-label{
+  color:#676B6E!important;
+}
+
+/* Light editorial blocks */
+.warm-editorial,.editorial-light{
+  background:#F2F2F1!important;
+  color:#16161A!important;
+  border-top-color:rgba(0,0,0,.12)!important;
+  border-bottom-color:rgba(0,0,0,.12)!important;
+}
+.warm-editorial h2,.editorial-light h2,
+.warm-editorial p,.editorial-light p{
+  color:#202024!important;
+}
+.dark-eyebrow,.editorial-light .eyebrow{color:#676B6E!important}
+.dark-link,.editorial-light .text-link{color:#2A2A2D!important}
+
+/* Form controls */
+.build-form input,.build-form select,.build-form textarea,.compare-side select{
+  background:#F8F8F7!important;
+  color:#16161A!important;
+  border-color:rgba(0,0,0,.16)!important;
+}
+.build-form .primary{
+  background:#000!important;
+  color:#fff!important;
+}
+
+/* Footer */
+.site-footer{
+  background:#101012!important;
+  color:#A7A7AA!important;
+  border-top-color:rgba(142,146,148,.25)!important;
+}
+.site-footer .socials span{color:#C6C7C8!important}
+
+/* Mobile */
+@media(max-width:860px){
+  .site-header,.nav{background:var(--mi-nav)!important}
+  .nav a,.products-menu summary{color:#202024!important}
+  .nav-cta{color:#fff!important}
+}
