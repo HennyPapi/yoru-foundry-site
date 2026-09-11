@@ -1372,3 +1372,152 @@ body,
   background:#111311!important;
   border-top-color:rgba(235,235,235,.14)!important;
 }
+
+
+/* ===== FINAL BRAND EMBLEM + COPPER HARMONY FIX ===== */
+:root{
+  --yf-charcoal:#1F2120;
+  --yf-charcoal-deep:#181A19;
+  --yf-linen:#F4F4F3;
+  --yf-ink:#16161A;
+  --yf-copper:#B85A38;
+  --yf-copper-hover:#C96A47;
+  --yf-line:rgba(239,236,230,.20);
+}
+
+/* Make the official emblem physically visible in the header */
+.brand{
+  width:68px!important;
+  height:68px!important;
+  min-width:68px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  border-radius:50%!important;
+  background:#111!important;
+  border:1px solid rgba(184,90,56,.45)!important;
+  box-shadow:0 8px 22px rgba(0,0,0,.16)!important;
+}
+.brand-mark{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  object-fit:cover!important;
+  border-radius:50%!important;
+  transform:scale(1.08)!important;
+  filter:none!important;
+  content:normal!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+/* Exact unified dark studio background */
+body,
+.home-hero,
+.page-main,
+.gallery-hero,
+.standards-section,
+.layout-preview,
+.compare-lab,
+.materials-section,
+.commission-flow,
+.pricing-philosophy{
+  background:var(--yf-charcoal)!important;
+}
+
+/* Remove green radial glow from all media placeholders */
+.hero-showpiece-frame,
+.featured-photo,
+.commission-hero-media,
+.commission-media-grid div,
+.story-media,
+.sample-image,
+.audio-placeholder,
+.media-placeholder,
+.layout-tile .keyboard-diagram,
+.archive-entry .media-placeholder,
+.build-card .media-placeholder{
+  background:linear-gradient(145deg,#222524,#171918)!important;
+  border-color:var(--yf-line)!important;
+  box-shadow:none!important;
+}
+.hero-showpiece-frame:before{
+  border-color:var(--yf-line)!important;
+}
+
+/* Modal backgrounds match the site instead of pure black */
+.story-modal,
+.modal-panel,
+.modal-content,
+.story-modal .modal-content{
+  background:var(--yf-charcoal)!important;
+  color:#EFECE6!important;
+  border-color:var(--yf-line)!important;
+}
+.story-modal{
+  background:rgba(9,10,10,.82)!important;
+}
+.story-modal .modal-shell,
+.modal-shell{
+  background:var(--yf-charcoal)!important;
+  border:1px solid var(--yf-line)!important;
+  box-shadow:0 28px 80px rgba(0,0,0,.42)!important;
+}
+.story-modal .sample-image,
+.story-modal .story-media{
+  background:linear-gradient(145deg,#242725,#171918)!important;
+  border-color:var(--yf-line)!important;
+}
+
+/* Header CTA now references the copper in the logo */
+.nav>a.nav-cta{
+  background:var(--yf-copper)!important;
+  color:#171412!important;
+  border-color:#8F4028!important;
+  box-shadow:0 8px 20px rgba(184,90,56,.20)!important;
+}
+.nav>a.nav-cta:hover{
+  background:var(--yf-copper-hover)!important;
+  color:#100D0C!important;
+}
+
+/* Copper interaction language */
+.text-link,
+.dark-link,
+.layout-tile .status.live,
+a[href*="request-a-build"]:not(.nav-cta):not(.button),
+a[href*="commission"]:not(.nav-cta):not(.button){
+  color:var(--yf-copper)!important;
+}
+.nav>a:not(.nav-cta):after,
+.products-menu>summary:before{
+  background:var(--yf-copper)!important;
+}
+.button.primary{
+  background:var(--yf-copper)!important;
+  color:#171412!important;
+}
+.button.primary:hover{
+  background:var(--yf-copper-hover)!important;
+}
+
+/* Keep the rest restrained */
+.eyebrow,.kicker,.tag,.showpiece-index{
+  color:#9EA29F!important;
+}
+.page-hero h1,.gallery-hero h1,.home-hero h1{
+  color:#F2F2F1!important;
+}
+
+/* Mobile emblem */
+@media(max-width:860px){
+  .brand{
+    width:54px!important;
+    height:54px!important;
+    min-width:54px!important;
+  }
+}
