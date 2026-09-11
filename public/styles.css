@@ -1886,3 +1886,306 @@ body,
     height:56px!important;
   }
 }
+
+
+/* ===== YORU HEADER — FINAL ATELIER LOCK =====
+   Replaces the stacked historical header experiments with one deliberate system.
+   Cream paper, architectural framing, restrained copper, no solid orange blocks. */
+.site-header{
+  position:sticky!important;
+  top:0!important;
+  z-index:1000!important;
+  width:100%!important;
+  max-width:none!important;
+  min-height:96px!important;
+  margin:0!important;
+  padding:12px clamp(28px,4.2vw,68px)!important;
+  display:grid!important;
+  grid-template-columns:88px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:clamp(24px,3vw,48px)!important;
+  overflow:visible!important;
+  background-color:#F4F4F3!important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='3' seed='12' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='.025'/%3E%3C/svg%3E"),
+    linear-gradient(180deg,#F8F7F4 0%,#F1F1EF 100%)!important;
+  background-repeat:repeat,no-repeat!important;
+  background-size:96px 96px,100% 100%!important;
+  border-top:0!important;
+  border-bottom:1px solid rgba(22,22,26,.16)!important;
+  box-shadow:0 7px 22px rgba(0,0,0,.07)!important;
+  backdrop-filter:none!important;
+}
+
+/* One restrained architectural baseline only. */
+.site-header::before{
+  content:""!important;
+  position:absolute!important;
+  left:clamp(28px,4.2vw,68px)!important;
+  right:clamp(28px,4.2vw,68px)!important;
+  bottom:8px!important;
+  top:auto!important;
+  height:1px!important;
+  background:linear-gradient(90deg,
+    rgba(184,90,56,.34),
+    rgba(22,22,26,.10) 22%,
+    rgba(22,22,26,.10) 78%,
+    rgba(184,90,56,.34)
+  )!important;
+  pointer-events:none!important;
+  z-index:0!important;
+}
+.site-header::after{
+  content:""!important;
+  position:absolute!important;
+  left:calc(clamp(28px,4.2vw,68px) + 88px + clamp(12px,1.6vw,24px))!important;
+  top:20px!important;
+  bottom:20px!important;
+  width:1px!important;
+  right:auto!important;
+  height:auto!important;
+  background:linear-gradient(180deg,transparent,rgba(22,22,26,.16),transparent)!important;
+  pointer-events:none!important;
+  z-index:0!important;
+}
+
+.brand{
+  position:relative!important;
+  z-index:2!important;
+  width:68px!important;
+  height:68px!important;
+  flex:0 0 68px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  justify-self:start!important;
+  overflow:hidden!important;
+  border-radius:50%!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.brand-mark{
+  display:block!important;
+  width:68px!important;
+  height:68px!important;
+  max-width:none!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  border-radius:50%!important;
+  transform:scale(1.16)!important;
+  filter:none!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+
+.nav{
+  position:relative!important;
+  z-index:2!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  justify-self:stretch!important;
+  display:grid!important;
+  grid-template-columns:
+    minmax(118px,1fr)
+    minmax(150px,1.14fr)
+    minmax(126px,1fr)
+    minmax(72px,.72fr)
+    minmax(110px,.86fr)
+    minmax(178px,1.22fr)!important;
+  align-items:center!important;
+  gap:clamp(8px,1.25vw,22px)!important;
+  color:#1B1B1D!important;
+  font-family:"Cormorant Garamond",serif!important;
+  font-size:clamp(18px,1.28vw,21px)!important;
+  font-weight:600!important;
+  letter-spacing:.012em!important;
+  text-align:center!important;
+}
+
+.nav>a,
+.products-menu summary{
+  position:relative!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:52px!important;
+  padding:10px 8px!important;
+  color:#1E1D1C!important;
+  border:0!important;
+  background:transparent!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  white-space:nowrap!important;
+  transition:color .22s ease,transform .22s ease,border-color .22s ease,background-color .22s ease!important;
+}
+.nav>a:not(.nav-cta)::before{
+  content:""!important;
+  position:absolute!important;
+  left:24%!important;
+  right:24%!important;
+  bottom:5px!important;
+  height:1px!important;
+  background:#B85A38!important;
+  opacity:0!important;
+  transform:scaleX(.35)!important;
+  transform-origin:center!important;
+  transition:opacity .22s ease,transform .22s ease!important;
+}
+.nav>a:not(.nav-cta)::after{
+  content:none!important;
+}
+.nav>a:not(.nav-cta):hover::before,
+.nav>a:not(.nav-cta).active::before{
+  opacity:.72!important;
+  transform:scaleX(1)!important;
+}
+.nav>a:hover,
+.products-menu summary:hover,
+.nav>a.active,
+.products-menu.active>summary{
+  color:#000!important;
+}
+.products-menu summary::before{
+  content:""!important;
+  position:absolute!important;
+  left:26%!important;
+  right:26%!important;
+  bottom:5px!important;
+  height:1px!important;
+  background:#B85A38!important;
+  opacity:0!important;
+  transform:scaleX(.35)!important;
+  transition:opacity .22s ease,transform .22s ease!important;
+}
+.products-menu:hover>summary::before,
+.products-menu.active>summary::before{
+  opacity:.72!important;
+  transform:scaleX(1)!important;
+}
+.products-menu summary::after{
+  content:"⌄"!important;
+  margin-left:7px!important;
+  color:#716C68!important;
+  background:none!important;
+}
+
+/* Commission CTA: precision outlined component, not a flat orange block. */
+.nav>a.nav-cta{
+  min-height:54px!important;
+  padding:0 clamp(18px,1.8vw,28px)!important;
+  border:1px solid rgba(184,90,56,.78)!important;
+  border-radius:4px!important;
+  background:rgba(248,247,244,.56)!important;
+  color:#181818!important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.42),
+    0 5px 14px rgba(0,0,0,.045)!important;
+  font-weight:700!important;
+  text-shadow:none!important;
+  opacity:1!important;
+  overflow:visible!important;
+}
+.nav>a.nav-cta::before,
+.nav>a.nav-cta::after{
+  content:none!important;
+}
+.nav>a.nav-cta:hover{
+  background:linear-gradient(180deg,#C06A49 0%,#B85A38 100%)!important;
+  color:#17120F!important;
+  border-color:#A84F31!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.28),
+    0 7px 16px rgba(64,31,19,.12)!important;
+  transform:translateY(-1px)!important;
+}
+
+/* Keep the products panel visually tied to the new header. */
+.products-dropdown{
+  top:56px!important;
+  background:#F5F3EE!important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='3' seed='12' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='.018'/%3E%3C/svg%3E")!important;
+  border:1px solid rgba(22,22,26,.14)!important;
+  border-radius:6px!important;
+  box-shadow:0 24px 50px rgba(0,0,0,.14)!important;
+}
+.products-dropdown a{
+  color:#282624!important;
+}
+.products-dropdown a:hover{
+  background:#E8E4DD!important;
+  color:#000!important;
+}
+
+/* Prevent the desktop header from clipping the CTA at common laptop widths. */
+@media(max-width:1180px) and (min-width:861px){
+  .site-header{
+    padding-left:26px!important;
+    padding-right:26px!important;
+    grid-template-columns:72px minmax(0,1fr)!important;
+    gap:20px!important;
+  }
+  .site-header::before{left:26px!important;right:26px!important}
+  .site-header::after{left:112px!important}
+  .brand,.brand-mark{width:60px!important;height:60px!important}
+  .nav{
+    grid-template-columns:
+      minmax(104px,1fr)
+      minmax(132px,1.1fr)
+      minmax(112px,1fr)
+      minmax(64px,.7fr)
+      minmax(96px,.82fr)
+      minmax(154px,1.18fr)!important;
+    gap:6px!important;
+    font-size:17px!important;
+  }
+  .nav>a.nav-cta{padding:0 14px!important}
+}
+
+@media(max-width:860px){
+  .site-header{
+    min-height:82px!important;
+    padding:10px 18px!important;
+    grid-template-columns:58px 1fr!important;
+    gap:16px!important;
+  }
+  .site-header::before{left:18px!important;right:18px!important;bottom:6px!important}
+  .site-header::after{content:none!important}
+  .brand,.brand-mark{width:54px!important;height:54px!important}
+  .menu-toggle{
+    display:block!important;
+    justify-self:end!important;
+    color:#181818!important;
+    position:relative!important;
+    z-index:3!important;
+  }
+  .nav{
+    display:none!important;
+    position:absolute!important;
+    top:82px!important;
+    left:14px!important;
+    right:14px!important;
+    width:auto!important;
+    grid-template-columns:1fr!important;
+    gap:2px!important;
+    padding:14px!important;
+    background:#F5F3EE!important;
+    border:1px solid rgba(22,22,26,.14)!important;
+    border-radius:6px!important;
+    box-shadow:0 22px 45px rgba(0,0,0,.16)!important;
+    text-align:left!important;
+  }
+  .nav.open{display:grid!important}
+  .nav>a,.products-menu summary{
+    justify-content:flex-start!important;
+    min-height:46px!important;
+    padding:8px 12px!important;
+  }
+  .nav>a.nav-cta{
+    justify-content:center!important;
+    margin-top:8px!important;
+  }
+}
