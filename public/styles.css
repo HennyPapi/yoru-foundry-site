@@ -1521,3 +1521,36 @@ a[href*="commission"]:not(.nav-cta):not(.button){
     min-width:54px!important;
   }
 }
+
+
+/* ===== MODAL LABEL HIERARCHY — CLEAN GRAY MINIMALISM =====
+   Remove leftover green from modal micro-labels and keep the modal
+   inside the charcoal / linen / copper system. */
+.story-modal .story-modal-head .eyebrow,
+.story-modal .story-copy .eyebrow{
+  color:rgba(239,236,230,.58)!important;
+  letter-spacing:.17em!important;
+  font-weight:700!important;
+}
+
+/* Keep main modal headings crisp and dominant */
+.story-modal .story-modal-head h2,
+.story-modal .story-copy h3{
+  color:#F2F2F1!important;
+}
+
+/* Supporting modal copy stays quiet */
+.story-modal .story-modal-head>p:last-child,
+.story-modal .story-copy>p:last-child{
+  color:rgba(239,236,230,.72)!important;
+}
+
+/* Copper remains interaction-only, not structural labeling */
+.story-modal .modal-close{
+  color:#EFECE6!important;
+  border-color:rgba(239,236,230,.20)!important;
+}
+.story-modal .modal-close:hover{
+  color:#fff!important;
+  border-color:#B85A38!important;
+}
