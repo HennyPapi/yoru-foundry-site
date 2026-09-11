@@ -528,3 +528,309 @@
   .nav a,.products-menu summary{color:#ddd5ca}
   .nav-cta{color:#173a31 !important}
 }
+
+
+/* ===== YORU GILDED EARTH / ATELIER PASS ===== */
+:root{
+  --gallery-black:#030504;
+  --gallery-green:#0c1713;
+  --cream-nav:#f7f2ea;
+  --cream-nav-2:#eee6da;
+  --espresso:#2c221e;
+  --brass:#b79b62;
+  --brass-soft:#d6c39a;
+  --rust:#a85f49;
+}
+
+/* Global atmosphere */
+body{
+  background:
+    radial-gradient(circle at 76% 8%,rgba(64,108,92,.08),transparent 34rem),
+    linear-gradient(180deg,#030504 0%,#040605 58%,#020302 100%);
+}
+
+/* Floating gallery navigation */
+.site-header{
+  min-height:102px;
+  padding:15px clamp(26px,4.5vw,72px);
+  grid-template-columns:78px 1fr;
+  background:
+    linear-gradient(180deg,rgba(250,247,241,.985),rgba(244,238,228,.985));
+  border-top:1px solid rgba(183,155,98,.38);
+  border-bottom:1px solid rgba(44,34,30,.18);
+  box-shadow:0 10px 30px rgba(0,0,0,.13);
+}
+.site-header:before{
+  content:"";
+  position:absolute;
+  top:8px;left:clamp(26px,4.5vw,72px);right:clamp(26px,4.5vw,72px);
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(183,155,98,.55),rgba(49,95,82,.28),rgba(183,155,98,.55),transparent);
+}
+.site-header:after{
+  content:"";
+  position:absolute;
+  bottom:8px;left:clamp(26px,4.5vw,72px);right:clamp(26px,4.5vw,72px);
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(44,34,30,.12),transparent);
+}
+.brand{
+  width:62px;height:62px;
+  background:url('/assets/yoru-emblem-header.png') center/contain no-repeat!important;
+}
+.brand-mark{
+  width:62px;height:62px;
+  content:url('/assets/yoru-emblem-header.png')!important;
+  filter:none!important;
+  opacity:1!important;
+}
+.nav{
+  max-width:none;
+  grid-template-columns:repeat(6,minmax(max-content,1fr));
+  gap:18px;
+  font-size:21px;
+  font-weight:700;
+  color:var(--espresso);
+}
+.nav>a,.products-menu summary{
+  color:var(--espresso);
+  padding:16px 10px;
+}
+.nav>a:hover,.products-menu summary:hover,.nav>a.active,.products-menu.active>summary{
+  color:#173b31;
+}
+.nav>a:not(.nav-cta):after,.products-menu>summary:before{
+  background:linear-gradient(90deg,var(--brass),#6d9c8c);
+  bottom:7px;
+}
+.products-menu summary:after{color:#426e60}
+.nav-cta{
+  border:1px solid rgba(44,34,30,.22);
+  background:linear-gradient(180deg,#244f44,#173b31);
+  color:#fffaf3!important;
+  box-shadow:0 8px 20px rgba(36,79,68,.16);
+  padding-inline:22px!important;
+}
+.nav-cta:hover{
+  background:linear-gradient(180deg,#2f6355,#1a4337);
+  color:#fffdf7!important;
+}
+.products-dropdown{
+  background:#f7f2ea;
+  border-color:rgba(44,34,30,.14);
+  box-shadow:0 24px 60px rgba(0,0,0,.18);
+}
+.products-dropdown a{color:#413934}
+.products-dropdown a:hover{background:#e9dfd0;color:#193c32}
+.mega-col>span{color:#7c653a}
+
+/* Cinematic editorial hero */
+.gallery-hero{
+  max-width:var(--max);
+  min-height:calc(100vh - 102px);
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:clamp(56px,7vw,110px);
+  align-items:center;
+  padding:clamp(86px,9vw,126px) 24px;
+}
+.gallery-hero .home-copy{max-width:720px}
+.gallery-hero h1{
+  color:#6ea892;
+  font-size:clamp(72px,8vw,116px);
+  line-height:.88;
+}
+.gallery-hero .manifesto{
+  max-width:680px;
+  font-size:clamp(22px,2vw,29px);
+  color:#d6cec2;
+}
+.gallery-hero .kicker{
+  color:var(--brass-soft);
+}
+.hero-micro{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0;
+  margin-top:27px;
+  color:#837d73;
+  font-size:10px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+.hero-micro span+span:before{
+  content:"•";
+  color:var(--brass);
+  margin:0 14px;
+}
+.hero-showpiece{min-width:0}
+.hero-showpiece-frame{
+  min-height:610px;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:flex-end;
+  padding:24px;
+  border:1px solid rgba(232,225,213,.16);
+  background:
+    linear-gradient(180deg,rgba(3,5,4,.02),rgba(3,5,4,.38)),
+    radial-gradient(circle at 60% 32%,rgba(110,168,146,.20),transparent 28%),
+    linear-gradient(135deg,#14221d 0%,#0a0f0d 52%,#030504 100%);
+  box-shadow:0 40px 100px rgba(0,0,0,.32);
+}
+.hero-showpiece-frame:before{
+  content:"";
+  position:absolute;
+  inset:18px;
+  border:1px solid rgba(183,155,98,.20);
+  pointer-events:none;
+}
+.showpiece-index{
+  position:absolute;
+  top:34px;left:38px;
+  color:var(--brass-soft);
+  font-size:11px;font-weight:700;letter-spacing:.19em;
+}
+.showpiece-caption{
+  max-width:320px;
+  color:#aaa298;
+  font-size:12px;
+  letter-spacing:.04em;
+}
+.showpiece-specs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
+  border:1px solid rgba(232,225,213,.14);
+  border-top:0;
+}
+.showpiece-specs span{
+  padding:13px 14px;
+  text-align:center;
+  color:#9f978c;
+  font-size:9px;
+  letter-spacing:.17em;
+  border-right:1px solid rgba(232,225,213,.10);
+}
+.showpiece-specs span:last-child{border-right:0}
+
+/* CTA treatment */
+.button.primary{
+  background:linear-gradient(180deg,#2f6858,#1d4b3f);
+  box-shadow:0 16px 34px rgba(16,47,39,.30);
+}
+.button.secondary{
+  border-color:rgba(214,195,154,.44);
+  color:#eee4d5;
+}
+
+/* Cream editorial rhythm */
+.editorial-light{
+  max-width:none;
+  padding:110px max(24px,calc((100vw - var(--max))/2 + 24px));
+  background:linear-gradient(180deg,#f6f1e9,#eae1d4);
+  color:var(--espresso);
+  border-top:1px solid rgba(183,155,98,.30);
+  border-bottom:1px solid rgba(183,155,98,.26);
+}
+.editorial-light .featured-photo{
+  background:
+    radial-gradient(circle at 35% 30%,rgba(91,149,131,.18),transparent 34%),
+    linear-gradient(145deg,#1a2722,#070a09);
+  border-color:rgba(44,34,30,.15);
+}
+.editorial-light .featured-copy h2{color:var(--espresso)}
+.editorial-light .featured-copy>p{color:#5d554e}
+.editorial-light .eyebrow{color:#6d5735}
+.editorial-light .commission-specs{border-color:rgba(44,34,30,.14)}
+.editorial-light .commission-specs dt{color:#7b7067}
+.editorial-light .commission-specs dd{color:#2f2925}
+.editorial-light .text-link{color:#315f52}
+
+/* Technical brochure details */
+.commission-specs dt,
+.commission-detail-grid span{
+  letter-spacing:.18em;
+}
+.commission-specs dd{
+  font-size:26px;
+}
+
+/* Dark showroom areas */
+.standards-section,.layout-preview{
+  background:transparent;
+}
+.standards-section{
+  border-top:1px solid rgba(232,225,213,.12);
+}
+.standards-head h2{
+  color:#eee7dc;
+}
+.standards-grid article{
+  background:linear-gradient(180deg,#101713,#080b09)!important;
+  color:#eee7dc!important;
+  border-color:rgba(232,225,213,.16)!important;
+  box-shadow:0 20px 45px rgba(0,0,0,.18)!important;
+}
+.standards-grid article h3{color:#eee7dc!important}
+.standards-grid article p{color:#aaa299!important}
+.standards-grid article span{color:var(--brass-soft)!important}
+
+/* Layout preview as architecture cards */
+.mini-layout{
+  background:#f2ece2;
+  color:#2c221e;
+  border-color:rgba(44,34,30,.14);
+}
+.mini-layout span{color:#6d5735}
+.mini-layout.live:hover{border-color:rgba(49,95,82,.42)}
+.mini-layout strong{color:#1c201d}
+.mini-layout small{color:#655e57}
+
+/* Warm sections keep gold micro-details */
+.warm-editorial{
+  background:#f6f1e9;
+  color:var(--espresso);
+  border-top:1px solid rgba(183,155,98,.28);
+  border-bottom:1px solid rgba(183,155,98,.22);
+}
+.warm-editorial .dark-eyebrow{color:#6d5735}
+
+/* Footer becomes intentionally quiet */
+.site-footer{
+  border-top:1px solid rgba(183,155,98,.24);
+}
+
+/* Request page as a light configurator on dark canvas */
+.build-form{
+  background:linear-gradient(180deg,#f7f2ea,#eee6db);
+  border-color:rgba(44,34,30,.15);
+}
+.build-form .primary{
+  background:linear-gradient(180deg,var(--rust),#874836);
+}
+
+/* Mobile */
+@media(max-width:1040px){
+  .gallery-hero{grid-template-columns:1fr;min-height:auto}
+  .hero-showpiece-frame{min-height:480px}
+  .nav{font-size:18px;gap:8px}
+}
+@media(max-width:860px){
+  .site-header{min-height:86px;background:#f7f2ea}
+  .brand,.brand-mark{width:50px;height:50px}
+  .nav{
+    top:86px;
+    background:#f7f2ea;
+    border-color:rgba(44,34,30,.14);
+    box-shadow:0 24px 50px rgba(0,0,0,.18);
+  }
+  .nav a,.products-menu summary{color:var(--espresso)}
+  .nav-cta{color:#fffaf3!important}
+}
+@media(max-width:680px){
+  .gallery-hero{padding-left:18px;padding-right:18px}
+  .hero-showpiece-frame{min-height:360px}
+  .showpiece-specs{grid-template-columns:1fr}
+  .showpiece-specs span{border-right:0;border-bottom:1px solid rgba(232,225,213,.10)}
+}
