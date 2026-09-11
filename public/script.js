@@ -132,3 +132,26 @@ function fill(side){
     a.textContent='Request a Commission';
   });
 })();
+;(()=>{
+  const logoSrc='/assets/yoru-emblem-official.webp';
+  document.querySelectorAll('img.brand-mark').forEach(img=>{
+    img.src=logoSrc;
+    img.removeAttribute('srcset');
+    img.style.display='block';
+    img.style.visibility='visible';
+    img.style.opacity='1';
+  });
+
+  let icon=document.querySelector('link[rel="icon"]');
+  if(!icon){
+    icon=document.createElement('link');
+    icon.rel='icon';
+    document.head.appendChild(icon);
+  }
+  icon.type='image/png';
+  icon.href='/assets/favicon.png';
+
+  document.querySelectorAll('a.nav-cta').forEach(a=>{
+    a.textContent='Request a Commission';
+  });
+})();
