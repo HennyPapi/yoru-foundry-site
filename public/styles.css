@@ -2189,3 +2189,79 @@ body,
     margin-top:8px!important;
   }
 }
+
+
+/* ===== FINAL MICRO-REFINEMENTS: HEADER BASELINE + HERO CTA + TEXT LINKS ===== */
+
+/* 1) One true architectural divider exactly at the linen/dark transition. */
+.site-header{
+  border-bottom:1px solid rgba(22,22,26,.15)!important;
+}
+/* Remove the older decorative line floating 8px above the bottom edge. */
+.site-header::before{
+  content:none!important;
+}
+
+/* 2) Hero CTA now mirrors the precision-outline language of the header CTA,
+      inverted for the dark hero canvas. */
+.home-hero .hero-actions .button.primary{
+  background:transparent!important;
+  background-image:none!important;
+  color:#F2F2F1!important;
+  border:1px solid rgba(184,90,56,.88)!important;
+  border-radius:4px!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  transition:
+    background-color .22s ease,
+    color .22s ease,
+    border-color .22s ease,
+    transform .22s ease!important;
+}
+.home-hero .hero-actions .button.primary:hover{
+  background:#B85A38!important;
+  color:#17120F!important;
+  border-color:#A84F31!important;
+  transform:translateY(-1px)!important;
+  box-shadow:0 7px 16px rgba(64,31,19,.12)!important;
+}
+
+/* The secondary hero action stays quieter so the copper-outline CTA leads. */
+.home-hero .hero-actions .button.secondary{
+  background:transparent!important;
+  color:#E7E5E1!important;
+  border:1px solid rgba(235,235,235,.28)!important;
+  border-radius:4px!important;
+  box-shadow:none!important;
+}
+.home-hero .hero-actions .button.secondary:hover{
+  border-color:rgba(235,235,235,.52)!important;
+  background:rgba(255,255,255,.035)!important;
+  color:#FFF!important;
+}
+
+/* Fix the blank copper rectangles: old cascade accidentally applied a copper
+   background to editorial text links while also making their text copper. */
+.text-link,
+.dark-link{
+  display:inline-flex!important;
+  align-items:center!important;
+  width:auto!important;
+  max-width:max-content!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  color:#B85A38!important;
+  border:0!important;
+  border-bottom:1px solid rgba(184,90,56,.34)!important;
+  padding:0 0 3px!important;
+  box-shadow:none!important;
+  text-decoration:none!important;
+  transition:color .2s ease,border-color .2s ease!important;
+}
+.text-link:hover,
+.dark-link:hover{
+  background:transparent!important;
+  background-color:transparent!important;
+  color:#C76A48!important;
+  border-bottom-color:#C76A48!important;
+}
