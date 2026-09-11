@@ -1674,3 +1674,40 @@ a[href*="commission"]:not(.nav-cta):not(.button){
 .product-layouts .layout-tile.active:hover{
   border-color:rgba(22,22,26,.24)!important;
 }
+
+
+/* ===== CRAFTED ART LAYOUT CARDS — FINAL NEUTRAL LOCK =====
+   The Crafted Art page uses .layout-grid rather than .product-layouts.
+   Neutralize every remaining patina/green accent in these layout schematics. */
+.layout-grid .layout-tile .keyboard-diagram{
+  background:linear-gradient(145deg,#222423,#181A19)!important;
+  background-image:linear-gradient(145deg,#222423,#181A19)!important;
+  border-bottom-color:rgba(239,236,230,.14)!important;
+}
+.layout-grid .layout-tile .diagram-label{
+  color:rgba(239,236,230,.72)!important;
+}
+.layout-grid .layout-tile .key{
+  background:#151817!important;
+  border-color:rgba(235,235,235,.22)!important;
+  box-shadow:none!important;
+}
+.layout-grid .layout-tile .status{
+  color:rgba(91,93,92,.45)!important;
+  opacity:1!important;
+  background:transparent!important;
+  border:0!important;
+}
+.layout-grid .layout-tile .status.live{
+  color:#5B5D5C!important;
+}
+.layout-grid .layout-tile.active:hover{
+  border-color:rgba(239,236,230,.30)!important;
+}
+
+/* Remove the old green hover/active cues on these specific cards. */
+.layout-grid .layout-tile:hover .diagram-label,
+.layout-grid .layout-tile.active .diagram-label,
+.layout-grid .layout-tile.coming .diagram-label{
+  color:rgba(239,236,230,.72)!important;
+}
