@@ -91,3 +91,8 @@ function fill(side){
 })();
 ;(()=>{document.querySelectorAll("img.brand-mark").forEach(img=>{img.src="/assets/yoru-emblem.webp";img.removeAttribute("srcset")})})();
 ;(()=>{document.querySelectorAll("img.brand-mark").forEach(img=>{img.src="/assets/yoru-emblem-header.png";img.removeAttribute("srcset");img.style.display="block";img.style.opacity="1";});})();
+;(()=>{
+  document.querySelectorAll('a[href="/request-a-build.html"]').forEach(a=>{
+    if(a.textContent.trim()==="Request a Build") a.textContent="Request a Commission";
+  });
+})();
