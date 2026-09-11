@@ -245,3 +245,148 @@
 @media(max-width:860px){
   .brand,.brand-mark{width:48px;height:48px}
 }
+
+
+/* Contrast + header refinement */
+:root{
+  --patina2:#6ea892;
+  --panel:#0d1210;
+  --panel2:#121816;
+  --line:rgba(232,225,213,.16);
+  --line2:rgba(110,168,146,.46);
+}
+
+/* Warm editorial header for stronger separation from the black canvas */
+.site-header{
+  background:rgba(232,225,213,.96);
+  border-bottom:1px solid rgba(49,95,82,.24);
+  box-shadow:0 8px 30px rgba(0,0,0,.16);
+}
+.brand{
+  background:url('/assets/yoru-emblem.webp') center/contain no-repeat;
+}
+.brand-mark{
+  content:url('/assets/yoru-emblem.webp');
+}
+.nav{
+  color:#3f423d;
+}
+.nav>a:hover,.products-menu summary:hover{
+  color:#111713;
+}
+.nav>a.active,.products-menu.active>summary{
+  color:#214d42;
+}
+.nav>a:not(.nav-cta).active:before{
+  background:#315f52;
+}
+.products-menu summary:after{
+  color:#315f52;
+}
+.nav-cta{
+  color:#f5efe5 !important;
+  background:#244f44;
+  border-color:#244f44;
+}
+.nav-cta:hover{
+  background:#183d34;
+  color:#fffaf1 !important;
+}
+.products-dropdown{
+  background:#eee7dc;
+  border-color:rgba(49,95,82,.22);
+  box-shadow:0 22px 55px rgba(0,0,0,.24);
+}
+.products-dropdown a{
+  color:#3d413c;
+}
+.products-dropdown a:hover{
+  background:#ddd5c8;
+  color:#15231e;
+}
+.mega-col>span{
+  color:#315f52;
+}
+.mega-col small{
+  color:#746e66;
+}
+
+/* Dark cards that were disappearing into the background now use ivory surfaces */
+.standards-grid article,
+.flow-grid li,
+.why-grid article,
+.journal-grid article,
+.archive-entry,
+.build-card,
+.commission-detail-grid article{
+  background:linear-gradient(180deg,var(--cream-2),var(--cream));
+  color:var(--cream-ink);
+  border-color:var(--cream-line);
+  box-shadow:0 16px 38px rgba(0,0,0,.13);
+}
+.standards-grid article span,
+.flow-grid li span,
+.why-grid article span,
+.journal-grid article span,
+.archive-entry span,
+.commission-detail-grid article span{
+  color:var(--cream-patina);
+}
+.standards-grid article p,
+.flow-grid li p,
+.why-grid article p,
+.journal-grid article p,
+.archive-entry p,
+.build-card p{
+  color:var(--cream-muted);
+}
+.standards-grid article h3,
+.flow-grid li h3,
+.why-grid article h2,
+.journal-grid article h2,
+.archive-entry h2,
+.build-card h2,
+.commission-detail-grid strong{
+  color:var(--cream-ink);
+}
+
+/* Keep image/media zones dark so photography still pops */
+.archive-entry .media-placeholder,
+.build-card .media-placeholder{
+  background:
+    radial-gradient(circle at 30% 30%,rgba(93,151,131,.18),transparent 34%),
+    linear-gradient(145deg,#121915,#060806);
+  color:#8f9a92;
+  border-color:rgba(232,225,213,.13);
+}
+
+/* Sharper separation for remaining dark interactive tiles */
+.feature-grid>div,
+.product-card,
+.family-card{
+  background:linear-gradient(180deg,#111713,#090d0b);
+  border-color:rgba(232,225,213,.18);
+  box-shadow:0 18px 45px rgba(0,0,0,.18);
+}
+.feature-grid p,
+.product-card p,
+.family-card p{
+  color:#bdb7ae;
+}
+
+/* Make green accents legible on black without becoming bright/neon */
+.eyebrow,.kicker,.tag,
+.portal-card span,
+.timeline-grid span,
+.layout-tile .status.live{
+  color:#6ea892;
+}
+
+@media(max-width:860px){
+  .nav{
+    background:#eee7dc;
+    border-color:rgba(49,95,82,.22);
+  }
+  .nav a,.products-menu summary{color:#383c37}
+  .nav-cta{color:#fffaf1 !important}
+}
