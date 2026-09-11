@@ -1382,14 +1382,7 @@ a[href*="commission"]:not(.nav-cta):not(.button){
   color:#F2F2F1!important;
 }
 
-/* Mobile emblem */
-@media(max-width:860px){
-  .brand{
-    width:54px!important;
-    height:54px!important;
-    min-width:54px!important;
-  }
-}
+
 
 
 /* ===== MODAL LABEL HIERARCHY — CLEAN GRAY MINIMALISM =====
