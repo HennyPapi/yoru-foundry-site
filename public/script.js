@@ -96,3 +96,17 @@ function fill(side){
     if(a.textContent.trim()==="Request a Build") a.textContent="Request a Commission";
   });
 })();
+;(()=>{
+  document.querySelectorAll('img.brand-mark').forEach(img=>{
+    img.src='/assets/yoru-emblem-official.webp';
+    img.removeAttribute('srcset');
+  });
+  let icon=document.querySelector('link[rel="icon"]');
+  if(!icon){
+    icon=document.createElement('link');
+    icon.rel='icon';
+    document.head.appendChild(icon);
+  }
+  icon.href='/assets/favicon.png';
+  icon.type='image/png';
+})();
