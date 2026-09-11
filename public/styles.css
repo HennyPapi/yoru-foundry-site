@@ -1724,3 +1724,29 @@ a[href*="commission"]:not(.nav-cta):not(.button){
 @media(max-width:860px){
   .brand{width:56px!important;height:56px!important;min-width:56px!important}
 }
+
+
+/* ===== LAYOUT STATUS BADGES — MONOCHROMATIC ARCHITECTURAL =====
+   Remove the remaining green status treatment from keyboard layout cards.
+   Active availability uses full-opacity neutral ink; coming-soon states recede. */
+.product-layouts .layout-tile .status{
+  color:rgba(22,22,26,.42)!important;
+  background:transparent!important;
+  border:0!important;
+  text-transform:uppercase!important;
+  letter-spacing:.12em!important;
+  font-weight:600!important;
+}
+.product-layouts .layout-tile .status.live{
+  color:#313333!important;
+  opacity:1!important;
+}
+.product-layouts .layout-tile.coming .status{
+  color:rgba(22,22,26,.38)!important;
+  opacity:1!important;
+}
+
+/* Also neutralize the small layout diagram labels so no green lingers. */
+.product-layouts .diagram-label{
+  color:rgba(239,236,230,.62)!important;
+}
