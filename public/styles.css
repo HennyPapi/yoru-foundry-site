@@ -853,3 +853,193 @@ body{
 .products-dropdown{
   z-index:50;
 }
+
+
+/* ===== GILDED EARTH COLOR TEST — exact warm luxury palette ===== */
+:root{
+  --ge-cream:#F8F5EF;
+  --ge-espresso:#2C221E;
+  --ge-hero:#1C1614;
+  --ge-oatmeal:#E8D6B3;
+  --ge-gold:#C9A84C;
+  --ge-gold-soft:#D8C18A;
+  --ge-card:#F1EADF;
+  --ge-ink:#2C221E;
+}
+
+/* Global dark areas: warm espresso, not digital black */
+body{
+  background:var(--ge-hero);
+  color:var(--ge-oatmeal);
+}
+.home-hero,.page-main,.standards-section,.layout-preview,.compare-lab,.materials-section,.commission-flow,.pricing-philosophy{
+  background:var(--ge-hero);
+}
+
+/* Header: warm cream + espresso */
+.site-header{
+  background:var(--ge-cream)!important;
+  border-top:1px solid rgba(201,168,76,.45)!important;
+  border-bottom:1px solid rgba(44,34,30,.16)!important;
+  box-shadow:0 10px 28px rgba(28,22,20,.12)!important;
+}
+.site-header:before{
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,.58),rgba(44,34,30,.14),rgba(201,168,76,.58),transparent)!important;
+}
+.site-header:after{
+  background:linear-gradient(90deg,transparent,rgba(44,34,30,.14),transparent)!important;
+}
+.brand{
+  background:url('/assets/yoru-emblem-official.webp') center/contain no-repeat!important;
+}
+.brand-mark{
+  content:url('/assets/yoru-emblem-official.webp')!important;
+}
+.nav{
+  color:var(--ge-espresso)!important;
+  font-size:21px!important;
+}
+.nav>a,.products-menu summary{
+  color:var(--ge-espresso)!important;
+}
+.nav>a:hover,.products-menu summary:hover,.nav>a.active,.products-menu.active>summary{
+  color:#17110F!important;
+}
+.nav>a:not(.nav-cta):after,.products-menu>summary:before{
+  background:var(--ge-gold)!important;
+}
+.products-menu summary:after{color:#8A6D2B!important}
+.nav-cta{
+  background:var(--ge-espresso)!important;
+  color:var(--ge-cream)!important;
+  border-color:var(--ge-gold)!important;
+  box-shadow:none!important;
+}
+.nav-cta:hover{
+  background:#3A2D27!important;
+  color:#FFFDF8!important;
+}
+
+/* Dropdown follows the cream gallery language */
+.products-dropdown{
+  background:var(--ge-cream)!important;
+  color:var(--ge-espresso)!important;
+  border-color:rgba(44,34,30,.15)!important;
+}
+.products-dropdown a{color:#493D37!important}
+.products-dropdown a:hover{
+  background:#EEE4D5!important;
+  color:#241B18!important;
+}
+.mega-col>span{color:#8B6E30!important}
+.mega-col small{color:#8D8176!important}
+
+/* Hero: warm dark metal + champagne typography */
+.gallery-hero{
+  background:
+    radial-gradient(circle at 78% 28%,rgba(201,168,76,.08),transparent 28rem),
+    linear-gradient(180deg,#211916 0%,var(--ge-hero) 70%);
+}
+.gallery-hero h1,.home-hero h1,.page-hero h1{
+  color:var(--ge-oatmeal)!important;
+}
+.gallery-hero .kicker,.kicker,.eyebrow,.tag{
+  color:var(--ge-gold-soft)!important;
+}
+.gallery-hero .manifesto,.manifesto,.page-hero>p:last-child{
+  color:#E4D9C8!important;
+}
+.hero-micro{color:#A89B8F!important}
+.hero-micro span+span:before{color:var(--ge-gold)!important}
+
+/* Hero image placeholder uses charcoal bronze instead of green */
+.hero-showpiece-frame{
+  background:
+    linear-gradient(180deg,rgba(28,22,20,.02),rgba(28,22,20,.46)),
+    radial-gradient(circle at 60% 30%,rgba(201,168,76,.12),transparent 30%),
+    linear-gradient(135deg,#30231E 0%,#1C1614 58%,#100C0A 100%)!important;
+  border-color:rgba(232,214,179,.22)!important;
+}
+.hero-showpiece-frame:before{border-color:rgba(201,168,76,.24)!important}
+.showpiece-index{color:var(--ge-gold-soft)!important}
+.showpiece-caption,.showpiece-specs span{color:#B9AA9A!important}
+.showpiece-specs{border-color:rgba(232,214,179,.18)!important}
+.showpiece-specs span{border-color:rgba(232,214,179,.12)!important}
+
+/* Buttons */
+.button.primary{
+  background:var(--ge-gold)!important;
+  color:#241B18!important;
+  box-shadow:0 14px 30px rgba(0,0,0,.20)!important;
+}
+.button.primary:hover{background:#D2B45A!important}
+.button.secondary{
+  background:var(--ge-espresso)!important;
+  border-color:var(--ge-gold)!important;
+  color:var(--ge-cream)!important;
+}
+
+/* Light cards: keep ivory, warm all text */
+.portal-card,.layout-tile,.story-tile,.education-tile,.compare-side,.materials-grid article,
+.standards-grid article,.flow-grid li,.why-grid article,.journal-grid article,.archive-entry,
+.build-card,.commission-detail-grid article,.mini-layout,.build-form{
+  background:var(--ge-card)!important;
+  color:var(--ge-ink)!important;
+  border-color:rgba(44,34,30,.14)!important;
+}
+.portal-card h2,.layout-tile h2,.story-tile h2,.education-tile h2,.materials-grid h3,
+.standards-grid h3,.flow-grid h3,.why-grid h2,.journal-grid h2,.archive-entry h2,
+.build-card h2,.mini-layout strong{
+  color:var(--ge-ink)!important;
+}
+.portal-card p,.layout-tile p,.story-tile p,.education-tile p,.materials-grid p,
+.standards-grid p,.flow-grid p,.why-grid p,.journal-grid p,.archive-entry p,.build-card p,
+.mini-layout small,.compare-desc{
+  color:#665B53!important;
+}
+.portal-card span,.layout-tile .status.live,.story-tile span,.education-tile span,
+.standards-grid span,.flow-grid span,.why-grid span,.journal-grid span,.archive-entry span,
+.commission-detail-grid span,.mini-layout span,.compare-label{
+  color:#8B6E30!important;
+}
+
+/* What’s Included / Why Yoru cream panels */
+.warm-editorial,.editorial-light{
+  background:var(--ge-cream)!important;
+  color:var(--ge-espresso)!important;
+  border-top-color:rgba(201,168,76,.30)!important;
+  border-bottom-color:rgba(201,168,76,.28)!important;
+}
+.warm-editorial h2,.editorial-light h2,
+.warm-editorial p,.editorial-light p{
+  color:var(--ge-espresso)!important;
+}
+.dark-eyebrow,.editorial-light .eyebrow{color:#8B6E30!important}
+.dark-link,.editorial-light .text-link{color:#6F5726!important}
+
+/* Form fields stay warm paper, not bright white */
+.build-form input,.build-form select,.build-form textarea,
+.compare-side select{
+  background:#FBF8F3!important;
+  color:var(--ge-espresso)!important;
+  border-color:rgba(44,34,30,.18)!important;
+}
+.build-form .primary{
+  background:var(--ge-gold)!important;
+  color:#241B18!important;
+}
+
+/* Footer */
+.site-footer{
+  background:#15100E;
+  color:#A99C90;
+  border-top-color:rgba(201,168,76,.28)!important;
+}
+.site-footer .socials span{color:var(--ge-gold-soft)!important}
+
+/* Mobile cream menu */
+@media(max-width:860px){
+  .site-header,.nav{background:var(--ge-cream)!important}
+  .nav a,.products-menu summary{color:var(--ge-espresso)!important}
+  .nav-cta{color:var(--ge-cream)!important}
+}
