@@ -219,3 +219,29 @@
     box-shadow:none;
   }
 }
+
+/* Header emblem correction */
+.brand{
+  width:56px;
+  height:56px;
+  padding:0;
+  border:0;
+  background:transparent;
+  box-shadow:none;
+  overflow:visible;
+}
+.brand-mark{
+  width:56px;
+  height:56px;
+  display:block;
+  object-fit:contain;
+  background:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  filter:none !important;
+  opacity:1;
+}
+@media(max-width:860px){
+  .brand,.brand-mark{width:48px;height:48px}
+}
