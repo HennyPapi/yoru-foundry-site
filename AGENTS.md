@@ -174,7 +174,8 @@ These rules are canonical for `public/styles.css` and must be preserved by futur
   - `--canvas`: Night Iron / primary page canvas
   - `--surface`: Gunmetal / cards, technical panels, media surfaces
   - `--ink`: Night Ink / text on light surfaces
-  - `--muted`: muted supporting text
+  - `--muted-on-light`: accessible muted supporting text on Forged Bone and other light surfaces
+  - `--muted-on-dark`: accessible muted supporting text on Night Iron, Gunmetal, and other dark surfaces
   - `--accent`: Burnished Copper / restrained interaction accent
 - Required font tokens:
   - `--font-display`: Cormorant Garamond
@@ -182,11 +183,12 @@ These rules are canonical for `public/styles.css` and must be preserved by futur
   - `--font-mono`: system monospace stack
 - Required type primitives: `--step-1` through `--step-5`.
 - Font sizes, font-family declarations, spacing declarations, radii, color values, and transition durations must use custom properties rather than anonymous repeated literals.
-- Preserve existing computed values when tokenizing. Tokenization by itself must be **visually identical**; do not use a token sweep as an excuse to redesign or normalize values unless a phase explicitly requests that visual change.
+- A spacing token must never be applied to a declaration whose original value was a percentage, `em`, `rem`, `vw`, `vh`, or `ch`. Only original `px` values may receive `px` spacing tokens.
+- Phase 3 is a refactor with an explicitly permitted set of visual deltas: borders 1px→0.5px, shadows removed, radii normalized, easing standardized. Any visual change outside that list is a bug.
 
 ### Geometry
 
-- `box-shadow: none` everywhere. Do not reintroduce elevation shadows.
+- `box-shadow: none`, with the sole exception of focus indicators, which must use `outline` instead.
 - Images and card-like surfaces use `border-radius: 0`.
 - Buttons, inputs, selects, and textareas use `border-radius: 4px`.
 - True circular micro-controls such as status dots or information tips may use the circular radius token.

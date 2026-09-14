@@ -2,7 +2,7 @@
 
 This file is the **source of truth** for any future ChatGPT Work / coding session on the Yoru Foundry website.
 
-Do not redesign the site from scratch unless Mike explicitly asks. Preserve the current visual direction and use this document to avoid asking for already-decided brand, palette, sizing, and styling choices.
+Do not redesign the site from scratch unless explicitly requested. Preserve the current visual direction and use this document to avoid asking for already-decided brand, palette, sizing, and styling choices.
 
 ## 1. Brand
 
@@ -51,7 +51,8 @@ These are the approved colors. Do not introduce ad-hoc browns, golds, olives, ru
 | `--yn-steel` | Warm Steel | `#9A9B97` | Secondary technical text |
 | `--yn-ink` | Night Ink | `#171A1D` | Text on light surfaces |
 | `--yn-text-light` | Light Secondary | `#D7D3CB` | Body text on dark surfaces |
-| `--yn-text-mid` | Mid Secondary | `#B8B9B5` | Muted copy |
+| `--muted-on-light` | Warm Graphite | `#6D6962` | Muted copy on Forged Bone / light surfaces |
+| `--muted-on-dark` | Mid Secondary | `#B8B9B5` | Muted copy on Night Iron / Gunmetal surfaces |
 | `--yn-bone-low` | Bone Low | `#E7E1D7` | Light hover / dropdown fill |
 
 ### Color usage rules
@@ -60,7 +61,7 @@ These are the approved colors. Do not introduce ad-hoc browns, golds, olives, ru
 - Forged Bone is the main light material, not pure white.
 - Gunmetal separates product/media objects from Night Iron.
 - Copper is **not** a generic ecommerce orange. Use it sparingly for borders, active states, selected states, links, and CTA interaction.
-- Patina is a **secret brand accent**. Use it only for tiny kicker labels, subtle dots, or very small details.
+- Patina is a **brand accent, used sparingly**. Use it only for tiny kicker labels, subtle dots, or very small details.
 - Never use Patina as a large background, large button fill, layout-card tint, or general "available" color.
 - No legacy brown / bronze / gold / olive / rust palette is approved.
 
@@ -234,7 +235,7 @@ Every HTML page must contain:
 - the same versioned stylesheet URL
 
 Current stylesheet URL:
-`/styles.css?v=yn-design-p3-1`
+`/styles.css?v=yn-design-p3-2`
 
 **Whenever styles.css changes, bump the query-string version on every HTML page.**
 This prevents browsers / Cloudflare from briefly showing a previously cached palette.
@@ -262,6 +263,7 @@ Approved concrete CSS color family is limited to:
 - `#94573D`
 - `#4E6A64`
 - `#9A9B97`
+- `#6D6962`
 - `#171A1D`
 - `#D7D3CB`
 - `#B8B9B5`
@@ -321,7 +323,8 @@ The UI should remain restrained so finished keyboards, materials, photography, a
   - `--canvas`: Night Iron
   - `--surface`: Gunmetal
   - `--ink`: Night Ink
-  - `--muted`: muted body/metadata tone
+  - `--muted-on-light`: accessible muted body/metadata tone on light surfaces
+  - `--muted-on-dark`: accessible muted body/metadata tone on dark surfaces
   - `--accent`: Burnished Copper
 - Font tokens:
   - `--font-display`: Cormorant Garamond
@@ -341,4 +344,4 @@ The UI should remain restrained so finished keyboards, materials, photography, a
 - Images and card-like surfaces use square corners.
 - Buttons and form controls use a 4px control radius.
 - Circular micro-controls such as status dots and info tips retain a circle token.
-- Current Phase 3 stylesheet version: `/styles.css?v=yn-design-p3-1`.
+- Current Phase 3 stylesheet version: `/styles.css?v=yn-design-p3-2`.
