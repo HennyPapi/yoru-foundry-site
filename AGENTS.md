@@ -2,8 +2,8 @@
 
 Before making any visual, CSS, layout, branding, navigation, responsive, or component change:
 
-1. Read `YORU_SITE_MEMORY.md` in full.
-2. Treat it as the source of truth for the approved Yoru Nocturne palette, dimensions, typography, texture system, component roles, logo, and visual direction.
+1. Treat this `AGENTS.md` file as the authoritative build and implementation rule set.
+2. Read `YORU_SITE_MEMORY.md` for supplemental project history, dimensions, page architecture, and approved visual context. If it conflicts with `AGENTS.md`, follow `AGENTS.md`.
 3. Do not reintroduce old brown / bronze / gold / olive / green-heavy experimental palettes.
 4. Do not redesign the site from scratch unless Mike explicitly asks.
 5. Preserve `/assets/yoru-foundry-logo-v5.webp` as the official header logo.
@@ -73,8 +73,8 @@ Patina is a micro-accent only. Copper is an interaction/material accent, not a g
 
 ### Button system
 
-- Header “Request a Commission”: Night Iron fill, 1px Burnished Copper border, Forged Bone text, restrained radius, subtle hover lift.
-- Primary CTA on a dark surface: hollow / transparent with a 1px Burnished Copper border and Forged Bone text; Copper fill may appear on hover.
+- Header “Request a Commission”: Night Iron fill, 0.5px Burnished Copper border, Forged Bone text, 4px control radius, subtle hover lift.
+- Primary CTA on a dark surface: hollow / transparent with a 0.5px Burnished Copper border and Forged Bone text; Copper fill may appear on hover.
 - Secondary CTA on a dark surface: transparent with a restrained Forged Bone / Warm Steel border and no competing accent fill.
 - Light-surface buttons must remain within the same Night Iron / Copper / Forged Bone system.
 - No gradient buttons.
@@ -160,3 +160,62 @@ Also avoid ecommerce patterns that imply inventory scale, urgency, discounting, 
 - Preserve the official header logo at `/assets/yoru-foundry-logo-v5.webp`.
 - Read `YORU_SITE_MEMORY.md` before beginning visual work.
 
+
+
+## Phase 3 CSS architecture
+
+These rules are canonical for `public/styles.css` and must be preserved by future coding agents unless Mike explicitly changes them.
+
+### Token architecture
+
+- Keep **one consolidated `:root` token catalog**. Do not add competing `:root` theme blocks.
+- No hardcoded hex, RGB, or RGBA color literals outside `:root`.
+- Required semantic color tokens:
+  - `--canvas`: Night Iron / primary page canvas
+  - `--surface`: Gunmetal / cards, technical panels, media surfaces
+  - `--ink`: Night Ink / text on light surfaces
+  - `--muted`: muted supporting text
+  - `--accent`: Burnished Copper / restrained interaction accent
+- Required font tokens:
+  - `--font-display`: Cormorant Garamond
+  - `--font-body`: Manrope
+  - `--font-mono`: system monospace stack
+- Required type primitives: `--step-1` through `--step-5`.
+- Font sizes, font-family declarations, spacing declarations, radii, color values, and transition durations must use custom properties rather than anonymous repeated literals.
+- Preserve existing computed values when tokenizing. Tokenization by itself must be **visually identical**; do not use a token sweep as an excuse to redesign or normalize values unless a phase explicitly requests that visual change.
+
+### Geometry
+
+- `box-shadow: none` everywhere. Do not reintroduce elevation shadows.
+- Images and card-like surfaces use `border-radius: 0`.
+- Buttons, inputs, selects, and textareas use `border-radius: 4px`.
+- True circular micro-controls such as status dots or information tips may use the circular radius token.
+- Standard border width is `--border-width: 0.5px`.
+- Borders must remain low contrast. Use the defined line tokens rather than high-opacity hardcoded borders.
+
+### Motion
+
+- Canonical easing: `--ease: cubic-bezier(0.16, 1, 0.3, 1)`.
+- Durations are tokenized; current motion primitives include fast, base, slow, and reduced-motion/none values.
+- State rules such as `:hover`, `:focus`, `:focus-visible`, `:active`, `[aria-current]`, and disabled states must follow the same token system.
+- `prefers-reduced-motion: reduce` must disable nonessential motion through the reduced-motion tokens.
+
+### Validation requirements
+
+After any CSS architecture or token change, statically verify all of the following even when browser rendering is unavailable:
+
+1. Every `var(--...)` reference resolves to a custom property defined in the canonical `:root`.
+2. No hardcoded color literal exists outside `:root`.
+3. No active non-`none` box shadow exists.
+4. No accidental 1px/2px component border remains where the 0.5px border token is required.
+5. State selectors were included in the sweep.
+6. No token replacement changes the computed value unless the requested phase explicitly calls for that visual change.
+7. No missing/wrong token can cause text, backgrounds, or borders to silently drop.
+8. Text/background contrast must not regress from the pre-change version.
+9. If `styles.css` changes, bump the stylesheet query version on every HTML page in the same commit.
+
+### Current branch workflow
+
+- Phase work belongs on `design-pass`, not `main`.
+- Keep each phase in its own reviewable commit.
+- Do not proceed to a later phase when Mike has asked to review the current phase first.
