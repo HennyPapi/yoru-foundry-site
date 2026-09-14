@@ -82,12 +82,19 @@ Texture should add physicality without visibly shifting the base colors.
 
 ### Gunmetal
 - Matte machined metal.
-- Smoother than Night Iron.
+- Same material family as Night Iron, but smoother and lower contrast.
+- Approx. visible strength: **2–4%**.
 - Product / photography placeholders should remain visually quiet.
 
 ### Copper
 - Smooth satin finish only.
+- No grain.
 - No rough copper texture, rust, or patina wash.
+
+### Patina
+- Color-only micro accent.
+- No texture treatment.
+- Never use as a large material field.
 
 ## 5. Typography
 
@@ -227,7 +234,7 @@ Every HTML page must contain:
 - the same versioned stylesheet URL
 
 Current stylesheet URL:
-`/styles.css?v=yn-20260914-2`
+`/styles.css?v=yn-20260914-3`
 
 **Whenever styles.css changes, bump the query-string version on every HTML page.**
 This prevents browsers / Cloudflare from briefly showing a previously cached palette.
