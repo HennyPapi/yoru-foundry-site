@@ -146,7 +146,7 @@ Also avoid ecommerce patterns that imply inventory scale, urgency, discounting, 
   - header: Forged Bone `#F2EFE8`
   - nav text: Night Ink `#171A1D`
   - header CTA: Night Iron + Copper border + Forged Bone text
-- If `public/styles.css` changes, bump the stylesheet version query on **every HTML page** in the same phase/commit.
+- If `src/static/styles.css` changes, update `config.stylesheetVersion` in `build.js` and rebuild. This is the single source of truth for the stylesheet query version.
 - Never leave pages pointing at mixed stylesheet versions.
 
 ### Development workflow
@@ -154,17 +154,32 @@ Also avoid ecommerce patterns that imply inventory scale, urgency, discounting, 
 - Work on the `design-pass` branch. Do **not** push design-pass phase work directly to `main`.
 - Work through requested phases in order.
 - Keep each phase reviewable and independently revertible.
-- Before committing a phase, run `npx wrangler dev` and verify that the site renders. If the execution environment prevents this, report the exact limitation rather than claiming the check passed.
+- The Cloudflare `design-pass` branch preview is the only render check. Local Wrangler does not work in agent environments and must not be attempted.
+- A missing local render is not a blocker. Complete static validation, push to `design-pass`, note the limitation, and leave visual verification to the Cloudflare branch preview.
 - Commit after each completed phase with a clear phase-specific message.
 - For broad visual changes, verify desktop, tablet, and mobile behavior.
 - Preserve the official header logo at `/assets/yoru-foundry-logo-v5.webp`.
 - Read `YORU_SITE_MEMORY.md` before beginning visual work.
 
+### Static build workflow
+
+- `/src` is the source of truth for page HTML. Every source page declares its output filename, title, active navigation item, and layout in its `PAGE` metadata block.
+- Shared markup lives only in `/src/partials`: `head.html`, `header.html`, `footer.html`, and `scripts.html`.
+- Static source assets, CSS, JavaScript, content data, images, and audio live in `/src/static`.
+- `/public` is generated, gitignored deployment output. **Never edit `/public` directly.** Edit `/src` and run the build.
+- Build command: `node build.js`. There is no framework, bundler, or watch-mode dependency.
+- `build.js` contains the single `config` object for `stylesheetVersion`, `siteTitle`, and `SITE_MODE`.
+- A stylesheet version bump is one edit to `config.stylesheetVersion`; `node build.js` propagates it to every generated page.
+- Active navigation is rendered from each page's `activeNav` metadata. Do not restore client-side pathname-based active-nav detection.
+- Every generated HTML page must begin with `<!-- GENERATED FILE — DO NOT EDIT. Edit /src and run node build.js. -->`.
+- The build must fail with a non-zero exit code for missing placeholders, invalid navigation values, duplicate/invalid outputs, or any source page that fails to create a non-empty output file.
+- Cloudflare Workers Builds runs `node build.js` before uploading `/public`. Non-production branches use version uploads and preview URLs; only `main` may deploy to production.
+
 
 
 ## Phase 3 CSS architecture
 
-These rules are canonical for `public/styles.css` and must be preserved by future coding agents unless Mike explicitly changes them.
+These rules are canonical for `src/static/styles.css` and must be preserved by future coding agents unless explicitly changed.
 
 ### Token architecture
 
@@ -214,7 +229,7 @@ After any CSS architecture or token change, statically verify all of the followi
 6. No token replacement changes the computed value unless the requested phase explicitly calls for that visual change.
 7. No missing/wrong token can cause text, backgrounds, or borders to silently drop.
 8. Text/background contrast must not regress from the pre-change version.
-9. If `styles.css` changes, bump the stylesheet query version on every HTML page in the same commit.
+9. If `styles.css` changes, update `config.stylesheetVersion` in `build.js` and regenerate `/public`.
 
 ### Current branch workflow
 
