@@ -4,19 +4,22 @@ Starter website for **yorufoundry.com**, designed for Cloudflare Workers Static 
 
 ## Structure
 
-- `public/index.html` — website content
-- `public/styles.css` — styling
-- `public/script.js` — menu + build-request email form
+- `src/*.html` — source pages and page metadata
+- `src/partials/` — shared head, header/navigation, footer, and scripts
+- `src/static/` — source CSS, JavaScript, data, images, and audio
+- `build.js` — dependency-free static page assembler
+- `public/` — generated, gitignored deployment output; never edit directly
 - `wrangler.jsonc` — Cloudflare deployment configuration
 
 ## Deploy
 
 In Cloudflare, connect this GitHub repository and use:
 
-- Build command: leave blank
-- Deploy command: `npx wrangler deploy`
+- Build command: `node build.js`
+- Deploy command: `npx wrangler@4 deploy`
+- Non-production deploy command: `npx wrangler@4 versions upload --preview-alias design-pass`
 
-Cloudflare will serve the files from `./public`.
+Cloudflare builds the source and serves the generated files from `./public`.
 
 ## Before launch
 
