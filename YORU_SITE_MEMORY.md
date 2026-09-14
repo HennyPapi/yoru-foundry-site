@@ -234,7 +234,7 @@ Every HTML page must contain:
 - the same versioned stylesheet URL
 
 Current stylesheet URL:
-`/styles.css?v=yn-20260914-3`
+`/styles.css?v=yn-design-p2-1`
 
 **Whenever styles.css changes, bump the query-string version on every HTML page.**
 This prevents browsers / Cloudflare from briefly showing a previously cached palette.
@@ -294,3 +294,21 @@ Material metaphor:
 - Patina = age / material transformation / signature detail
 
 The UI should remain restrained so finished keyboards, materials, photography, and sound content become the artwork.
+
+
+## 14. Phase 2 Content Architecture
+
+- Content mode lives in `public/data/content.js`.
+- Single launch switch: `const SITE_MODE = "prelaunch";`.
+- Allowed values: `prelaunch` and `live`.
+- Hero eyebrow, primary hero CTA, hero status, footer status, and archive filtering read from this mode.
+- Build/archive content lives only in the `BUILDS` array.
+- Build statuses: `placeholder`, `in-progress`, `built`, `available`.
+- In prelaunch, placeholder records render; in live, placeholder records are filtered out.
+- Build detail pages use `/commission.html?id=YF-###`; adding a build does not require a new HTML page.
+- Sound references live in `SOUND_SAMPLES`.
+- Prelaunch audio uses `/audio/silence-3s.mp3`, a real three-second silent MP3.
+- Locked media ratios: hero **16:9**; archive **4:5**; process **3:2**; detail macros **1:1**.
+- Placeholder media under `/public/img/` matches those exact ratios.
+- Placeholder specs use production-length values to test wrapping before launch.
+- Phase 2 versions: stylesheet `/styles.css?v=yn-design-p2-1`; content `/data/content.js?v=phase2-1`; runtime `/script.js?v=phase2-1`.
