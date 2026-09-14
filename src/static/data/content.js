@@ -1,4 +1,4 @@
-const SITE_MODE = "prelaunch"; // "prelaunch" | "live"
+const SITE_MODE = "__SITE_MODE__"; // "prelaunch" | "live"
 
 const SITE_MODE_CONTENT = {
   prelaunch: {
