@@ -2859,3 +2859,92 @@ body,
     background-blend-mode:soft-light,soft-light,normal,normal,normal!important;
   }
 }
+
+
+/* =====================================================================
+   SEAMLESS NIGHT IRON CANVAS
+   One continuous full-bleed dark material behind all dark sections.
+   Content remains constrained, but the material no longer restarts at
+   each max-width section and no L-shaped seams appear.
+   ===================================================================== */
+
+/* The page itself owns the Night Iron material texture. */
+body{
+  background-color:var(--yn-night)!important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='132' viewBox='0 0 132 132'%3E%3Cfilter id='metal'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' seed='47' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='132' height='132' filter='url(%23metal)' opacity='.095'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(92deg,rgba(255,255,255,.010) 0 1px,transparent 1px 5px),
+    radial-gradient(ellipse at 72% 14%,rgba(154,155,151,.040),transparent 38%),
+    linear-gradient(118deg,rgba(255,255,255,.018),rgba(255,255,255,.003) 31%,rgba(0,0,0,.045) 68%,rgba(255,255,255,.010)),
+    linear-gradient(180deg,#1D2125 0%,var(--yn-night) 58%,#15181C 100%)!important;
+  background-size:132px 132px,100% 100%,100% 100%,100% 100%,100% 100%!important;
+  background-repeat:repeat,no-repeat,no-repeat,no-repeat,no-repeat!important;
+  background-attachment:fixed,fixed,fixed,fixed,fixed!important;
+  background-blend-mode:soft-light,soft-light,normal,normal,normal!important;
+}
+
+/* Dark structural sections become transparent windows onto that one canvas.
+   Their max-width still controls the content, not the background material. */
+main,
+.home-hero,
+.page-main,
+.gallery-hero,
+.page-hero,
+.portal-section,
+.standards-section,
+.layout-preview,
+.compare-lab,
+.materials-section,
+.commission-flow,
+.pricing-philosophy,
+.commission-story,
+.sound-sample{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+}
+
+/* Dark-to-dark transitions should not announce themselves with UI borders. */
+.standards-section,
+.layout-preview,
+.compare-lab,
+.materials-section,
+.commission-flow,
+.pricing-philosophy,
+.commission-story,
+.sound-sample{
+  border-top-color:transparent!important;
+  border-bottom-color:transparent!important;
+}
+
+/* Remove decorative copper separators on dark-to-dark section changes.
+   Copper remains for real hierarchy and interactive details. */
+.standards-section::before,
+.compare-lab::before,
+.commission-flow::before{
+  content:none!important;
+}
+
+/* Light material sections still create an intentional, clean material change.
+   No extra line is needed because the color/material shift already separates them. */
+.editorial-light,
+.warm-editorial{
+  border-top-color:transparent!important;
+  border-bottom-color:transparent!important;
+}
+
+/* Preserve copper detail inside light editorial regions without creating
+   a full-width separator between dark and light materials. */
+.editorial-light::before,
+.warm-editorial::before{
+  opacity:.34!important;
+  width:min(760px,58vw)!important;
+}
+
+/* On mobile, fixed backgrounds can be expensive/janky, so keep the same
+   seamless canvas without forcing fixed attachment. */
+@media(max-width:860px){
+  body{
+    background-attachment:scroll,scroll,scroll,scroll,scroll!important;
+  }
+}
