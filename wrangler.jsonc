@@ -2,6 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "yoru-foundry-site",
   "compatibility_date": "2026-09-10",
+  "preview_urls": true,
   "assets": {
     "directory": "./public"
   }
