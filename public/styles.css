@@ -3680,3 +3680,179 @@ main,
   --yn-text-mid:#B8B9B5;
   --yn-bone-low:#E7E1D7;
 }
+
+
+/* =====================================================================
+   YORU MATERIAL TEXTURE SYSTEM — LOCKED 2026-09-14
+   A) Forged Bone = archival paper, 2–4%
+   B) Night Iron = anodized micro-grain, 3–6%
+   C) Gunmetal = smoother machined grain, 2–4%
+   D) Copper = satin finish only
+   E) Patina = color-only micro accent
+   Texture must add physicality without changing the approved palette.
+   ===================================================================== */
+
+/* A — FORGED BONE: soft matte paper.
+   Two extremely low-contrast layers: irregular fiber/noise + faint directional tooth.
+   No multiply/color-burn so #F2EFE8 stays visually true. */
+.site-header,
+.editorial-light,
+.warm-editorial,
+.portal-card,
+.story-tile,
+.education-tile,
+.compare-side,
+.materials-grid article,
+.why-grid article,
+.journal-grid article,
+.archive-entry,
+.build-card,
+.commission-detail-grid article,
+.build-form,
+.products-dropdown{
+  background-color:var(--yn-bone)!important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.34 .62' numOctaves='2' seed='211' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23paper)' opacity='.030'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(7deg,rgba(17,20,24,.007) 0 1px,transparent 1px 11px)!important;
+  background-size:128px 128px,100% 100%!important;
+  background-repeat:repeat,no-repeat!important;
+  background-blend-mode:soft-light,normal!important;
+}
+
+/* Header grain is intentionally quieter than editorial paper. */
+.site-header{
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='144' height='144' viewBox='0 0 144 144'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.31 .57' numOctaves='2' seed='223' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='144' height='144' filter='url(%23paper)' opacity='.022'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(6deg,rgba(17,20,24,.005) 0 1px,transparent 1px 13px)!important;
+  background-size:144px 144px,100% 100%!important;
+  background-repeat:repeat,no-repeat!important;
+  background-blend-mode:soft-light,normal!important;
+}
+
+/* Inputs stay mostly smooth paper for maximum legibility. */
+.build-form input,
+.build-form select,
+.build-form textarea{
+  background-color:var(--yn-bone-soft)!important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.42' numOctaves='1' seed='229' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23paper)' opacity='.014'/%3E%3C/svg%3E")!important;
+  background-size:140px 140px!important;
+  background-repeat:repeat!important;
+  background-blend-mode:soft-light!important;
+}
+
+/* B — NIGHT IRON: bead-blasted / anodized micro-grain.
+   One fine noise layer plus a nearly invisible satin falloff. */
+body{
+  background-color:var(--yn-night)!important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='116' height='116' viewBox='0 0 116 116'%3E%3Cfilter id='metal'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' seed='241' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='116' height='116' filter='url(%23metal)' opacity='.050'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 72% 10%,rgba(248,245,239,.018),transparent 44%),
+    linear-gradient(180deg,rgba(248,245,239,.006),rgba(17,20,24,.008))!important;
+  background-size:116px 116px,100% 100%,100% 100%!important;
+  background-repeat:repeat,no-repeat,no-repeat!important;
+  background-attachment:scroll,scroll,scroll!important;
+  background-blend-mode:soft-light,normal,normal!important;
+}
+
+/* Keep structural dark sections transparent so the Night Iron texture is continuous. */
+main,
+.page-main,
+.home-hero,
+.gallery-hero,
+.page-hero,
+.portal-section,
+.standards-section,
+.layout-preview,
+.compare-lab,
+.materials-section,
+.commission-flow,
+.pricing-philosophy,
+.commission-story,
+.sound-sample{
+  background-color:transparent!important;
+  background-image:none!important;
+}
+
+/* C — GUNMETAL: same family, smoother / tighter / lower contrast.
+   Used for technical cards and media placeholders so copy stays crisp. */
+.layout-grid .layout-tile,
+.product-layouts .layout-tile,
+.layout-tile.active,
+.layout-tile.coming,
+.standards-grid article,
+.flow-grid li,
+.mini-layout,
+.mini-layout.live,
+.mini-layout.muted,
+.hero-showpiece-frame,
+.featured-photo,
+.commission-hero-media,
+.commission-media-grid div,
+.story-media,
+.sample-image,
+.audio-placeholder,
+.media-placeholder,
+.archive-entry .media-placeholder,
+.build-card .media-placeholder,
+.founder-photo{
+  background-color:var(--yn-gunmetal)!important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='132' viewBox='0 0 132 132'%3E%3Cfilter id='metal'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.70' numOctaves='2' seed='251' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='132' height='132' filter='url(%23metal)' opacity='.030'/%3E%3C/svg%3E"),
+    linear-gradient(145deg,rgba(248,245,239,.016),rgba(17,20,24,.018))!important;
+  background-size:132px 132px,100% 100%!important;
+  background-repeat:repeat,no-repeat!important;
+  background-blend-mode:soft-light,normal!important;
+}
+
+/* Keyboard schematic panel is even smoother than the surrounding Gunmetal card. */
+.layout-grid .layout-tile .keyboard-diagram,
+.product-layouts .layout-tile .keyboard-diagram{
+  background-color:var(--yn-gunmetal)!important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='148' height='148' viewBox='0 0 148 148'%3E%3Cfilter id='metal'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.64' numOctaves='1' seed='257' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='148' height='148' filter='url(%23metal)' opacity='.020'/%3E%3C/svg%3E"),
+    linear-gradient(145deg,rgba(248,245,239,.012),rgba(17,20,24,.014))!important;
+  background-size:148px 148px,100% 100%!important;
+  background-repeat:repeat,no-repeat!important;
+  background-blend-mode:soft-light,normal!important;
+}
+
+/* D — COPPER: no grain. Only a satin highlight when copper becomes a fill. */
+.home-hero .hero-actions .button.primary:hover,
+.button.primary:hover{
+  background-color:var(--yn-copper)!important;
+  background-image:
+    linear-gradient(180deg,var(--yn-copper-hi) 0%,var(--yn-copper) 52%,var(--yn-copper-deep) 100%)!important;
+  background-size:100% 100%!important;
+  background-repeat:no-repeat!important;
+  background-blend-mode:normal!important;
+}
+
+/* Copper hairlines / text accents remain perfectly crisp. */
+.text-link,
+.dark-link,
+.nav>a:not(.nav-cta)::before,
+.products-menu summary::before{
+  background-image:none!important;
+}
+
+/* E — PATINA: color-only micro accent. Never a material field. */
+.kicker,
+.eyebrow,
+.tag,
+.showpiece-index,
+.dark-eyebrow{
+  color:var(--yn-patina)!important;
+  background:transparent!important;
+  background-image:none!important;
+}
+
+/* Texture intensity reduction for small/mobile screens. */
+@media(max-width:860px){
+  body{
+    background-size:132px 132px,100% 100%,100% 100%!important;
+  }
+  .site-header{
+    background-size:164px 164px,100% 100%!important;
+  }
+}
