@@ -235,7 +235,7 @@ Every HTML page must contain:
 - the same versioned stylesheet URL
 
 Current stylesheet URL:
-`/styles.css?v=yn-design-p3-2`
+`/styles.css?v=yn-design-p3-3`
 
 **Whenever styles.css changes, bump the query-string version on every HTML page.**
 This prevents browsers / Cloudflare from briefly showing a previously cached palette.
@@ -344,4 +344,4 @@ The UI should remain restrained so finished keyboards, materials, photography, a
 - Images and card-like surfaces use square corners.
 - Buttons and form controls use a 4px control radius.
 - Circular micro-controls such as status dots and info tips retain a circle token.
-- Current Phase 3 stylesheet version: `/styles.css?v=yn-design-p3-2`.
+- Current Phase 3 stylesheet version: `/styles.css?v=yn-design-p3-3`.
