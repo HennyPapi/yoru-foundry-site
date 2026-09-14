@@ -234,7 +234,7 @@ Every HTML page must contain:
 - the same versioned stylesheet URL
 
 Current stylesheet URL:
-`/styles.css?v=yn-design-p2-1`
+`/styles.css?v=yn-design-p3-1`
 
 **Whenever styles.css changes, bump the query-string version on every HTML page.**
 This prevents browsers / Cloudflare from briefly showing a previously cached palette.
@@ -311,4 +311,34 @@ The UI should remain restrained so finished keyboards, materials, photography, a
 - Locked media ratios: hero **16:9**; archive **4:5**; process **3:2**; detail macros **1:1**.
 - Placeholder media under `/public/img/` matches those exact ratios.
 - Placeholder specs use production-length values to test wrapping before launch.
-- Phase 2 versions: stylesheet `/styles.css?v=yn-design-p2-1`; content `/data/content.js?v=phase2-1`; runtime `/script.js?v=phase2-1`.
+- Phase 2 versions: stylesheet `/styles.css?v=yn-design-p3-1`; content `/data/content.js?v=phase2-1`; runtime `/script.js?v=phase2-1`.
+
+
+## 15. Phase 3 Tokenized CSS System
+
+- `public/styles.css` now has a single consolidated `:root` token catalog.
+- Required semantic tokens:
+  - `--canvas`: Night Iron
+  - `--surface`: Gunmetal
+  - `--ink`: Night Ink
+  - `--muted`: muted body/metadata tone
+  - `--accent`: Burnished Copper
+- Font tokens:
+  - `--font-display`: Cormorant Garamond
+  - `--font-body`: Manrope
+  - `--font-mono`: system monospace stack
+- Type scale primitives:
+  - `--step-1` through `--step-5`
+- Motion:
+  - `--duration-fast`, `--duration-base`, `--duration-slow`
+  - `--ease: cubic-bezier(0.16, 1, 0.3, 1)`
+  - reduced-motion duration token `--duration-none`
+- Every hardcoded color outside `:root` was replaced with a color token.
+- Font sizes, font-family declarations, spacing declarations, radii, and transition durations are token-driven.
+- Box shadows are disabled globally and historic shadow declarations were neutralized.
+- Standard border width is `--border-width: 0.5px`.
+- General line colors are deliberately low contrast; high-opacity legacy borders were capped.
+- Images and card-like surfaces use square corners.
+- Buttons and form controls use a 4px control radius.
+- Circular micro-controls such as status dots and info tips retain a circle token.
+- Current Phase 3 stylesheet version: `/styles.css?v=yn-design-p3-1`.
