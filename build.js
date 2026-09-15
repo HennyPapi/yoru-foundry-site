@@ -35,6 +35,73 @@ function read(file) {
   return fs.readFileSync(file, "utf8");
 }
 
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"\']/g, (char) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "\'": "&#039;",
+  })[char]);
+}
+
+function buildHref(build) { return "/commission.html?id=" + encodeURIComponent(build.id); }
+
+function statusLabel(status) {
+  return ({ placeholder: "PRELAUNCH STUDY", "in-progress": "IN PROGRESS", built: "BUILT", available: "AVAILABLE" })[status] || String(status || "").toUpperCase();
+}
+
+function loadSiteContent() {
+  const file = path.join(STATIC, "data", "content.js");
+  const source = read(file);
+  const marker = "__SITE_MODE__";
+  const count = source.split(marker).length - 1;
+  if (count !== 1) fail("src/static/data/content.js: expected one " + marker + ", found " + count);
+  const createContent = new Function("window", source.replace(marker, config.SITE_MODE) + "\nreturn window.YORU_CONTENT;");
+  const content = createContent({});
+  if (!content) fail("src/static/data/content.js: YORU_CONTENT was not created");
+  return content;
+}
+
+function visibleBuilds(content) {
+  const builds = Array.isArray(content.BUILDS) ? content.BUILDS : [];
+  return content.SITE_MODE === "live" ? builds.filter((build) => build.status !== "placeholder") : builds;
+}
+
+function renderDataBackedContent(html, content) {
+  const modeContent = (content.SITE_MODE_CONTENT || {})[content.SITE_MODE] || (content.SITE_MODE_CONTENT || {}).prelaunch || {};
+  const builds = Array.isArray(content.BUILDS) ? content.BUILDS : [];
+  const visible = visibleBuilds(content);
+  const build = visible[0] || builds[0];
+
+  html = html.replace(/(<p class="kicker" data-site-hero-eyebrow>)[\s\S]*?(<\/p>)/, (_, open, close) => open + escapeHtml(modeContent.heroEyebrow || "YORU FOUNDRY") + close);
+  html = html.replace(/<a class="button primary" data-site-hero-cta href="[^"]*">[\s\S]*?<\/a>/, () => '<a class="button primary" data-site-hero-cta href="' + escapeHtml(modeContent.heroCta?.href || "/crafted-art.html") + '">' + escapeHtml(modeContent.heroCta?.label || "Explore Crafted Art") + "</a>");
+  html = html.replace(/(<span data-site-hero-status>)[\s\S]*?(<\/span>)/, (_, open, close) => open + escapeHtml(modeContent.heroStatus || "Built one at a time") + close);
+
+  if (build) {
+    const home = build.home || {};
+    const heroSpecs = Array.isArray(home.heroSpecs) && home.heroSpecs.length ? home.heroSpecs : [build.specs?.case, build.specs?.mount, build.specs?.switches];
+    html = html.replace(/(<div class="hero-showpiece-frame" data-hero-build-media>)[\s\S]*?(<\/div>)/, (_, open, close) => open + '<img src="' + escapeHtml(build.heroImage || "/img/placeholder-16x9.svg") + '" alt="" width="1600" height="900" decoding="async">' + '<span class="showpiece-index">' + escapeHtml(build.id.replace("-", " / ")) + "</span>" + '<div class="showpiece-caption">' + escapeHtml(home.heroCaption || build.summary) + "</div>" + close);
+    html = html.replace(/(<div class="showpiece-specs" data-hero-build-specs>)[\s\S]*?(<\/div>)/, (_, open, close) => open + heroSpecs.map((value) => "<span>" + escapeHtml(value) + "</span>").join("") + close);
+
+    const featureSpecs = Array.isArray(home.featuredSpecs) && home.featuredSpecs.length ? home.featuredSpecs : [
+      { label: "Layout", value: build.layout },
+      { label: "Plate", value: build.specs?.plate },
+      { label: "Case", value: build.specs?.case },
+      { label: "Mount", value: build.specs?.mount },
+    ];
+    const featureMedia = home.featuredMediaLabel ? '<div class="featured-photo">' + escapeHtml(home.featuredMediaLabel) + "</div>" : '<div class="featured-photo"><img src="' + escapeHtml(build.images?.[0] || "/img/placeholder-4x5.svg") + '" alt="" width="1200" height="1500" loading="lazy" decoding="async"></div>';
+    const featureHtml = featureMedia + '<div class="featured-copy"><p class="eyebrow">' + escapeHtml(home.featuredEyebrow || (statusLabel(build.status) + " • " + build.id)) + "</p><h2>" + escapeHtml(home.featuredHeading || build.name) + "</h2><p>" + escapeHtml(home.featuredBody || build.notes) + '</p><dl class="commission-specs">' + featureSpecs.map((item) => "<div><dt>" + escapeHtml(item.label) + "</dt><dd>" + escapeHtml(item.value) + "</dd></div>").join("") + '</dl><a class="text-link" href="' + escapeHtml(home.featuredHref || buildHref(build)) + '">' + escapeHtml(home.featuredLinkLabel || ("View " + build.id + " record →")) + "</a></div>";
+    html = html.replace(/(<section class="featured-commission editorial-light" data-featured-build>)[\s\S]*?(<\/section>)/, (_, open, close) => open + featureHtml + close);
+  }
+
+  html = html.replace(/(<section class="archive-grid" data-archive-grid aria-live="polite">)[\s\S]*?(<\/section>)/, (_, open, close) => {
+    if (!visible.length) return open + '<div class="archive-empty"><p class="eyebrow">ARCHIVE IN PROGRESS</p><h2>I will add finished commissions here as they are completed and documented.</h2></div>' + close;
+    const entries = visible.map((item) => {
+      const placeholder = item.status === "placeholder";
+      const image = item.images?.[0] || "/img/placeholder-4x5.svg";
+      return '<a href="' + buildHref(item) + '" class="archive-entry' + (placeholder ? " is-placeholder" : "") + '"><div class="archive-media"><img src="' + escapeHtml(image) + '" alt="" width="1200" height="1500" loading="lazy" decoding="async"></div><div class="archive-copy"><span class="archive-status">' + escapeHtml(statusLabel(item.status)) + " • " + escapeHtml(item.id) + " • " + escapeHtml(item.layout || "") + "</span><h2>" + escapeHtml(item.name) + "</h2><p>" + escapeHtml(item.summary) + '</p><div class="archive-specs" aria-label="Build specifications"><span><b>CASE</b><em>' + escapeHtml(item.specs?.case || "") + "</em></span><span><b>SWITCHES</b><em>" + escapeHtml(item.specs?.switches || "") + "</em></span><span><b>MOUNT</b><em>" + escapeHtml(item.specs?.mount || "") + "</em></span></div></div></a>";
+    }).join("");
+    return open + entries + close;
+  });
+  return html;
+}
 function replaceTokens(template, values, label) {
   const output = template.replace(/\{\{([A-Z0-9_]+)\}\}/g, (_, key) => {
     if (!(key in values)) fail(`${label}: missing value for {{${key}}}`);
@@ -88,7 +155,7 @@ function parsePage(file) {
   return { file, page, template };
 }
 
-function renderPage(entry, partials) {
+function renderPage(entry, partials, content) {
   const { page, template, file } = entry;
   const label = path.basename(file);
   const redirect = page.layout === "redirect";
@@ -134,6 +201,7 @@ function renderPage(entry, partials) {
     page.footerVariant === "archive"
       ? '<a href="/archive.html">Archive</a><a href="/why-yoru.html">Why Yoru</a><a href="/journal.html">Journal</a><a href="/crafted-art.html">Crafted Art</a><a href="/about.html">About</a><a href="mailto:hello@yorufoundry.com">hello@yorufoundry.com</a>'
       : '<a href="/crafted-art.html">Crafted Art</a><a href="/about.html">About</a><a href="mailto:hello@yorufoundry.com">hello@yorufoundry.com</a>';
+  const modeContent = (content.SITE_MODE_CONTENT || {})[content.SITE_MODE] || (content.SITE_MODE_CONTENT || {}).prelaunch || {};
   const footer = redirect
     ? ""
     : replaceTokens(
@@ -142,6 +210,8 @@ function renderPage(entry, partials) {
           FOOTER_LEAD: footerLead,
           FOOTER_LINKS: footerLinks,
           COPYRIGHT_CLASS: page.footerVariant === "emblem" ? "" : ' class="copyright"',
+          FOOTER_STATUS: escapeHtml(modeContent.footerStatus || "Built one at a time."),
+          COPYRIGHT_YEAR: String(new Date().getFullYear()),
         },
         `${label} footer`,
       );
@@ -155,7 +225,8 @@ function renderPage(entry, partials) {
     `${label} scripts`,
   );
 
-  const html = replaceTokens(template, { HEAD: head, HEADER: header, FOOTER: footer, SCRIPTS: scripts }, label);
+  let html = replaceTokens(template, { HEAD: head, HEADER: header, FOOTER: footer, SCRIPTS: scripts }, label);
+  html = renderDataBackedContent(html, content);
   if (!html.trim()) fail(`${label}: produced no output`);
   return `${GENERATED_HEADER}\n${html}`;
 }
@@ -170,6 +241,7 @@ function injectSiteMode() {
 }
 
 function build() {
+  const content = loadSiteContent();
   const partials = Object.fromEntries(
     ["head", "header", "footer", "scripts"].map((name) => [
       name,
@@ -186,7 +258,7 @@ function build() {
   const rendered = entries.map((entry) => {
     if (outputs.has(entry.page.output)) fail(`Duplicate output: ${entry.page.output}`);
     outputs.add(entry.page.output);
-    return [entry.page.output, renderPage(entry, partials)];
+    return [entry.page.output, renderPage(entry, partials, content)];
   });
 
   if (!fs.existsSync(STATIC)) fail("Missing required directory: src/static");
