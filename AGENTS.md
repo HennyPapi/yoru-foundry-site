@@ -108,7 +108,9 @@ Patina is a micro-accent only. Copper is an interaction/material accent, not a g
 
 ### Voice and copy
 
-- Write in **first person singular**.
+- **Mike is the final authority for public-facing brand copy.** Do not invent, rewrite, or publish new brand copy unless Mike explicitly asks for copy work or supplies/approves the wording.
+- If a layout or implementation requires copy that has not been supplied, stop and ask rather than filling the gap with invented text.
+- Write approved copy in **first person singular**.
 - Use “I build”, “I source”, “I tune”, “I’ll work with you”.
 - Never use “we”, “our team”, or copy that implies employees or a larger operation.
 - Tone: knowledgeable, precise, patient, personal, craft-led, and transparent.
@@ -165,12 +167,16 @@ Also avoid ecommerce patterns that imply inventory scale, urgency, discounting, 
 
 ### Development workflow
 
-- Work on the `design-pass` branch. Do **not** push design-pass phase work directly to `main`.
+- Phase work normally belongs on `design-pass`, not `main`, **but only when the agent has been assigned sole write ownership of that branch**.
+- **One writable branch may have only one active AI contributor at a time.** Other agents may inspect it read-only. Parallel implementation requires separate branches with explicit scopes. Confirm branch ownership before making any write.
+- Do **not** push design-pass phase work directly to `main`.
 - Work through requested phases in order.
-- Keep each phase reviewable and independently revertible.
-- The Cloudflare `design-pass` branch preview is the only render check. Local Wrangler does not work in agent environments and must not be attempted.
-- A missing local render is not a blocker. Complete static validation, push to `design-pass`, note the limitation, and leave visual verification to the Cloudflare branch preview.
-- Commit after each completed phase with a clear phase-specific message.
+- Keep each phase reviewable and independently revertible. When Mike asks for separate commits, keep each requested item in its own commit so it can be reviewed or reverted independently.
+- Never report an item as “fixed” or “verified” without real build/test output. A partial build is not verification. Report actual measurements/output rather than expected output presented as fact.
+- The Cloudflare branch preview is the render environment. Local Wrangler does not work in agent environments and must not be attempted.
+- Automated fetches of a Cloudflare preview may return stale cached output. **Mike’s browser after a hard refresh is the source of truth for rendered appearance.** If an automated preview read disagrees with what Mike sees, treat the automated read as stale/unreliable.
+- A missing local render is not a blocker. Complete static validation, push to the assigned non-production branch, state the rendering limitation explicitly, and leave final visual verification to Mike in the Cloudflare branch preview.
+- Commit after each completed phase/item with a clear phase-specific message.
 - For broad visual changes, verify desktop, tablet, and mobile behavior.
 - Preserve the official header logo at `/assets/yoru-foundry-logo-v5.webp`.
 - Read `YORU_SITE_MEMORY.md` before beginning visual work.
@@ -185,7 +191,8 @@ Also avoid ecommerce patterns that imply inventory scale, urgency, discounting, 
 - `build.js` contains the single `config` object for `stylesheetVersion`, `siteTitle`, and `SITE_MODE`.
 - A stylesheet version bump is one edit to `config.stylesheetVersion`; `node build.js` propagates it to every generated page.
 - Active navigation is rendered from each page's `activeNav` metadata. Do not restore client-side pathname-based active-nav detection.
-- The existing `footerVariant` values are temporary compatibility scaffolding used only to preserve pre-migration output. They are slated for removal when Phase 9 replaces the footer with one four-column design. Do not add new footer variants.
+- `src/static/data/content.js` has a dual role: `build.js` evaluates it at build time for prerendering, and the built copy is also available for client-side hydration. **Critical content must exist in generated HTML at build time; client-side JavaScript may hydrate/enhance it but must never be required for the content to exist.** Do not regress to empty client-side shells.
+- The existing `footerVariant` values (`standard`, `archive`, `emblem`) are temporary compatibility scaffolding. **The current Phase 3.5 task is to collapse them into one existing/current footer across all 17 footer-bearing pages.** This is a normalization task, not the future Phase 9 four-column footer redesign. Do not add new footer variants. A later phase may redesign the already-unified footer when Mike explicitly starts that phase.
 - Every generated HTML page must begin with `<!-- GENERATED FILE — DO NOT EDIT. Edit /src and run node build.js. -->`.
 - The build must fail with a non-zero exit code for missing placeholders, invalid navigation values, duplicate/invalid outputs, or any source page that fails to create a non-empty output file.
 - Cloudflare Workers Builds runs `node build.js` before uploading `/public`. Non-production branches use version uploads and preview URLs; only `main` may deploy to production.
@@ -242,6 +249,7 @@ After any CSS architecture or token change, statically verify all of the followi
 
 ### Current branch workflow
 
-- Phase work belongs on `design-pass`, not `main`.
-- Keep each phase in its own reviewable commit.
+- Phase work belongs on a non-production development branch, normally `design-pass`, not `main`.
+- `design-pass` may have only one active AI writer at a time. If another agent is already writing there, remain read-only or use a separate explicitly assigned branch.
+- Keep each phase in its own reviewable commit; keep separate requested items in separate commits when Mike asks.
 - Do not proceed to a later phase when Mike has asked to review the current phase first.
