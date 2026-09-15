@@ -171,6 +171,7 @@ Also avoid ecommerce patterns that imply inventory scale, urgency, discounting, 
 - `build.js` contains the single `config` object for `stylesheetVersion`, `siteTitle`, and `SITE_MODE`.
 - A stylesheet version bump is one edit to `config.stylesheetVersion`; `node build.js` propagates it to every generated page.
 - Active navigation is rendered from each page's `activeNav` metadata. Do not restore client-side pathname-based active-nav detection.
+- The existing `footerVariant` values are temporary compatibility scaffolding used only to preserve pre-migration output. They are slated for removal when Phase 9 replaces the footer with one four-column design. Do not add new footer variants.
 - Every generated HTML page must begin with `<!-- GENERATED FILE — DO NOT EDIT. Edit /src and run node build.js. -->`.
 - The build must fail with a non-zero exit code for missing placeholders, invalid navigation values, duplicate/invalid outputs, or any source page that fails to create a non-empty output file.
 - Cloudflare Workers Builds runs `node build.js` before uploading `/public`. Non-production branches use version uploads and preview URLs; only `main` may deploy to production.
