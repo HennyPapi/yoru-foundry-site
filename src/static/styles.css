@@ -23,7 +23,7 @@
   --status-in-progress: var(--copper);
   --status-coming-soon: var(--muted-dark);
   --status-built: var(--muted-dark);
-  --grain-subtle: 0.25;
+  --grain-subtle: 0.17;
   --grain: 0.04;
   --border-width: 0.5px;
   --border-width-accent: 1px;
@@ -4314,12 +4314,11 @@ main:not(.section-shell),
   inset:0;
   z-index:0;
   pointer-events:none;
-  /* Phase 3.5 diagnostic: real Night Iron bead-blast texture (homepage grain-subtle only). */
-  background-image:url("/img/textures/night-iron-beadblast.webp");
+  /* Phase 3.5 diagnostic: Metal 027 roughness microtexture on homepage hero only. */
+  background-image:url("/img/textures/metal027-roughness.webp");
   background-size:1024px 1024px;
   background-repeat:repeat;
   mix-blend-mode:soft-light;
-  filter:brightness(1.15) contrast(1.30);
 }
 .grain-subtle::after{opacity:var(--grain-subtle)}
 .grain::after{opacity:var(--grain)}
