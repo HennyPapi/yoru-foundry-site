@@ -2,9 +2,9 @@ const SITE_MODE = "__SITE_MODE__"; // "prelaunch" | "live"
 
 const SITE_MODE_CONTENT = {
   prelaunch: {
-    heroEyebrow: "YORU FOUNDRY / WORKSHOP PREVIEW",
-    heroCta: { label: "Explore the Workshop", href: "/crafted-art.html" },
-    heroStatus: "Prelaunch workshop preview",
+    heroEyebrow: "YORU FOUNDRY / EST. 2026",
+    heroCta: { label: "Explore Crafted Art", href: "/crafted-art.html" },
+    heroStatus: "Currently accepting commissions",
     footerStatus: "Prelaunch workshop preview • Real build documentation will replace these placeholders as I complete, tune, and photograph commissions."
   },
   live: {
