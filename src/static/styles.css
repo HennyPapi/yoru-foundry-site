@@ -4199,7 +4199,11 @@ main,
 }
 
 /* ===== PHASE 3.5 — PALETTE, STATUS, HAIRLINES, AND GRAIN ===== */
-body{background-color:var(--night-void)!important}
+html,
+body{
+  background-color:var(--night-void)!important;
+  background-image:none!important;
+}
 main:not(.section-shell),
 .page-main,
 .page-hero,
