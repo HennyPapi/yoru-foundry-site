@@ -249,7 +249,7 @@ function renderPage(entry, partials, content) {
       );
   const footerLead =
     page.footerVariant === "emblem"
-      ? '<div class="footer-brand"><img src="/assets/yoru-emblem.svg" alt=""><div><strong>YORU FOUNDRY</strong> <span aria-hidden="true">·</span> <span>Refined by Craft.</span></div></div>'
+      ? '<div class="footer-brand"><img src="/assets/yoru-emblem.svg" alt="" width="48" height="48"><div><strong>YORU FOUNDRY</strong> <span aria-hidden="true">·</span> <span>Refined by Craft.</span></div></div>'
       : '<div class="socials"><span>Follow the Foundry</span><a href="https://www.instagram.com/yorufoundry/" target="_blank" rel="noopener">Instagram&nbsp; @yorufoundry</a><a href="https://www.tiktok.com/@yoru.foundry" target="_blank" rel="noopener">TikTok&nbsp; @yoru.foundry</a></div>';
   const footerLinks =
     page.footerVariant === "archive"
