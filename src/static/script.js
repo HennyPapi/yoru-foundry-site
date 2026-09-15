@@ -48,14 +48,23 @@ function yfRenderHomeBuild(){
   const visible=yfVisibleBuilds();
   const build=visible[0]||builds[0];
   if(!build)return;
+  const home=build.home||{};
   const media=document.querySelector("[data-hero-build-media]");
-  if(media)media.innerHTML='<img src="'+yfEscape(build.heroImage||"/img/placeholder-16x9.svg")+'" alt="" width="1600" height="900" decoding="async"><span class="showpiece-index">'+yfEscape(build.id.replace("-"," / "))+'</span><div class="showpiece-caption">'+yfEscape(build.summary)+'</div>';
+  if(media)media.innerHTML='<img src="'+yfEscape(build.heroImage||"/img/placeholder-16x9.svg")+'" alt="" width="1600" height="900" decoding="async"><span class="showpiece-index">'+yfEscape(build.id.replace("-"," / "))+'</span><div class="showpiece-caption">'+yfEscape(home.heroCaption||build.summary)+'</div>';
+  const heroSpecs=Array.isArray(home.heroSpecs)&&home.heroSpecs.length?home.heroSpecs:[build.specs.case,build.specs.mount,build.specs.switches];
   const specs=document.querySelector("[data-hero-build-specs]");
-  if(specs)specs.innerHTML='<span>'+yfEscape(build.specs.case)+'</span><span>'+yfEscape(build.specs.mount)+'</span><span>'+yfEscape(build.specs.switches)+'</span>';
+  if(specs)specs.innerHTML=heroSpecs.map(value=>'<span>'+yfEscape(value)+'</span>').join("");
   const feature=document.querySelector("[data-featured-build]");
   if(feature){
     feature.classList.toggle("is-placeholder",build.status==="placeholder");
-    feature.innerHTML='<div class="featured-photo"><img src="'+yfEscape(build.images?.[0]||"/img/placeholder-4x5.svg")+'" alt="" width="1200" height="1500" loading="lazy" decoding="async"></div><div class="featured-copy"><p class="eyebrow">'+yfEscape(yfStatusLabel(build.status))+' • '+yfEscape(build.id)+'</p><h2>'+yfEscape(build.name)+'</h2><p>'+yfEscape(build.notes)+'</p><dl class="commission-specs"><div><dt>Layout</dt><dd>'+yfEscape(build.layout)+'</dd></div><div><dt>Plate</dt><dd>'+yfEscape(build.specs.plate)+'</dd></div><div><dt>Case</dt><dd>'+yfEscape(build.specs.case)+'</dd></div><div><dt>Mount</dt><dd>'+yfEscape(build.specs.mount)+'</dd></div></dl><a class="text-link" href="'+yfBuildHref(build)+'">View '+yfEscape(build.id)+' record →</a></div>';
+    const featureSpecs=Array.isArray(home.featuredSpecs)&&home.featuredSpecs.length?home.featuredSpecs:[
+      {label:"Layout",value:build.layout},
+      {label:"Plate",value:build.specs.plate},
+      {label:"Case",value:build.specs.case},
+      {label:"Mount",value:build.specs.mount}
+    ];
+    const featureMedia=home.featuredMediaLabel?'<div class="featured-photo">'+yfEscape(home.featuredMediaLabel)+'</div>':'<div class="featured-photo"><img src="'+yfEscape(build.images?.[0]||"/img/placeholder-4x5.svg")+'" alt="" width="1200" height="1500" loading="lazy" decoding="async"></div>';
+    feature.innerHTML=featureMedia+'<div class="featured-copy"><p class="eyebrow">'+yfEscape(home.featuredEyebrow||(yfStatusLabel(build.status)+" • "+build.id))+'</p><h2>'+yfEscape(home.featuredHeading||build.name)+'</h2><p>'+yfEscape(home.featuredBody||build.notes)+'</p><dl class="commission-specs">'+featureSpecs.map(item=>'<div><dt>'+yfEscape(item.label)+'</dt><dd>'+yfEscape(item.value)+'</dd></div>').join("")+'</dl><a class="text-link" href="'+yfEscape(home.featuredHref||yfBuildHref(build))+'">'+yfEscape(home.featuredLinkLabel||("View "+build.id+" record →"))+'</a></div>';
   }
 }
 function yfSoundPlayer(sample){
