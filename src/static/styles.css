@@ -23,7 +23,7 @@
   --status-in-progress: var(--copper);
   --status-coming-soon: var(--muted-dark);
   --status-built: var(--muted-dark);
-  --grain-subtle: 0.28;
+  --grain-subtle: 0.25;
   --grain: 0.04;
   --border-width: 0.5px;
   --border-width-accent: 1px;
@@ -4319,7 +4319,7 @@ main:not(.section-shell),
   background-size:1024px 1024px;
   background-repeat:repeat;
   mix-blend-mode:soft-light;
-  filter:brightness(1.5) contrast(1.2);
+  filter:brightness(1.15) contrast(1.30);
 }
 .grain-subtle::after{opacity:var(--grain-subtle)}
 .grain::after{opacity:var(--grain)}
