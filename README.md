@@ -26,3 +26,4 @@ Cloudflare builds the source and serves the generated files from `./public`.
 Replace the gallery placeholders with your own keyboard photography.
 Update Instagram/TikTok links once the accounts are ready.
 The Request a Build form currently opens the visitor's email app with a pre-filled message to `hello@yorufoundry.com`.
+
