@@ -23,7 +23,7 @@
   --status-in-progress: var(--copper);
   --status-coming-soon: var(--muted-dark);
   --status-built: var(--muted-dark);
-  --grain-subtle: 0.22;
+  --grain-subtle: 0.10;
   --grain: 0.04;
   --border-width: 0.5px;
   --border-width-accent: 1px;
@@ -4314,11 +4314,11 @@ main:not(.section-shell),
   inset:0;
   z-index:0;
   pointer-events:none;
-  /* Phase 3.5 diagnostic: direct Metal 027 4K Roughness (no high-pass) on homepage hero only. */
-  background-image:url("/img/textures/metal027-roughness-4k.webp");
-  background-size:2048px 2048px;
+  /* Phase 3.5 diagnostic: Metal 027 Color luma at native 4K scale on homepage hero only. */
+  background-image:url("/img/textures/metal027-color-luma-4k.webp");
+  background-size:4096px 4096px;
   background-repeat:repeat;
-  mix-blend-mode:soft-light;
+  mix-blend-mode:luminosity;
 }
 .grain-subtle::after{opacity:var(--grain-subtle)}
 .grain::after{opacity:var(--grain)}
