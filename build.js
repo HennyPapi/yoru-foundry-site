@@ -172,7 +172,7 @@ function renderPage(entry, partials, content) {
       FULL_TITLE: `${page.title} | ${config.siteTitle}`,
       CRITICAL_CSS: redirect
         ? "html,body{margin:0;background:#181B1F;color:#F2EFE8;min-height:100%;font-family:Manrope,system-ui,sans-serif}main{max-width:760px;margin:auto;padding:15vh 24px}a{color:#C88967}"
-        : "html,body{margin:0;background:#181B1F;color:#F2EFE8;min-height:100%}body{min-height:100vh}.site-header{background:#F2EFE8;color:#171A1D}.nav,.nav a,.products-menu summary{color:#171A1D}.nav-cta{background:#181B1F!important;color:#F2EFE8!important;border:1px solid #B8734F!important}",
+        : "html,body{margin:0;background:#181B1F;color:#F2EFE8;min-height:100%}body{min-height:100vh;display:flex;flex-direction:column}body>main{flex:1 0 auto}.site-footer{flex:0 0 auto}.site-header{background:#F2EFE8;color:#171A1D}.nav,.nav a,.products-menu summary{color:#171A1D}.nav-cta{background:#181B1F!important;color:#F2EFE8!important;border:1px solid #B8734F!important}",
       STYLESHEET_VERSION: config.stylesheetVersion,
     },
     `${label} head`,
@@ -195,7 +195,7 @@ function renderPage(entry, partials, content) {
       );
   const footerLead =
     page.footerVariant === "emblem"
-      ? '<div class="footer-brand"><img src="/assets/yoru-emblem.svg" alt=""><div><strong>YORU FOUNDRY</strong><span>Refined by Craft.</span></div></div>'
+      ? '<div class="footer-brand"><img src="/assets/yoru-emblem.svg" alt=""><div><strong>YORU FOUNDRY</strong> <span aria-hidden="true">·</span> <span>Refined by Craft.</span></div></div>'
       : '<div class="socials"><span>Follow the Foundry</span><a href="https://www.instagram.com/yorufoundry/" target="_blank" rel="noopener">Instagram&nbsp; @yorufoundry</a><a href="https://www.tiktok.com/@yoru.foundry" target="_blank" rel="noopener">TikTok&nbsp; @yoru.foundry</a></div>';
   const footerLinks =
     page.footerVariant === "archive"

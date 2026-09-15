@@ -4084,3 +4084,17 @@ summary:focus-visible,
   transform: translateY(1px) !important;
   background: var(--night-deep) !important;
 }
+
+/* ===== PHASE 3.5 — SHORT PAGE + FOOTER CONSISTENCY ===== */
+body{
+  display:flex;
+  min-height:100vh;
+  flex-direction:column;
+}
+body>main{
+  flex:1 0 auto;
+}
+.site-footer{
+  flex:0 0 auto;
+  border-top:var(--border-width) solid var(--alpha-accent-220)!important;
+}
