@@ -22,6 +22,22 @@ const BUILDS = [
     status: "placeholder",
     date: "PRELAUNCH DOCUMENTATION SLOT",
     layout: "75%",
+    home: {
+      heroCaption: "Placeholder for cinematic macro photography or a slow build video loop",
+      heroSpecs: ["CNC ALUMINUM", "GASKET MOUNT", "HAND TUNED"],
+      featuredMediaLabel: "Placeholder — full-width editorial build photography",
+      featuredEyebrow: "FEATURED COMMISSION • YF-001",
+      featuredHeading: "Built around a feeling, not a parts list.",
+      featuredBody: "This placeholder commission demonstrates how future Yoru builds will be presented: the customer's goal, material choices, sound direction, layout, and the decisions that shaped the final result.",
+      featuredSpecs: [
+        { label: "Layout", value: "75%" },
+        { label: "Sound", value: "Ember" },
+        { label: "Case", value: "Aluminum" },
+        { label: "Mount", value: "Gasket" }
+      ],
+      featuredHref: "/commission-yf-001.html",
+      featuredLinkLabel: "View Commission YF-001 →"
+    },
     summary: "Reserved archive entry showing the final card density, media proportions, and specification hierarchy a completed commission will use.",
     heroImage: "/img/placeholder-16x9.svg",
     images: ["/img/placeholder-4x5.svg"],
