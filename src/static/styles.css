@@ -4224,6 +4224,21 @@ main:not(.section-shell),
   background-color:var(--night-void)!important;
   border-top:var(--border-width) solid var(--line)!important;
 }
+.site-footer,
+.standards-section,
+.layout-preview,
+.compare-lab,
+.materials-section,
+.commission-flow,
+.pricing-philosophy,
+.commission-story,
+.sound-sample,
+.about-editorial,
+.founder-chapter,
+.future-foundry,
+.craft-state,
+.brand-belief.expanded{border-color:var(--line-quiet)!important}
+.site-header{border-bottom-color:var(--line-strong)!important}
 
 /* The same four hierarchy roles adapt to Bone without adding a fifth tier. */
 .site-header,
