@@ -5,10 +5,10 @@ const SITE_MODE_CONTENT = {
     heroEyebrow: "YORU FOUNDRY / EST. 2026",
     heroCta: { label: "Explore Crafted Art", href: "/crafted-art.html" },
     heroStatus: "Currently accepting commissions",
-    footerStatus: "Prelaunch workshop preview • Real build documentation will replace these placeholders as I complete, tune, and photograph commissions."
+    footerStatus: "Built one at a time in Miami."
   },
   live: {
-    heroEyebrow: "YORU FOUNDRY / COMMISSIONS OPEN",
+    heroEyebrow: "YORU FOUNDRY / EST. 2026",
     heroCta: { label: "Explore Crafted Art", href: "/crafted-art.html" },
     heroStatus: "Currently accepting commissions",
     footerStatus: "Commission-built one at a time • I document each finished build after tuning, testing, and photography."
