@@ -209,7 +209,7 @@ function renderPage(entry, partials, content) {
         {
           FOOTER_LEAD: footerLead,
           FOOTER_LINKS: footerLinks,
-          COPYRIGHT_CLASS: page.footerVariant === "emblem" ? "" : ' class="copyright"',
+          COPYRIGHT_CLASS: ' class="copyright"',
           FOOTER_STATUS: escapeHtml(modeContent.footerStatus || "Built one at a time."),
           COPYRIGHT_YEAR: String(new Date().getFullYear()),
         },

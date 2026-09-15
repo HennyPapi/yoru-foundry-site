@@ -4141,3 +4141,29 @@ body{
     padding-right:18px;
   }
 }
+
+/* ===== PRE-PHASE 3.5 — FOOTER TEMPORARY SIZE NORMALIZATION ===== */
+.site-footer-inner{
+  padding:80px 24px 64px!important;
+}
+.footer-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.footer-brand img{
+  width:48px;
+  height:48px;
+  flex:0 0 48px;
+}
+.copyright{
+  text-align:right;
+}
+@media(max-width:680px){
+  .site-footer-inner{
+    padding:48px 18px 40px!important;
+  }
+  .copyright{
+    text-align:left;
+  }
+}
