@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "yn-design-p3-4",
+  stylesheetVersion: "yn-design-p3-5",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
 });
@@ -225,8 +225,8 @@ function renderPage(entry, partials, content) {
         : "",
       FULL_TITLE: `${page.title} | ${config.siteTitle}`,
       CRITICAL_CSS: redirect
-        ? "html,body{margin:0;background:#181B1F;color:#F2EFE8;min-height:100%;font-family:Manrope,system-ui,sans-serif}main{max-width:760px;margin:auto;padding:15vh 24px}a{color:#C88967}"
-        : "html,body{margin:0;background:#181B1F;color:#F2EFE8;min-height:100%}body{min-height:100vh}.site-header{background:#F2EFE8;color:#171A1D}.nav,.nav a,.products-menu summary{color:#171A1D}.nav-cta{background:#181B1F!important;color:#F2EFE8!important;border:1px solid #B8734F!important}",
+        ? "html,body{margin:0;background:#0C0E11;color:#F2EFE8;min-height:100%;font-family:Manrope,system-ui,sans-serif}main{max-width:760px;margin:auto;padding:15vh 24px}a{color:#CB9560}"
+        : "html,body{margin:0;background:#0C0E11;color:#F2EFE8;min-height:100%}body{min-height:100vh}.site-header{background:#F2EFE8;color:#171A1D}.nav,.nav a,.products-menu summary{color:#171A1D}.nav-cta{background:#181B1F!important;color:#F2EFE8!important;border:1px solid #B8734F!important}",
       STYLESHEET_VERSION: config.stylesheetVersion,
     },
     `${label} head`,

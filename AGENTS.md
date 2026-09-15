@@ -7,9 +7,9 @@ Before making any visual, CSS, layout, branding, navigation, responsive, or comp
 3. Do not reintroduce old brown / bronze / gold / olive / green-heavy experimental palettes.
 4. Do not redesign the site from scratch unless Mike explicitly asks.
 5. Preserve `/assets/yoru-foundry-logo-v5.webp` as the official header logo.
-6. If `public/styles.css` changes, bump the version query on **every HTML page** so stale CSS cannot flash an old palette.
+6. If `src/static/styles.css` changes, bump `config.stylesheetVersion` once in `build.js`, then rebuild so stale CSS cannot flash an old palette.
 7. Keep first-paint critical colors consistent:
-   - body: `#181B1F`
+   - body: `#0C0E11`
    - header: `#F2EFE8`
    - nav text: `#171A1D`
    - header CTA: Night Iron + `#B8734F` border + Forged Bone text
@@ -33,26 +33,40 @@ These rules are standing constraints for all future work in this repository. Rea
 
 Use the Yoru Nocturne tokens below. Prefer CSS custom properties over literal color values. Do not introduce ad-hoc palette colors.
 
-- Night Iron / primary dark canvas: `#181B1F`
-- Deep Night / deepest dark: `#111418`
-- Forged Bone / primary light material: `#F2EFE8`
-- Soft Bone / fields and light highlights: `#F8F5EF`
-- Gunmetal / cards and media: `#2B2F32`
-- Gunmetal highlight: `#34393D`
-- Gunmetal low: `#272C30`
-- Burnished Copper / primary interaction accent: `#B8734F`
-- Copper highlight: `#C88967`
-- Copper deep: `#94573D`
-- Aged Patina / micro-accent only: `#4E6A64`
-- Warm Steel / secondary technical text: `#9A9B97`
-- Night Ink / text on light surfaces: `#171A1D`
-- Light secondary text: `#D7D3CB`
-- Mid secondary text: `#B8B9B5`
-- Bone Low / light hover fill: `#E7E1D7`
+- `--night-void` `#0C0E11`: page canvas, body, and footer.
+- `--night-deep` `#111418`: alternate dark sections.
+- `--night` `#181B1F`: elevated dark surfaces, header pairing, and theme color.
+- `--gunmetal` `#2B2F32`: cards and media on dark surfaces.
+- `--iron` `#3A3F43`: hover and active surfaces on dark cards.
+- `--bone` / `--bone-text` `#F2EFE8`: the sole light surface and primary text on night.
+- `--ink` `#171A1D`: primary text on Bone. This color is not a dark surface tier.
+- `--muted-dark` `#B8B9B5`: secondary text on night.
+- `--muted-light` `#6D6962`: secondary text on Bone.
+- `--muted-deep` `#8A8C88`: tertiary text on `--night` only; never use it on cards.
+- `--copper` `#B8734F`: night-only borders, fills, hairlines, and large/bold text.
+- `--copper-text` `#CB9560`: body-size copper text on night and Gunmetal.
+- `--copper-deep` `#915A37`: copper on Bone only.
+- `--patina` `#6E938B`: night-only status and micro-accent.
+- `--patina-deep` `#4E6A64`: patina on Bone only.
+- `--state-error` `#C96A5A`: error state on night.
+- `--state-error-deep` `#A34430`: error state on Bone.
+- Success aliases Patina on night and Patina Deep on Bone.
 
 Never use pure `#FFFFFF` or pure `#000000` anywhere.
 
 Patina is a micro-accent only. Copper is an interaction/material accent, not a generic ecommerce-orange fill. No legacy brown, bronze, gold, olive, rust, or green-heavy palette may be reintroduced.
+
+- Tier backgrounds go on full-bleed shells only, never on `.page-main`, `.page-hero`, or any max-width container.
+- Exception: the request-a-build hero shell fills a grid area by design. Do not “fix” it.
+- `body` and `footer` are both `--night-void` so short pages have no visible seam below the footer. Content sections use a higher tier so the footer still reads as distinct.
+- Cream (`--bone`) is an accent, not a surface family. Maximum one light section per page. If a page needs two, the second is wrong.
+- `--copper` and `--patina` are night-only. `--copper-deep` and `--patina-deep` are Bone-only. Neither crosses over.
+- `--copper` is 3.60:1 on `--gunmetal`. Use it for borders, fills, and text at 24px+ or 19px bold only. Use `--copper-text` at body size.
+- `--muted-deep` is 3.98:1 on `--gunmetal`. Never use it on cards.
+- Section rhythm comes from alternating night tiers, not from alternating light and dark.
+- Borders use the four-tier hairline scale: quiet, standard, strong, and accent. No raw border values.
+- `box-shadow: none`, except focus indicators, which use `outline`.
+- Any new color must state its legal surfaces and measured contrast ratio before being added.
 
 ### Texture roles
 
@@ -142,7 +156,7 @@ Also avoid ecommerce patterns that imply inventory scale, urgency, discounting, 
 - Every HTML page must keep `<meta name="theme-color" content="#181B1F">`.
 - Every HTML page must keep the critical first-paint theme so navigation never flashes an old palette.
 - Critical first-paint roles:
-  - body: Night Iron `#181B1F`
+  - body: Night Void `#0C0E11`
   - header: Forged Bone `#F2EFE8`
   - nav text: Night Ink `#171A1D`
   - header CTA: Night Iron + Copper border + Forged Bone text
@@ -186,13 +200,7 @@ These rules are canonical for `src/static/styles.css` and must be preserved by f
 
 - Keep **one consolidated `:root` token catalog**. Do not add competing `:root` theme blocks.
 - No hardcoded hex, RGB, or RGBA color literals outside `:root`.
-- Required semantic color tokens:
-  - `--canvas`: Night Iron / primary page canvas
-  - `--surface`: Gunmetal / cards, technical panels, media surfaces
-  - `--ink`: Night Ink / text on light surfaces
-  - `--muted-on-light`: accessible muted supporting text on Forged Bone and other light surfaces
-  - `--muted-on-dark`: accessible muted supporting text on Night Iron, Gunmetal, and other dark surfaces
-  - `--accent`: Burnished Copper / restrained interaction accent
+- Canonical semantic color tokens are the surface, text, accent, state, status, hairline, and grain tokens listed above. Compatibility aliases may only resolve to those canonical roles and must not introduce another color value.
 - Required font tokens:
   - `--font-display`: Cormorant Garamond
   - `--font-body`: Manrope

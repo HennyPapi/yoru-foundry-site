@@ -37,31 +37,31 @@ These are the approved colors. Do not introduce ad-hoc browns, golds, olives, ru
 
 | Token | Name | Hex | Role |
 |---|---|---|---|
-| `--yn-night` | Night Iron | `#181B1F` | Primary dark canvas |
-| `--yn-night-deep` | Deep Night | `#111418` | Footer / deep dark / pressed states |
-| `--yn-bone` | Forged Bone | `#F2EFE8` | Header / editorial light surfaces / forms |
-| `--yn-bone-soft` | Soft Bone | `#F8F5EF` | Inputs / subtle highlights |
-| `--yn-gunmetal` | Gunmetal | `#2B2F32` | Product cards / media / technical panels |
-| `--yn-gunmetal-hi` | Gunmetal Highlight | `#34393D` | Very subtle metal highlight |
-| `--yn-gunmetal-low` | Gunmetal Low | `#272C30` | Very subtle metal shadow |
-| `--yn-copper` | Burnished Copper | `#B8734F` | Primary accent / borders / CTA interaction |
-| `--yn-copper-hi` | Copper Highlight | `#C88967` | Hover / highlight |
-| `--yn-copper-deep` | Copper Deep | `#94573D` | Dark copper shadow only |
-| `--yn-patina` | Aged Patina | `#4E6A64` | Micro-accent only |
-| `--yn-steel` | Warm Steel | `#9A9B97` | Secondary technical text |
-| `--yn-ink` | Night Ink | `#171A1D` | Text on light surfaces |
-| `--yn-text-light` | Light Secondary | `#D7D3CB` | Body text on dark surfaces |
-| `--muted-on-light` | Warm Graphite | `#6D6962` | Muted copy on Forged Bone / light surfaces |
-| `--muted-on-dark` | Mid Secondary | `#B8B9B5` | Muted copy on Night Iron / Gunmetal surfaces |
-| `--yn-bone-low` | Bone Low | `#E7E1D7` | Light hover / dropdown fill |
+| `--night-void` | Night Void | `#0C0E11` | Body, page canvas, footer |
+| `--night-deep` | Deep Night | `#111418` | Alternate dark sections |
+| `--night` | Night Iron | `#181B1F` | Elevated dark sections, header pairing, theme color |
+| `--gunmetal` | Gunmetal | `#2B2F32` | Product cards, media, technical panels |
+| `--iron` | Iron | `#3A3F43` | Dark-card hover and active states |
+| `--bone` / `--bone-text` | Forged Bone | `#F2EFE8` | Sole light surface / primary dark-surface text |
+| `--ink` | Ink | `#171A1D` | Text on Bone; not a surface tier |
+| `--muted-dark` | Muted on dark | `#B8B9B5` | Secondary text on night surfaces |
+| `--muted-light` | Muted on light | `#6D6962` | Secondary text on Bone |
+| `--muted-deep` | Tertiary on Night Iron | `#8A8C88` | Night Iron only; never cards |
+| `--copper` | Burnished Copper | `#B8734F` | Night-only borders, fills, and large/bold text |
+| `--copper-text` | Copper Text | `#CB9560` | Body-size copper on night and Gunmetal |
+| `--copper-deep` | Copper Deep | `#915A37` | Copper on Bone only |
+| `--patina` | Patina | `#6E938B` | Available/open status on night |
+| `--patina-deep` | Patina Deep | `#4E6A64` | Patina on Bone only |
+| `--state-error` | Error | `#C96A5A` | Error state on night |
+| `--state-error-deep` | Error Deep | `#A34430` | Error state on Bone |
 
 ### Color usage rules
 
-- Night Iron should dominate the overall page.
-- Forged Bone is the main light material, not pure white.
+- Night tiers should dominate the overall page; section rhythm comes from alternating those tiers.
+- Forged Bone is a rare accent, not a surface family. Use no more than one light section per page.
 - Gunmetal separates product/media objects from Night Iron.
 - Copper is **not** a generic ecommerce orange. Use it sparingly for borders, active states, selected states, links, and CTA interaction.
-- Patina is a **brand accent, used sparingly**. Use it only for tiny kicker labels, subtle dots, or very small details.
+- Patina is a **brand accent, used sparingly**. Use it for available/open states and small night-surface details.
 - Never use Patina as a large background, large button fill, layout-card tint, or general "available" color.
 - No legacy brown / bronze / gold / olive / rust palette is approved.
 
