@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "yn-design-p3-3",
+  stylesheetVersion: "yn-design-p3-4",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
 });
