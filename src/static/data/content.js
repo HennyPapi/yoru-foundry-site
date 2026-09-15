@@ -184,4 +184,71 @@ const SOUND_SAMPLES = [
   }
 ];
 
-window.YORU_CONTENT = Object.freeze({ SITE_MODE, SITE_MODE_CONTENT, BUILDS, SOUND_SAMPLES });
+const STORIES = {
+ process:{
+  1:{title:"Preparation",intro:"The decisions before assembly determine how cleanly the rest of a build comes together.",steps:[
+   ["Inspect & Plan","Sample photo — parts laid out","Every component is inspected, the layout is confirmed, and the build plan is mapped before anything is modified."],
+   ["Stabilizer Preparation","Sample video — stabilizer prep","Large keys are checked, balanced and prepared so later tuning has a consistent foundation."],
+   ["Switch & Component Check","Sample photo — switches and PCB","Switches, sockets, PCB, plate and hardware are checked before the build is committed."]
+  ]},
+  2:{title:"Tuning",intro:"This is where small adjustments begin shaping the personality of the board.",steps:[
+   ["Lubing & Consistency","Sample video — switch lubing","Lubrication can reduce scratch, change pitch and improve consistency when applied deliberately."],
+   ["Foam & Acoustic Decisions","Sample photo — foam options","Not every build needs every layer. Material is added or removed based on the sound and response we are aiming for."],
+   ["Mount & Plate Testing","Sample video — flex test","The mounting system and plate influence stiffness, rebound and resonance, so they are evaluated as part of the whole build."]
+  ]},
+  3:{title:"Assembly",intro:"The planned parts and tuning choices finally become one object.",steps:[
+   ["Core Assembly","Sample video — PCB and plate assembly","The switches, plate, PCB and case are brought together carefully and checked as the build progresses."],
+   ["Cable & Hardware Check","Sample photo — internal assembly","Internal routing, screws, daughterboards and connections are verified before the case is closed."],
+   ["Keycap Installation","Sample video — final keycaps","Keycaps are installed and visually checked for fit, alignment and the intended final presentation."]
+  ]},
+  4:{title:"Final Refinement",intro:"A build is not finished because the screws are in. It is finished when it behaves the way it should.",steps:[
+   ["Typing & Sound Test","Sample video — typing test","Every key is tested while listening for inconsistencies, rattle, tick, binding or unwanted resonance."],
+   ["Correction Pass","Sample photo — adjustment","Anything that does not meet the intended standard is reopened, adjusted and tested again."],
+   ["Final Presentation","Sample photo — finished build","The completed board is cleaned, photographed and prepared for handoff."]
+  ]}
+ },
+ taste:{
+  1:{title:"Switch Lubing",intro:"Hear and understand what lubrication changes — and what it does not.",steps:[
+   ["Before","Sample audio/video — unlubed switch","A clean baseline shows the natural scratch, pitch and spring character of the switch."],
+   ["After","Sample audio/video — lubed switch","The same switch after careful lubrication demonstrates the change in smoothness, consistency and sound."],
+   ["What You Feel","Sample close-up video","The goal is not simply 'quieter.' The difference can be in friction, return, texture and perceived refinement."]
+  ]},
+  2:{title:"Stabilizer Tuning",intro:"Spacebars, shifts, enter and backspace reveal poor tuning immediately.",steps:[
+   ["Untuned","Sample audio — rattle/tick","An untuned stabilizer can add wire rattle, ticking and uneven travel."],
+   ["Tuned","Sample audio — tuned stabilizer","Lubrication, wire correction and balance can make large keys sound cleaner and feel more consistent."],
+   ["Why It Matters","Sample video — side-by-side","This comparison makes one of the most audible build-quality differences easy to understand."]
+  ]},
+  3:{title:"Keycap Material & Profile",intro:"Shape, thickness and material all influence the way a keyboard speaks back.",steps:[
+   ["Material","Sample photo — ABS vs PBT","ABS and PBT differ in texture, wear, density and often perceived pitch."],
+   ["Profile","Sample diagram — profiles","Cherry, OEM, SA and other profiles change sculpting, height and finger positioning."],
+   ["Sound Comparison","Sample audio/video","The same board with different keycaps reveals how much the cap itself can change the final sound."]
+  ]},
+  4:{title:"Mounting Style",intro:"How the plate and PCB are supported changes stiffness, movement and resonance.",steps:[
+   ["Gasket Mount","Sample flex video","Gasket systems can isolate the assembly and provide a softer, more cushioned response depending on implementation."],
+   ["Firmer Mounts","Sample flex video","Top, tray and other firmer systems can create a more direct response and different resonance."],
+   ["Side by Side","Sample audio/video comparison","The meaningful choice is not which mount is 'best,' but which behavior matches your preference."]
+  ]},
+  5:{title:"Plate Material",intro:"Plate material changes more than appearance.",steps:[
+   ["Aluminum","Sample plate photo/audio","Typically firmer and more direct, with its own resonant character."],
+   ["Polycarbonate / FR4","Sample plate comparison","Softer or more flexible materials can change rebound, pitch and perceived softness."],
+   ["Choose by Feel","Sample typing comparison","The plate is selected as part of the full system, not in isolation."]
+  ]},
+  6:{title:"Sound Profiles",intro:"Rather than vague internet labels, we will use real recordings so you can choose by ear.",steps:[
+   ["Profile A","Sample audio — sound profile","A controlled recording with notes describing pitch, resonance and character."],
+   ["Profile B","Sample audio — alternate profile","A contrasting tuning direction on comparable hardware."],
+   ["Your Preference","Sample comparison player","These examples will become the vocabulary used in the build request form."]
+  ]}
+ }
+};
+
+const COMPARE_OPTIONS = {
+stabilizer:[["Untuned","Natural wire rattle, tick and unevenness before correction."],["Tuned","Balanced, lubricated and checked for cleaner large-key behavior."]],
+switchlube:[["Stock","Factory or dry feel, depending on the switch."],["Hand Lubed","Reduced friction and a more consistent travel when applied carefully."]],
+switch:[["Linear","Smooth travel without a tactile bump."],["Tactile","A defined bump provides physical feedback."],["Clicky","Tactile and intentionally audible feedback."]],
+tape:[["No Tape","PCB left untreated."],["2 Layers","A light tape treatment with a smaller acoustic shift."],["4 Layers","A stronger treatment that can increase reflected energy."],["6 Layers","An intentionally exaggerated tape treatment for comparison."]],
+plate:[["Aluminum","Firm, direct and typically more rigid."],["Polycarbonate","Softer and more flexible in many implementations."],["FR4","A middle-ground fiberglass laminate."],["Brass","Dense and firm with added mass."]],
+keycap:[["PBT","Textured and durable with its own density and pitch."],["ABS","Smooth, vivid and often brighter or more resonant."]],
+mount:[["Gasket","Isolated mounting that can allow a softer response."],["Top Mount","More direct attachment and controlled firmness."],["Tray Mount","Simple, rigid mounting with a distinct feel."]]
+};
+
+window.YORU_CONTENT = Object.freeze({ SITE_MODE, SITE_MODE_CONTENT, BUILDS, SOUND_SAMPLES, STORIES, COMPARE_OPTIONS });

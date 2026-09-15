@@ -64,6 +64,34 @@ function visibleBuilds(content) {
   return content.SITE_MODE === "live" ? builds.filter((build) => build.status !== "placeholder") : builds;
 }
 
+
+function renderSoundPlayer(sample) {
+  if (!sample) return "<p>Audio reference is not available yet.</p>";
+  return '<div class="sound-player-copy"><strong>' + escapeHtml(sample.name) + '</strong><p>' + escapeHtml(sample.description) + '</p></div><audio controls preload="metadata" src="' + escapeHtml(sample.file) + '" aria-label="' + escapeHtml(sample.name) + '"></audio>';
+}
+
+function renderStoryGrid(type, stories) {
+  const group = (stories || {})[type] || {};
+  return Object.entries(group).map(([id, story], index) => {
+    const action = type === "process" ? "Open process →" : "Explore comparison →";
+    return '<button class="story-tile" data-story-type="' + escapeHtml(type) + '" data-story="' + escapeHtml(id) + '"><div class="sample-image"><img src="/img/placeholder-3x2.svg" alt="" width="1200" height="800" loading="lazy" decoding="async"></div><span>' + String(index + 1).padStart(2, "0") + '</span><h2>' + escapeHtml(story.title) + '</h2><p>' + escapeHtml(story.intro) + '</p><b>' + action + '</b></button>';
+  }).join("");
+}
+
+function renderStorySteps(story) {
+  if (!story) return "";
+  return (story.steps || []).map((step, index) => '<section class="story-row ' + (index % 2 ? "reverse" : "") + '"><div class="story-media"><img src="/img/placeholder-3x2.svg" alt="" width="1200" height="800" loading="lazy" decoding="async"><span class="media-label">' + escapeHtml(step[1]) + '</span></div><div class="story-copy"><p class="eyebrow">STEP ' + String(index + 1).padStart(2, "0") + '</p><h3>' + escapeHtml(step[0]) + '</h3><p>' + escapeHtml(step[2]) + '</p></div></section>').join("");
+}
+
+function renderCommissionDetail(build, soundSamples) {
+  if (!build) {
+    return '<section class="page-hero-shell section-shell"><div class="section-shell-frame"><div class="page-hero"><p class="eyebrow">BUILD RECORD</p><h1>This record is not published.</h1><p>I publish build records after the work is ready to document.</p></div></div></section>';
+  }
+  const details = (build.detailImages?.length ? build.detailImages : ["/img/placeholder-1x1.svg", "/img/placeholder-1x1.svg", "/img/placeholder-1x1.svg"]).slice(0, 3);
+  const audioSample = build.audio ? { name: build.id + " standardized sound test", file: build.audio, description: "Recorded using the standardized Yoru Foundry comparison setup." } : soundSamples[0];
+  return '<section class="page-hero-shell section-shell"><div class="section-shell-frame"><div class="page-hero"><p class="eyebrow">' + escapeHtml(statusLabel(build.status)) + ' • ' + escapeHtml(build.id) + ' • ' + escapeHtml(build.layout) + '</p><h1>' + escapeHtml(build.name) + '</h1><p>' + escapeHtml(build.summary) + '</p></div></div></section><section class="commission-hero-media"><img src="' + escapeHtml(build.heroImage || "/img/placeholder-16x9.svg") + '" alt="" width="1600" height="900"></section><section class="commission-story"><div><p class="eyebrow">THE RECORD</p><h2>Documented around intent, not a catalog SKU.</h2></div><div><p>' + escapeHtml(build.notes) + '</p></div></section><section class="commission-detail-grid"><article><span>Case</span><strong>' + escapeHtml(build.specs.case) + '</strong></article><article><span>Plate</span><strong>' + escapeHtml(build.specs.plate) + '</strong></article><article><span>Switches</span><strong>' + escapeHtml(build.specs.switches) + '</strong></article><article><span>Lube</span><strong>' + escapeHtml(build.specs.lube) + '</strong></article><article><span>Keycaps</span><strong>' + escapeHtml(build.specs.keycaps) + '</strong></article><article><span>Mount</span><strong>' + escapeHtml(build.specs.mount) + '</strong></article></section><section class="commission-media-grid">' + details.map((src) => '<div class="detail-media"><img src="' + escapeHtml(src) + '" alt="" width="1000" height="1000" loading="lazy" decoding="async"></div>').join("") + '</section><section class="sound-sample"><div><p class="eyebrow">STANDARDIZED SOUND TEST</p><h2>Hear the build under the same conditions.</h2><p>The player footprint is already locked so a real recording can replace the silent reference without moving the layout.</p></div><div class="compare-audio build-audio">' + renderSoundPlayer(audioSample) + '</div></section><section class="commission-story"><div><p class="eyebrow">PROCESS NOTES</p><h2>Why these choices.</h2></div><div><p>' + escapeHtml(build.processNotes || build.notes) + '</p><a class="text-link" href="/request-a-build.html?layout=' + encodeURIComponent(build.layout) + '">Request a ' + escapeHtml(build.layout) + ' commission →</a></div></section>';
+}
+
 function renderDataBackedContent(html, content) {
   const modeContent = (content.SITE_MODE_CONTENT || {})[content.SITE_MODE] || (content.SITE_MODE_CONTENT || {}).prelaunch || {};
   const builds = Array.isArray(content.BUILDS) ? content.BUILDS : [];
@@ -100,6 +128,32 @@ function renderDataBackedContent(html, content) {
     }).join("");
     return open + entries + close;
   });
+
+  const stories = content.STORIES || {};
+  const soundSamples = Array.isArray(content.SOUND_SAMPLES) ? content.SOUND_SAMPLES : [];
+  const compareOptions = content.COMPARE_OPTIONS || {};
+
+  html = html.replace(/(<section class="[^"]*story-tile-grid[^"]*" data-story-grid="([^"]+)">)[\s\S]*?(<\/section>)/g, (_, open, type, close) => open + renderStoryGrid(type, stories) + close);
+
+  html = html.replace(/(<div data-build-detail>)[\s\S]*?(<\/div>)/, (_, open, close) => {
+    const detailBuild = content.SITE_MODE === "live" ? visible[0] : (visible[0] || builds[0]);
+    return open + renderCommissionDetail(detailBuild, soundSamples) + close;
+  });
+
+  html = html.replace(/(<div class="compare-audio" data-sound-player="(\d+)">)[\s\S]*?(<\/div>)/g, (_, open, index, close) => open + renderSoundPlayer(soundSamples[Number(index)] || soundSamples[0]) + close);
+
+  const initialCompare = Array.isArray(compareOptions.stabilizer) ? compareOptions.stabilizer : [];
+  const compareOptionHtml = initialCompare.map((item, index) => '<option value="' + index + '">' + escapeHtml(item[0]) + '</option>').join("");
+  html = html.replace(/(<select id="compareOption[AB]" class="compare-option">)[\s\S]*?(<\/select>)/g, (_, open, close) => open + compareOptionHtml + close);
+  html = html.replace(/(<p id="compareDesc[AB]" class="compare-desc">)[\s\S]*?(<\/p>)/g, (_, open, close) => open + escapeHtml(initialCompare[0]?.[1] || "") + close);
+
+  html = html.replace(/(<div class="story-modal" id="storyModal"[\s\S]*?<p class="eyebrow">)(TRUST THE PROCESS|BUILT TO TASTE)(<\/p><h2 id="storyTitle">)[\s\S]*?(<\/h2><p id="storyIntro">)[\s\S]*?(<\/p><\/div><div id="storyContent" class="story-content">)[\s\S]*?(<\/div>)/g, (match, a, label, b, c, d, e) => {
+    const type = label === "TRUST THE PROCESS" ? "process" : "taste";
+    const first = Object.values(stories[type] || {})[0];
+    if (!first) return match;
+    return a + label + b + escapeHtml(first.title) + c + escapeHtml(first.intro) + d + renderStorySteps(first) + e;
+  });
+
   return html;
 }
 function replaceTokens(template, values, label) {
