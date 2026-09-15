@@ -4098,3 +4098,52 @@ body>main{
   flex:0 0 auto;
   border-top:var(--border-width) solid var(--alpha-accent-220)!important;
 }
+
+/* ===== PRE-PHASE 3.5 — FULL-BLEED SECTION SHELLS =====
+   Backgrounds belong to full-width shells. Existing named containers
+   remain content-only width/layout wrappers. All shells stay transparent
+   until the surface-tier pass. */
+.section-shell{
+  width:100%;
+  max-width:none;
+  margin-left:0;
+  margin-right:0;
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+}
+.section-shell-frame{width:100%;max-width:none}
+.page-main>.section-shell{
+  width:100vw;
+  max-width:100vw;
+  margin-left:calc(50% - 50vw);
+  margin-right:calc(50% - 50vw);
+}
+.page-main>.section-shell>.section-shell-frame{
+  max-width:var(--max);
+  margin-left:auto;
+  margin-right:auto;
+  padding-left:24px;
+  padding-right:24px;
+}
+.page-main,
+.page-hero,
+.home-hero,
+.gallery-hero,
+.portal-section,
+.standards-section,
+.layout-preview,
+.compare-lab,
+.materials-section,
+.commission-flow,
+.pricing-philosophy{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+}
+@media(max-width:680px){
+  .page-main>.section-shell>.section-shell-frame{
+    padding-left:18px;
+    padding-right:18px;
+  }
+}
