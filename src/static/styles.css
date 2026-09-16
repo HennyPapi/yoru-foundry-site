@@ -24,6 +24,7 @@
   --status-coming-soon: var(--muted-dark);
   --status-built: var(--muted-dark);
   --grain-subtle: 0.10;
+  --paper-subtle: 0.08;
   --grain: 0.04;
   --border-width: 0.5px;
   --border-width-accent: 1px;
@@ -4327,3 +4328,20 @@ main:not(.section-shell),
 .editorial-light.grain::after,
 .warm-editorial.grain-subtle::after,
 .warm-editorial.grain::after{content:none}
+
+/* Phase 3.5 diagnostic: Wallpaper002B paper on one homepage Bone section only. */
+.paper-subtle{position:relative;isolation:isolate}
+.paper-subtle::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:url("/img/textures/wallpaper002b-paper.webp");
+  background-size:1800px 1800px;
+  background-repeat:repeat;
+  mix-blend-mode:multiply;
+  opacity:var(--paper-subtle);
+}
+.paper-subtle>*{position:relative;z-index:1}
+
