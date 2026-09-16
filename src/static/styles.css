@@ -24,7 +24,7 @@
   --status-coming-soon: var(--muted-dark);
   --status-built: var(--muted-dark);
   --grain-subtle: 0.10;
-  --paper-subtle: 0.18;
+  --paper-subtle: 0.32;
   --grain: 0.04;
   --border-width: 0.5px;
   --border-width-accent: 1px;
@@ -4338,7 +4338,7 @@ main:not(.section-shell),
   z-index:0;
   pointer-events:none;
   background-image:url("/img/textures/wallpaper002b-paper.webp");
-  background-size:1800px 1800px;
+  background-size:4096px 4096px;
   background-repeat:repeat;
   mix-blend-mode:multiply;
   opacity:var(--paper-subtle);
