@@ -24,7 +24,7 @@
   --status-coming-soon: var(--muted-dark);
   --status-built: var(--muted-dark);
   --grain-subtle: 0.10;
-  --paper-subtle: 0.10;
+  --paper-subtle: 0.16;
   --grain: 0.04;
   --border-width: 0.5px;
   --border-width-accent: 1px;
@@ -4337,11 +4337,11 @@ main:not(.section-shell),
   inset:0;
   z-index:0;
   pointer-events:none;
-  /* Phase 3.5 diagnostic: Paper001 Displacement on homepage featured Bone only. */
-  background-image:url("/img/textures/paper001-displacement.webp");
-  background-size:4096px 2402px;
+  /* Phase 3.5 diagnostic: Plaster Grey 04 mineral on homepage featured Bone only. */
+  background-image:url("/img/textures/plaster-grey-04.webp");
+  background-size:3000px 3000px;
   background-repeat:repeat;
-  mix-blend-mode:multiply;
+  mix-blend-mode:soft-light;
   opacity:var(--paper-subtle);
 }
 .paper-subtle>*{position:relative;z-index:1}
