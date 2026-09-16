@@ -24,7 +24,7 @@
   --status-coming-soon: var(--muted-dark);
   --status-built: var(--muted-dark);
   --grain-subtle: 0.10;
-  --paper-subtle: 0.32;
+  --paper-subtle: 0.14;
   --grain: 0.04;
   --border-width: 0.5px;
   --border-width-accent: 1px;
@@ -4337,8 +4337,9 @@ main:not(.section-shell),
   inset:0;
   z-index:0;
   pointer-events:none;
-  background-image:url("/img/textures/wallpaper002b-paper.webp");
-  background-size:4096px 4096px;
+  /* Phase 3.5 diagnostic: Paper001 Color on homepage featured Bone only. */
+  background-image:url("/img/textures/paper001-color.webp");
+  background-size:2400px 2400px;
   background-repeat:repeat;
   mix-blend-mode:multiply;
   opacity:var(--paper-subtle);
