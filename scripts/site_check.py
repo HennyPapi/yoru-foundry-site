@@ -46,6 +46,7 @@ CRITICAL_STYLE_MARKER = "critical-yf-theme"
 HERO_KEYWORD = "keyboard"           # Phase 7: homepage headline must contain this
 MIN_CREAM_PER_PAGE = 1              # Phase 14: every page gets a cream section...
 MAX_CREAM_PER_PAGE = 1              # ...and only one (cream cards count individually)
+CREAM_EXTRA_SELECTORS = []          # cream surfaces the checker can't detect on its own, e.g. [".process-card"]
 IGNORE_MARKER = "site-check: ignore"
 
 LIGHT_LUMINANCE = 0.5               # brighter than this = light surface
@@ -135,7 +136,9 @@ class Report:
                 out.append(f"\n**{tag}**" if markdown else f"\n{tag}")
                 for where, msg in entries[:40]:
                     loc = (f"`{where}` " if markdown else f"{where}  ") if where else ""
-                    out.append(f"- {loc}{msg}")
+                    first, *rest = msg.split("\n")
+                    out.append(f"- {loc}{first}")
+                    out += [f"  - {line}" for line in rest]
                 if len(entries) > 40:
                     out.append(f"- ...and {len(entries) - 40} more")
         if e == 0 and w == 0:
@@ -427,7 +430,8 @@ class CreamCounter(HTMLParser):
                         for t, c, i, at in self.selectors)
             if not cream and a.get("style"):
                 cream = any(is_light_bg(pr, v, self.tokens) for _, pr, v, _, _ in iter_declarations("x{" + a["style"] + "}"))
-        if cream and not any(c for _, c in self.stack):
+        in_chrome = any(t in ("header", "nav", "footer") for t, _ in self.stack)
+        if cream and not in_chrome and not any(c for _, c in self.stack):
             self.found.append((tag + "".join("." + c for c in sorted(classes)[:2]), self.getpos()[0]))
         self.stack.append((tag, cream))
 
@@ -581,12 +585,12 @@ def check_variants(pages, tag, phase, label, report):
         desc = "; ".join(
             f"variant {chr(65 + i)} ({len(g)} page{'s' if len(g) > 1 else ''}: {', '.join(sorted(g)[:6])}"
             f"{', ...' if len(g) > 6 else ''})" for i, (_, g) in enumerate(ordered))
-        report.error(phase, f"{label} markup differs between pages", "", f"{len(groups)} variants -> {desc}")
+        details = []
         for i, (norm, g) in enumerate(ordered[1:], start=1):
             a, b = first_difference(base, norm)
-            report.error(phase, f"{label} markup differs between pages", "",
-                         f"variant {chr(65 + i)} first differs from A here -> A: ...{a}...  |  "
-                         f"{chr(65 + i)}: ...{b}...")
+            details.append(f"variant {chr(65 + i)} first differs from A here -> A: ...{a}...  |  {chr(65 + i)}: ...{b}...")
+        report.error(phase, f"{label} markup differs between pages", "",
+                     f"{len(groups)} variants -> {desc}\n" + "\n".join(details))
 
 
 # ================================================================ main
@@ -770,7 +774,8 @@ def main():
     check_variants(pages, "footer", "3.5", "Footer", report)   # pulled forward from Phase 9
     check_variants(pages, "header", "6", "Header", report)
 
-    cream_sels = []
+    cream_sels = cream_selectors("".join(f"{sel} {{ background: #F2EFE8; }}\n" for sel in CREAM_EXTRA_SELECTORS),
+                                 Tokens([]))
     for css in list(css_text.values()) + [b[0] for parser, _ in pages.values() for b in parser.style_blocks]:
         cream_sels += cream_selectors(css, tokens)
     for p, (_, raw) in pages.items():
