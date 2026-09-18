@@ -4315,7 +4315,7 @@ main:not(.section-shell),
   inset:0;
   z-index:0;
   pointer-events:none;
-  /* Phase 3.5 diagnostic: Metal 027 Color luma at native 4K scale on homepage hero only. */
+  /* Approved Night treatment (locked): Metal 027 Color luma. Homepage Night base sections. */
   background-image:url("/img/textures/metal027-color-luma-4k.webp");
   background-size:4096px 4096px;
   background-repeat:repeat;
@@ -4329,7 +4329,7 @@ main:not(.section-shell),
 .warm-editorial.grain-subtle::after,
 .warm-editorial.grain::after{content:none}
 
-/* Phase 3.5 diagnostic: Wallpaper002B paper on one homepage Bone section only. */
+/* Approved Bone treatment (locked): Plaster Grey 04 mineral. Homepage Bone base sections. */
 .paper-subtle{position:relative;isolation:isolate}
 .paper-subtle::after{
   content:"";
@@ -4337,7 +4337,7 @@ main:not(.section-shell),
   inset:0;
   z-index:0;
   pointer-events:none;
-  /* Phase 3.5 diagnostic: Plaster Grey 04 mineral on homepage featured Bone only. */
+  /* Approved Bone treatment (locked): plaster-grey-04.webp multiply @ --paper-subtle. */
   background-image:url("/img/textures/plaster-grey-04.webp");
   background-size:3000px 3000px;
   background-repeat:repeat;
@@ -4345,4 +4345,10 @@ main:not(.section-shell),
   opacity:var(--paper-subtle);
 }
 .paper-subtle>*{position:relative;z-index:1}
+
+/* Homepage surface system (Phase 3.5):
+   Base Night shells use .grain-subtle (approved Night treatment).
+   Base Bone sections use .paper-subtle (approved Bone treatment).
+   Cards / inset panels / media placeholders stay plain by design (portal-card,
+   standards-grid article, mini-layout, hero-showpiece-frame, featured-photo). */
 
