@@ -1,0 +1,73 @@
+# Yoru Foundry site check
+# Builds the site (src/ -> public/) the same way Cloudflare does, then runs scripts/site_check.py.
+# Runs automatically:
+#   - every push to ANY branch (your work branch and main)
+#   - every pull request (checks Grok's fixes before you merge)
+#   - every Monday 9:00 AM Miami time, plus a check that the live site matches main
+#   - any time you press "Run workflow" in the Actions tab
+# GitHub emails you when it fails. The full report is on each run's Summary page.
+# It alerts; it does not block Cloudflare from deploying.
+# Note: GitHub pauses scheduled runs in public repos after 60 days with no commits.
+
+name: Site check
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 13 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # Leave blank to auto-detect (package.json "build" script, or build.mjs / build.js).
+  # If the check can't find it, paste the exact build command from Cloudflare here.
+  BUILD_COMMAND: ""
+
+jobs:
+  site-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v5
+
+      - name: Build the site (same assembler Cloudflare runs)
+        run: |
+          if [ -n "$BUILD_COMMAND" ]; then
+            echo "Running: $BUILD_COMMAND"; eval "$BUILD_COMMAND"
+          elif [ -f package.json ] && node -e "process.exit(require('./package.json').scripts?.build ? 0 : 1)"; then
+            echo "Running: npm run build"; npm run build
+          else
+            for f in build.mjs build.js assemble.mjs assemble.js scripts/build.mjs scripts/build.js tools/build.mjs tools/build.js; do
+              if [ -f "$f" ]; then echo "Running: node $f"; node "$f"; exit 0; fi
+            done
+            if [ -d public ]; then
+              echo "No build script found; checking the committed public/ folder."
+            else
+              echo "::error::Couldn't find the build command. Set BUILD_COMMAND at the top of this file to match Cloudflare's build command."
+              exit 1
+            fi
+          fi
+
+      - name: Check the site
+        run: python3 scripts/site_check.py
+
+      - name: Check the live site matches main
+        if: always() && github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+        run: |
+          SITE="https://yorufoundry.com"
+          if ! html=$(curl -fsSL --retry 3 -A "Mozilla/5.0 (yoru-site-check)" "$SITE/"); then
+            echo "::error::$SITE did not load."
+            exit 1
+          fi
+          live=$(printf '%s' "$html" | grep -oE 'href="[^"]*styles\.css[^"]*"' | head -n1 || true)
+          built=$(grep -oE 'href="[^"]*styles\.css[^"]*"' public/index.html | head -n1 || true)
+          echo "Live:  ${live:-none}"
+          echo "Built: ${built:-none}"
+          if [ "$live" != "$built" ]; then
+            echo "::error::The live site's stylesheet doesn't match what main builds. The last Cloudflare deploy may have failed or main hasn't deployed yet."
+            exit 1
+          fi
+          echo "Live site is up and matches main."
