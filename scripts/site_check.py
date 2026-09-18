@@ -46,7 +46,7 @@ CRITICAL_STYLE_MARKER = "critical-yf-theme"
 HERO_KEYWORD = "keyboard"           # Phase 7: homepage headline must contain this
 MIN_CREAM_PER_PAGE = 1              # Phase 14: every page gets a cream section...
 MAX_CREAM_PER_PAGE = 1              # ...and only one (cream cards count individually)
-CREAM_EXTRA_SELECTORS = []          # cream surfaces the checker can't detect on its own, e.g. [".process-card"]
+CREAM_EXTRA_SELECTORS = [".story-tile"]          # cream surfaces the checker can't detect on its own, e.g. [".process-card"]
 IGNORE_MARKER = "site-check: ignore"
 
 LIGHT_LUMINANCE = 0.5               # brighter than this = light surface
