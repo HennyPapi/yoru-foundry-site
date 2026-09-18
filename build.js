@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "yn-design-p3-5z",
+  stylesheetVersion: "yn-design-p3-5aa",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
 });
@@ -222,7 +222,9 @@ function renderPage(entry, partials, content) {
       DESCRIPTION_META: description,
       HEAD_EXTRA: redirect
         ? `<meta http-equiv="refresh" content="0; url=${page.redirectUrl}">`
-        : "",
+        : page.output === "index.html"
+          ? `<link rel="preload" as="image" type="image/webp" href="/img/textures/metal027-color-luma-4k.webp"><link rel="preload" as="image" type="image/webp" href="/img/textures/plaster-grey-04.webp">`
+          : "",
       FULL_TITLE: `${page.title} | ${config.siteTitle}`,
       CRITICAL_CSS: redirect
         ? "html,body{margin:0;background:#0C0E11;color:#F2EFE8;min-height:100%;font-family:Manrope,system-ui,sans-serif}main{max-width:760px;margin:auto;padding:15vh 24px}a{color:#CB9560}"
