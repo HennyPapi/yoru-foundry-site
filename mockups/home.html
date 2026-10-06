@@ -80,7 +80,7 @@ if (tex === 'none') delete document.documentElement.dataset.tex; else if (tex) d
   --canvas: #151A1A; --ink: #EEF0EC; --muted: #A7B2AE; --rule: #2B3533;
   --band: #0C1010; --band-ink: #EEF0EC; --band-muted: #A7B2AE;
   --key: #1F2726; --key-edge: #070909; --accent: #E8834D; --accent-edge: #9A4B22; --accent-ink: #151A1A;
-  --signal: #4FB3A0; --frame: #1F2726; --frame-ink: #A7B2AE; --glow-mix: 26%;
+  --signal: #4FB3A0; --frame: #1F2726; --frame-ink: #A7B2AE; --glow-mix: 45%;
 }
 .temper-strip { display: none; }
 [data-theme="temper"] .temper-strip { display: block; height: 4px; background: linear-gradient(90deg, #E2C77A, #D4A443, #9B6B3F, #6E4A8E, #3D5FB0, #7FA6D6); }
@@ -89,11 +89,15 @@ if (tex === 'none') delete document.documentElement.dataset.tex; else if (tex) d
   --tex-key: var(--tex-page); --tex-key-size: 160px; --tex-key-op: .3; }
 [data-tex="cast"] { --tex-page: url("tex/cast.webp"); --tex-page-op: .9; }
 [data-tex="sand"] { --tex-key: url("tex/sand.webp"); --tex-key-op: .9; }
-[data-tex="cast-sand"] { --tex-page: url("tex/cast.webp"); --tex-page-op: .9; --tex-key: url("tex/sand.webp"); --tex-key-op: .9; }
+[data-tex="cast-sand"] { --tex-page: url("tex/cast.webp"); --tex-page-op: .9; --tex-key: url("tex/sand.webp"); --tex-key-op: .9; --tex-key-size: 256px; }
 [data-tex] body { position: relative; background: transparent; }
 [data-tex] body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: var(--tex-page, none) center / var(--tex-page-size, 512px) repeat; opacity: var(--tex-page-op, 0); mix-blend-mode: soft-light; }
 [data-tex] .key, [data-tex] .frame { position: relative; isolation: isolate; }
+.key:nth-child(2)::before { background-position: 113px 47px; }
+.key:nth-child(3)::before { background-position: 201px 151px; }
+.key:nth-child(4)::before { background-position: 59px 223px; }
+[data-tex] .frame::before { opacity: calc(var(--tex-key-op, 0) * .55); }
 [data-tex] .key::before, [data-tex] .frame::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
   background: var(--tex-key, none) center / var(--tex-key-size, 384px) repeat; opacity: var(--tex-key-op, 0); mix-blend-mode: soft-light; }
 * { box-sizing: border-box; }
@@ -111,7 +115,7 @@ a { color: inherit; text-decoration-color: var(--accent-2, var(--accent)); text-
   font-family: Archivo, system-ui, sans-serif; font-stretch: 112%;
 }
 h1, h2, h3 { font-family: Archivo, system-ui, sans-serif; font-stretch: 118%; font-weight: 750; letter-spacing: -.02em; line-height: 1.02; margin: 0; text-wrap: balance; }
-h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); }
+h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); max-width: 6em; }
 h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); }
 h3 { font-size: 1.35rem; letter-spacing: -.01em; }
 p { margin: 0; max-width: 62ch; }
@@ -142,7 +146,7 @@ header .wrap { display: flex; align-items: center; gap: 32px; height: 84px; }
 .frame {
   grid-column: 1; aspect-ratio: 16 / 9; color: var(--frame-ink);
   background-color: var(--frame);
-  background-image: radial-gradient(90% 70% at 50% 115%, color-mix(in srgb, var(--accent) var(--glow-mix, 0%), transparent), transparent 70%);
+  background-image: radial-gradient(110% 85% at 50% 118%, color-mix(in srgb, var(--accent) var(--glow-mix, 0%), transparent), transparent 70%);
   display: grid; place-items: center; font: 600 .8rem/1.4 Archivo, sans-serif; font-stretch: 112%;
   text-align: center; padding: 16px; align-content: center; gap: 18px;
 }
@@ -163,6 +167,10 @@ header .wrap { display: flex; align-items: center; gap: 32px; height: 84px; }
 .status { display: flex; align-items: center; gap: 10px; margin-top: 24px; font-size: .9rem; font-weight: 600; }
 .status::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--signal); }
 .note { font-size: .85rem; color: var(--muted); margin-top: 6px; }
+.sheet dd small { display: block; max-width: 26ch; margin-top: 3px; font: 400 .8rem/1.35 "Source Serif 4", Georgia, serif; color: var(--muted); }
+.tbd { color: var(--muted); font-style: italic; }
+.paths { display: flex; flex-wrap: wrap; gap: 4px 24px; margin-top: -4px; }
+.paths a { display: inline-block; padding: 14px 0; font: 600 .95rem Archivo, sans-serif; font-stretch: 112%; }
 
 /* Key-unit row */
 .keys { display: grid; grid-template-columns: 2.25fr 2fr 2.75fr 1.75fr; gap: 10px; padding: 0 0 72px; }
@@ -231,21 +239,21 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   .logo { width: 48px; height: 48px; }
   .hero, .band .wrap, .standards, .close { grid-template-columns: 1fr; }
   .sheet-card { grid-column: 1; grid-row: auto; }
-  .keys { grid-template-columns: 1fr 1fr; }
-  .key { min-height: 140px; }
+  .key { min-height: 150px; }
   .standards li { grid-template-columns: 1fr; gap: 6px; }
   .scale-row { grid-template-columns: 1fr; }
   .board[data-layout="75"], .board[data-layout="65"] { width: 87.7%; } /* 16u of 18.25u: still to scale */
 }
+@media (max-width: 680px) { .keys { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 520px) { .keys { grid-template-columns: 1fr; } .key { min-height: 0; } }
 @media (prefers-reduced-motion: reduce) { .btn, .key { transition: none; } }
 </style>
 </head>
 <body>
 <header><div class="wrap">
-  <a href="#" aria-label="Yoru Foundry home"><img class="logo" src="../src/static/assets/yoru-foundry-logo-v5.webp" alt=""></a>
+  <a href="#" aria-label="Yoru Foundry home"><img class="logo" src="tex/logo-trim.webp" alt=""></a>
   <nav class="nav" aria-label="Main"><a href="#">Crafted Art</a><a href="#">Trust the Process</a><a href="#">Built to Taste</a><a href="#">About</a></nav>
-  <a class="btn primary" href="#">Request a Commission</a>
+  <a class="btn" href="#">Request a Commission</a>
   <details class="menu"><summary>Menu</summary><nav aria-label="Main"><a href="#">Crafted Art</a><a href="#">Trust the Process</a><a href="#">Built to Taste</a><a href="#">About</a></nav></details>
 </div></header>
 <div class="temper-strip" aria-hidden="true"></div>
@@ -257,7 +265,8 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
     <div class="hero-copy">
       <h1>Refined by Craft.</h1>
       <p class="lede">Art can live in the objects we use every day. Yoru Foundry turns sound, material, function, and personal taste into pieces made to be felt, heard, and kept.</p>
-      <div class="actions"><a class="btn primary" href="#">Request a Commission</a><a href="#">See the process</a></div>
+      <div class="actions"><a class="btn primary" href="#">Request a Commission</a></div>
+      <p class="paths"><a href="#">New to custom boards? Start here</a><a href="#">I know my spec</a></p>
     </div>
     <aside class="sheet-card" aria-label="Build sheet">
       <div>
@@ -265,9 +274,11 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
         <dl class="sheet">
           <div><dt>Layout</dt><dd>75%</dd></div>
           <div><dt>Case</dt><dd>Aluminum</dd></div>
-          <div><dt>Mount</dt><dd>Gasket</dd></div>
-          <div><dt>Sound</dt><dd>Ember</dd></div>
+          <div><dt>Mount</dt><dd>Gasket<small>Isolated mounting that can allow a softer response.</small></dd></div>
+          <div><dt>Sound</dt><dd>Ember<small class="tbd">Description to come</small></dd></div>
           <div><dt>Build window</dt><dd>2–5 weeks</dd></div>
+          <div><dt>Starting budget</dt><dd class="tbd">To be confirmed</dd></div>
+          <div><dt>Bring your own parts</dt><dd>Welcome<small class="tbd">Details to come</small></dd></div>
         </dl>
       </div>
       <div>
@@ -296,7 +307,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
         <button class="play" disabled aria-label="Play sound test (recording not available yet)"><svg viewBox="0 0 12 14"><path d="M0 0l12 7-12 7z"/></svg></button>
         <svg id="wave" viewBox="0 0 600 72" preserveAspectRatio="none" aria-hidden="true"></svg>
       </div>
-      <p class="label">YF-001 sound test (placeholder)</p>
+      <p class="label">YF-001 sound test: recording coming soon</p>
     </div>
   </div>
 </section>

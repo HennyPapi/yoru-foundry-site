@@ -274,7 +274,9 @@ homepage leads into them, not what they are.
 1. Approve the direction, or tell me what to change.
 2. ~~Does the Nocturne palette have to stay?~~ **Answered:** no. **Chosen:** Verdigris (section 3).
 3. Reference sites: received (section 7). To check them against the live sites, allow the four domains in this environment's network settings or send screenshots.
-4. Copy and real numbers for the "what every build gets" list, the queue line, and the hero strip (lead time, starting budget, bring-your-own-parts).
+4. Copy and real numbers, now shown as marked gaps in the mockup build sheet: starting budget, bring-your-own-parts details,
+   a description of the "Ember" sound profile, and the wording of the two entry links ("New to custom boards? Start here",
+   "I know my spec"). Also the "what every build gets" list and the queue line.
 5. ~~Fix the P0 Bone contrast bug now?~~ **Done** in its own commit (1.72:1 → 4.75:1).
 6. Hero H1 wording. It must say "keyboards."
 7. Verdigris changes the critical first-paint colors in `AGENTS.md` (body `#151A1A`, header on Cast). OK to change those rules?
