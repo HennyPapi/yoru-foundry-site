@@ -66,6 +66,12 @@ hero media frame.
   is pressed. Key data: `src/static/data/header-keys.json`, rendered by `build.js`. Renders and their tools:
   `mockups/keys/`. Coil hidden below 1180px, cable below 1000px; at 860px and below: medallion, Commission key and a
   menu icon, with the links as text in a panel. No Products menu at launch.
+- Homepage (rebuilt 2026-10-06 from `mockups/home.html`): the 75% drawing in a frame lit faintly copper from below,
+  "Forged by night." in Aboreto, the line beneath, the copper Enter key, two entry links (New to custom boards? Start
+  here → Built to Taste; I know my spec → request page) and the build sheet beside them (rows from YF-001's `sheet` and
+  `COMMISSION_TERMS` in content.js); four section keys (About: "The one who keeps the forge lit after dark."); the
+  deep sound band; the ruled standards list; layouts drawn to scale from `LAYOUTS`; the closing line with the copper
+  key and the Why Yoru link. Page keys are written as `<yf-key cap="c2.25" ...>` and rendered by build.js.
 - Request a Commission (rebuilt 2026-10-06): status line with a verdigris dot, the H1 and intro on the canvas; the
   form on a raised Green Sand surface with inset Cast fields (Cinzel labels, Alegreya input text, Pewter chevrons);
   submit is the copper Enter keycap (`/assets/keys/c2.25*.webp`, legend as real text), the only copper key on the

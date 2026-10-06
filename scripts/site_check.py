@@ -43,7 +43,7 @@ SOURCE_DIR = "src"                  # where edits actually go
 SITE_HOSTS = {"yorufoundry.com", "www.yorufoundry.com"}
 THEME_TOKEN = "--cast"              # <meta name="theme-color"> must equal this token (Verdigris)
 CRITICAL_STYLE_MARKER = "critical-yf-theme"
-HERO_KEYWORD = "keyboard"           # Phase 7: homepage headline must contain this
+HERO_KEYWORD = "keyboard"           # Phase 7: the homepage must say what it makes, in the <h1> or the <title>
 MIN_CREAM_PER_PAGE = 0              # Verdigris has no light section (2026-10-06); old pages keep interim ones...
 MAX_CREAM_PER_PAGE = 0              # ...until each page is rebuilt (cream cards count individually)
 CREAM_EXTRA_SELECTORS = [".story-tile"]          # cream surfaces the checker can't detect on its own, e.g. [".process-card"]
@@ -739,8 +739,9 @@ def main():
         if os.path.basename(p) == "index.html" and os.path.dirname(p) == root:
             if not parser.h1:
                 report.error("7", "Homepage has no <h1>", name, "")
-            elif HERO_KEYWORD not in parser.h1.lower():
-                report.error("7", f"Hero headline doesn't say '{HERO_KEYWORD}s'", name, f"'{parser.h1}'")
+            elif HERO_KEYWORD not in parser.h1.lower() and HERO_KEYWORD not in parser.title.lower():
+                # "Forged by night." (Mike, 2026-10-06) leaves "keyboards" to the title and meta description
+                report.error("7", f"Homepage doesn't say '{HERO_KEYWORD}s' in its headline or title", name, f"'{parser.h1}'")
 
         if not is_404:
             t = " ".join(parser.title.split())

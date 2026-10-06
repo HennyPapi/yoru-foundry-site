@@ -47,7 +47,6 @@ Reference sites received (Alexotos, Keycult, Angry Miao, Mode Designs); see `DES
 Still waiting on Mike: whether the palette must stay, and approval of the plan.
 
 Known small issues (fix when touching these areas):
-- The homepage hero placeholder caption overflows the right edge of its frame on desktop.
 - The Crafted Art 75% card copy says "Our first focused layout"; the rules require first person ("my").
   Copy is Mike's call, so ask.
 
@@ -61,7 +60,7 @@ Known small issues (fix when touching these areas):
 | 3.5 | Surface/texture system, footer normalization, first paint | Done: no texture (Mike), one footer on all 17 pages (measured identical: 245px desktop, 410px phone), Cast first paint |
 | 4–5 | *Not defined in the repo; Mike to confirm what these were* | ? |
 | 6 | Header: one header on every page | Done: keyboard-row header with the LED cable (2026-10-06) |
-| 7 | Homepage hero and message | Planned (needs Mike's copy) |
+| 7 | Homepage hero and message | Done: rebuilt from `mockups/home.html` (2026-10-06); "keyboards" lives in the title and meta description |
 | 8 | Media and sound readiness | Planned |
 | 9 | Footer redesign (four columns) | Planned |
 | 10 | Commission form sends without `mailto:` | Planned (needs a decision). Form restyled in Verdigris (2026-10-06); lower half of the page still old |

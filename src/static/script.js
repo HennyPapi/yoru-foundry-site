@@ -14,12 +14,6 @@ function yfBuildHref(build){return "/commission.html?id="+encodeURIComponent(bui
 function yfVisibleBuilds(){return siteMode==="live"?builds.filter(build=>build.status!=="placeholder"):builds}
 function yfStatusLabel(status){return ({placeholder:"PRELAUNCH STUDY","in-progress":"IN PROGRESS",built:"BUILT",available:"AVAILABLE"})[status]||String(status||"").toUpperCase()}
 function yfApplySiteMode(){
-  const eyebrow=document.querySelector("[data-site-hero-eyebrow]");
-  if(eyebrow)eyebrow.textContent=siteModeContent.heroEyebrow||"YORU FOUNDRY";
-  const cta=document.querySelector("[data-site-hero-cta]");
-  if(cta){cta.textContent=siteModeContent.heroCta?.label||"Explore Crafted Art";cta.href=siteModeContent.heroCta?.href||"/crafted-art.html"}
-  const heroStatus=document.querySelector("[data-site-hero-status]");
-  if(heroStatus)heroStatus.textContent=siteModeContent.heroStatus||"Built one at a time";
   document.querySelectorAll(".site-footer").forEach(footer=>{
     let line=footer.querySelector("[data-site-footer-status]");
     if(!line){
@@ -45,29 +39,6 @@ function yfRenderArchive(){
     const image=build.images?.[0]||"/img/placeholder-4x5.svg";
     return '<a href="'+yfBuildHref(build)+'" class="archive-entry'+(placeholder?' is-placeholder':'')+'"><div class="archive-media"><img src="'+yfEscape(image)+'" alt="" width="1200" height="1500" loading="lazy" decoding="async"></div><div class="archive-copy"><span class="archive-status">'+yfEscape(yfStatusLabel(build.status))+' • '+yfEscape(build.id)+' • '+yfEscape(build.layout||"")+'</span><h2>'+yfEscape(build.name)+'</h2><p>'+yfEscape(build.summary)+'</p><div class="archive-specs" aria-label="Build specifications"><span><b>CASE</b><em>'+yfEscape(build.specs?.case||"")+'</em></span><span><b>SWITCHES</b><em>'+yfEscape(build.specs?.switches||"")+'</em></span><span><b>MOUNT</b><em>'+yfEscape(build.specs?.mount||"")+'</em></span></div></div></a>';
   }).join("");
-}
-function yfRenderHomeBuild(){
-  const visible=yfVisibleBuilds();
-  const build=visible[0]||builds[0];
-  if(!build)return;
-  const home=build.home||{};
-  const media=document.querySelector("[data-hero-build-media]");
-  if(media)media.innerHTML='<img src="'+yfEscape(build.heroImage||"/img/placeholder-16x9.svg")+'" alt="" width="1600" height="900" decoding="async"><span class="showpiece-index">'+yfEscape(build.id.replace("-"," / "))+'</span><div class="showpiece-caption">'+yfEscape(home.heroCaption||build.summary)+'</div>';
-  const heroSpecs=Array.isArray(home.heroSpecs)&&home.heroSpecs.length?home.heroSpecs:[build.specs.case,build.specs.mount,build.specs.switches];
-  const specs=document.querySelector("[data-hero-build-specs]");
-  if(specs)specs.innerHTML=heroSpecs.map(value=>'<span>'+yfEscape(value)+'</span>').join("");
-  const feature=document.querySelector("[data-featured-build]");
-  if(feature){
-    feature.classList.toggle("is-placeholder",build.status==="placeholder");
-    const featureSpecs=Array.isArray(home.featuredSpecs)&&home.featuredSpecs.length?home.featuredSpecs:[
-      {label:"Layout",value:build.layout},
-      {label:"Plate",value:build.specs.plate},
-      {label:"Case",value:build.specs.case},
-      {label:"Mount",value:build.specs.mount}
-    ];
-    const featureMedia=home.featuredMediaLabel?'<div class="featured-photo">'+yfEscape(home.featuredMediaLabel)+'</div>':'<div class="featured-photo"><img src="'+yfEscape(build.images?.[0]||"/img/placeholder-4x5.svg")+'" alt="" width="1200" height="1500" loading="lazy" decoding="async"></div>';
-    feature.innerHTML=featureMedia+'<div class="featured-copy"><p class="eyebrow">'+yfEscape(home.featuredEyebrow||(yfStatusLabel(build.status)+" • "+build.id))+'</p><h2>'+yfEscape(home.featuredHeading||build.name)+'</h2><p>'+yfEscape(home.featuredBody||build.notes)+'</p><dl class="commission-specs">'+featureSpecs.map(item=>'<div><dt>'+yfEscape(item.label)+'</dt><dd>'+yfEscape(item.value)+'</dd></div>').join("")+'</dl><a class="text-link" href="'+yfEscape(home.featuredHref||yfBuildHref(build))+'">'+yfEscape(home.featuredLinkLabel||("View "+build.id+" record →"))+'</a></div>';
-  }
 }
 function yfSoundPlayer(sample){
   if(!sample)return '<p>Audio reference is not available yet.</p>';
@@ -96,7 +67,6 @@ function yfRenderBuildDetail(){
 }
 yfApplySiteMode();
 yfRenderArchive();
-yfRenderHomeBuild();
 yfRenderSoundPlayers();
 yfRenderBuildDetail();
 

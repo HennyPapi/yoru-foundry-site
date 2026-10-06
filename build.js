@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-10-rgb",
+  stylesheetVersion: "vg-11-home",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
 });
@@ -92,32 +92,46 @@ function renderCommissionDetail(build, soundSamples) {
   return '<section class="page-hero-shell section-shell"><div class="section-shell-frame"><div class="page-hero"><p class="eyebrow">' + escapeHtml(statusLabel(build.status)) + ' • ' + escapeHtml(build.id) + ' • ' + escapeHtml(build.layout) + '</p><h1>' + escapeHtml(build.name) + '</h1><p>' + escapeHtml(build.summary) + '</p></div></div></section><section class="commission-hero-media"><img src="' + escapeHtml(build.heroImage || "/img/placeholder-16x9.svg") + '" alt="" width="1600" height="900"></section><section class="commission-story"><div><p class="eyebrow">THE RECORD</p><h2>Documented around intent, not a catalog SKU.</h2></div><div><p>' + escapeHtml(build.notes) + '</p></div></section><section class="commission-detail-grid"><article><span>Case</span><strong>' + escapeHtml(build.specs.case) + '</strong></article><article><span>Plate</span><strong>' + escapeHtml(build.specs.plate) + '</strong></article><article><span>Switches</span><strong>' + escapeHtml(build.specs.switches) + '</strong></article><article><span>Lube</span><strong>' + escapeHtml(build.specs.lube) + '</strong></article><article><span>Keycaps</span><strong>' + escapeHtml(build.specs.keycaps) + '</strong></article><article><span>Mount</span><strong>' + escapeHtml(build.specs.mount) + '</strong></article></section><section class="commission-media-grid">' + details.map((src) => '<div class="detail-media"><img src="' + escapeHtml(src) + '" alt="" width="1000" height="1000" loading="lazy" decoding="async"></div>').join("") + '</section><section class="sound-sample"><div><p class="eyebrow">STANDARDIZED SOUND TEST</p><h2>Hear the build under the same conditions.</h2><p>The player footprint is already locked so a real recording can replace the silent reference without moving the layout.</p></div><div class="compare-audio build-audio">' + renderSoundPlayer(audioSample) + '</div></section><section class="commission-story"><div><p class="eyebrow">PROCESS NOTES</p><h2>Why these choices.</h2></div><div><p>' + escapeHtml(build.processNotes || build.notes) + '</p><a class="text-link" href="/request-a-build.html?layout=' + encodeURIComponent(build.layout) + '">Request a ' + escapeHtml(build.layout) + ' commission →</a></div></section>';
 }
 
+function renderBoard(layout, id, live) {
+  if (!layout) fail(`content.js: unknown layout "${id}"`);
+  let y = 0, w = 0, keys = "";
+  layout.rows.forEach((row, i) => {
+    let x = 0;
+    row.forEach((u, j) => {
+      if (u < 0) { x -= u; return; }
+      const esc = live && i === 0 && j === 0 && !layout.noEsc;
+      keys += `<rect${esc ? ' class="esc"' : ""} x="${(x + 0.06).toFixed(2)}" y="${(y + 0.06).toFixed(2)}" width="${(u - 0.12).toFixed(2)}" height=".88" rx=".12"/>`;
+      x += u;
+    });
+    w = Math.max(w, x); y += 1 + (i === 0 ? layout.gapAfterFirst || 0 : 0);
+  });
+  return `<svg class="board${live ? " live" : ""}" viewBox="0 0 ${w} ${y}" role="img" aria-label="${escapeHtml(layout.name)} layout">${keys}</svg>`;
+}
+
 function renderDataBackedContent(html, content) {
   const modeContent = (content.SITE_MODE_CONTENT || {})[content.SITE_MODE] || (content.SITE_MODE_CONTENT || {}).prelaunch || {};
   const builds = Array.isArray(content.BUILDS) ? content.BUILDS : [];
   const visible = visibleBuilds(content);
   const build = visible[0] || builds[0];
 
-  html = html.replace(/(<p class="kicker" data-site-hero-eyebrow>)[\s\S]*?(<\/p>)/, (_, open, close) => open + escapeHtml(modeContent.heroEyebrow || "YORU FOUNDRY") + close);
-  html = html.replace(/<a class="button primary" data-site-hero-cta href="[^"]*">[\s\S]*?<\/a>/, () => '<a class="button primary" data-site-hero-cta href="' + escapeHtml(modeContent.heroCta?.href || "/crafted-art.html") + '">' + escapeHtml(modeContent.heroCta?.label || "Explore Crafted Art") + "</a>");
-  html = html.replace(/(<span data-site-hero-status>)[\s\S]*?(<\/span>)/, (_, open, close) => open + escapeHtml(modeContent.heroStatus || "Built one at a time") + close);
-
-  if (build) {
-    const home = build.home || {};
-    const heroSpecs = Array.isArray(home.heroSpecs) && home.heroSpecs.length ? home.heroSpecs : [build.specs?.case, build.specs?.mount, build.specs?.switches];
-    html = html.replace(/(<div class="hero-showpiece-frame" data-hero-build-media>)[\s\S]*?(<\/div>)/, (_, open, close) => open + '<img src="' + escapeHtml(build.heroImage || "/img/placeholder-16x9.svg") + '" alt="" width="1600" height="900" decoding="async">' + '<span class="showpiece-index">' + escapeHtml(build.id.replace("-", " / ")) + "</span>" + '<div class="showpiece-caption">' + escapeHtml(home.heroCaption || build.summary) + "</div>" + close);
-    html = html.replace(/(<div class="showpiece-specs" data-hero-build-specs>)[\s\S]*?(<\/div>)/, (_, open, close) => open + heroSpecs.map((value) => "<span>" + escapeHtml(value) + "</span>").join("") + close);
-
-    const featureSpecs = Array.isArray(home.featuredSpecs) && home.featuredSpecs.length ? home.featuredSpecs : [
-      { label: "Layout", value: build.layout },
-      { label: "Plate", value: build.specs?.plate },
-      { label: "Case", value: build.specs?.case },
-      { label: "Mount", value: build.specs?.mount },
-    ];
-    const featureMedia = home.featuredMediaLabel ? '<div class="featured-photo">' + escapeHtml(home.featuredMediaLabel) + "</div>" : '<div class="featured-photo"><img src="' + escapeHtml(build.images?.[0] || "/img/placeholder-4x5.svg") + '" alt="" width="1200" height="1500" loading="lazy" decoding="async"></div>';
-    const featureHtml = featureMedia + '<div class="featured-copy"><p class="eyebrow">' + escapeHtml(home.featuredEyebrow || (statusLabel(build.status) + " • " + build.id)) + "</p><h2>" + escapeHtml(home.featuredHeading || build.name) + "</h2><p>" + escapeHtml(home.featuredBody || build.notes) + '</p><dl class="commission-specs">' + featureSpecs.map((item) => "<div><dt>" + escapeHtml(item.label) + "</dt><dd>" + escapeHtml(item.value) + "</dd></div>").join("") + '</dl><a class="text-link" href="' + escapeHtml(home.featuredHref || buildHref(build)) + '">' + escapeHtml(home.featuredLinkLabel || ("View " + build.id + " record →")) + "</a></div>";
-    html = html.replace(/(<section class="featured-commission editorial-light" data-featured-build>)[\s\S]*?(<\/section>)/, (_, open, close) => open + featureHtml + close);
-  }
+  // Homepage build sheet: the first visible build's facts, then the commission terms and status.
+  html = html.replace(/<aside class="build-sheet" data-build-sheet><\/aside>/, () => {
+    if (!build) fail("index.html: the build sheet needs at least one build in content.js");
+    const row = (item) => "<div><dt>" + escapeHtml(item.label) + "</dt><dd>" + escapeHtml(item.value) + (item.note ? "<small>" + escapeHtml(item.note) + "</small>" : "") + "</dd></div>";
+    const rows = [...(build.sheet || []), ...(content.COMMISSION_TERMS || [])];
+    return '<aside class="build-sheet" aria-labelledby="build-sheet-title"><div class="build-sheet-head"><h2 id="build-sheet-title">Build sheet</h2><span class="serial">' + escapeHtml(build.id) + (build.nickname ? " \u201c" + escapeHtml(build.nickname) + "\u201d" + (build.status === "placeholder" ? " (placeholder)" : "") : "") + '</span></div><dl>' + rows.map(row).join("") + '</dl><p class="build-status"><span class="status-light" aria-hidden="true"></span>' + escapeHtml(modeContent.heroStatus || "Currently accepting commissions") + '</p><p class="build-status-note">' + escapeHtml(modeContent.statusNote || "") + "</p></aside>";
+  });
+  // Keyboard layouts drawn at one shared scale; the 75% is drawn live with its Esc key in copper.
+  html = html.replace(/<svg data-board="([\w]+)"( class="live")?><\/svg>/g, (_, id, live) => renderBoard(content.LAYOUTS?.[id], id, Boolean(live)));
+  // Placeholder waveform (a fixed shape, not a recording).
+  html = html.replace(/<svg data-wave><\/svg>/, () => {
+    let bars = "";
+    for (let i = 0; i < 100; i++) {
+      const h = 8 + Math.abs(Math.sin(i * 0.37) * Math.cos(i * 0.11) * 58) + (i % 7 === 0 ? 6 : 0);
+      bars += '<rect' + (i < 34 ? ' class="lit"' : "") + ' x="' + i * 6 + '" y="' + (36 - h / 2).toFixed(1) + '" width="3" height="' + h.toFixed(1) + '" rx="1.5"/>';
+    }
+    return '<svg class="wave" viewBox="0 0 600 72" preserveAspectRatio="none" aria-hidden="true">' + bars + "</svg>";
+  });
 
   html = html.replace(/(<section class="archive-grid" data-archive-grid aria-live="polite">)[\s\S]*?(<\/section>)/, (_, open, close) => {
     if (!visible.length) return open + '<div class="archive-empty"><p class="eyebrow">ARCHIVE IN PROGRESS</p><h2>I will add finished commissions here as they are completed and documented.</h2></div>' + close;
@@ -158,16 +172,21 @@ function renderDataBackedContent(html, content) {
 }
 // One header key: three rendered frames (idle, hover, pressed) stacked, with the legend as real text on the
 // cap's top face. The current page's key shows pressed. Metrics come from src/static/data/header-keys.json.
-function renderKey(item, page, headerKeys, extraClass = "") {
+function renderKey(item, page, headerKeys, extraClass = "", led = true) {
   const cap = headerKeys.caps[item.cap];
   if (!cap) fail(`header-keys.json: unknown cap "${item.cap}" for ${item.name}`);
   const [fx, fy] = cap.f.idle, [hx, hy] = cap.f["-hover"], [px, py] = cap.f["-press"];
   const style = `--w:${cap.w}px;--ml:-${cap.bl}px;--mr:-${cap.br}px;--fx:${fx}%;--fy:${fy}%;--fxh:${hx}%;--fyh:${hy}%;--fxp:${px}%;--fyp:${py}%`;
   const frames = ["", "-hover", "-press"]
-    .map((s, i) => `<img${i ? ` class="${"hp"[i - 1]}"` : ""} src="/assets/keys/${item.cap}${s}.webp" alt="" width="${Math.round(cap.w)}" height="74">`)   // every key render shares one 74px-tall plate band
+    .map((s, i) => `<img${i ? ` class="${"hp"[i - 1]}"` : ""} src="/assets/keys/${item.cap}${s}.webp" alt="" width="${Math.round(cap.w)}" height="${cap.h || 74}">`)   // header renders share one 74px-tall plate band
     .join("");
   const current = page.activeNav === item.activeNav ? ' aria-current="page"' : "";
-  return `<a class="k${extraClass ? ` ${extraClass}` : ""}" style="${style}" href="${item.href}" aria-label="${escapeHtml(item.name)}"${current}><span class="halo" aria-hidden="true"></span><span class="under" aria-hidden="true"></span>${frames}<span class="legend glow-text" aria-hidden="true">${item.legend}</span><span class="legend" aria-hidden="true">${item.legend}</span></a>`;
+  const cls = `k${extraClass ? ` ${extraClass}` : ""}`;
+  if (!led) {   // a page key: the legend is its visible, accessible text
+    const open = item.type ? `<button class="${cls}" style="${style}" type="${item.type}">` : `<a class="${cls}" style="${style}" href="${item.href}">`;
+    return `${open}${frames}<span class="legend">${item.legend}</span>${item.type ? "</button>" : "</a>"}`;
+  }
+  return `<a class="${cls}" style="${style}" href="${item.href}" aria-label="${escapeHtml(item.name)}"${current}><span class="halo" aria-hidden="true"></span><span class="under" aria-hidden="true"></span>${frames}<span class="legend glow-text" aria-hidden="true">${item.legend}</span><span class="legend" aria-hidden="true">${item.legend}</span></a>`;
 }
 
 function replaceTokens(template, values, label) {
@@ -285,6 +304,10 @@ function renderPage(entry, partials, content, headerKeys) {
   );
 
   let html = replaceTokens(template, { HEAD: head, HEADER: header, FOOTER: footer, SCRIPTS: scripts }, label);
+  html = html.replace(/<yf-key([^>]*)>([\s\S]*?)<\/yf-key>/g, (_, attrs, legend) => {
+    const attr = (name) => (attrs.match(new RegExp(`${name}="([^"]*)"`)) || [])[1];
+    return renderKey({ cap: attr("cap"), href: attr("href"), type: attr("type"), legend }, page, headerKeys, attr("class") || "", false);
+  });
   html = renderDataBackedContent(html, content);
   if (!html.trim()) fail(`${label}: produced no output`);
   return `${GENERATED_HEADER}\n${html}`;

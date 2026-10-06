@@ -2,17 +2,32 @@ const SITE_MODE = "__SITE_MODE__"; // "prelaunch" | "live"
 
 const SITE_MODE_CONTENT = {
   prelaunch: {
-    heroEyebrow: "YORU FOUNDRY / EST. 2026",
-    heroCta: { label: "Explore Crafted Art", href: "/crafted-art.html" },
     heroStatus: "Currently accepting commissions",
+    statusNote: "Typical build window: approximately 2–5 weeks after parts are confirmed.",
     footerStatus: "Built one at a time in Miami."
   },
   live: {
-    heroEyebrow: "YORU FOUNDRY / EST. 2026",
-    heroCta: { label: "Explore Crafted Art", href: "/crafted-art.html" },
     heroStatus: "Currently accepting commissions",
+    statusNote: "Typical build window: approximately 2–5 weeks after parts are confirmed.",
     footerStatus: "Commission-built one at a time • I document each finished build after tuning, testing, and photography."
   }
+};
+
+// Commission terms shown on the homepage build sheet (Mike, 2026-10-06).
+const COMMISSION_TERMS = [
+  { label: "Build window", value: "2–5 weeks" },
+  { label: "Starting budget", value: "From $250" },
+  { label: "Bring your own parts", value: "Welcome", note: "Priced after I check which of your parts work." }
+];
+
+// Keyboard layouts as rows of key widths in units (negative = a gap), drawn at one shared scale.
+const LAYOUTS = {
+  "75": { name: "75%", status: "Available", href: "/products-keyboards.html", blurb: "Balanced, compact and complete.", gapAfterFirst: 0.25,
+    rows: [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,2,1],[1.5,1,1,1,1,1,1,1,1,1,1,1,1,1.5,1],[1.75,1,1,1,1,1,1,1,1,1,1,1,2.25,1],[2.25,1,1,1,1,1,1,1,1,1,1,1.75,1,1],[1.25,1.25,1.25,6.25,1,1,1,1,1,1]] },
+  "65": { name: "65%", status: "Coming soon", blurb: "Compact, practical, and enthusiast-friendly.", gapAfterFirst: 0, noEsc: true,
+    rows: [[1,1,1,1,1,1,1,1,1,1,1,1,1,2,1],[1.5,1,1,1,1,1,1,1,1,1,1,1,1,1.5,1],[1.75,1,1,1,1,1,1,1,1,1,1,1,2.25,1],[2.25,1,1,1,1,1,1,1,1,1,1,1.75,1,1],[1.25,1.25,1.25,6.25,1,1,1,1,1,1]] },
+  "tkl": { name: "TKL / 80%", status: "Coming soon", blurb: "Traditional control with a cleaner footprint.", gapAfterFirst: 0.5,
+    rows: [[1,-1,1,1,1,1,-0.5,1,1,1,1,-0.5,1,1,1,1,-0.25,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,2,-0.25,1,1,1],[1.5,1,1,1,1,1,1,1,1,1,1,1,1,1.5,-0.25,1,1,1],[1.75,1,1,1,1,1,1,1,1,1,1,1,2.25],[2.25,1,1,1,1,1,1,1,1,1,1,2.75,-1.25,1],[1.25,1.25,1.25,6.25,1.25,1.25,1.25,1.25,-0.25,1,1,1]] }
 };
 
 const BUILDS = [
@@ -22,22 +37,13 @@ const BUILDS = [
     status: "placeholder",
     date: "PRELAUNCH DOCUMENTATION SLOT",
     layout: "75%",
-    home: {
-      heroCaption: "Placeholder for cinematic macro photography or a slow build video loop",
-      heroSpecs: ["CNC ALUMINUM", "GASKET MOUNT", "HAND TUNED"],
-      featuredMediaLabel: "Placeholder — full-width editorial build photography",
-      featuredEyebrow: "FEATURED COMMISSION • YF-001",
-      featuredHeading: "Built around a feeling, not a parts list.",
-      featuredBody: "This placeholder commission demonstrates how future Yoru builds will be presented: the customer's goal, material choices, sound direction, layout, and the decisions that shaped the final result.",
-      featuredSpecs: [
-        { label: "Layout", value: "75%" },
-        { label: "Sound", value: "Ember" },
-        { label: "Case", value: "Aluminum" },
-        { label: "Mount", value: "Gasket" }
-      ],
-      featuredHref: "/commission-yf-001.html",
-      featuredLinkLabel: "View Commission YF-001 →"
-    },
+    nickname: "Ember",
+    // Homepage build sheet: the build's own facts (the commission terms follow from COMMISSION_TERMS).
+    sheet: [
+      { label: "Layout", value: "75%" },
+      { label: "Case", value: "Aluminum" },
+      { label: "Mount", value: "Gasket", note: "Isolated mounting that can allow a softer response." }
+    ],
     summary: "Reserved archive entry showing the final card density, media proportions, and specification hierarchy a completed commission will use.",
     heroImage: "/img/placeholder-16x9.svg",
     images: ["/img/placeholder-4x5.svg"],
@@ -251,4 +257,4 @@ keycap:[["PBT","Textured and durable with its own density and pitch."],["ABS","S
 mount:[["Gasket","Isolated mounting that can allow a softer response."],["Top Mount","More direct attachment and controlled firmness."],["Tray Mount","Simple, rigid mounting with a distinct feel."]]
 };
 
-window.YORU_CONTENT = Object.freeze({ SITE_MODE, SITE_MODE_CONTENT, BUILDS, SOUND_SAMPLES, STORIES, COMPARE_OPTIONS });
+window.YORU_CONTENT = Object.freeze({ SITE_MODE, SITE_MODE_CONTENT, COMMISSION_TERMS, LAYOUTS, BUILDS, SOUND_SAMPLES, STORIES, COMPARE_OPTIONS });
