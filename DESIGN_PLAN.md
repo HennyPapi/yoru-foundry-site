@@ -30,6 +30,45 @@ Why it reads as "AI-made":
   - The layout picker shows "75% / 65% / TKL" as type only, when the real difference is physical size.
   - Sound gets one word, though sound is half of why people commission a custom board.
 
+### 1b. Impeccable critique (scored)
+
+`/impeccable critique` on `src/index.html`: **19/36, Acceptable**. Heuristic 9 is n/a because the page has
+no inputs. The full report is in `.impeccable/critique/`. It agrees with the manual critique above and adds:
+
+- **[P0] Unreadable text on Bone.** A night-only grey (`--muted-dark`) is used on the cream surface:
+  - portal card descriptions and the featured-commission spec labels: 1.72:1;
+  - mega-menu column labels: 1.72:1 at 9px;
+  - mega-menu copper links: about 3.25:1.
+
+  This is a live bug, worth fixing now on the current design whatever the redesign decides.
+- **[P1] "Keyboard" first appears about 92% of the way down the page.** The `<title>` and meta description
+  don't say it either.
+- **[P1] No reassurance at the commission decision.** Nowhere near either CTA mentions lead time
+  (2–5 weeks), budget, "consultation first" or bring-your-own-parts. Two equal-weight CTAs compete, plus a
+  third in the nav.
+- **[P2] Navigation shows scope that isn't offered.** Products lists 5 categories that are hidden at
+  launch, and the "Coming Soon" 65% / TKL items link to the request form.
+- **[P2] Mobile controls:**
+  - the menu button is 33×30px, under the 44px minimum;
+  - Escape doesn't close the mobile menu;
+  - the button's label stays "Open menu" while the menu is open;
+  - at 390px, the hero meta row wraps with an orphan bullet;
+  - at 820px, the portal cards leave an orphan third card.
+- **Text size.** Micro labels throughout are 9–10px.
+- **Detector false positives:**
+  - the grain textures (flagged as "stripes");
+  - padding on full-bleed shells;
+  - one contrast hit on the dark placeholder.
+
+What this changes in the plan:
+- **Hero:** one primary CTA. Next to it, a short build-sheet strip with lead time, starting budget,
+  "consultation first" and "bring your own parts welcome". This needs Mike's copy and numbers.
+- **Nav:** drop the Products mega menu for launch. Four plain links plus the commission keycap.
+- **Two entry paths:**
+  - "New to custom boards? Start here" leads to Built to Taste.
+  - "I know my spec" leads to the request form, with a bring-your-own-parts option.
+- **Text floor:** no text under 12px. Every text color states its legal surface, as `AGENTS.md` already requires.
+
 ## 2. Direction: "The Bench"
 
 The site should feel like Mike's bench at night: a bead-blasted aluminum case, a steel plate, one
@@ -219,6 +258,7 @@ Each step: `node build.js`, `python3 scripts/site_check.py` (0 errors), and a he
 1. Approve the direction, or tell me what to change.
 2. Does the Nocturne palette have to stay? (If so, only the colors in section 3 change.)
 3. Reference sites: received (section 7). To check them against the live sites, allow the four domains in this environment's network settings or send screenshots.
-4. Copy and real numbers for the "what every build gets" list and the queue line.
-5. Hero H1 wording. It must say "keyboards."
-6. The light-led canvas flips the critical first-paint colors in `AGENTS.md` (body, header). OK to change those rules?
+4. Copy and real numbers for the "what every build gets" list, the queue line, and the hero strip (lead time, starting budget, bring-your-own-parts).
+5. Fix the P0 Bone contrast bug now on the current design, before the redesign? (Small, separate commit.)
+6. Hero H1 wording. It must say "keyboards."
+7. The light-led canvas flips the critical first-paint colors in `AGENTS.md` (body, header). OK to change those rules?
