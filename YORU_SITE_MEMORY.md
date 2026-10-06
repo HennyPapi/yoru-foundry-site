@@ -19,8 +19,8 @@ direction and the reasoning behind it.
 
 - The copper and patina circular medallion: `/assets/yoru-foundry-logo-v5.webp` (128 × 128).
 - The raster has a baked black ring outside the copper rim. Use a circular cut just inside it (see
-  `mockups/tex/logo-trim.webp`); never redraw or recolor the medallion.
-- Header size about 56px desktop, 48px phone. The logo links home.
+  `/assets/yoru-foundry-logo-trim.webp`, used in the header); never redraw or recolor the medallion.
+- Header logo 64px desktop, 52px phone. The logo links home.
 
 ## 3. Palette — Verdigris (chosen 2026-10-06)
 
@@ -58,8 +58,11 @@ hero media frame.
 ## 6. Layout
 
 - Content max width about 1240px; side padding `clamp(16px, 4vw, 40px)`.
-- Header: Cast, logo left, nav right, plain keycap "Request a Commission". Below 860px the nav becomes a
-  "Menu" disclosure.
+- Header (built 2026-10-06): Cast, logo left, four links right (Crafted Art, Trust the Process, Built to Taste,
+  About; current page gets a copper underline), then the commission key: a rendered Green Sand Enter keycap
+  (`/assets/keys/commission-sand*.webp`, idle / hover / pressed) with the legend "Commission" as real text on the
+  cap, aria-label "Request a Commission". On the request page the key shows pressed. No Products menu at launch
+  (the product stub pages still build, unlinked). Below 860px the links fold into a panel under a "Menu" button.
 - Homepage order: hero (75% drawing frame, headline, one copper button, two entry links, build sheet) → section
   keys (Crafted Art, Trust the Process, Built to Taste, About) → sound band → "What I refuse to rush" ruled list
   → layouts drawn to relative scale (75 / 65 / TKL) → closing statement → footer.

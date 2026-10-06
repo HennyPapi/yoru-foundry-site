@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-3-fonts",
+  stylesheetVersion: "vg-4-header",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
 });
@@ -226,7 +226,7 @@ function renderPage(entry, partials, content) {
       FULL_TITLE: `${page.title} | ${config.siteTitle}`,
       CRITICAL_CSS: redirect
         ? "html,body{margin:0;background:#151A1A;color:#EEF0EC;min-height:100%;font-family:Alegreya,Georgia,serif}main{max-width:760px;margin:auto;padding:15vh 24px}a{color:#E8834D}"
-        : "html,body{margin:0;background:#151A1A;color:#EEF0EC;min-height:100%}body{min-height:100vh}.site-header{background:#EEF0EC;color:#151A1A}.nav,.nav a,.products-menu summary{color:#151A1A}.nav-cta{background:#1A2120!important;color:#EEF0EC!important;border:1px solid #E8834D!important}",
+        : "html,body{margin:0;background:#151A1A;color:#EEF0EC;min-height:100%}body{min-height:100vh}.site-header{background:#151A1A;color:#EEF0EC}.nav a,.nav-key-legend{color:#EEF0EC}.nav-key{display:inline-grid;position:relative}.nav-key img{grid-area:1/1}.nav-key .h,.nav-key .p{opacity:0}",
       STYLESHEET_VERSION: config.stylesheetVersion,
     },
     `${label} head`,
@@ -238,12 +238,11 @@ function renderPage(entry, partials, content) {
     : replaceTokens(
         partials.header,
         {
-          NAV_CRAFTED_ART: active("crafted-art") ? ' class="active"' : "",
-          NAV_TRUST: active("trust-the-process") ? ' class="active"' : "",
-          NAV_TASTE: active("built-to-taste") ? ' class="active"' : "",
-          NAV_ABOUT: active("about") ? ' class="active"' : "",
-          NAV_PRODUCTS: active("products") ? " active" : "",
-          NAV_REQUEST: active("request-a-build") ? " active" : "",
+          NAV_CRAFTED_ART: active("crafted-art") ? ' aria-current="page"' : "",
+          NAV_TRUST: active("trust-the-process") ? ' aria-current="page"' : "",
+          NAV_TASTE: active("built-to-taste") ? ' aria-current="page"' : "",
+          NAV_ABOUT: active("about") ? ' aria-current="page"' : "",
+          NAV_REQUEST: active("request-a-build") ? ' aria-current="page"' : "",
         },
         `${label} header`,
       );

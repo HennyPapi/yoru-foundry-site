@@ -60,7 +60,7 @@ Known small issues (fix when touching these areas):
 | 3 | Tokenized CSS system | Done |
 | 3.5 | Surface/texture system, footer normalization, first paint | **Paused** — redesign may replace the texture work |
 | 4–5 | *Not defined in the repo; Mike to confirm what these were* | ? |
-| 6 | Header: one header on every page | Planned |
+| 6 | Header: one header on every page | Done (Verdigris header, 2026-10-06) |
 | 7 | Homepage hero and message | Planned (needs Mike's copy) |
 | 8 | Media and sound readiness | Planned |
 | 9 | Footer redesign (four columns) | Planned |

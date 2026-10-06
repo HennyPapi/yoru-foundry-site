@@ -121,23 +121,6 @@ document.querySelectorAll("[data-story]").forEach(el=>el.addEventListener("click
 
 const form=document.getElementById("buildForm");if(form){const params=new URLSearchParams(location.search);const layoutParam=params.get("layout");const layoutSelect=form.querySelector('[name="layout"]');const locked=form.querySelector('[data-layout-locked]');if(layoutParam&&layoutSelect){let option=[...layoutSelect.options].find(o=>o.value===layoutParam||o.textContent===layoutParam);if(!option){option=new Option(layoutParam,layoutParam);layoutSelect.add(option)}layoutSelect.value=layoutParam;layoutSelect.disabled=true;layoutSelect.classList.add("locked-layout");if(locked)locked.value=layoutParam}form.addEventListener("submit",event=>{event.preventDefault();const data=new FormData(form);const layout=layoutParam||data.get("layout");const subject=`Yoru Foundry Build Request — ${data.get("name")}`;const body=["YORU FOUNDRY BUILD REQUEST","",`Name: ${data.get("name")}`,`Email: ${data.get("email")}`,`Layout: ${layout}`,`Budget range: ${data.get("budget")}`,`Switch feel: ${data.get("feel")}`,`Sound preference: ${data.get("sound")}`,"","Build details:",data.get("details")||"No additional details provided."].join("\n");location.href=`mailto:hello@yorufoundry.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`})}
 ;(()=>{
-  const dropdown=document.querySelector(".products-dropdown");
-  if(dropdown){
-    dropdown.classList.add("mega-menu");
-    dropdown.innerHTML='<div class="mega-col"><span>KEYBOARDS</span><a href="/products-keyboards.html">All Keyboards</a><a href="/request-a-build.html?layout=75%25">75%</a><a href="/request-a-build.html?layout=65%25">65% <small>Coming Soon</small></a><a href="/request-a-build.html?layout=TKL">TKL / 80% <small>Coming Soon</small></a></div><div class="mega-col"><span>DESK</span><a href="/products-deskmats.html">Desk Mats</a><a href="/products-mousepads.html">Mouse Pads</a><a href="/products-wristrests.html">Wrist Rests</a></div><div class="mega-col"><span>INPUT + MORE</span><a href="/products-mice.html">Mice</a><a href="/products-accessories.html">Accessories</a></div>';
-  }
-  const menu=document.querySelector(".products-menu");
-  if(menu){
-    const summary=menu.querySelector("summary");
-    const hover=matchMedia("(hover:hover) and (pointer:fine) and (min-width:861px)");
-    let timer;
-    document.addEventListener("click",e=>{if(menu.open&&!menu.contains(e.target))menu.open=false});
-    document.addEventListener("keydown",e=>{if(e.key==="Escape"&&menu.open){menu.open=false;summary?.focus()}});
-    menu.addEventListener("mouseenter",()=>{if(!hover.matches)return;clearTimeout(timer);menu.open=true});
-    menu.addEventListener("mouseleave",()=>{if(!hover.matches)return;clearTimeout(timer);timer=setTimeout(()=>{menu.open=false},250)});
-    summary?.addEventListener("click",e=>{if(hover.matches&&e.detail>0&&menu.open)e.preventDefault()});
-    dropdown?.addEventListener("click",e=>{if(e.target.closest("a"))menu.open=false});
-  }
   document.querySelectorAll(".site-footer .footer-links").forEach(f=>{if(!f.querySelector('[href="/archive.html"]'))f.insertAdjacentHTML("afterbegin",'<a href="/archive.html">Archive</a><a href="/why-yoru.html">Why Yoru</a><a href="/journal.html">Journal</a>')});
 })();
 

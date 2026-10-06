@@ -442,16 +442,8 @@
 }
 html{font-synthesis:none}
 
-
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:var(--space-0);background:radial-gradient(circle at 78% -10%,var(--alpha-surface-080),transparent 36rem),var(--night-void);color:var(--bone-text);font-family:var(--font-body);line-height:1.65;-webkit-font-smoothing:antialiased}body.modal-open{overflow:hidden}a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
-.site-header{position:sticky;top:var(--space-0);z-index:100;width:100%;max-width:var(--max);margin:var(--space-auto);min-height:88px;padding:var(--space-pattern-001);display:grid;grid-template-columns:74px 1fr;align-items:center;gap:var(--space-18);background:var(--alpha-night-deep-940);backdrop-filter:blur(18px);border-bottom:var(--border-width) solid var(--line)}
-.nav{display:grid;grid-template-columns:repeat(6,minmax(max-content,1fr));align-items:center;gap:var(--space-12);width:100%;font-family:var(--font-display);font-size:var(--step-5);font-weight:700;letter-spacing:var(--space-pattern-002);color:var(--copper);text-align:center}
-.nav>a,.products-menu summary{cursor:pointer;transition:color var(--duration-base) var(--ease),background var(--duration-base) var(--ease),border-color var(--duration-base) var(--ease);padding:var(--space-pattern-003)}.nav>a:hover,.products-menu summary:hover{color:var(--bone-text)}
-.nav-cta{border:var(--border-width-accent) solid var(--line-accent);border-radius:var(--radius-8px);color:var(--bone-text)!important;background:var(--alpha-bone-015)}
-.products-menu{position:relative}.products-menu summary{list-style:none}.products-menu summary::-webkit-details-marker{display:none}.products-menu summary:after{content:"⌄";margin-left:var(--space-6);color:var(--patina)}
-.products-dropdown{position:absolute;left:var(--space-50);transform:translateX(-50%);top:var(--space-46);min-width:220px;padding:var(--space-10);background:var(--night-deep);border:var(--border-width-accent) solid var(--line-accent);border-radius:var(--radius-12px);box-shadow:none;text-align:left;font-family:var(--font-body);font-size:var(--type-13);font-weight:500}
-.products-dropdown a{display:block;padding:var(--space-pattern-004);border-radius:var(--radius-8px);color:var(--copper)}.products-dropdown a:hover{background:var(--night-deep);color:var(--bone-text)}
-.menu-toggle{display:none;background:transparent;border:0;color:var(--bone-text);font-size:var(--type-24)}
+
 .home-hero{max-width:var(--max);margin:var(--space-auto);min-height:70vh;padding:var(--space-pattern-005);display:flex;align-items:center}.home-copy{max-width:930px}
 .kicker,.eyebrow,.tag{color:var(--patina);font-size:var(--type-11);font-weight:700;letter-spacing:var(--space-pattern-006);text-transform:uppercase}
 .home-hero h1,.page-hero h1{font-family:var(--font-display);font-weight:600;letter-spacing:var(--space-pattern-007);line-height:.92;margin:var(--space-pattern-008)}.home-hero h1{font-size:var(--type-fluid-01);color:var(--patina)}
@@ -467,18 +459,13 @@ html{font-synthesis:none}
 .request-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:var(--space-60);align-items:start;padding-top:var(--space-40)}.form-intro{padding-top:var(--space-60)}.contact-mini{display:grid;gap:var(--space-7);margin-top:var(--space-26);color:var(--muted-dark);font-size:var(--type-13)}.build-form{margin-top:var(--space-60);padding:var(--space-28);background:var(--panel);border:var(--border-width) solid var(--line);border-radius:var(--radius-18px)}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-14)}label{display:grid;gap:var(--space-8);margin-bottom:var(--space-14);color:var(--copper-text);font-size:var(--step-2);font-weight:600}input,select,textarea{width:100%;padding:var(--space-pattern-024);border:var(--border-width) solid var(--line);border-radius:var(--radius-8px);background:var(--night-deep);color:var(--bone-text);font:inherit;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--line-accent);box-shadow:none}select.locked-layout{color:var(--muted-light);background:var(--night-deep);cursor:not-allowed}.submit{width:100%;border:0;cursor:pointer}.form-note{text-align:center;color:var(--muted-dark);font-size:var(--type-11)}
 .build-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-16)}.build-card{background:var(--panel);border:var(--border-width) solid var(--line);border-radius:var(--radius-18px);overflow:hidden}.build-card .media-placeholder{border:0;border-bottom:var(--border-width) solid var(--line);border-radius:var(--radius-square);min-height:280px}.build-card div:last-child{padding:var(--space-20)}.build-card h2{font-family:var(--font-display);font-size:var(--type-32);margin:var(--space-pattern-025)}.build-card p{color:var(--muted-light)}
 .site-footer{border-top:var(--border-width) solid var(--line);color:var(--muted-dark);font-size:var(--step-2)}.site-footer-inner{max-width:var(--max);margin:var(--space-auto);display:grid;grid-template-columns:1fr auto auto;gap:var(--space-24);align-items:end}.socials{display:grid;gap:var(--space-5)}.socials span{color:var(--patina);font-weight:700;letter-spacing:var(--space-pattern-027);text-transform:uppercase;margin-bottom:var(--space-3)}.socials a:hover,.footer-links a:hover{color:var(--bone-text)}.footer-links{display:flex;gap:var(--space-18)}.copyright{text-align:right}
-@media(max-width:1120px){.nav{font-size:var(--step-4);gap:var(--space-6)}.layout-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1120px){.layout-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:980px){.portal-section,.build-gallery{grid-template-columns:1fr 1fr}.request-layout,.about-editorial,.founder-section{grid-template-columns:1fr}.request-layout{gap:var(--space-0)}.build-form{margin-top:var(--space-0)}.site-footer-inner{grid-template-columns:1fr}.footer-links{flex-wrap:wrap}.copyright{text-align:left}}
-@media(max-width:860px){.site-header{grid-template-columns:58px 1fr}.menu-toggle{display:block;justify-self:end}.nav{display:none;position:absolute;top:var(--space-82);left:var(--space-18);right:var(--space-18);grid-template-columns:1fr;align-items:stretch;padding:var(--space-15);background:var(--night-deep);border:var(--border-width) solid var(--line);border-radius:var(--radius-12px);text-align:left}.nav.open{display:grid}.products-menu{width:100%}.products-dropdown{position:static;transform:none;margin-top:var(--space-8);box-shadow:none;text-align:left}}
-@media(max-width:680px){.site-header,.home-hero,.portal-section,.page-main{padding-left:var(--space-18);padding-right:var(--space-18)}.portal-section,.layout-grid,.story-tile-grid,.education-grid,.build-gallery,.form-row{grid-template-columns:1fr}.home-hero{min-height:auto;padding-top:var(--space-85)}.story-panel{padding:var(--space-pattern-028)}.story-row{grid-template-columns:1fr}.story-row.reverse .story-media,.story-row.reverse .story-copy{order:initial}.story-media{min-height:230px}.founder-photo{min-height:360px}.footer-links{display:grid;gap:var(--space-6)}}
+
+@media(max-width:680px){.home-hero,.portal-section,.page-main{padding-left:var(--space-18);padding-right:var(--space-18)}.portal-section,.layout-grid,.story-tile-grid,.education-grid,.build-gallery,.form-row{grid-template-columns:1fr}.home-hero{min-height:auto;padding-top:var(--space-85)}.story-panel{padding:var(--space-pattern-028)}.story-row{grid-template-columns:1fr}.story-row.reverse .story-media,.story-row.reverse .story-copy{order:initial}.story-media{min-height:230px}.founder-photo{min-height:360px}.footer-links{display:grid;gap:var(--space-6)}}
 
 /* 2026-09-10 refinement pass */
-.site-header{max-width:none;width:100%;padding-left:var(--space-pattern-029);padding-right:var(--space-pattern-029);border-bottom:var(--border-width) solid var(--line);box-shadow:none}
-.nav{max-width:1120px;justify-self:end}
-.nav a.active,.products-menu.active>summary{color:var(--bone-text)}
-.nav a.active:after,.products-menu.active>summary:after{color:var(--patina)}
-.nav>a:not(.nav-cta){position:relative}
-.nav>a:not(.nav-cta).active:before{content:"";position:absolute;left:22%;right:22%;bottom:var(--space-2);height:1px;background:var(--patina)}
+
 .standards-section,.layout-preview{max-width:var(--max);margin:var(--space-auto);padding:var(--space-pattern-030);border-top:var(--border-width) solid var(--line)}
 .standards-head{max-width:760px;margin-bottom:var(--space-36)}
 .standards-head h2{font-family:var(--font-display);font-size:var(--type-fluid-05);line-height:1;margin:var(--space-pattern-031);font-weight:600}
@@ -496,7 +483,7 @@ html{font-synthesis:none}
 .mini-layout small{color:var(--muted-dark)}
 .mini-layout.muted{opacity:.58}
 @media(max-width:1000px){.standards-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:680px){.standards-section,.layout-preview{padding:var(--space-pattern-033)}.standards-grid,.mini-layout-grid{grid-template-columns:1fr}.nav{max-width:none}}
+@media(max-width:680px){.standards-section,.layout-preview{padding:var(--space-pattern-033)}.standards-grid,.mini-layout-grid{grid-template-columns:1fr}}
 
 /* Boutique commission expansion */
 .featured-commission{max-width:var(--max);margin:var(--space-auto);padding:var(--space-pattern-034);display:grid;grid-template-columns:1.25fr .75fr;gap:var(--space-52);align-items:center;border-top:var(--border-width) solid var(--line)}
@@ -514,9 +501,6 @@ html{font-synthesis:none}
 @media(max-width:900px){.featured-commission,.warm-editorial,.pricing-philosophy{grid-template-columns:1fr}.featured-photo{min-height:420px}.materials-grid,.flow-grid{grid-template-columns:1fr 1fr}.compare-shell{grid-template-columns:1fr}.compare-vs{text-align:center}}
 @media(max-width:640px){.featured-commission,.compare-lab,.materials-section,.commission-flow,.pricing-philosophy{padding-left:var(--space-18);padding-right:var(--space-18)}.materials-grid,.flow-grid,.included-list{grid-template-columns:1fr}.warm-editorial{padding-left:var(--space-18);padding-right:var(--space-18)}}
 
-.mega-menu{width:min(620px,78vw)!important;display:grid!important;grid-template-columns:1.2fr 1fr 1fr;gap:var(--space-12);left:var(--space-auto)!important;right:var(--space-0)!important;transform:none!important;padding:var(--space-16)!important}
-.mega-col{display:grid;align-content:start}.mega-col>span{padding:var(--space-pattern-050);color:var(--patina);font-size:var(--type-9);font-weight:800;letter-spacing:var(--space-pattern-051)}.mega-col small{display:block;color:var(--muted-dark);font-size:var(--type-9)}
-
 .commission-hero-media{min-height:620px;border:var(--border-width) solid var(--line);border-radius:var(--radius-18px);background:radial-gradient(circle at 35% 25%,var(--alpha-patina-200),transparent 32%),var(--night-deep);display:flex;align-items:flex-end;padding:var(--space-20);color:var(--muted-dark);font-size:var(--step-2)}.commission-story,.sound-sample{display:grid;grid-template-columns:.8fr 1.2fr;gap:var(--space-70);padding:var(--space-pattern-052);border-bottom:var(--border-width) solid var(--line)}.commission-story h2,.sound-sample h2{font-family:var(--font-display);font-size:var(--type-48);line-height:1.05;margin:var(--space-pattern-014)}.commission-story p,.sound-sample p{color:var(--muted-dark);font-size:var(--step-4)}.commission-detail-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:var(--border-width) solid var(--line);border-left:var(--border-width) solid var(--line)}.commission-detail-grid article{padding:var(--space-22);border-right:var(--border-width) solid var(--line);border-bottom:var(--border-width) solid var(--line);display:grid;gap:var(--space-6)}.commission-detail-grid span,.archive-entry span,.journal-grid span,.why-grid span{font-size:var(--step-1);letter-spacing:var(--space-pattern-017);color:var(--patina)}.commission-detail-grid strong{font-family:var(--font-display);font-size:var(--type-26);font-weight:600}.commission-media-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:var(--space-12);padding:var(--space-pattern-053)}.commission-media-grid div{min-height:330px;border:var(--border-width) solid var(--line);border-radius:var(--radius-14px);background:var(--night-deep);display:flex;align-items:flex-end;padding:var(--space-15);color:var(--muted-dark);font-size:var(--step-2)}.archive-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-16)}.archive-entry{border:var(--border-width) solid var(--line);border-radius:var(--radius-16px);overflow:hidden;background:var(--panel)}.archive-entry>div:last-child{padding:var(--space-20)}.archive-entry h2{font-family:var(--font-display);font-size:var(--type-31);margin:var(--space-pattern-014)}.archive-entry p{color:var(--muted-light)}.archive-entry.ghost{opacity:.48}.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-14);margin-bottom:var(--space-90)}.why-grid article,.journal-grid article{min-height:270px;padding:var(--space-25);border:var(--border-width) solid var(--line);border-radius:var(--radius-16px);background:var(--panel)}.why-grid h2,.journal-grid h2{font-family:var(--font-display);font-size:var(--type-34);line-height:1.05;margin:var(--space-pattern-054)}.why-grid p,.journal-grid p{color:var(--muted-light);font-size:var(--step-3)}.journal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-14)}
 @media(max-width:900px){.commission-story,.sound-sample{grid-template-columns:1fr}.commission-detail-grid,.why-grid,.journal-grid{grid-template-columns:1fr 1fr}.commission-media-grid{grid-template-columns:1fr}.archive-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.commission-detail-grid,.why-grid,.journal-grid,.archive-grid{grid-template-columns:1fr}}
@@ -525,9 +509,7 @@ html{font-synthesis:none}
 .founder-chapter,.future-foundry{display:grid;grid-template-columns:.8fr 1.2fr;gap:var(--space-70);padding:var(--space-pattern-055);border-top:var(--border-width) solid var(--line)}.founder-chapter.reverse{grid-template-columns:1.2fr .8fr}.founder-chapter.reverse>div:first-child{order:2}.founder-chapter.reverse>div:last-child{order:1}.founder-chapter h2,.future-foundry h2,.craft-state h2{font-family:var(--font-display);font-size:var(--type-fluid-07);line-height:1.05;margin:var(--space-pattern-014);font-weight:600}.founder-chapter p,.future-foundry p,.craft-state p{color:var(--muted-dark);font-size:var(--step-4)}.craft-state{display:grid;grid-template-columns:1.1fr .9fr;gap:var(--space-52);align-items:center;padding:var(--space-pattern-055);border-top:var(--border-width) solid var(--line)}.workbench-placeholder{min-height:430px}.founder-belief{margin-left:var(--space-pattern-056);margin-right:var(--space-pattern-056)}.brand-belief.expanded{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-18);padding:var(--space-pattern-057);border-top:var(--border-width) solid var(--line)}.brand-belief.expanded>div{padding:var(--space-28);border:var(--border-width) solid var(--line);border-radius:var(--radius-16px);background:var(--panel)}.brand-belief.expanded h2{font-family:var(--font-display);font-size:var(--type-38);line-height:1.05;margin:var(--space-pattern-058)}.brand-belief.expanded p{color:var(--muted-dark)}.future-foundry{border-bottom:var(--border-width) solid var(--line)}.founder-close{padding:var(--space-pattern-059);max-width:980px}.founder-close blockquote{margin:var(--space-pattern-060);font-family:var(--font-body);font-size:var(--type-fluid-08);line-height:1.15;color:var(--bone-text);font-weight:500}
 @media(max-width:900px){.founder-chapter,.founder-chapter.reverse,.future-foundry,.craft-state,.brand-belief.expanded{grid-template-columns:1fr}.founder-chapter.reverse>div:first-child,.founder-chapter.reverse>div:last-child{order:initial}}
 
-
 /* Warm ivory editorial tile system */
-
 
 /* Homepage gateway cards */
 .portal-card{
@@ -650,61 +632,6 @@ html{font-synthesis:none}
     box-shadow:none;
   }
 }
-@media(max-width:860px){
-}
-
-
-/* Contrast + header refinement */
-
-
-/* Warm editorial header for stronger separation from the black canvas */
-.site-header{
-  background:var(--alpha-bone-960);
-  border-bottom:var(--border-width) solid var(--line);
-  box-shadow:none;
-}
-.nav{
-  color:var(--gunmetal);
-}
-.nav>a:hover,.products-menu summary:hover{
-  color:var(--night-deep);
-}
-.nav>a.active,.products-menu.active>summary{
-  color:var(--gunmetal);
-}
-.nav>a:not(.nav-cta).active:before{
-  background:var(--gunmetal);
-}
-.products-menu summary:after{
-  color:var(--gunmetal);
-}
-.nav-cta{
-  color:var(--bone) !important;
-  background:var(--gunmetal);
-  border-color:var(--line-strong);
-}
-.nav-cta:hover{
-  background:var(--gunmetal);
-  color:var(--bone) !important;
-}
-.products-dropdown{
-  background:var(--bone);
-  border-color:var(--line);
-  box-shadow:none;
-}
-.products-dropdown a{
-  color:var(--gunmetal);
-}
-.products-dropdown a:hover{
-  background:var(--copper-text);
-  color:var(--night-deep);
-}
-.mega-col>span{
-  color:var(--gunmetal);
-}
-.mega-col small{
-  color:var(--muted-dark);
-}
 
 /* Dark cards that were disappearing into the background now use ivory surfaces */
 .standards-grid article,
@@ -777,117 +704,7 @@ html{font-synthesis:none}
   color:var(--patina);
 }
 
-@media(max-width:860px){
-  .nav{
-    background:var(--bone);
-    border-color:var(--line);
-  }
-  .nav a,.products-menu summary{color:var(--gunmetal)}
-  .nav-cta{color:var(--bone) !important}
-}
-
-
-/* Luxe header + verified emblem */
-.site-header{
-  position:sticky;top:var(--space-0);
-  z-index:100;
-  min-height:94px;padding:var(--space-pattern-061);
-  display:grid;
-  grid-template-columns:72px 1fr;
-  align-items:center;gap:var(--space-22);
-  background:
-    linear-gradient(180deg,var(--alpha-night-deep-980),var(--alpha-night-deep-980) 58%,var(--alpha-night-deep-990)),
-    radial-gradient(circle at 50% -70%,var(--alpha-bone-080),transparent 60%);
-  border-top:var(--border-width) solid var(--line-quiet);
-  border-bottom:var(--border-width) solid var(--line-strong);
-  box-shadow:none;
-}
-.site-header::after{
-  content:"";
-  position:absolute;left:16%;right:16%;bottom:var(--space-neg-1);
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--alpha-patina-250),var(--alpha-bone-420),var(--alpha-patina-250),transparent);
-  pointer-events:none;
-}
-.nav{
-  width:100%;
-  max-width:1120px;
-  justify-self:end;
-  display:grid;
-  grid-template-columns:repeat(6,minmax(max-content,1fr));
-  align-items:center;gap:var(--space-10);
-  color:var(--copper-text);
-  font-family:var(--font-display);
-  font-size:var(--step-5);
-  font-weight:700;letter-spacing:var(--space-pattern-062);
-  text-align:center;
-}
-.nav>a,.products-menu summary{
-  position:relative;padding:var(--space-pattern-063);
-  color:var(--copper-text);
-  transition:color var(--duration-base) var(--ease),transform var(--duration-base) var(--ease),background var(--duration-base) var(--ease);
-}
-.nav>a:not(.nav-cta):after,
-.products-menu>summary:before{
-  content:"";
-  position:absolute;left:28%;right:28%;bottom:var(--space-6);
-  height:1px;
-  background:var(--patina);
-  transform:scaleX(0);
-  transform-origin:center;
-  transition:transform var(--duration-base) var(--ease);
-}
-.nav>a:not(.nav-cta):hover:after,
-.nav>a.active:not(.nav-cta):after,
-.products-menu:hover>summary:before,
-.products-menu.active>summary:before{
-  transform:scaleX(1);
-}
-.nav>a:hover,.products-menu summary:hover,.nav>a.active,.products-menu.active>summary{
-  color:var(--bone);
-}
-.products-menu summary:after{
-  color:var(--patina);
-}
-.nav-cta{
-  border:var(--border-width) solid var(--line);
-  border-radius:var(--radius-8px);
-  background:linear-gradient(180deg,var(--bone),var(--copper-text));
-  color:var(--gunmetal) !important;
-  box-shadow:none;
-}
-.nav-cta:hover{
-  background:var(--bone);
-  color:var(--night-deep) !important;
-  transform:translateY(-1px);
-}
-.products-dropdown{
-  background:var(--bone);
-  color:var(--gunmetal);
-  border:var(--border-width) solid var(--line-strong);
-  box-shadow:none;
-}
-.products-dropdown a{color:var(--gunmetal)}
-.products-dropdown a:hover{background:var(--copper-text);color:var(--gunmetal)}
-.mega-col>span{color:var(--gunmetal)}
-.mega-col small{color:var(--muted-dark)}
-
-@media(max-width:860px){
-  .site-header{grid-template-columns:56px 1fr;min-height:82px;padding:var(--space-pattern-064)}
-  .nav{top:var(--space-82);left:var(--space-18);right:var(--space-18);
-    max-width:none;
-    background:linear-gradient(180deg,var(--night-deep),var(--night-deep));
-    border:var(--border-width) solid var(--line-strong);
-    box-shadow:none;
-    text-align:left;
-  }
-  .nav a,.products-menu summary{color:var(--copper-text)}
-  .nav-cta{color:var(--gunmetal) !important}
-}
-
-
 /* ===== YORU GILDED EARTH / ATELIER PASS ===== */
-
 
 /* Global atmosphere */
 body{
@@ -895,64 +712,6 @@ body{
     radial-gradient(circle at 76% 8%,var(--alpha-patina-080),transparent 34rem),
     linear-gradient(180deg,var(--night-deep) 0%,var(--night-deep) 58%,var(--night-deep) 100%);
 }
-
-/* Floating gallery navigation */
-.site-header{
-  min-height:102px;padding:var(--space-pattern-065);
-  grid-template-columns:78px 1fr;
-  background:
-    linear-gradient(180deg,var(--alpha-bone-985),var(--alpha-bone-985));
-  border-top:var(--border-width) solid var(--line-strong);
-  border-bottom:var(--border-width) solid var(--line);
-  box-shadow:none;
-}
-.site-header:before{
-  content:"";
-  position:absolute;top:var(--space-8);left:var(--space-pattern-066);right:var(--space-pattern-066);
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--alpha-accent-550),var(--alpha-surface-280),var(--alpha-accent-550),transparent);
-}
-.site-header:after{
-  content:"";
-  position:absolute;bottom:var(--space-8);left:var(--space-pattern-066);right:var(--space-pattern-066);
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--alpha-night-deep-120),transparent);
-}
-.nav{
-  max-width:none;
-  grid-template-columns:repeat(6,minmax(max-content,1fr));gap:var(--space-18);
-  font-size:var(--type-21);
-  font-weight:700;
-  color:var(--night-deep);
-}
-.nav>a,.products-menu summary{
-  color:var(--night-deep);padding:var(--space-pattern-067);
-}
-.nav>a:hover,.products-menu summary:hover,.nav>a.active,.products-menu.active>summary{
-  color:var(--gunmetal);
-}
-.nav>a:not(.nav-cta):after,.products-menu>summary:before{
-  background:linear-gradient(90deg,var(--copper),var(--patina));bottom:var(--space-7);
-}
-.products-menu summary:after{color:var(--patina)}
-.nav-cta{
-  border:var(--border-width) solid var(--line);
-  background:linear-gradient(180deg,var(--gunmetal),var(--gunmetal));
-  color:var(--bone)!important;
-  box-shadow:none;padding-inline:var(--space-22)!important;
-}
-.nav-cta:hover{
-  background:linear-gradient(180deg,var(--gunmetal),var(--gunmetal));
-  color:var(--bone)!important;
-}
-.products-dropdown{
-  background:var(--bone);
-  border-color:var(--line);
-  box-shadow:none;
-}
-.products-dropdown a{color:var(--gunmetal)}
-.products-dropdown a:hover{background:var(--bone);color:var(--gunmetal)}
-.mega-col>span{color:var(--copper-deep)}
 
 /* Cinematic editorial hero */
 .gallery-hero{
@@ -1129,18 +888,9 @@ body{
 @media(max-width:1040px){
   .gallery-hero{grid-template-columns:1fr;min-height:auto}
   .hero-showpiece-frame{min-height:480px}
-  .nav{font-size:var(--step-5);gap:var(--space-8)}
+  
 }
-@media(max-width:860px){
-  .site-header{min-height:86px;background:var(--bone)}
-  .nav{top:var(--space-86);
-    background:var(--bone);
-    border-color:var(--line);
-    box-shadow:none;
-  }
-  .nav a,.products-menu summary{color:var(--night-deep)}
-  .nav-cta{color:var(--bone)!important}
-}
+
 @media(max-width:680px){
   .gallery-hero{padding-left:var(--space-18);padding-right:var(--space-18)}
   .hero-showpiece-frame{min-height:360px}
@@ -1148,27 +898,7 @@ body{
   .showpiece-specs span{border-right:0;border-bottom:var(--border-width) solid var(--line-quiet)}
 }
 
-
-/* Fix Products mega-menu overlap with decorative header rules */
-.site-header::before,
-.site-header::after{
-  z-index:0;
-}
-.site-header>.menu-toggle,
-.site-header>.nav{
-  position:relative;
-  z-index:2;
-}
-.products-menu{
-  z-index:5;
-}
-.products-dropdown{
-  z-index:50;
-}
-
-
 /* ===== GILDED EARTH COLOR TEST — exact warm luxury palette ===== */
-
 
 /* Global dark areas: warm espresso, not digital black */
 body{
@@ -1179,57 +909,7 @@ body{
   background:var(--night-deep);
 }
 
-/* Header: warm cream + espresso */
-.site-header{
-  background:var(--bone)!important;
-  border-top:var(--border-width-accent) solid var(--line-accent)!important;
-  border-bottom:var(--border-width) solid var(--line)!important;
-  box-shadow:none;
-}
-.site-header:before{
-  background:linear-gradient(90deg,transparent,var(--alpha-accent-580),var(--alpha-night-deep-140),var(--alpha-accent-580),transparent)!important;
-}
-.site-header:after{
-  background:linear-gradient(90deg,transparent,var(--alpha-night-deep-140),transparent)!important;
-}
-.nav{
-  color:var(--night-deep)!important;
-  font-size:var(--type-21)!important;
-}
-.nav>a,.products-menu summary{
-  color:var(--night-deep)!important;
-}
-.nav>a:hover,.products-menu summary:hover,.nav>a.active,.products-menu.active>summary{
-  color:var(--night-deep)!important;
-}
-.nav>a:not(.nav-cta):after,.products-menu>summary:before{
-  background:var(--copper)!important;
-}
-.products-menu summary:after{color:var(--copper-deep)!important}
-.nav-cta{
-  background:var(--night-deep)!important;
-  color:var(--bone)!important;
-  border-color:var(--line-accent)!important;
-  box-shadow:none;
-}
-.nav-cta:hover{
-  background:var(--gunmetal)!important;
-  color:var(--bone)!important;
-}
-
 /* Dropdown follows the cream gallery language */
-.products-dropdown{
-  background:var(--bone)!important;
-  color:var(--night-deep)!important;
-  border-color:var(--line)!important;
-}
-.products-dropdown a{color:var(--gunmetal)!important}
-.products-dropdown a:hover{
-  background:var(--bone)!important;
-  color:var(--night-deep)!important;
-}
-.mega-col>span{color:var(--copper-deep)!important}
-.mega-col small{color:var(--muted-dark)!important}
 
 /* Hero: warm dark metal + champagne typography */
 .gallery-hero{
@@ -1334,32 +1014,7 @@ body{
 }
 .site-footer .socials span{color:var(--copper)!important}
 
-/* Mobile cream menu */
-@media(max-width:860px){
-  .site-header,.nav{background:var(--bone)!important}
-  .nav a,.products-menu summary{color:var(--night-deep)!important}
-  .nav-cta{color:var(--bone)!important}
-}
-
-/* Explicitly outrank .nav>a so the CTA text cannot disappear */
-.nav>a.nav-cta{
-  color:var(--bone)!important;
-  background:var(--night-deep)!important;
-  border:var(--border-width-accent) solid var(--line-accent)!important;
-  text-shadow:none!important;
-  opacity:1!important;
-}
-.nav>a.nav-cta:hover{
-  color:var(--bone)!important;
-  background:var(--gunmetal)!important;
-}
-
-@media(max-width:860px){
-}
-
-
 /* ===== MONO-INDUSTRIAL COLOR TEST ===== */
-
 
 /* Global canvas */
 body{
@@ -1370,50 +1025,7 @@ body{
   background:var(--night-deep)!important;
 }
 
-/* Navigation */
-.site-header{
-  background:var(--bone)!important;
-  border-top:var(--border-width) solid var(--line-quiet)!important;
-  border-bottom:var(--border-width) solid var(--line)!important;
-  box-shadow:none;
-}
-.site-header:before{
-  background:linear-gradient(90deg,transparent,var(--alpha-night-deep-120),transparent)!important;
-}
-.site-header:after{
-  background:linear-gradient(90deg,transparent,var(--alpha-muted-300),transparent)!important;
-}
-.nav,.nav>a,.products-menu summary{
-  color:var(--night)!important;
-}
-.nav>a:hover,.products-menu summary:hover,.nav>a.active,.products-menu.active>summary{
-  color:var(--night-deep)!important;
-}
-.nav>a:not(.nav-cta):after,.products-menu>summary:before{
-  background:var(--muted-dark)!important;
-}
-.products-menu summary:after{color:var(--muted-dark)!important}
-.nav>a.nav-cta{
-  background:var(--night-deep)!important;
-  color:var(--bone)!important;
-  border-color:var(--line-strong)!important;
-}
-.nav>a.nav-cta:hover{
-  background:var(--night)!important;
-  color:var(--bone)!important;
-}
-
 /* Dropdown */
-.products-dropdown{
-  background:var(--bone)!important;
-  color:var(--night-deep)!important;
-  border-color:var(--line-quiet)!important;
-  box-shadow:none;
-}
-.products-dropdown a{color:var(--night)!important}
-.products-dropdown a:hover{background:var(--bone)!important;color:var(--night-deep)!important}
-.mega-col>span{color:var(--muted-light)!important}
-.mega-col small{color:var(--muted-light)!important}
 
 /* Hero */
 .gallery-hero{
@@ -1519,17 +1131,10 @@ body{
 .site-footer .socials span{color:var(--bone-text)!important}
 
 /* Mobile */
-@media(max-width:860px){
-  .site-header,.nav{background:var(--bone)!important}
-  .nav a,.products-menu summary{color:var(--night)!important}
-  .nav-cta{color:var(--bone)!important}
-}
-
 
 /* ===== DARK STUDIO HARMONY PASS =====
    Unify all dark structural surfaces to the same desaturated obsidian-green/charcoal.
    Product photography will provide future color; UI chrome stays quiet and architectural. */
-
 
 /* Core dark canvases */
 body,
@@ -1625,9 +1230,7 @@ body,
   border-top-color:var(--line)!important;
 }
 
-
 /* ===== FINAL BRAND EMBLEM + COPPER HARMONY FIX ===== */
-
 
 /* Exact unified dark studio background */
 body,
@@ -1687,30 +1290,13 @@ body,
   border-color:var(--line)!important;
 }
 
-/* Header CTA now references the copper in the logo */
-.nav>a.nav-cta{
-  background:var(--copper)!important;
-  color:var(--night-deep)!important;
-  border-color:var(--line-accent)!important;
-  box-shadow:none;
-}
-.nav>a.nav-cta:hover{
-  background:var(--copper-text)!important;
-  color:var(--night-deep)!important;
-}
-
 /* Copper interaction language */
 .text-link,
 .dark-link,
-.layout-tile .status.live,
-a[href*="request-a-build"]:not(.nav-cta):not(.button):not(.products-dropdown a):not(.editorial-light a):not(.warm-editorial a),
-a[href*="commission"]:not(.nav-cta):not(.button):not(.editorial-light a):not(.warm-editorial a){
+.layout-tile .status.live{
   color:var(--copper)!important;
 }
-.nav>a:not(.nav-cta):after,
-.products-menu>summary:before{
-  background:var(--copper)!important;
-}
+
 .button.primary{
   background:var(--copper)!important;
   color:var(--night-deep)!important;
@@ -1726,9 +1312,6 @@ a[href*="commission"]:not(.nav-cta):not(.button):not(.editorial-light a):not(.wa
 .page-hero h1,.gallery-hero h1,.home-hero h1{
   color:var(--bone)!important;
 }
-
-
-
 
 /* ===== MODAL LABEL HIERARCHY — CLEAN GRAY MINIMALISM =====
    Remove leftover green from modal micro-labels and keep the modal
@@ -1761,9 +1344,7 @@ a[href*="commission"]:not(.nav-cta):not(.button):not(.editorial-light a):not(.wa
   border-color:var(--line-accent)!important;
 }
 
-
 /* ===== MATERIAL LUXURY + FINAL BRAND CLEANUP ===== */
-
 
 /* 2) Remove the remaining green from process / comparison modals */
 .story-panel{
@@ -1800,7 +1381,6 @@ a[href*="commission"]:not(.nav-cta):not(.button):not(.editorial-light a):not(.wa
 
 /* 3) Tactile linen rather than flat light gray.
    Tiny tonal variation + micro paper grain, intentionally almost invisible. */
-.site-header,
 .editorial-light,
 .warm-editorial,
 .portal-card,
@@ -1891,18 +1471,10 @@ a[href*="commission"]:not(.nav-cta):not(.button):not(.editorial-light a):not(.wa
 }
 
 /* Copper stays at roughly 10% of the visual system: interactions and micro-details */
-.nav>a.nav-cta,
 .button.primary{background:var(--copper)!important;color:var(--night-deep)!important}
-.nav>a.nav-cta:hover,
 .button.primary:hover{background:var(--copper)!important}
-.nav>a:not(.nav-cta):after,
-.products-menu>summary:before,
 .text-link,
 .dark-link{background-color:var(--copper)!important;color:var(--copper)!important}
-
-@media(max-width:860px){
-}
-
 
 /* ===== LAYOUT STATUS BADGES — MONOCHROMATIC ARCHITECTURAL =====
    Remove the remaining green status treatment from keyboard layout cards.
@@ -1928,52 +1500,8 @@ a[href*="commission"]:not(.nav-cta):not(.button):not(.editorial-light a):not(.wa
   color:var(--alpha-bone-620)!important;
 }
 
-
 /* ===== YORU FOUNDRY LOGO — SINGLE SOURCE OF TRUTH =====
    One static image element. No CSS image swapping, no data URI, no JS overrides. */
-.brand {
-  width: 70px;
-  height: 70px;
-  flex: 0 0 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;padding:var(--space-0);margin:var(--space-0);
-  text-decoration: none;
-  background: transparent;
-  border: 0;
-  border-radius:var(--radius-square);
-  overflow: visible;
-  box-shadow:none;
-}
-.brand-mark {
-  display: block;
-  width: 70px;
-  height: 70px;
-  max-width: 70px;
-  object-fit: contain;
-  object-position: center;
-  border-radius:var(--radius-square);
-  background: transparent;
-  border: 0;
-  opacity: 1;
-  visibility: visible;
-  filter: none;
-  transform: none;
-  box-shadow:none;
-}
-@media (max-width: 860px) {
-  .brand {
-    width: 56px;
-    height: 56px;
-    flex-basis: 56px;
-  }
-  .brand-mark {
-    width: 56px;
-    height: 56px;
-    max-width: 56px;
-  }
-}
-
 
 /* ===== KEYBOARD LAYOUT CARDS — FINAL NEUTRAL LOCK =====
    No green/patina is permitted in the 75%, 65%, or TKL schematics/status UI. */
@@ -2006,7 +1534,6 @@ a[href*="commission"]:not(.nav-cta):not(.button):not(.editorial-light a):not(.wa
 .product-layouts .layout-tile.active:hover{
   border-color:var(--line)!important;
 }
-
 
 /* ===== CRAFTED ART LAYOUT CARDS — FINAL NEUTRAL LOCK =====
    The Crafted Art page uses .layout-grid rather than .product-layouts.
@@ -2044,22 +1571,9 @@ a[href*="commission"]:not(.nav-cta):not(.button):not(.editorial-light a):not(.wa
   color:var(--alpha-bone-720)!important;
 }
 
-
-/* Header logo: render only the transparent emblem asset, with no circular mask, border, or shadow. */
-.brand,
-.brand-mark{
-  background:transparent!important;
-  border:0!important;
-  border-radius:var(--radius-square)!important;
-  box-shadow:none;
-  outline:0!important;
-}
-
-
 /* ===== DARK SURFACES — SUBTLE ANODIZED ALUMINUM TEXTURE =====
    Material-luxury treatment: microscopic grain + satin tonal variation.
    Intentionally restrained so the page still reads as clean charcoal at normal distance. */
-
 
 /* Large structural dark fields only — not media/photo placeholders. */
 body,
@@ -2108,40 +1622,6 @@ body,
   background-image:
     linear-gradient(135deg,var(--alpha-bone-008),var(--alpha-night-deep-020))!important;
   background-size:150px 150px,100% 100%!important;
-}
-
-
-/* ===== HEADER EMBLEM — TIGHT CIRCULAR CROP =====
-   The current raster asset contains black corners around the round medallion.
-   Crop those corners away at render time so only the emblem is visible. */
-.brand{
-  width:70px!important;
-  height:70px!important;
-  flex:0 0 70px!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  overflow:hidden!important;
-  border-radius:var(--radius-circle)!important;
-  background:transparent!important;
-  border:0!important;
-  box-shadow:none;
-}
-.brand-mark{
-  display:block!important;
-  width:70px!important;
-  height:70px!important;
-  max-width:none!important;
-  object-fit:cover!important;
-  object-position:center!important;
-  border-radius:var(--radius-circle)!important;
-  transform:scale(1.18)!important;
-  transform-origin:center!important;
-  background:transparent!important;
-  border:0!important;
-  box-shadow:none;
-  filter:none!important;
-  opacity:1!important;
 }
 
 /* ===== DARK SURFACES — VISIBLE SATIN ANODIZED GRAIN v2 =====
@@ -2199,289 +1679,11 @@ body,
   background-blend-mode:normal!important;
 }
 
-@media(max-width:860px){
-  .brand{
-    width:56px!important;
-    height:56px!important;
-    flex-basis:56px!important;
-  }
-  .brand-mark{
-    width:56px!important;
-    height:56px!important;
-  }
-}
-
-
-/* ===== YORU HEADER — FINAL ATELIER LOCK =====
-   Replaces the stacked historical header experiments with one deliberate system.
-   Cream paper, architectural framing, restrained copper, no solid orange blocks. */
-.site-header{
-  position:sticky!important;top:var(--space-0)!important;
-  z-index:1000!important;
-  width:100%!important;
-  max-width:none!important;
-  min-height:96px!important;margin:var(--space-0)!important;padding:var(--space-pattern-075)!important;
-  display:grid!important;
-  grid-template-columns:88px minmax(0,1fr)!important;
-  align-items:center!important;gap:var(--space-pattern-076)!important;
-  overflow:visible!important;
-  background-color:var(--bone)!important;
-  background-image:
-    linear-gradient(180deg,var(--bone) 0%,var(--bone) 100%)!important;
-  background-repeat:repeat,no-repeat!important;
-  background-size:96px 96px,100% 100%!important;
-  border-top:0!important;
-  border-bottom:var(--border-width) solid var(--line)!important;
-  box-shadow:none;
-  backdrop-filter:none!important;
-}
-
 /* One restrained architectural baseline only. */
-.site-header::before{
-  content:""!important;
-  position:absolute!important;left:var(--space-pattern-077)!important;right:var(--space-pattern-077)!important;bottom:var(--space-8)!important;top:var(--space-auto)!important;
-  height:1px!important;
-  background:linear-gradient(90deg,
-    var(--alpha-accent-340),
-    var(--alpha-night-deep-100) 22%,
-    var(--alpha-night-deep-100) 78%,
-    var(--alpha-accent-340)
-  )!important;
-  pointer-events:none!important;
-  z-index:0!important;
-}
-.site-header::after{
-  content:""!important;
-  position:absolute!important;left:var(--space-pattern-078)!important;top:var(--space-20)!important;bottom:var(--space-20)!important;
-  width:1px!important;right:var(--space-auto)!important;
-  height:auto!important;
-  background:linear-gradient(180deg,transparent,var(--alpha-night-deep-160),transparent)!important;
-  pointer-events:none!important;
-  z-index:0!important;
-}
-
-.brand{
-  position:relative!important;
-  z-index:2!important;
-  width:68px!important;
-  height:68px!important;
-  flex:0 0 68px!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  justify-self:start!important;
-  overflow:hidden!important;
-  border-radius:var(--radius-circle)!important;
-  background:transparent!important;
-  border:0!important;
-  box-shadow:none;
-}
-.brand-mark{
-  display:block!important;
-  width:68px!important;
-  height:68px!important;
-  max-width:none!important;
-  object-fit:cover!important;
-  object-position:center!important;
-  border-radius:var(--radius-circle)!important;
-  transform:scale(1.16)!important;
-  filter:none!important;
-  background:transparent!important;
-  border:0!important;
-  box-shadow:none;
-}
-
-.nav{
-  position:relative!important;
-  z-index:2!important;
-  width:100%!important;
-  max-width:none!important;
-  min-width:0!important;
-  justify-self:stretch!important;
-  display:grid!important;
-  grid-template-columns:
-    minmax(118px,1fr)
-    minmax(150px,1.14fr)
-    minmax(126px,1fr)
-    minmax(72px,.72fr)
-    minmax(110px,.86fr)
-    minmax(178px,1.22fr)!important;
-  align-items:center!important;gap:var(--space-pattern-079)!important;
-  color:var(--night)!important;
-  font-family:var(--font-display)!important;
-  font-size:var(--type-fluid-11)!important;
-  font-weight:600!important;letter-spacing:var(--space-pattern-080)!important;
-  text-align:center!important;
-}
-
-.nav>a,
-.products-menu summary{
-  position:relative!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  min-height:52px!important;padding:var(--space-pattern-003)!important;
-  color:var(--night)!important;
-  border:0!important;
-  background:transparent!important;
-  border-radius:var(--radius-square)!important;
-  box-shadow:none;
-  white-space:nowrap!important;
-  transition:color var(--duration-slow) var(--ease),transform var(--duration-slow) var(--ease),border-color var(--duration-slow) var(--ease),background-color var(--duration-slow) var(--ease)!important;
-}
-.nav>a:not(.nav-cta)::before{
-  content:""!important;
-  position:absolute!important;left:24%!important;right:24%!important;bottom:var(--space-5)!important;
-  height:1px!important;
-  background:var(--copper)!important;
-  opacity:0!important;
-  transform:scaleX(.35)!important;
-  transform-origin:center!important;
-  transition:opacity var(--duration-slow) var(--ease),transform var(--duration-slow) var(--ease)!important;
-}
-.nav>a:not(.nav-cta)::after{
-  content:none!important;
-}
-.nav>a:not(.nav-cta):hover::before,
-.nav>a:not(.nav-cta).active::before{
-  opacity:.72!important;
-  transform:scaleX(1)!important;
-}
-.nav>a:hover,
-.products-menu summary:hover,
-.nav>a.active,
-.products-menu.active>summary{
-  color:var(--night-deep)!important;
-}
-.products-menu summary::before{
-  content:""!important;
-  position:absolute!important;left:26%!important;right:26%!important;bottom:var(--space-5)!important;
-  height:1px!important;
-  background:var(--copper)!important;
-  opacity:0!important;
-  transform:scaleX(.35)!important;
-  transition:opacity var(--duration-slow) var(--ease),transform var(--duration-slow) var(--ease)!important;
-}
-.products-menu:hover>summary::before,
-.products-menu.active>summary::before{
-  opacity:.72!important;
-  transform:scaleX(1)!important;
-}
-.products-menu summary::after{
-  content:"⌄"!important;margin-left:var(--space-7)!important;
-  color:var(--muted-dark)!important;
-  background:none!important;
-}
 
 /* Commission CTA: precision outlined component, not a flat orange block. */
-.nav>a.nav-cta{
-  min-height:54px!important;padding:var(--space-pattern-081)!important;
-  border:var(--border-width-accent) solid var(--line-accent)!important;
-  border-radius:var(--radius-control)!important;
-  background:var(--alpha-bone-560)!important;
-  color:var(--night-deep)!important;
-  box-shadow:none;
-  font-weight:700!important;
-  text-shadow:none!important;
-  opacity:1!important;
-  overflow:visible!important;
-}
-.nav>a.nav-cta::before,
-.nav>a.nav-cta::after{
-  content:none!important;
-}
-.nav>a.nav-cta:hover{
-  background:linear-gradient(180deg,var(--copper) 0%,var(--copper) 100%)!important;
-  color:var(--night-deep)!important;
-  border-color:var(--line-accent)!important;
-  box-shadow:none;
-  transform:translateY(-1px)!important;
-}
 
-/* Keep the products panel visually tied to the new header. */
-.products-dropdown{top:var(--space-56)!important;
-  background:var(--bone)!important;
-  background-image:none!important;
-  border:var(--border-width) solid var(--line)!important;
-  border-radius:var(--radius-6px)!important;
-  box-shadow:none;
-}
-.products-dropdown a{
-  color:var(--night)!important;
-}
-.products-dropdown a:hover{
-  background:var(--bone)!important;
-  color:var(--night-deep)!important;
-}
-
-/* Prevent the desktop header from clipping the CTA at common laptop widths. */
-@media(max-width:1180px) and (min-width:861px){
-  .site-header{padding-left:var(--space-26)!important;padding-right:var(--space-26)!important;
-    grid-template-columns:72px minmax(0,1fr)!important;gap:var(--space-20)!important;
-  }
-  .site-header::before{left:var(--space-26)!important;right:var(--space-26)!important}
-  .site-header::after{left:var(--space-112)!important}
-  .brand,.brand-mark{width:60px!important;height:60px!important}
-  .nav{
-    grid-template-columns:
-      minmax(104px,1fr)
-      minmax(132px,1.1fr)
-      minmax(112px,1fr)
-      minmax(64px,.7fr)
-      minmax(96px,.82fr)
-      minmax(154px,1.18fr)!important;gap:var(--space-6)!important;
-    font-size:var(--type-17)!important;
-  }
-  .nav>a.nav-cta{padding:var(--space-pattern-070)!important}
-}
-
-@media(max-width:860px){
-  .site-header{
-    min-height:82px!important;padding:var(--space-pattern-082)!important;
-    grid-template-columns:58px 1fr!important;gap:var(--space-16)!important;
-  }
-  .site-header::before{left:var(--space-18)!important;right:var(--space-18)!important;bottom:var(--space-6)!important}
-  .site-header::after{content:none!important}
-  .brand,.brand-mark{width:54px!important;height:54px!important}
-  .menu-toggle{
-    display:block!important;
-    justify-self:end!important;
-    color:var(--night-deep)!important;
-    position:relative!important;
-    z-index:3!important;
-  }
-  .nav{
-    display:none!important;
-    position:absolute!important;top:var(--space-82)!important;left:var(--space-14)!important;right:var(--space-14)!important;
-    width:auto!important;
-    grid-template-columns:1fr!important;gap:var(--space-2)!important;padding:var(--space-14)!important;
-    background:var(--bone)!important;
-    border:var(--border-width) solid var(--line)!important;
-    border-radius:var(--radius-6px)!important;
-    box-shadow:none;
-    text-align:left!important;
-  }
-  .nav.open{display:grid!important}
-  .nav>a,.products-menu summary{
-    justify-content:flex-start!important;
-    min-height:46px!important;padding:var(--space-pattern-083)!important;
-  }
-  .nav>a.nav-cta{
-    justify-content:center!important;margin-top:var(--space-8)!important;
-  }
-}
-
-
-/* ===== FINAL MICRO-REFINEMENTS: HEADER BASELINE + HERO CTA + TEXT LINKS ===== */
-
-/* 1) One true architectural divider exactly at the linen/dark transition. */
-.site-header{
-  border-bottom:var(--border-width) solid var(--line)!important;
-}
 /* Remove the older decorative line floating 8px above the bottom edge. */
-.site-header::before{
-  content:none!important;
-}
 
 /* 2) Hero CTA now mirrors the precision-outline language of the header CTA,
       inverted for the dark hero canvas. */
@@ -2545,7 +1747,6 @@ body,
   border-bottom-color:var(--line-accent)!important;
 }
 
-
 /* =====================================================================
    YORU NOCTURNE — FINAL PALETTE PREVIEW
    Night Iron  var(--night)
@@ -2555,7 +1756,6 @@ body,
    Aged Patina var(--patina)
    Warm Steel  var(--muted-dark)
    ===================================================================== */
-
 
 /* --- DARK ARCHITECTURE: Yoru = night --- */
 body,
@@ -2616,7 +1816,6 @@ body,
 }
 
 /* --- LIGHT ARCHITECTURE: handmade paper / atelier --- */
-.site-header,
 .editorial-light,
 .warm-editorial,
 .portal-card,
@@ -2694,27 +1893,8 @@ body,
 .story-copy p{
   color:var(--muted-dark)!important;
 }
-.products-menu summary::after{
-  color:var(--patina)!important;
-}
 
 /* --- COPPER = heat / foundry / action --- */
-.nav>a:not(.nav-cta)::before,
-.products-menu summary::before{
-  background:var(--copper)!important;
-}
-.nav>a.nav-cta{
-  background:var(--alpha-bone-720)!important;
-  color:var(--ink)!important;
-  border:var(--border-width-accent) solid var(--line-accent)!important;
-  box-shadow:none;
-}
-.nav>a.nav-cta:hover{
-  background:linear-gradient(180deg,var(--copper-text),var(--copper))!important;
-  color:var(--night-deep)!important;
-  border-color:var(--line-accent)!important;
-  box-shadow:none;
-}
 
 /* Dark hero button harmony. */
 .home-hero .hero-actions .button.primary,
@@ -2762,34 +1942,6 @@ body,
 .compare-lab::before,
 .commission-flow::before{
   background:linear-gradient(90deg,transparent,var(--alpha-accent-520),transparent)!important;
-}
-
-/* --- HEADER: Forged Bone architectural strip --- */
-.site-header{
-  background-color:var(--bone)!important;
-  background-image:
-    linear-gradient(180deg,var(--bone) 0%,var(--bone) 100%)!important;
-  border-bottom:var(--border-width) solid var(--line)!important;
-}
-.nav,
-.nav>a,
-.products-menu summary{
-  color:var(--ink)!important;
-}
-.site-header::after{
-  background:linear-gradient(180deg,transparent,var(--alpha-night-deep-150),transparent)!important;
-}
-.products-dropdown{
-  background-color:var(--bone)!important;
-  background-image:
-    radial-gradient(circle at 12% 18%,var(--alpha-night-deep-018) 0 1px,transparent 1.2px),
-    linear-gradient(180deg,var(--bone),var(--bone))!important;
-  border-color:var(--line)!important;
-}
-.products-dropdown a{color:var(--gunmetal)!important}
-.products-dropdown a:hover{
-  background:var(--bone)!important;
-  color:var(--ink)!important;
 }
 
 /* --- FORMS --- */
@@ -2878,24 +2030,6 @@ body,
 }
 
 /* Mobile inherits the same palette. */
-@media(max-width:860px){
-  .site-header,
-  .nav{
-    background-color:var(--bone)!important;
-    color:var(--ink)!important;
-  }
-  .menu-toggle{
-    color:var(--ink)!important;
-  }
-  .nav>a,
-  .products-menu summary{
-    color:var(--ink)!important;
-  }
-  .nav>a.nav-cta{
-    color:var(--ink)!important;
-  }
-}
-
 
 /* =====================================================================
    YORU FOUNDRY — FINAL MATERIAL TEXTURE SYSTEM
@@ -2908,7 +2042,6 @@ body,
 
 /* 1) FORGED BONE — subtle archival paper grain.
       Large light fields receive the richest paper treatment. */
-.site-header,
 .editorial-light,
 .warm-editorial{
   background-color:var(--bone)!important;
@@ -3017,7 +2150,6 @@ body,
 
 /* 4) BURNISHED COPPER — smooth satin treatment only when copper fills.
       No grain: it should read as machined metal, not rust or leather. */
-.nav>a.nav-cta:hover,
 .home-hero .hero-actions .button.primary:hover,
 .button.primary:hover{
   background-color:var(--copper)!important;
@@ -3044,13 +2176,11 @@ body,
 .eyebrow,
 .tag,
 .showpiece-index,
-.dark-eyebrow,
-.products-menu summary::after{
+.dark-eyebrow{
   color:var(--patina)!important;
 }
 
 /* Material hierarchy: textures should never interfere with readability. */
-.site-header,
 .portal-card,
 .layout-tile,
 .story-tile,
@@ -3087,7 +2217,6 @@ body,
     background-blend-mode:soft-light,soft-light,normal,normal,normal!important;
   }
 }
-
 
 /* =====================================================================
    SEAMLESS NIGHT IRON CANVAS
@@ -3175,7 +2304,6 @@ main,
   }
 }
 
-
 /* =====================================================================
    YORU NOCTURNE — COLOR CALIBRATION + VISIBLE MATERIAL GRAIN
    Adjusts the rendered values to match the actual palette more closely:
@@ -3183,10 +2311,8 @@ main,
    Texture is intentionally visible at normal zoom, not just on inspection.
    ===================================================================== */
 
-
 /* FORGED BONE — stop the light material from washing out toward white.
    Paper grain is now stronger and includes faint directional fibers. */
-.site-header,
 .editorial-light,
 .warm-editorial{
   background-color:var(--bone)!important;
@@ -3282,7 +2408,6 @@ body{
   }
 }
 
-
 /* =====================================================================
    YORU NOCTURNE — FINAL VISUAL STABILIZATION
    Locks the palette, removes brown drift, fixes the header/nav treatment,
@@ -3301,7 +2426,6 @@ a,button,summary{
 
 /* FORGED BONE: keep the intended color visible.
    Texture adds material without darkening the surface into gray/taupe. */
-.site-header,
 .editorial-light,
 .warm-editorial{
   background-color:var(--bone)!important;
@@ -3312,76 +2436,8 @@ a,button,summary{
   background-blend-mode:normal,normal!important;
 }
 
-/* The header itself is a clean architectural strip, not a dark navigation bar. */
-.site-header{
-  border-bottom:var(--border-width) solid var(--line)!important;
-  box-shadow:none;
-}
-.nav{
-  background:transparent!important;
-  background-image:none!important;
-  border:0!important;
-  box-shadow:none;
-}
-.nav,
-.nav>a,
-.products-menu summary{
-  color:var(--ink)!important;
-}
-.nav>a:hover,
-.products-menu summary:hover,
-.nav>a.active,
-.products-menu.active>summary{
-  color:var(--night-deep)!important;
-}
-
 /* Commission CTA = precision-machined Night Iron with a burnished copper edge.
    This avoids the pale generic form-button appearance. */
-.nav>a.nav-cta{
-  background-color:var(--night)!important;
-  background-image:
-    linear-gradient(180deg,var(--alpha-bone-055),var(--alpha-bone-000) 45%),
-    linear-gradient(180deg,var(--night-deep) 0%,var(--night) 100%)!important;
-  color:var(--bone)!important;
-  border:var(--border-width-accent) solid var(--line-accent)!important;
-  border-radius:var(--radius-3px)!important;
-  box-shadow:none;
-  font-weight:700!important;letter-spacing:var(--space-pattern-062)!important;
-  transition:border-color var(--duration-fast) var(--ease),
-    background-color var(--duration-fast) var(--ease),
-    box-shadow var(--duration-fast) var(--ease),
-    transform var(--duration-fast) var(--ease),
-    color var(--duration-fast) var(--ease)!important;
-}
-.nav>a.nav-cta:hover{
-  background-color:var(--night-deep)!important;
-  background-image:
-    linear-gradient(180deg,var(--alpha-accent-100),var(--alpha-accent-000) 48%),
-    linear-gradient(180deg,var(--gunmetal) 0%,var(--night-deep) 100%)!important;
-  color:var(--bone)!important;
-  border-color:var(--line-accent)!important;
-  box-shadow:none;
-  transform:translateY(-1px)!important;
-}
-.nav>a.nav-cta:active{
-  background:var(--night-deep)!important;
-  color:var(--bone)!important;
-  border-color:var(--line-accent)!important;
-  transform:translateY(0)!important;
-  box-shadow:none;
-}
-.nav>a.nav-cta:focus-visible{
-  outline:2px solid var(--alpha-accent-480)!important;
-  outline-offset:3px!important;
-}
-
-/* Products dropdown stays on the same Forged Bone material. */
-.products-dropdown{
-  background-color:var(--bone)!important;
-  background-image:none!important;
-  background-size:110px 110px!important;
-  border-color:var(--line)!important;
-}
 
 /* True Gunmetal for the compact layout cards.
    Availability is conveyed with type/accent, never a brown-tinted card fill. */
@@ -3497,19 +2553,6 @@ a,button,summary{
   background-blend-mode:normal,normal!important;
 }
 
-/* Mobile menu gets the same light material; CTA keeps the dark machined style. */
-@media(max-width:860px){
-  .nav,
-  .nav.open{
-    background-color:var(--bone)!important;
-    background-image:none!important;
-  }
-  .nav>a.nav-cta{
-    color:var(--bone)!important;
-  }
-}
-
-
 /* =====================================================================
    YORU NOCTURNE — SITE-WIDE COMPONENT LOCK
    Final cross-page role map. This block intentionally sits last so every
@@ -3517,7 +2560,6 @@ a,button,summary{
    ===================================================================== */
 
 /* Core tokens */
-
 
 /* One continuous Night Iron canvas everywhere. */
 html,body{
@@ -3542,66 +2584,6 @@ main,
   background-color:transparent!important;
   background-image:none!important;
 }
-
-/* Universal header on every page. */
-.site-header{
-  background-color:var(--bone)!important;
-  background-image:
-    linear-gradient(180deg,var(--alpha-bone-060),var(--alpha-bone-025))!important;
-  background-size:110px 110px,100% 100%!important;
-  background-repeat:repeat,no-repeat!important;
-  background-blend-mode:normal,normal!important;
-  border-bottom:var(--border-width) solid var(--line)!important;
-  box-shadow:none;
-}
-.nav{
-  background:transparent!important;
-  background-image:none!important;
-  border:0!important;
-  box-shadow:none;
-}
-.nav,
-.nav>a,
-.products-menu summary{
-  color:var(--ink)!important;
-}
-.nav>a:hover,
-.products-menu summary:hover,
-.nav>a.active,
-.products-menu.active>summary{
-  color:var(--night-deep)!important;
-}
-.nav>a:not(.nav-cta)::before,
-.products-menu summary::before{
-  background:var(--copper)!important;
-}
-
-/* Header CTA: one treatment everywhere. */
-.nav>a.nav-cta{
-  background-color:var(--night)!important;
-  background-image:
-    linear-gradient(180deg,var(--alpha-bone-055),var(--alpha-bone-000) 45%),
-    linear-gradient(180deg,var(--night-deep) 0%,var(--night) 100%)!important;
-  color:var(--bone)!important;
-  border:var(--border-width-accent) solid var(--line-accent)!important;
-  border-radius:var(--radius-3px)!important;
-  box-shadow:none;
-}
-.nav>a.nav-cta:hover{
-  background-color:var(--night-deep)!important;
-  background-image:
-    linear-gradient(180deg,var(--alpha-accent-100),var(--alpha-accent-000) 48%),
-    linear-gradient(180deg,var(--gunmetal) 0%,var(--night-deep) 100%)!important;
-  color:var(--bone)!important;
-  border-color:var(--line-accent)!important;
-}
-.products-dropdown{
-  background:var(--bone)!important;
-  color:var(--ink)!important;
-  border-color:var(--line)!important;
-}
-.products-dropdown a{color:var(--gunmetal)!important}
-.products-dropdown a:hover{background:var(--bone)!important;color:var(--ink)!important}
 
 /* Page introductions / hero typography. */
 .page-hero h1,
@@ -3836,28 +2818,9 @@ main,
   border-top:var(--border-width) solid var(--line)!important;
 }
 
-/* Mobile menu must match the same header material. */
-@media(max-width:860px){
-  .nav,
-  .nav.open{
-    background:var(--bone)!important;
-    color:var(--ink)!important;
-  }
-  .nav>a,
-  .products-menu summary{
-    color:var(--ink)!important;
-  }
-  .nav>a.nav-cta{
-    color:var(--bone)!important;
-  }
-}
-
-
 /* ===== PALETTE SANITIZER LOCK — DO NOT REMOVE =====
    All legacy experiments above are constrained to the approved Yoru Nocturne family.
    New work must use these variables instead of introducing ad-hoc colors. */
-
-
 
 /* =====================================================================
    YORU MATERIAL TEXTURE SYSTEM — LOCKED 2026-09-14
@@ -3872,7 +2835,6 @@ main,
 /* A — FORGED BONE: soft matte paper.
    Two extremely low-contrast layers: irregular fiber/noise + faint directional tooth.
    No multiply/color-burn so var(--bone) stays visually true. */
-.site-header,
 .editorial-light,
 .warm-editorial,
 .portal-card,
@@ -3885,19 +2847,10 @@ main,
 .archive-entry,
 .build-card,
 .commission-detail-grid article,
-.build-form,
-.products-dropdown{
+.build-form{
   background-color:var(--bone)!important;
   background-image:none!important;
   background-size:128px 128px,100% 100%!important;
-  background-repeat:repeat,no-repeat!important;
-  background-blend-mode:soft-light,normal!important;
-}
-
-/* Header grain is intentionally quieter than editorial paper. */
-.site-header{
-  background-image:none!important;
-  background-size:144px 144px,100% 100%!important;
   background-repeat:repeat,no-repeat!important;
   background-blend-mode:soft-light,normal!important;
 }
@@ -3999,9 +2952,7 @@ main,
 
 /* Copper hairlines / text accents remain perfectly crisp. */
 .text-link,
-.dark-link,
-.nav>a:not(.nav-cta)::before,
-.products-menu summary::before{
+.dark-link{
   background-image:none!important;
 }
 
@@ -4021,9 +2972,7 @@ main,
   body{
     background-size:132px 132px,100% 100%,100% 100%!important;
   }
-  .site-header{
-    background-size:164px 164px,100% 100%!important;
-  }
+  
 }
 
 /* ===== PHASE 2 — CONTENT ARCHITECTURE / LOCKED MEDIA RATIOS ===== */
@@ -4054,20 +3003,17 @@ main,
 .commission-detail-grid strong{overflow-wrap:anywhere}
 @media(max-width:680px){.archive-specs span{grid-template-columns:64px minmax(0,1fr)}.archive-copy{padding:var(--space-18)}}
 
-
 /* ===== PHASE 3 — CANONICAL DESIGN TOKENS ===== */
-
 
 /* Phase 3 geometry and border rules */
 *,*::before,*::after{box-shadow:none!important}
-img,.portal-card,.layout-tile,.story-tile,.education-tile,.compare-side,.materials-grid article,.why-grid article,.journal-grid article,.archive-entry,.build-card,.commission-detail-grid article,.standards-grid article,.flow-grid li,.mini-layout,.build-form,.products-dropdown,.archive-empty,.brand-belief.expanded>div,.story-panel,.modal-panel,.modal-content,.modal-shell,.hero-showpiece-frame,.featured-photo,.commission-hero-media,.story-media,.sample-image,.media-placeholder,.commission-media-grid .detail-media{border-radius:var(--radius-square)!important}
-button,.button,input,select,textarea,.nav-cta{border-radius:var(--radius-control)!important}
+img,.portal-card,.layout-tile,.story-tile,.education-tile,.compare-side,.materials-grid article,.why-grid article,.journal-grid article,.archive-entry,.build-card,.commission-detail-grid article,.standards-grid article,.flow-grid li,.mini-layout,.build-form,.archive-empty,.brand-belief.expanded>div,.story-panel,.modal-panel,.modal-content,.modal-shell,.hero-showpiece-frame,.featured-photo,.commission-hero-media,.story-media,.sample-image,.media-placeholder,.commission-media-grid .detail-media{border-radius:var(--radius-square)!important}
+button,.button,input,select,textarea{border-radius:var(--radius-control)!important}
 .status-dot,.tip{border-radius:var(--radius-circle)!important}
-.portal-card,.layout-tile,.story-tile,.education-tile,.compare-side,.materials-grid article,.why-grid article,.journal-grid article,.archive-entry,.build-card,.commission-detail-grid article,.standards-grid article,.flow-grid li,.mini-layout,.build-form,.products-dropdown,.archive-empty,.hero-showpiece-frame,.featured-photo,.commission-hero-media,.story-media,.sample-image,.media-placeholder,.commission-media-grid .detail-media{border-width:var(--border-width)!important}
-.nav>a.nav-cta{border-width:var(--border-width-accent)!important;border-color:var(--line-accent)!important}
+.portal-card,.layout-tile,.story-tile,.education-tile,.compare-side,.materials-grid article,.why-grid article,.journal-grid article,.archive-entry,.build-card,.commission-detail-grid article,.standards-grid article,.flow-grid li,.mini-layout,.build-form,.archive-empty,.hero-showpiece-frame,.featured-photo,.commission-hero-media,.story-media,.sample-image,.media-placeholder,.commission-media-grid .detail-media{border-width:var(--border-width)!important}
+
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:var(--duration-none)!important;animation-duration:var(--duration-none)!important;animation-iteration-count:1!important}}
 /* Approved accessibility/state corrections — 2026-09-14 */
-.nav>a.nav-cta:focus-visible,
 .build-form input:focus-visible,
 .build-form select:focus-visible,
 .build-form textarea:focus-visible,
@@ -4081,10 +3027,6 @@ summary:focus-visible,
 [tabindex]:not([tabindex="-1"]):focus-visible{
   outline: 2px solid var(--copper) !important;
   outline-offset: 2px !important;
-}
-.nav>a.nav-cta:active{
-  transform: translateY(1px) !important;
-  background: var(--night-deep) !important;
 }
 
 /* ===== PHASE 3.5 — STICKY FOOTER + CANVAS CONSISTENCY ===== */
@@ -4227,11 +3169,8 @@ main:not(.section-shell),
 .future-foundry,
 .craft-state,
 .brand-belief.expanded{border-color:var(--line-quiet)!important}
-.site-header{border-bottom-color:var(--line-strong)!important}
 
 /* The same four hierarchy roles adapt to Bone without adding a fifth tier. */
-.site-header,
-.products-dropdown,
 .editorial-light,
 .warm-editorial,
 .portal-card,
@@ -4271,10 +3210,6 @@ main:not(.section-shell),
 .product-layouts .layout-tile .tile-copy b{color:var(--copper-text)!important}
 
 /* Bone-only accent pairing. */
-.site-header .kicker,
-.site-header .eyebrow,
-.products-dropdown .kicker,
-.products-dropdown .eyebrow,
 .editorial-light .kicker,
 .editorial-light .eyebrow,
 .editorial-light .tag,
@@ -4327,14 +3262,41 @@ main:not(.section-shell),
 }
 .paper-subtle>*{position:relative;z-index:1}
 
-/* Homepage surface system (Phase 3.5):
-   Base Night shells use .grain-subtle (approved Night treatment).
-   Base Bone sections use .paper-subtle (approved Bone treatment).
-   Cards / inset panels / media placeholders stay plain by design (portal-card,
-   standards-grid article, mini-layout, hero-showpiece-frame, featured-photo). */
 
-
-/* Interim (until the header rebuild): Cinzel is wider than the old nav face. */
-.nav>a,.products-menu summary{font-size:var(--step-3)!important}
-.nav>a.nav-cta{white-space:nowrap;flex-shrink:0;width:max-content}
-@media (max-width:1100px){.nav>a,.products-menu summary{font-size:var(--step-2)!important;letter-spacing:0!important}.nav>a.nav-cta{padding-inline:var(--space-12)!important}}
+/* Header (Verdigris): Cast bar, the medallion, four links, the commission keycap.
+   The key is three renders (idle, hover, pressed: the cap sinks into the plate) swapped by state;
+   the legend is real text placed on the cap's top face, which moves down with each frame.
+   At 860px and below the links fold into a panel under the bar. */
+.site-header{position:sticky;top:var(--space-0);z-index:100;display:flex;align-items:center;gap:var(--space-28);min-height:88px;padding:var(--space-8) var(--space-pattern-029);background:var(--cast);color:var(--bright);border-bottom:var(--border-width) solid var(--line)}
+.brand{display:block;flex-shrink:0;border-radius:var(--radius-circle)}
+.brand-mark{display:block;width:64px;height:64px}
+.nav{display:flex;align-items:center;gap:var(--space-28);margin-left:var(--space-auto);font-family:var(--font-display);font-size:var(--step-4);font-weight:700}
+.nav a{padding:var(--space-10) var(--space-0);color:var(--bright);text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:var(--space-6);transition:text-decoration-color var(--duration-base) var(--ease)}
+.nav a:hover{text-decoration-color:var(--pewter)}
+.nav a[aria-current]{text-decoration-color:var(--raw-copper)}
+.nav-key{position:relative;display:inline-grid;flex-shrink:0;line-height:1;border-radius:var(--radius-8px)}
+.nav-key img{grid-area:1/1;display:block;width:168px;height:auto}
+.nav-key .h,.nav-key .p{opacity:0}
+.nav-key:hover img:first-child{opacity:0}
+.nav-key:hover .h{opacity:1}
+.nav-key:active img:not(.p),.nav-key[aria-current] img:not(.p){opacity:0}
+.nav-key:active .p,.nav-key[aria-current] .p{opacity:1}
+.nav-key-legend{position:absolute;left:12%;top:14%;font-family:var(--font-display);font-size:var(--step-3);font-weight:700;color:var(--bright);pointer-events:none}
+.nav-key:hover .nav-key-legend{left:12.3%;top:17.5%}
+.nav-key:active .nav-key-legend,.nav-key[aria-current] .nav-key-legend{left:13%;top:23.5%}
+.site-header a:focus-visible,.menu-toggle:focus-visible{outline:2px solid var(--raw-copper);outline-offset:var(--space-4)}
+.menu-toggle{display:none;padding:var(--space-8) var(--space-14) var(--space-6);font-family:var(--font-display);font-size:var(--step-3);font-weight:700;color:var(--bright);background:var(--green-sand);border:var(--border-width-accent) solid var(--deep);border-bottom-width:4px;border-radius:var(--radius-6px);cursor:pointer}
+.menu-toggle[aria-expanded="true"]{background:var(--green-sand-hi);border-bottom-width:1px;transform:translateY(3px)}
+@media(max-width:1100px){.site-header{gap:var(--space-18)}.nav{gap:var(--space-18);font-size:var(--step-3)}}
+@media(max-width:860px){
+  .site-header{gap:var(--space-12);min-height:72px}
+  .brand-mark{width:52px;height:52px}
+  .nav-key{margin-left:var(--space-auto)}
+  .nav-key img{width:136px}
+  .nav-key-legend{font-size:var(--step-2)}
+  .menu-toggle{display:block}
+  .nav{display:none;position:absolute;top:100%;left:var(--space-0);right:var(--space-0);flex-direction:column;align-items:stretch;gap:var(--space-0);margin:var(--space-0);padding:var(--space-4) var(--space-pattern-029) var(--space-16);font-size:var(--step-4);background:var(--cast);border-bottom:var(--border-width) solid var(--line)}
+  .nav.open{display:flex}
+  .nav a{padding:var(--space-14) var(--space-0);border-top:var(--border-width) solid var(--line-quiet)}
+}
+@media(prefers-reduced-motion:reduce){.nav a{transition:none}}
