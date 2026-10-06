@@ -29,6 +29,15 @@
         ],
         "createdAt": "2026-10-06T20:29:11.437Z",
         "reason": "Claude: opacity-0 imgs are the keycap's hover and pressed frames, shown on :hover/:active (verified opacities 0,0,1 on real press)"
+      },
+      {
+        "rule": "radial-halo",
+        "value": "*",
+        "files": [
+          "mockups/nav-row.html"
+        ],
+        "createdAt": "2026-10-06T21:04:18.962Z",
+        "reason": "Claude: the gradient is the 26x11px LED bead travelling inside the cable (Mike asked for it), not a background wash"
       }
     ]
   }
