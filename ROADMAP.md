@@ -20,7 +20,9 @@ Mike has **reopened the visual direction**. Mike feels the site looks generic, "
 That overrides the "already approved / do not redesign" lines in `AGENTS.md` for this work, but only
 through the steps below. Palette, fonts and label style are all open; the logo stays.
 
-1. Load the `frontend-design` skill (enabled in `.claude/settings.json`, along with Ponytail).
+1. Plugins enabled in `.claude/settings.json`: Ponytail, `frontend-design` and Impeccable. Start with
+   `/impeccable critique` on the homepage, then use `frontend-design` and Impeccable for the plan.
+   Impeccable may ask to create `PRODUCT.md` / `DESIGN.md`; seed them from `YORU_SITE_MEMORY.md`.
 2. Write a short design plan *before any code*: 4–6 named colors, typefaces and their roles, layout ideas
    with ASCII wireframes, and guiding principles. Ground it in keyboards: keycaps, switches, sound, the bench.
 3. Check the plan against the AI tells the current site shows, and avoid each one unless there's a real reason:
