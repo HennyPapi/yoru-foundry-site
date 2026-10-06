@@ -3167,8 +3167,10 @@ main:not(.section-shell),
    each cap and behind its legend, from nothing to a gentle maximum. */
 .k .under{position:absolute;z-index:1;left:calc(var(--ml) * -1 - var(--space-6));right:calc(var(--mr) * -1 - var(--space-6));bottom:var(--space-2);height:34%;border-radius:var(--radius-circle);background:radial-gradient(farthest-side at 50% 100%,var(--led-under),var(--led-bloom-clear));mix-blend-mode:screen;opacity:0;pointer-events:none;transition:opacity var(--duration-led-rise) ease}   /* light leaking out where the cap meets the plate */
 .k .legend{z-index:2}
+.k .halo{position:absolute;left:calc(var(--ml) * -1 - var(--space-16));right:calc(var(--mr) * -1 - var(--space-16));top:0;bottom:calc(var(--space-6) * -1);border-radius:var(--radius-16px);background:radial-gradient(closest-side,var(--led-under) 66%,var(--led-bloom-clear));filter:blur(6px);opacity:0;pointer-events:none;transition:opacity var(--duration-led-rise) ease}   /* behind the cap: light spilling out on every side, like keyboard underglow */
 .k .glow-text{color:var(--raw-copper);filter:blur(2.5px);opacity:0;transition:opacity var(--duration-led-rise) ease}
-.site-header.lit .k .under{opacity:.8}
+.site-header.lit .k .halo{opacity:.9}
+.site-header.lit .k .under{opacity:.55}
 .site-header.lit .k .glow-text{opacity:.5}
 .site-header a:focus-visible,.menu-toggle:focus-visible{outline:2px solid var(--raw-copper);outline-offset:var(--space-4)}
 .menu-toggle{display:none;width:44px;height:44px;padding:var(--space-10);color:var(--bright);background:none;border:0;border-radius:var(--radius-6px);cursor:pointer}
@@ -3177,7 +3179,7 @@ main:not(.section-shell),
 .menu-toggle[aria-expanded="true"] .menu-close{display:block}
 @media(hover:hover){.menu-toggle:hover{color:var(--raw-copper)}}
 @media(max-width:1180px){.cable .coil,.cable .run.long{display:none}}
-@media(prefers-reduced-motion:reduce){.k .under,.k .glow-text{transition:none}}
+@media(prefers-reduced-motion:reduce){.k .halo,.k .under,.k .glow-text{transition:none}}
 @media(max-width:1000px){.cable{display:none}.nav{margin-left:var(--space-auto)}}
 @media(max-width:860px){
   .site-header{min-height:72px}
@@ -3188,7 +3190,7 @@ main:not(.section-shell),
   .nav.open{display:flex}
   /* in the panel the keys become plain text links */
   .nav .k{display:block;width:auto;margin:var(--space-0);padding:var(--space-14) var(--space-0);border-top:var(--border-width) solid var(--line-quiet);border-radius:var(--radius-square)}
-  .nav .k img,.nav .k .legend br,.nav .k .under,.nav .k .glow-text{display:none}
+  .nav .k img,.nav .k .legend br,.nav .k .halo,.nav .k .under,.nav .k .glow-text{display:none}
   .nav .k .legend,.nav .k:hover .legend,.nav .k[aria-current] .legend{position:static;font-size:var(--step-4)}
   .nav .k[aria-current] .legend{text-decoration:underline;text-decoration-color:var(--raw-copper);text-underline-offset:var(--space-6)}
 }
