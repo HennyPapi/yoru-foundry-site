@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Aboreto&family=Alegreya:wght@400..700&family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
 <script>
-// #theme or #theme&tex=grain|cast|sand|cast-sand|light|keys (default: verdigris, no texture; studies kept for reference)
+// fonts: &font=cinzel|aboreto|cinzel-aboreto|aboreto-cinzel. #theme or #theme&tex=grain|cast|sand|cast-sand|light|keys (default: verdigris, no texture; studies kept for reference)
 const [t, q] = location.hash.slice(1).split('&');
 if (t) document.documentElement.dataset.theme = t;
 const tex = new URLSearchParams(q || '').get('tex');
@@ -111,6 +111,8 @@ if (font) document.documentElement.dataset.font = font;
 [data-font="cinzel"] { --f-d: Cinzel, serif; --f-ui: Cinzel, serif; --f-b: Alegreya, Georgia, serif; --f-dw: 700; --f-dt: .02em; }
 [data-font="aboreto"] { --f-d: Aboreto, serif; --f-ui: Aboreto, serif; --f-b: Alegreya, Georgia, serif; --f-dw: 400; --f-dt: .05em; }
 [data-font="cinzel-aboreto"] { --f-d: Cinzel, serif; --f-ui: Aboreto, serif; --f-b: Alegreya, Georgia, serif; --f-dw: 700; --f-dt: .02em; }
+[data-font="aboreto-cinzel"] { --f-d: Cinzel, serif; --f-ui: Cinzel, serif; --f-b: Alegreya, Georgia, serif; --f-dw: 700; --f-dt: .02em; }
+[data-font="aboreto-cinzel"] h1 { font-family: Aboreto, serif; font-weight: 400; letter-spacing: .05em; } /* the big line only */
 html { font-synthesis: none; } /* never fake a bold the face doesn't have */
 * { box-sizing: border-box; }
 html { background: var(--canvas); }
