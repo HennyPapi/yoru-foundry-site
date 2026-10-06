@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-8-patina",
+  stylesheetVersion: "vg-9-glow",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
 });
@@ -167,7 +167,7 @@ function renderKey(item, page, headerKeys, extraClass = "") {
     .map((s, i) => `<img${i ? ` class="${"hp"[i - 1]}"` : ""} src="/assets/keys/${item.cap}${s}.webp" alt="" width="${Math.round(cap.w)}" height="74">`)   // every key render shares one 74px-tall plate band
     .join("");
   const current = page.activeNav === item.activeNav ? ' aria-current="page"' : "";
-  return `<a class="k${extraClass ? ` ${extraClass}` : ""}" style="${style}" href="${item.href}" aria-label="${escapeHtml(item.name)}"${current}>${frames}<span class="legend" aria-hidden="true">${item.legend}</span></a>`;
+  return `<a class="k${extraClass ? ` ${extraClass}` : ""}" style="${style}" href="${item.href}" aria-label="${escapeHtml(item.name)}"${current}><span class="under" aria-hidden="true"></span>${frames}<span class="legend glow-text" aria-hidden="true">${item.legend}</span><span class="legend" aria-hidden="true">${item.legend}</span></a>`;
 }
 
 function replaceTokens(template, values, label) {
@@ -240,7 +240,7 @@ function renderPage(entry, partials, content, headerKeys) {
       FULL_TITLE: `${page.title} | ${config.siteTitle}`,
       CRITICAL_CSS: redirect
         ? "html,body{margin:0;background:#151A1A;color:#EEF0EC;min-height:100%;font-family:Alegreya,Georgia,serif}main{max-width:760px;margin:auto;padding:15vh 24px}a{color:#E8834D}"
-        : "html,body{margin:0;background:#151A1A;color:#EEF0EC;min-height:100%}body{min-height:100vh}.site-header{background:#151A1A;color:#EEF0EC}.k{display:inline-grid;position:relative;color:#EEF0EC}.k img{grid-area:1/1}.k .h,.k .p{opacity:0}.k .legend{position:absolute}.cable{display:none}",
+        : "html,body{margin:0;background:#151A1A;color:#EEF0EC;min-height:100%}body{min-height:100vh}.site-header{background:#151A1A;color:#EEF0EC}.k{display:inline-grid;position:relative;color:#EEF0EC}.k img{grid-area:1/1}.k .h,.k .p{opacity:0}.k .legend{position:absolute}.k .under,.k .glow-text{opacity:0}.cable{display:none}",
       STYLESHEET_VERSION: config.stylesheetVersion,
     },
     `${label} head`,

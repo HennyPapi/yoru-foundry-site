@@ -1,4 +1,4 @@
-:root{
+:root{color-scheme:dark;
   /* Verdigris (Mike, 2026-10-06). Canonical tokens; contrast in AGENTS.md. */
   --deep: #0C1010;
   --cast: #151A1A;
@@ -14,6 +14,8 @@
   --raw-copper-edge: #9A4B22;
   --led-bloom: rgba(232,131,77,0.35);       /* header cable LED only: faint light around a bead, never behind text */
   --led-bloom-clear: rgba(232,131,77,0);
+  --led-under: rgba(232,131,77,0.5);         /* header keys' underglow once the LED reaches them; never behind text */
+  --duration-led-rise: 2600ms;
   --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23A7B2AE' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");   /* select arrow, Pewter */
   --verdigris: #4FB3A0;
   --verdigris-deep: #2B6E62;
@@ -3142,7 +3144,8 @@ main:not(.section-shell),
 .cable{position:relative;flex:1;display:flex;min-width:0;margin:calc(var(--space-2) * -1.1) calc(var(--space-26) * -1) var(--space-0) calc(var(--space-24) * -1)}   /* lines the cable up with the keys' plate */
 .cable .run{position:relative;flex:1;min-width:24px;height:82px;background:url(/assets/cable/tile.webp) repeat-x 0 0/120px 82px}
 .cable .run.long{flex:2}
-.cable .coil{position:relative;flex-shrink:0;width:226px;height:82px;background:url(/assets/cable/coil.webp) 0 0/100% 100%}
+.cable .coil{position:relative;flex-shrink:0;width:226px;height:82px}
+.cable .coil img{display:block;width:100%;height:100%}
 .cable .plug{flex-shrink:0;display:block;width:108px;height:82px}
 .cable .glow{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;filter:brightness(1.6);-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-image:linear-gradient(transparent,transparent);mask-image:linear-gradient(transparent,transparent)}
 .cable .run .glow{background:url(/assets/cable/tile-glow.webp) repeat-x 0 0/120px 82px}
@@ -3150,7 +3153,7 @@ main:not(.section-shell),
 .cable .bead{position:absolute;left:0;top:0;width:34px;height:16px;margin:calc(var(--space-8) * -1) 0 0 calc(var(--space-16) * -1);border-radius:var(--radius-circle);pointer-events:none;mix-blend-mode:screen;opacity:0;background:radial-gradient(closest-side,var(--led-bloom),var(--led-bloom-clear))}
 .nav{position:relative;z-index:1;display:flex;align-items:flex-end;column-gap:3.9px;flex-shrink:0}   /* 3.9px: the 1.06mm gap between caps on a plate */
 .k{position:relative;display:inline-grid;flex-shrink:0;width:var(--w);margin-left:var(--ml);margin-right:var(--mr);line-height:1.12;color:var(--bright);text-decoration:none;border-radius:var(--radius-8px)}
-.k img{grid-area:1/1;display:block;width:100%;height:auto}
+.k img{position:relative;grid-area:1/1;display:block;width:100%;height:auto}
 .k .h,.k .p{opacity:0}
 .k:hover img:first-child{opacity:0}
 .k:hover .h{opacity:1}
@@ -3160,6 +3163,13 @@ main:not(.section-shell),
 .k:hover .legend{left:calc(var(--fxh) + var(--space-7));top:calc(var(--fyh) + var(--space-6))}
 .k:active .legend,.k[aria-current] .legend{left:calc(var(--fxp) + var(--space-7));top:calc(var(--fyp) + var(--space-6))}
 .k.commission{margin-left:calc(var(--space-28) - var(--space-2))}
+/* LED on the keys: once the first bead reaches the keys (script.js adds .lit), a soft copper glow rises under
+   each cap and behind its legend, from nothing to a gentle maximum. */
+.k .under{position:absolute;z-index:1;left:calc(var(--ml) * -1 - var(--space-6));right:calc(var(--mr) * -1 - var(--space-6));bottom:var(--space-2);height:34%;border-radius:var(--radius-circle);background:radial-gradient(farthest-side at 50% 100%,var(--led-under),var(--led-bloom-clear));mix-blend-mode:screen;opacity:0;pointer-events:none;transition:opacity var(--duration-led-rise) ease}   /* light leaking out where the cap meets the plate */
+.k .legend{z-index:2}
+.k .glow-text{color:var(--raw-copper);filter:blur(2.5px);opacity:0;transition:opacity var(--duration-led-rise) ease}
+.site-header.lit .k .under{opacity:.8}
+.site-header.lit .k .glow-text{opacity:.5}
 .site-header a:focus-visible,.menu-toggle:focus-visible{outline:2px solid var(--raw-copper);outline-offset:var(--space-4)}
 .menu-toggle{display:none;width:44px;height:44px;padding:var(--space-10);color:var(--bright);background:none;border:0;border-radius:var(--radius-6px);cursor:pointer}
 .menu-toggle svg{display:block;width:24px;height:24px;fill:currentColor;stroke:currentColor;stroke-width:1.5;stroke-linecap:round}
@@ -3167,6 +3177,7 @@ main:not(.section-shell),
 .menu-toggle[aria-expanded="true"] .menu-close{display:block}
 @media(hover:hover){.menu-toggle:hover{color:var(--raw-copper)}}
 @media(max-width:1180px){.cable .coil,.cable .run.long{display:none}}
+@media(prefers-reduced-motion:reduce){.k .under,.k .glow-text{transition:none}}
 @media(max-width:1000px){.cable{display:none}.nav{margin-left:var(--space-auto)}}
 @media(max-width:860px){
   .site-header{min-height:72px}
@@ -3177,7 +3188,7 @@ main:not(.section-shell),
   .nav.open{display:flex}
   /* in the panel the keys become plain text links */
   .nav .k{display:block;width:auto;margin:var(--space-0);padding:var(--space-14) var(--space-0);border-top:var(--border-width) solid var(--line-quiet);border-radius:var(--radius-square)}
-  .nav .k img,.nav .k .legend br{display:none}
+  .nav .k img,.nav .k .legend br,.nav .k .under,.nav .k .glow-text{display:none}
   .nav .k .legend,.nav .k:hover .legend,.nav .k[aria-current] .legend{position:static;font-size:var(--step-4)}
   .nav .k[aria-current] .legend{text-decoration:underline;text-decoration-color:var(--raw-copper);text-underline-offset:var(--space-6)}
 }

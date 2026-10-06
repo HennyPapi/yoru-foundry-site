@@ -99,7 +99,7 @@ Rules:
 - Hover lift should generally stay within **1–3px**; do not use dramatic scaling.
 - Animate only properties that communicate state: opacity, transform, border-color, background-color, and text color.
 - No bounce, spring, elastic, parallax, scroll-jacking, or decorative continuous animation.
-- **Exception: the header cable LED** (Mike asked for it, 2026-10-06). Beads of copper light travel inside the header's braided cable, from the medallion to the first key, one after another. It is the only continuous animation on the site; it reveals a glow render of the cable through a moving mask (`script.js`), never sits behind text, and is fully off under `prefers-reduced-motion: reduce` and wherever the cable is hidden.
+- **Exception: the header cable LED** (Mike asked for it, 2026-10-06). Beads of copper light travel inside the header's braided cable, from the medallion to the first key, one after another. It is the only continuous animation on the site; it reveals a glow render of the cable through a moving mask (`script.js`), never sits behind text, and is fully off under `prefers-reduced-motion: reduce` and wherever the cable is hidden. When the first bead reaches the keys, a soft copper underglow and legend glow rise once on the header keys over 2.6s (Mike, 2026-10-06); with reduced motion, or with no cable on screen, the keys are simply lit.
 - Respect `prefers-reduced-motion: reduce`; nonessential transitions and animations must collapse or disable.
 - Motion should make the interface feel machined and deliberate, not app-like.
 

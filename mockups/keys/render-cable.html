@@ -88,30 +88,47 @@ function noise2(sz, oct, f0 = 4) {                 // tileable value-noise fbm
   for (let i = 0; i < out.length; i++) out[i] /= tot;
   return out;
 }
-function patinaMat(f0, amount) {                    // amount: how far the verdigris has spread (0-1)
-  const sz = 512, n = noise2(sz, 6, f0), fine = noise2(sz, 6, f0 * 2), c = document.createElement('canvas'), r = document.createElement('canvas');
-  c.width = c.height = r.width = r.height = sz;
-  const ci = c.getContext('2d').createImageData(sz, sz), ri = r.getContext('2d').createImageData(sz, sz);
-  for (let i = 0; i < sz * sz; i++) {
-    // mostly aged, darkened copper; verdigris settles as fine speckle that thickens in patches
-    const p = Math.min(1, Math.max(0, (n[i] * 0.8 + fine[i] * 0.2 - 0.40) * 2.6)) * amount;   // soft-edged patches
-    const age = 0.78 + 0.22 * n[i];                                             // gentle, broad darkening
-    const cu = [100 * age + 12, 55 * age + 8, 36 * age + 6];                    // aged, darkened copper
-    const vg = [70 + 22 * fine[i], 112 + 22 * fine[i], 100 + 18 * fine[i]];     // muted verdigris
-    for (let ch = 0; ch < 3; ch++) ci.data[i * 4 + ch] = cu[ch] + (vg[ch] - cu[ch]) * p;
-    ci.data[i * 4 + 3] = 255;
-    ri.data[i * 4] = 0; ri.data[i * 4 + 1] = 255 * (0.32 + 0.55 * p); ri.data[i * 4 + 2] = 255 * (1 - p); ri.data[i * 4 + 3] = 255;   // G rough, B metal
-  }
-  c.getContext('2d').putImageData(ci, 0, 0); r.getContext('2d').putImageData(ri, 0, 0);
-  const map = new THREE.CanvasTexture(c); map.colorSpace = THREE.SRGBColorSpace;
-  const rm = new THREE.CanvasTexture(r);
-  for (const t of [map, rm]) { t.wrapS = t.wrapT = THREE.RepeatWrapping; }
-  return new THREE.MeshPhysicalMaterial({ map, roughnessMap: rm, metalnessMap: rm, roughness: 1, metalness: 1 });
+// Patina computed in the shader from each part's own 3D position (object space, mm), so it never stretches across
+// a face or seams at a UV edge. Aged satin copper (cuprite brown) with crisp chalky verdigris patches, fine flecks,
+// and a darker tarnish rim around each patch. amount: how far the verdigris has spread (0-1).
+const PATINA_GLSL = `
+varying vec3 vObjPos;
+uniform float uAmount;
+float h3(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
+float vn(vec3 x) {
+  vec3 i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(mix(h3(i), h3(i + vec3(1,0,0)), f.x), mix(h3(i + vec3(0,1,0)), h3(i + vec3(1,1,0)), f.x), f.y),
+             mix(mix(h3(i + vec3(0,0,1)), h3(i + vec3(1,0,1)), f.x), mix(h3(i + vec3(0,1,1)), h3(i + vec3(1,1,1)), f.x), f.y), f.z);
 }
-// mostly smooth aged copper; verdigris settles in the collar grooves (verdigrisFill) and only faintly elsewhere
-const patina = patinaMat(3, 0.85);
-const housing = patinaMat(3, 0.8);
-const verdigrisFill = patinaMat(8, 1);
+float fbm(vec3 x) { float v = 0.0, a = 0.5; for (int i = 0; i < 5; i++) { v += a * vn(x); x = x * 2.03 + 11.7; a *= 0.5; } return v; }
+`;
+function patinaMat(amount) {
+  const m = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.4, metalness: 1 });
+  m.onBeforeCompile = sh => {
+    sh.uniforms.uAmount = { value: amount };
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vObjPos;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvObjPos = position;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\n' + PATINA_GLSL)
+      .replace('#include <map_fragment>', `
+        vec3 q = vObjPos;
+        float broad = fbm(q * 0.45), mid = fbm(q * 1.9 + 5.3), fine = vn(q * 11.0), grain = vn(q * 34.0);
+        float field = broad * 0.62 + mid * 0.38;
+        float patP = smoothstep(0.50, 0.555, field + (fine - 0.5) * 0.06);          // crisp-edged patches
+        patP = max(patP, smoothstep(0.80, 0.86, fine) * smoothstep(0.42, 0.5, field)); // flecks near the patches
+        patP = uAmount >= 1.0 ? 1.0 : patP * smoothstep(0.0, 0.15, uAmount) * min(1.0, uAmount * 1.4);
+        float rim = smoothstep(0.43, 0.5, field) * (1.0 - patP);                       // tarnish around a patch
+        vec3 copper = mix(vec3(0.10, 0.038, 0.018), vec3(0.21, 0.075, 0.034), smoothstep(0.3, 0.7, mid));   // aged brown copper
+        copper *= (1.0 - rim * 0.55) * (0.96 + 0.04 * grain);
+        vec3 verd = mix(vec3(0.05, 0.22, 0.16), vec3(0.16, 0.40, 0.31), smoothstep(0.2, 0.85, mid * 0.5 + fine * 0.5)) * (0.95 + 0.1 * grain);
+        diffuseColor.rgb = mix(copper, verd, patP);`)
+      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = mix(0.46 + 0.12 * rim + 0.06 * grain, 0.92, patP);')
+      .replace('#include <metalnessmap_fragment>', '#include <metalnessmap_fragment>\nmetalnessFactor = mix(1.0, 0.0, patP);');
+  };
+  return m;
+}
+const patina = patinaMat(0.55);
+const housing = patinaMat(0.5);
+const verdigrisFill = patinaMat(1);
 const steel = new THREE.MeshPhysicalMaterial({ color: 0x6f7774, metalness: 1, roughness: 0.5 });
 const rubber = new THREE.MeshPhysicalMaterial({ color: 0x141617, roughness: 0.55, sheen: 0.3, sheenColor: new THREE.Color(0x667070) });
 const BLACK = new THREE.MeshBasicMaterial({ color: 0x000000 });
