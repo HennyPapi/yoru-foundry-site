@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-2-tokens",
+  stylesheetVersion: "vg-3-fonts",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
 });
@@ -225,7 +225,7 @@ function renderPage(entry, partials, content) {
         : "",
       FULL_TITLE: `${page.title} | ${config.siteTitle}`,
       CRITICAL_CSS: redirect
-        ? "html,body{margin:0;background:#151A1A;color:#EEF0EC;min-height:100%;font-family:Archivo,system-ui,sans-serif}main{max-width:760px;margin:auto;padding:15vh 24px}a{color:#E8834D}"
+        ? "html,body{margin:0;background:#151A1A;color:#EEF0EC;min-height:100%;font-family:Alegreya,Georgia,serif}main{max-width:760px;margin:auto;padding:15vh 24px}a{color:#E8834D}"
         : "html,body{margin:0;background:#151A1A;color:#EEF0EC;min-height:100%}body{min-height:100vh}.site-header{background:#EEF0EC;color:#151A1A}.nav,.nav a,.products-menu summary{color:#151A1A}.nav-cta{background:#1A2120!important;color:#EEF0EC!important;border:1px solid #E8834D!important}",
       STYLESHEET_VERSION: config.stylesheetVersion,
     },

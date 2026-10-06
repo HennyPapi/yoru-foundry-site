@@ -130,16 +130,17 @@ Rules:
 - Logo: the medallion image has a baked-in black ring that shows on Cast. Fix the image edge, not the
   logo design, during the header step.
 
-## 4. Type: two families
+## 4. Type (chosen by Mike, 2026-10-06)
 
-| Family | Role | Why |
-|---|---|---|
-| **Archivo** (variable, width axis; Semi-Expanded / Expanded, 600–800) | display, nav, labels, spec values, buttons | Reads like engraved case badges and keycap legends; the width axis gives emphasis without decorative weight |
-| **Source Serif 4** (variable, optical size) | body copy, long-form, captions | A letter-like voice for first-person writing; optical sizes keep small text sturdy |
+| Family | Role |
+|---|---|
+| **Aboreto** | Homepage headline only ("FORGED BY NIGHT."): wide, thin, mystical capitals |
+| **Cinzel** | Headings, nav, buttons, labels, spec values: carved Roman capitals |
+| **Alegreya** | Body copy and notes |
 
-- Labels use sentence case at normal tracking. No all-caps eyebrows.
-- Spec numbers use Archivo with tabular figures, so build sheets line up without a monospace font.
-- Removes Cormorant Garamond and Manrope. Avoids the current AI defaults: Inter, Space Grotesk, Instrument Serif, DM Sans, Bricolage.
+Archivo + Source Serif 4 read as bland. Five rounds of studies in `mockups/fonts.html` (blackletter, letterpress,
+manuscript, wood type, carved inscription) led to Cinzel and Aboreto for a "dwarven, mystical, metalwork, clean" feel.
+Aboreto is weak at small sizes, so it carries only the big headline.
 
 ## 5. Layout
 

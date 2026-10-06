@@ -73,19 +73,21 @@ Rules:
 
 ### Type roles
 
-- Display, headings, navigation, labels, buttons, and spec values: **Archivo** (variable, width axis; set at a wide stretch, 600–800 weight).
-- Body copy, long-form, captions, and notes: **Source Serif 4**.
+- **Homepage headline only:** **Aboreto** (wide, thin capitals), one weight, never faux-bolded. It is strongest large; never use it for small text.
+- Display, headings, navigation, labels, buttons, and spec values: **Cinzel** (carved Roman capitals; lowercase renders as small capitals), 600–700.
+- Body copy, long-form, captions, and notes: **Alegreya**.
 - Spec numbers use tabular figures. No monospace font as a "technical" costume.
-- Do not add **Inter**. Cormorant Garamond and Manrope are retired.
-- Labels are sentence case at normal tracking. No spaced ALL-CAPS eyebrow labels above headings.
-- Minimum text size 12px.
+- Do not add **Inter**. Cormorant Garamond, Manrope, Archivo and Source Serif 4 are retired.
+- Cinzel and Aboreto are capital-only faces, so headings and labels read as capitals; keep body copy in Alegreya so pages never become all capitals. No extra letter-spacing on labels (no spaced-capital eyebrows).
+- Minimum text size 12px. `font-synthesis: none` so single-weight faces are never faked bold.
+- Chosen by Mike on 2026-10-06 after five font rounds (`mockups/fonts.html`, `mockups/fonts-home-*.png`).
 
 ### Button system
 
 - Buttons are **keycaps**: 6px radius, 1px edge, a thicker bottom edge (4px) that shortens as the key travels down on hover (2px) and press (1px). Section keys use the same press at 8px radius with a 5px bottom edge.
 - **Primary** (commission): Raw Copper face, Cast text, darker copper edge. Only one per view.
 - **Plain** (header commission, secondary actions): Green Sand face, Bright text, near-black edge.
-- Text links: Archivo, underlined with a copper or verdigris underline; no "→" appended.
+- Text links: Cinzel, underlined with a copper or verdigris underline; no "→" appended.
 - No gradient buttons. No glossy, glass, neon, or oversized ecommerce-style CTAs. Buttons never flash pure white or black.
 
 ### Motion specification
@@ -203,8 +205,9 @@ These rules are canonical for `src/static/styles.css` and must be preserved by f
 - No hardcoded hex, RGB, or RGBA color literals outside `:root`.
 - Canonical semantic color tokens are the surface, text, accent, state, status, hairline, and grain tokens listed above. Compatibility aliases may only resolve to those canonical roles and must not introduce another color value.
 - Required font tokens:
-  - `--font-display`: Archivo
-  - `--font-body`: Source Serif 4
+  - `--font-display`: Cinzel
+  - `--font-body`: Alegreya
+  - `--font-headline`: Aboreto (homepage headline only)
   - `--font-mono`: system monospace stack (code only)
 - Required type primitives: `--step-1` through `--step-5`.
 - Font sizes, font-family declarations, spacing declarations, radii, color values, and transition durations must use custom properties rather than anonymous repeated literals.

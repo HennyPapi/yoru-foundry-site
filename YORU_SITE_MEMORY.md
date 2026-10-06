@@ -49,9 +49,11 @@ hero media frame.
 
 ## 5. Typography
 
-- Display, headings, nav, labels, buttons, spec values: **Archivo** (wide stretch, 600–800).
-- Body and notes: **Source Serif 4**.
-- Sentence-case labels, no spaced capitals, no text under 12px. Tabular figures for specs.
+- Homepage headline: **Aboreto** (wide, thin capitals; large sizes only).
+- Display, headings, nav, labels, buttons, spec values: **Cinzel** (carved Roman capitals).
+- Body and notes: **Alegreya**.
+- Chosen 2026-10-06 (version 4 of `mockups/fonts-home-*`): "foundry, night, metalwork, artisanal, clean, dwarven/mystical".
+  Earlier rounds tried Archivo, blackletters (Pirata One, Jacquard), letterpress (IM Fell) and more.
 
 ## 6. Layout
 
