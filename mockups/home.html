@@ -96,7 +96,6 @@ if (tex === 'none') delete document.documentElement.dataset.tex; else if (tex) d
 [data-tex] .key, [data-tex] .frame { position: relative; isolation: isolate; }
 [data-tex] .key::before, [data-tex] .frame::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
   background: var(--tex-key, none) center / var(--tex-key-size, 384px) repeat; opacity: var(--tex-key-op, 0); mix-blend-mode: soft-light; }
-[data-tex] .key.accent::before { display: none; } /* copper stays satin: no grain */
 * { box-sizing: border-box; }
 html { background: var(--canvas); }
 body {
@@ -112,7 +111,7 @@ a { color: inherit; text-decoration-color: var(--accent-2, var(--accent)); text-
   font-family: Archivo, system-ui, sans-serif; font-stretch: 112%;
 }
 h1, h2, h3 { font-family: Archivo, system-ui, sans-serif; font-stretch: 118%; font-weight: 750; letter-spacing: -.02em; line-height: 1.02; margin: 0; text-wrap: balance; }
-h1 { font-size: clamp(2.6rem, 6.4vw, 5.4rem); }
+h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); }
 h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); }
 h3 { font-size: 1.35rem; letter-spacing: -.01em; }
 p { margin: 0; max-width: 62ch; }
@@ -135,21 +134,24 @@ header .wrap { display: flex; align-items: center; gap: 32px; height: 84px; }
 }
 [data-theme="bench"] .btn:not(.primary) { color: #232527; }
 .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent-edge); }
+.btn:hover { transform: translateY(2px); border-bottom-width: 2px; }
 .btn:active { transform: translateY(3px); border-bottom-width: 1px; }
 
 /* Hero */
-.hero { display: grid; grid-template-columns: 1.55fr 1fr; gap: 24px clamp(24px, 4vw, 56px); padding: clamp(40px, 7vw, 88px) 0 56px; align-items: end; }
+.hero { display: grid; grid-template-columns: 1.55fr 1fr; gap: 24px clamp(24px, 4vw, 56px); padding: clamp(24px, 3vw, 36px) 0 56px; align-items: end; }
 .frame {
   grid-column: 1; aspect-ratio: 16 / 9; color: var(--frame-ink);
   background-color: var(--frame);
   background-image: radial-gradient(90% 70% at 50% 115%, color-mix(in srgb, var(--accent) var(--glow-mix, 0%), transparent), transparent 70%);
   display: grid; place-items: center; font: 600 .8rem/1.4 Archivo, sans-serif; font-stretch: 112%;
-  text-align: center; padding: 16px;
+  text-align: center; padding: 16px; align-content: center; gap: 18px;
 }
+.frame .board.hero-board { width: 78%; }
+.frame-note { max-width: none; }
 .hero-copy { grid-column: 1; display: grid; gap: 20px; }
 .hero-copy .lede { font-size: clamp(1.1rem, 1.6vw, 1.3rem); color: var(--muted); }
 .actions { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-top: 8px; }
-.actions a:not(.btn) { font-family: Archivo, sans-serif; font-stretch: 112%; font-weight: 600; font-size: .95rem; }
+.actions a:not(.btn) { display: inline-block; padding: 12px 0; font-family: Archivo, sans-serif; font-stretch: 112%; font-weight: 600; font-size: .95rem; }
 .sheet-card { grid-column: 2; grid-row: 1 / span 2; align-self: start; display: flex; flex-direction: column; gap: 8px; border-top: 2px solid var(--ink); padding-top: 16px; }
 .sheet-head { display: flex; justify-content: space-between; align-items: baseline; }
 .sheet-head .sheet-title { font-size: 1.4rem; }
@@ -176,8 +178,7 @@ header .wrap { display: flex; align-items: center; gap: 32px; height: 84px; }
 .key:active { transform: translateY(4px); border-bottom-width: 1px; }
 .key-legend { font-weight: 750; font-size: 1.15rem; letter-spacing: -.01em; }
 .key p { font-size: .95rem; line-height: 1.45; color: var(--muted); }
-.key.accent { background: var(--accent); border-color: var(--accent-edge); color: var(--accent-ink); }
-.key.accent p { color: var(--accent-ink); }
+.key.accent { border-top: 3px solid var(--accent); }
 
 /* Sound band */
 .band { background: var(--band); color: var(--band-ink); padding: 64px 0; }
@@ -185,10 +186,11 @@ header .wrap { display: flex; align-items: center; gap: 32px; height: 84px; }
 .band p { color: var(--band-muted); margin-top: 14px; }
 .wave { display: flex; align-items: center; gap: 14px; }
 .play { flex: none; width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--band-muted); background: transparent; display: grid; place-items: center; cursor: not-allowed; }
+.play:disabled { opacity: .45; }
 .play svg { width: 16px; fill: var(--band-ink); margin-left: 3px; }
 .wave > svg { width: 100%; height: 72px; }
 .wave rect { fill: var(--band-muted); }
-.wave rect.lit { fill: var(--accent-2, var(--accent)); }
+.wave rect.lit { fill: var(--signal); }
 .band .label { font-size: .8rem; font-weight: 600; color: var(--band-muted); margin-top: 10px; }
 
 /* Standards: ruled list */
@@ -213,10 +215,20 @@ header .wrap { display: flex; align-items: center; gap: 32px; height: 84px; }
 .close p { color: var(--muted); margin-bottom: 24px; }
 footer { border-top: 1px solid var(--rule); padding: 28px 0 40px; font: 500 .85rem Archivo, sans-serif; font-stretch: 112%; color: var(--muted); }
 footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.foot-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.foot-links a { padding: 10px 0; }
+.menu { display: none; position: relative; font: 600 .95rem Archivo, sans-serif; font-stretch: 112%; }
+.menu summary { list-style: none; cursor: pointer; padding: 14px 4px; }
+.menu summary::-webkit-details-marker { display: none; }
+.menu nav { position: absolute; right: 0; top: 100%; z-index: 2; display: grid; min-width: 200px; padding: 8px 0; background: var(--key); border: 1px solid var(--rule); border-radius: 8px; }
+.menu nav a { padding: 12px 16px; text-decoration: none; }
 
 @media (max-width: 860px) {
   .nav { display: none; }
-  header .btn { margin-left: auto; padding: 10px 14px 8px; font-size: .85rem; }
+  .menu { display: block; }
+  header .wrap { gap: 12px; }
+  header .btn { margin-left: auto; padding: 10px 12px 8px; font-size: .85rem; white-space: nowrap; }
+  .logo { width: 48px; height: 48px; }
   .hero, .band .wrap, .standards, .close { grid-template-columns: 1fr; }
   .sheet-card { grid-column: 1; grid-row: auto; }
   .keys { grid-template-columns: 1fr 1fr; }
@@ -231,15 +243,17 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 </head>
 <body>
 <header><div class="wrap">
-  <img class="logo" src="../src/static/assets/yoru-foundry-logo-v5.webp" alt="Yoru Foundry">
+  <a href="#" aria-label="Yoru Foundry home"><img class="logo" src="../src/static/assets/yoru-foundry-logo-v5.webp" alt=""></a>
   <nav class="nav" aria-label="Main"><a href="#">Crafted Art</a><a href="#">Trust the Process</a><a href="#">Built to Taste</a><a href="#">About</a></nav>
   <a class="btn primary" href="#">Request a Commission</a>
+  <details class="menu"><summary>Menu</summary><nav aria-label="Main"><a href="#">Crafted Art</a><a href="#">Trust the Process</a><a href="#">Built to Taste</a><a href="#">About</a></nav></details>
 </div></header>
 <div class="temper-strip" aria-hidden="true"></div>
 
-<main class="wrap">
+<main>
+<div class="wrap">
   <section class="hero">
-    <div class="frame">Hero photo or slow build loop · 16:9<br>(real footage replaces this frame)</div>
+    <div class="frame"><div class="board live hero-board" data-layout="75"><svg></svg></div><p class="frame-note">The 75% layout. Real build footage replaces this drawing.</p></div>
     <div class="hero-copy">
       <h1>Refined by Craft.</h1>
       <p class="lede">Art can live in the objects we use every day. Yoru Foundry turns sound, material, function, and personal taste into pieces made to be felt, heard, and kept.</p>
@@ -247,7 +261,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
     </div>
     <aside class="sheet-card" aria-label="Build sheet">
       <div>
-        <div class="sheet-head"><h2 class="sheet-title">Build sheet</h2><span class="serial">YF-001 · placeholder</span></div>
+        <div class="sheet-head"><h2 class="sheet-title">Build sheet</h2><span class="serial">YF-001 (placeholder)</span></div>
         <dl class="sheet">
           <div><dt>Layout</dt><dd>75%</dd></div>
           <div><dt>Case</dt><dd>Aluminum</dd></div>
@@ -269,7 +283,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
     <a class="key accent" href="#"><span class="key-legend">Built to Taste</span><p>Learn how material, mounting, switches, lubrication, keycaps, and tuning change feel and sound.</p></a>
     <a class="key" href="#"><span class="key-legend">About</span><p>Meet the founder. Your builder.</p></a>
   </nav>
-</main>
+</div>
 
 <section class="band" aria-label="Sound">
   <div class="wrap">
@@ -282,12 +296,12 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
         <button class="play" disabled aria-label="Play sound test (recording not available yet)"><svg viewBox="0 0 12 14"><path d="M0 0l12 7-12 7z"/></svg></button>
         <svg id="wave" viewBox="0 0 600 72" preserveAspectRatio="none" aria-hidden="true"></svg>
       </div>
-      <p class="label">YF-001 sound test · placeholder</p>
+      <p class="label">YF-001 sound test (placeholder)</p>
     </div>
   </div>
 </section>
 
-<main class="wrap">
+<div class="wrap">
   <section class="standards">
     <h2>What I refuse to rush.</h2>
     <ul>
@@ -315,8 +329,9 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
       <a class="btn primary" href="#">Request a Commission</a>
     </div>
   </section>
+</div>
 </main>
-<footer><div class="wrap"><span>Built one at a time in Miami.</span><span>hello@yorufoundry.com · Instagram @yorufoundry · TikTok @yoru.foundry</span><span>© 2026 Yoru Foundry</span></div></footer>
+<footer><div class="wrap"><span>Built one at a time in Miami.</span><span class="foot-links"><a href="mailto:hello@yorufoundry.com">hello@yorufoundry.com</a><a href="https://instagram.com/yorufoundry">Instagram</a><a href="https://www.tiktok.com/@yoru.foundry">TikTok</a></span><span>© 2026 Yoru Foundry</span></div></footer>
 
 <script>
 // Key rows in units; negative = gap. Same scale for every board, so sizes compare honestly.
