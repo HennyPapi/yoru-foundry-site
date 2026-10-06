@@ -1,0 +1,118 @@
+{
+ "_note": "Header keys. caps: rendered keycap metrics in CSS px (image width, cap base inset left/right, top-face corner % per state), from mockups/keys/row-crop.py. Legends are real text set on the cap's top face.",
+ "caps": {
+  "d1.25": {
+   "w": 99.6,
+   "bl": 2.2,
+   "br": 12.8,
+   "f": {
+    "idle": [
+     12.71,
+     3.72
+    ],
+    "-hover": [
+     12.98,
+     7.25
+    ],
+    "-press": [
+     13.54,
+     13.2
+    ]
+   }
+  },
+  "d1.75": {
+   "w": 134.8,
+   "bl": 2.1,
+   "br": 12.7,
+   "f": {
+    "idle": [
+     9.69,
+     3.72
+    ],
+    "-hover": [
+     10.0,
+     7.25
+    ],
+    "-press": [
+     10.51,
+     13.2
+    ]
+   }
+  },
+  "d2": {
+   "w": 152.3,
+   "bl": 1.9,
+   "br": 12.5,
+   "f": {
+    "idle": [
+     8.67,
+     3.72
+    ],
+    "-hover": [
+     9.03,
+     7.25
+    ],
+    "-press": [
+     9.58,
+     13.2
+    ]
+   }
+  },
+  "s2.25": {
+   "w": 170.1,
+   "bl": 1.9,
+   "br": 12.7,
+   "f": {
+    "idle": [
+     7.85,
+     3.72
+    ],
+    "-hover": [
+     8.17,
+     7.25
+    ],
+    "-press": [
+     8.82,
+     13.2
+    ]
+   }
+  }
+ },
+ "nav": [
+  {
+   "activeNav": "crafted-art",
+   "href": "/crafted-art.html",
+   "name": "Crafted Art",
+   "legend": "Crafted <br>Art",
+   "cap": "d1.75"
+  },
+  {
+   "activeNav": "trust-the-process",
+   "href": "/trust-the-process.html",
+   "name": "Trust the Process",
+   "legend": "Trust the <br>Process",
+   "cap": "d2"
+  },
+  {
+   "activeNav": "built-to-taste",
+   "href": "/built-to-taste.html",
+   "name": "Built to Taste",
+   "legend": "Built to <br>Taste",
+   "cap": "d1.75"
+  },
+  {
+   "activeNav": "about",
+   "href": "/about.html",
+   "name": "About",
+   "legend": "About",
+   "cap": "d1.25"
+  }
+ ],
+ "commission": {
+  "activeNav": "request-a-build",
+  "href": "/request-a-build.html",
+  "name": "Request a Commission",
+  "legend": "Commission",
+  "cap": "s2.25"
+ }
+}

@@ -12,6 +12,8 @@
   --muted-on-bright: #5A6461;
   --raw-copper: #E8834D;
   --raw-copper-edge: #9A4B22;
+  --led-bloom: rgba(232,131,77,0.35);       /* header cable LED only: faint light around a bead, never behind text */
+  --led-bloom-clear: rgba(232,131,77,0);
   --verdigris: #4FB3A0;
   --verdigris-deep: #2B6E62;
   /* Nocturne names below are compatibility aliases until each page is rebuilt. */
@@ -3263,43 +3265,56 @@ main:not(.section-shell),
 .paper-subtle>*{position:relative;z-index:1}
 
 
-/* Header (Verdigris): Cast bar, the medallion, four links, the commission keycap.
-   The key is three renders (idle, hover, pressed: the cap sinks into the plate) swapped by state;
-   the legend is real text placed on the cap's top face, which moves down with each frame.
-   At 860px and below the links fold into a panel under the bar. */
-.site-header{position:sticky;top:var(--space-0);z-index:100;display:flex;align-items:center;gap:var(--space-28);min-height:88px;padding:var(--space-8) var(--space-pattern-029);background:var(--cast);color:var(--bright);border-bottom:var(--border-width) solid var(--line)}
-.brand{display:block;flex-shrink:0;border-radius:var(--radius-circle)}
+/* Header (Verdigris): the bottom row of a keyboard. The medallion at the left, a braided USB-C cable running from
+   behind it to the keys (straight runs stretch with the page; the coil and plug stay fixed; the plug's tip tucks
+   under the first key), then the link keys and the Enter key for the commission.
+   Each key is three renders (idle, hover, pressed: the cap sinks into the plate) swapped by state; the legend is
+   real text on the cap's top face and moves with it (face positions come from header-keys.json). The current page's
+   key shows pressed. LED: beads of copper light travel inside the cable (script.js), revealing a glow render of the
+   same cable through a moving mask. Below 1180px the coil goes, below 1000px the cable, and at 860px and below the
+   links fold into a panel under the bar. */
+.site-header{position:sticky;top:var(--space-0);z-index:100;display:flex;align-items:center;min-height:92px;padding:var(--space-4) var(--space-pattern-029);background:var(--cast);color:var(--bright);border-bottom:var(--border-width) solid var(--line)}
+.brand{position:relative;z-index:2;display:block;flex-shrink:0;border-radius:var(--radius-circle)}
 .brand-mark{display:block;width:64px;height:64px}
-.nav{display:flex;flex:1;justify-content:space-evenly;align-items:center;gap:var(--space-28);font-family:var(--font-display);font-size:var(--step-4);font-weight:700}
-.nav a{padding:var(--space-10) var(--space-0);color:var(--bright);text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:var(--space-6);transition:text-decoration-color var(--duration-base) var(--ease)}
-.nav a:hover{text-decoration-color:var(--pewter)}
-.nav a[aria-current]{text-decoration-color:var(--raw-copper)}
-.nav-key{position:relative;display:inline-grid;flex-shrink:0;line-height:1;border-radius:var(--radius-8px)}
-.nav-key img{grid-area:1/1;display:block;width:168px;height:auto}
-.nav-key .h,.nav-key .p{opacity:0}
-.nav-key:hover img:first-child{opacity:0}
-.nav-key:hover .h{opacity:1}
-.nav-key:active img:not(.p),.nav-key[aria-current] img:not(.p){opacity:0}
-.nav-key:active .p,.nav-key[aria-current] .p{opacity:1}
-.nav-key-legend{position:absolute;left:12%;top:14%;font-family:var(--font-display);font-size:var(--step-3);font-weight:700;color:var(--bright);pointer-events:none}
-.nav-key:hover .nav-key-legend{left:12.3%;top:17.5%}
-.nav-key:active .nav-key-legend,.nav-key[aria-current] .nav-key-legend{left:13%;top:23.5%}
+.cable{position:relative;flex:1;display:flex;min-width:0;margin:calc(var(--space-2) * -1.05) calc(var(--space-26) * -1) var(--space-0) calc(var(--space-24) * -1)}   /* lines the cable up with the keys' plate */
+.cable .run{position:relative;flex:1;min-width:24px;height:83.5px;background:url(/assets/cable/tile.webp) repeat-x 0 0/120px 83.5px}
+.cable .run.long{flex:2}
+.cable .coil{position:relative;flex-shrink:0;width:226px;height:83.5px;background:url(/assets/cable/coil.webp) 0 0/100% 100%}
+.cable .plug{flex-shrink:0;display:block;width:108px;height:83.5px}
+.cable .glow{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;filter:brightness(1.6);-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-image:linear-gradient(transparent,transparent);mask-image:linear-gradient(transparent,transparent)}
+.cable .run .glow{background:url(/assets/cable/tile-glow.webp) repeat-x 0 0/120px 83.5px}
+.cable .coil .glow{background:url(/assets/cable/coil-glow.webp) 0 0/100% 100%}
+.cable .bead{position:absolute;left:0;top:0;width:34px;height:16px;margin:calc(var(--space-8) * -1) 0 0 calc(var(--space-16) * -1);border-radius:var(--radius-circle);pointer-events:none;mix-blend-mode:screen;opacity:0;background:radial-gradient(closest-side,var(--led-bloom),var(--led-bloom-clear))}
+.nav{position:relative;z-index:1;display:flex;align-items:flex-end;column-gap:3.9px;flex-shrink:0}   /* 3.9px: the 1.06mm gap between caps on a plate */
+.k{position:relative;display:inline-grid;flex-shrink:0;width:var(--w);margin-left:var(--ml);margin-right:var(--mr);line-height:1.12;color:var(--bright);text-decoration:none;border-radius:var(--radius-8px)}
+.k img{grid-area:1/1;display:block;width:100%;height:auto}
+.k .h,.k .p{opacity:0}
+.k:hover img:first-child{opacity:0}
+.k:hover .h{opacity:1}
+.k:active img:not(.p),.k[aria-current] img:not(.p){opacity:0}
+.k:active .p,.k[aria-current] .p{opacity:1}
+.k .legend{position:absolute;left:calc(var(--fx) + var(--space-7));top:calc(var(--fy) + var(--space-6));font-family:var(--font-display);font-size:var(--type-13);font-weight:700;pointer-events:none}
+.k:hover .legend{left:calc(var(--fxh) + var(--space-7));top:calc(var(--fyh) + var(--space-6))}
+.k:active .legend,.k[aria-current] .legend{left:calc(var(--fxp) + var(--space-7));top:calc(var(--fyp) + var(--space-6))}
+.k.commission{margin-left:calc(var(--space-28) - var(--space-2))}
 .site-header a:focus-visible,.menu-toggle:focus-visible{outline:2px solid var(--raw-copper);outline-offset:var(--space-4)}
 .menu-toggle{display:none;width:44px;height:44px;padding:var(--space-10);color:var(--bright);background:none;border:0;border-radius:var(--radius-6px);cursor:pointer}
 .menu-toggle svg{display:block;width:24px;height:24px;fill:currentColor;stroke:currentColor;stroke-width:1.5;stroke-linecap:round}
 .menu-toggle .menu-close,.menu-toggle[aria-expanded="true"] .menu-open{display:none}
 .menu-toggle[aria-expanded="true"] .menu-close{display:block}
 @media(hover:hover){.menu-toggle:hover{color:var(--raw-copper)}}
-@media(max-width:1100px){.site-header{gap:var(--space-18)}.nav{gap:var(--space-18);font-size:var(--step-3)}}
+@media(max-width:1180px){.cable .coil,.cable .run.long{display:none}}
+@media(max-width:1000px){.cable{display:none}.nav{margin-left:var(--space-auto)}}
 @media(max-width:860px){
-  .site-header{gap:var(--space-12);min-height:72px}
+  .site-header{min-height:72px}
   .brand-mark{width:52px;height:52px}
-  .nav-key{margin-left:var(--space-auto)}
-  .nav-key img{width:136px}
-  .nav-key-legend{font-size:var(--step-2)}
-  .menu-toggle{display:block;margin-right:calc(var(--space-10) * -1)}
-  .nav{display:none;position:absolute;top:100%;left:var(--space-0);right:var(--space-0);flex-direction:column;align-items:stretch;gap:var(--space-0);margin:var(--space-0);padding:var(--space-4) var(--space-pattern-029) var(--space-16);font-size:var(--step-4);background:var(--cast);border-bottom:var(--border-width) solid var(--line)}
+  .k.commission{margin-left:var(--space-auto)}
+  .menu-toggle{display:block;margin-left:var(--space-12);margin-right:calc(var(--space-10) * -1)}
+  .nav{display:none;position:absolute;top:100%;left:var(--space-0);right:var(--space-0);flex-direction:column;align-items:stretch;margin:var(--space-0);padding:var(--space-4) var(--space-pattern-029) var(--space-16);background:var(--cast);border-bottom:var(--border-width) solid var(--line)}
   .nav.open{display:flex}
-  .nav a{padding:var(--space-14) var(--space-0);border-top:var(--border-width) solid var(--line-quiet)}
+  /* in the panel the keys become plain text links */
+  .nav .k{display:block;width:auto;margin:var(--space-0);padding:var(--space-14) var(--space-0);border-top:var(--border-width) solid var(--line-quiet);border-radius:var(--radius-square)}
+  .nav .k img,.nav .k .legend br{display:none}
+  .nav .k .legend,.nav .k:hover .legend,.nav .k[aria-current] .legend{position:static;font-size:var(--step-4)}
+  .nav .k[aria-current] .legend{text-decoration:underline;text-decoration-color:var(--raw-copper);text-underline-offset:var(--space-6)}
 }
-@media(prefers-reduced-motion:reduce){.nav a{transition:none}}

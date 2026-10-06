@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-5-header",
+  stylesheetVersion: "vg-6-keyrow",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
 });
@@ -156,6 +156,20 @@ function renderDataBackedContent(html, content) {
 
   return html;
 }
+// One header key: three rendered frames (idle, hover, pressed) stacked, with the legend as real text on the
+// cap's top face. The current page's key shows pressed. Metrics come from src/static/data/header-keys.json.
+function renderKey(item, page, headerKeys, extraClass = "") {
+  const cap = headerKeys.caps[item.cap];
+  if (!cap) fail(`header-keys.json: unknown cap "${item.cap}" for ${item.name}`);
+  const [fx, fy] = cap.f.idle, [hx, hy] = cap.f["-hover"], [px, py] = cap.f["-press"];
+  const style = `--w:${cap.w}px;--ml:-${cap.bl}px;--mr:-${cap.br}px;--fx:${fx}%;--fy:${fy}%;--fxh:${hx}%;--fyh:${hy}%;--fxp:${px}%;--fyp:${py}%`;
+  const frames = ["", "-hover", "-press"]
+    .map((s, i) => `<img${i ? ` class="${"hp"[i - 1]}"` : ""} src="/assets/keys/${item.cap}${s}.webp" alt="" width="${Math.round(cap.w)}" height="74">`)   // every key render shares one 74px-tall plate band
+    .join("");
+  const current = page.activeNav === item.activeNav ? ' aria-current="page"' : "";
+  return `<a class="k${extraClass ? ` ${extraClass}` : ""}" style="${style}" href="${item.href}" aria-label="${escapeHtml(item.name)}"${current}>${frames}<span class="legend" aria-hidden="true">${item.legend}</span></a>`;
+}
+
 function replaceTokens(template, values, label) {
   const output = template.replace(/\{\{([A-Z0-9_]+)\}\}/g, (_, key) => {
     if (!(key in values)) fail(`${label}: missing value for {{${key}}}`);
@@ -209,7 +223,7 @@ function parsePage(file) {
   return { file, page, template };
 }
 
-function renderPage(entry, partials, content) {
+function renderPage(entry, partials, content, headerKeys) {
   const { page, template, file } = entry;
   const label = path.basename(file);
   const redirect = page.layout === "redirect";
@@ -226,23 +240,19 @@ function renderPage(entry, partials, content) {
       FULL_TITLE: `${page.title} | ${config.siteTitle}`,
       CRITICAL_CSS: redirect
         ? "html,body{margin:0;background:#151A1A;color:#EEF0EC;min-height:100%;font-family:Alegreya,Georgia,serif}main{max-width:760px;margin:auto;padding:15vh 24px}a{color:#E8834D}"
-        : "html,body{margin:0;background:#151A1A;color:#EEF0EC;min-height:100%}body{min-height:100vh}.site-header{background:#151A1A;color:#EEF0EC}.nav a,.nav-key-legend{color:#EEF0EC}.nav-key{display:inline-grid;position:relative}.nav-key img{grid-area:1/1}.nav-key .h,.nav-key .p{opacity:0}",
+        : "html,body{margin:0;background:#151A1A;color:#EEF0EC;min-height:100%}body{min-height:100vh}.site-header{background:#151A1A;color:#EEF0EC}.k{display:inline-grid;position:relative;color:#EEF0EC}.k img{grid-area:1/1}.k .h,.k .p{opacity:0}.k .legend{position:absolute}.cable{display:none}",
       STYLESHEET_VERSION: config.stylesheetVersion,
     },
     `${label} head`,
   );
 
-  const active = (item) => page.activeNav === item;
   const header = redirect
     ? ""
     : replaceTokens(
         partials.header,
         {
-          NAV_CRAFTED_ART: active("crafted-art") ? ' aria-current="page"' : "",
-          NAV_TRUST: active("trust-the-process") ? ' aria-current="page"' : "",
-          NAV_TASTE: active("built-to-taste") ? ' aria-current="page"' : "",
-          NAV_ABOUT: active("about") ? ' aria-current="page"' : "",
-          NAV_REQUEST: active("request-a-build") ? ' aria-current="page"' : "",
+          NAV_KEYS: headerKeys.nav.map((item) => renderKey(item, page, headerKeys)).join(""),
+          COMMISSION_KEY: renderKey(headerKeys.commission, page, headerKeys, "commission"),
         },
         `${label} header`,
       );
@@ -269,7 +279,7 @@ function renderPage(entry, partials, content) {
     {
       PAGE_SCRIPTS: redirect
         ? `<script>location.replace(${JSON.stringify(page.redirectUrl)})</script>`
-        : '<script src="/data/content.js?v=phase2-1"></script><script src="/script.js?v=phase2-1"></script>',
+        : `<script src="/data/content.js?v=${config.stylesheetVersion}"></script><script src="/script.js?v=${config.stylesheetVersion}"></script>`,
     },
     `${label} scripts`,
   );
@@ -291,6 +301,7 @@ function injectSiteMode() {
 
 function build() {
   const content = loadSiteContent();
+  const headerKeys = JSON.parse(read(path.join(SRC, "static", "data", "header-keys.json")));
   const partials = Object.fromEntries(
     ["head", "header", "footer", "scripts"].map((name) => [
       name,
@@ -307,7 +318,7 @@ function build() {
   const rendered = entries.map((entry) => {
     if (outputs.has(entry.page.output)) fail(`Duplicate output: ${entry.page.output}`);
     outputs.add(entry.page.output);
-    return [entry.page.output, renderPage(entry, partials, content)];
+    return [entry.page.output, renderPage(entry, partials, content, headerKeys)];
   });
 
   if (!fs.existsSync(STATIC)) fail("Missing required directory: src/static");

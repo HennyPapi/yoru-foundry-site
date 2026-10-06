@@ -58,11 +58,14 @@ hero media frame.
 ## 6. Layout
 
 - Content max width about 1240px; side padding `clamp(16px, 4vw, 40px)`.
-- Header (built 2026-10-06): Cast, logo left, four links right (Crafted Art, Trust the Process, Built to Taste,
-  About; current page gets a copper underline), then the commission key: a rendered Green Sand Enter keycap
-  (`/assets/keys/commission-sand*.webp`, idle / hover / pressed) with the legend "Commission" as real text on the
-  cap, aria-label "Request a Commission". On the request page the key shows pressed. No Products menu at launch
-  (the product stub pages still build, unlinked). Below 860px the links fold into a panel under a "Menu" button.
+- Header (rebuilt 2026-10-06, option C): the bottom row of a keyboard. Medallion left; a black braided USB-C cable
+  (patina-copper collars and plug, a coiled section) runs from behind it to the keys, its straight runs stretching
+  with the window, the plug tucked under the first key; copper LED beads travel through it. Then four rendered
+  dark keycaps (Crafted Art 1.75u, Trust the Process 2u, Built to Taste 1.75u, About 1.25u) and a Green Sand Enter
+  key, "Commission" (aria-label "Request a Commission"). Legends are real text on the caps; the current page's key
+  is pressed. Key data: `src/static/data/header-keys.json`, rendered by `build.js`. Renders and their tools:
+  `mockups/keys/`. Coil hidden below 1180px, cable below 1000px; at 860px and below: medallion, Commission key and a
+  menu icon, with the links as text in a panel. No Products menu at launch.
 - Homepage order: hero (75% drawing frame, headline, one copper button, two entry links, build sheet) → section
   keys (Crafted Art, Trust the Process, Built to Taste, About) → sound band → "What I refuse to rush" ruled list
   → layouts drawn to relative scale (75 / 65 / TKL) → closing statement → footer.
