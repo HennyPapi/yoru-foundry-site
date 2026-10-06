@@ -3139,13 +3139,13 @@ main:not(.section-shell),
 .site-header{position:sticky;top:var(--space-0);z-index:100;display:flex;align-items:center;min-height:92px;padding:var(--space-4) var(--space-pattern-029);background:var(--cast);color:var(--bright);border-bottom:var(--border-width) solid var(--line)}
 .brand{position:relative;z-index:2;display:block;flex-shrink:0;border-radius:var(--radius-circle)}
 .brand-mark{display:block;width:64px;height:64px}
-.cable{position:relative;flex:1;display:flex;min-width:0;margin:calc(var(--space-2) * -1.05) calc(var(--space-26) * -1) var(--space-0) calc(var(--space-24) * -1)}   /* lines the cable up with the keys' plate */
-.cable .run{position:relative;flex:1;min-width:24px;height:83.5px;background:url(/assets/cable/tile.webp) repeat-x 0 0/120px 83.5px}
+.cable{position:relative;flex:1;display:flex;min-width:0;margin:calc(var(--space-2) * -1.1) calc(var(--space-26) * -1) var(--space-0) calc(var(--space-24) * -1)}   /* lines the cable up with the keys' plate */
+.cable .run{position:relative;flex:1;min-width:24px;height:82px;background:url(/assets/cable/tile.webp) repeat-x 0 0/120px 82px}
 .cable .run.long{flex:2}
-.cable .coil{position:relative;flex-shrink:0;width:226px;height:83.5px;background:url(/assets/cable/coil.webp) 0 0/100% 100%}
-.cable .plug{flex-shrink:0;display:block;width:108px;height:83.5px}
+.cable .coil{position:relative;flex-shrink:0;width:226px;height:82px;background:url(/assets/cable/coil.webp) 0 0/100% 100%}
+.cable .plug{flex-shrink:0;display:block;width:108px;height:82px}
 .cable .glow{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;filter:brightness(1.6);-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-image:linear-gradient(transparent,transparent);mask-image:linear-gradient(transparent,transparent)}
-.cable .run .glow{background:url(/assets/cable/tile-glow.webp) repeat-x 0 0/120px 83.5px}
+.cable .run .glow{background:url(/assets/cable/tile-glow.webp) repeat-x 0 0/120px 82px}
 .cable .coil .glow{background:url(/assets/cable/coil-glow.webp) 0 0/100% 100%}
 .cable .bead{position:absolute;left:0;top:0;width:34px;height:16px;margin:calc(var(--space-8) * -1) 0 0 calc(var(--space-16) * -1);border-radius:var(--radius-circle);pointer-events:none;mix-blend-mode:screen;opacity:0;background:radial-gradient(closest-side,var(--led-bloom),var(--led-bloom-clear))}
 .nav{position:relative;z-index:1;display:flex;align-items:flex-end;column-gap:3.9px;flex-shrink:0}   /* 3.9px: the 1.06mm gap between caps on a plate */
