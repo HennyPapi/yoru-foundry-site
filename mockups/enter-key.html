@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yoru Foundry: Enter keycap study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Cinzel:wght@400..900&family=Alegreya:wght@400..700&display=swap" rel="stylesheet">
+<style>
+/* Mockup only. The commission button drawn as a real Enter keycap seen from above and in front. */
+:root {
+  --cast: #151A1A; --deep: #0C1010; --bright: #EEF0EC; --pewter: #A7B2AE; --rule: #2B3533;
+  --face: #E8834D;        /* legend: Cast on face 6.5:1 */
+  --rim: #F2A06E;         /* light catching the top edge of the dish */
+  --back: #F0965F;        /* sliver of back wall, lit */
+  --wall-l: #C96A38;      /* left wall, toward the light */
+  --wall-r: #A9562A;      /* right wall, away from the light */
+  --front: #87401D;       /* front wall, in its own shade */
+  --ease: cubic-bezier(.16,1,.3,1);
+}
+* { box-sizing: border-box; }
+html { font-synthesis: none; }
+body { margin: 0; background: var(--deep); color: var(--bright); font: 400 17px/1.5 Alegreya, Georgia, serif; padding: 28px; }
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 1400px; margin: 0 auto; }
+.cell { background: var(--cast); padding: 26px 30px 34px; display: grid; gap: 16px; align-content: start; }
+.cell h2 { margin: 0; font: 700 16px/1.3 Cinzel, serif; display: flex; justify-content: space-between; gap: 12px; }
+.cell h2 span { font: 400 14px Alegreya, serif; color: var(--pewter); }
+.cell p { margin: 0; color: var(--pewter); font-size: 15px; max-width: 62ch; }
+.stage { display: flex; flex-wrap: wrap; gap: 34px; align-items: flex-end; padding-top: 22px; border-top: 1px solid var(--rule); }
+.state { display: grid; gap: 12px; justify-items: start; }
+.state small { font: 600 12px Cinzel, serif; color: var(--pewter); }
+.hero-snip { display: grid; gap: 14px; }
+.hero-snip h3 { margin: 0; font: 400 52px/1 Aboreto, serif; letter-spacing: .05em; }
+.hero-snip .lede { margin: 0; color: var(--pewter); font-size: 20px; }
+
+/* The key. The whole cap travels on press; the shadow stays on the plate and tightens. */
+.key { position: relative; display: inline-block; width: 268px; height: 104px; text-decoration: none; color: var(--cast); }
+.key .cap { position: absolute; inset: 0 0 auto 0; width: 268px; height: 92px; transition: transform 150ms var(--ease); }
+.key .shadow { position: absolute; left: 6px; right: 6px; bottom: 0; height: 22px; transition: opacity 150ms var(--ease), transform 150ms var(--ease); }
+.key .legend { position: absolute; left: 24px; top: 13px; font: 700 15px/1.15 Cinzel, serif; transition: transform 150ms var(--ease); pointer-events: none; }
+.key:hover .cap, .key.is-hover .cap, .key:hover .legend, .key.is-hover .legend { transform: translateY(2px); }
+.key:active .cap, .key.is-press .cap, .key:active .legend, .key.is-press .legend { transform: translateY(5px); }
+.key:hover .shadow, .key.is-hover .shadow { transform: scaleX(.98); }
+.key:active .shadow, .key.is-press .shadow { opacity: .55; transform: scaleX(.95); }
+.key:focus-visible { outline: 2px solid var(--face); outline-offset: 6px; border-radius: 10px; }
+@media (prefers-reduced-motion: reduce) { .key .cap, .key .legend, .key .shadow { transition: none; } }
+.arrow { fill: none; stroke: var(--cast); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Plain (header) version of the same drawing */
+.key.plain { color: var(--bright); --face: #2A3432; --rim: #3A4744; --back: #34403E; --wall-l: #222B2A; --wall-r: #1A2120; --front: #101515; }
+.key.plain .arrow { stroke: var(--bright); }
+.key.plain .legend b { color: #E8834D; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Flat-faceted cap: solid fills only -->
+    <symbol id="cap-flat" viewBox="0 0 268 92">
+      <path d="M8 3h252l-6 5H14z" style="fill:var(--back)"/>
+      <path d="M8 3 14 8v58L2 88z" style="fill:var(--wall-l)"/>
+      <path d="M260 3l-6 5v58l12 22z" style="fill:var(--wall-r)"/>
+      <path d="M14 66h240l12 22H2z" style="fill:var(--front)"/>
+      <rect x="14" y="8" width="240" height="58" rx="7" style="fill:var(--face)"/>
+      <path d="M21 9h226" style="stroke:var(--rim)" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <!-- Shaded cap: curved (cylindrical) top face and toned walls -->
+    <linearGradient id="dish" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" style="stop-color:var(--rim)"/><stop offset=".22" style="stop-color:var(--face)"/>
+      <stop offset=".78" style="stop-color:var(--face)"/><stop offset="1" style="stop-color:var(--wall-l)"/>
+    </linearGradient>
+    <linearGradient id="front" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--wall-r)"/><stop offset="1" style="stop-color:var(--front)"/></linearGradient>
+    <symbol id="cap-shaded" viewBox="0 0 268 92">
+      <path d="M8 3h252l-6 5H14z" style="fill:var(--back)"/>
+      <path d="M8 3 14 8v58L2 88z" style="fill:var(--wall-l)"/>
+      <path d="M260 3l-6 5v58l12 22z" style="fill:var(--wall-r)"/>
+      <path d="M14 66h240l12 22H2z" fill="url(#front)"/>
+      <rect x="14" y="8" width="240" height="58" rx="7" fill="url(#dish)"/>
+    </symbol>
+    <filter id="soft" x="-20%" y="-100%" width="140%" height="300%"><feGaussianBlur stdDeviation="5"/></filter>
+  </defs>
+</svg>
+
+<template id="key-flat"><svg class="shadow" viewBox="0 0 256 22" preserveAspectRatio="none" aria-hidden="true"><rect x="6" y="2" width="244" height="8" rx="4" fill="#0C1010" opacity=".9"/></svg><svg class="cap" viewBox="0 0 268 92" aria-hidden="true"><use href="#cap-flat"/><path class="arrow" d="M240 40v12h-26m7-7-7 7 7 7"/></svg><span class="legend">Request a Commission</span></template>
+<template id="key-shaded"><svg class="shadow" viewBox="0 0 256 22" preserveAspectRatio="none" aria-hidden="true"><ellipse cx="128" cy="8" rx="122" ry="7" fill="#0C1010" filter="url(#soft)"/></svg><svg class="cap" viewBox="0 0 268 92" aria-hidden="true"><use href="#cap-shaded"/><path class="arrow" d="M240 40v12h-26m7-7-7 7 7 7"/></svg><span class="legend">Request a Commission</span></template>
+
+<div class="grid">
+  <section class="cell">
+    <h2>D2. Flat facets <span>within the current rules: solid fills, hard shadow</span></h2>
+    <p>Sloped side walls in two shades (lit from the upper left), a deeper front wall, a light rim on the top edge, and a hard contact shadow on the plate. The whole key travels down on press.</p>
+    <div class="stage">
+      <div class="state"><a class="key" data-k="flat" href="#"></a><small>Idle</small></div>
+      <div class="state"><a class="key is-hover" data-k="flat" href="#"></a><small>Hover</small></div>
+      <div class="state"><a class="key is-press" data-k="flat" href="#"></a><small>Pressed</small></div>
+    </div>
+  </section>
+  <section class="cell">
+    <h2>D3. Fully shaded <span>needs a rule change: soft shadow, curved face</span></h2>
+    <p>The same key with a softly curved top face (light at the top edge, falling off toward the front) and a blurred shadow, like a real cap on a plate at night.</p>
+    <div class="stage">
+      <div class="state"><a class="key" data-k="shaded" href="#"></a><small>Idle</small></div>
+      <div class="state"><a class="key is-hover" data-k="shaded" href="#"></a><small>Hover</small></div>
+      <div class="state"><a class="key is-press" data-k="shaded" href="#"></a><small>Pressed</small></div>
+    </div>
+  </section>
+  <section class="cell">
+    <h2>Plain keycap, same drawing <span>for the header</span></h2>
+    <p>Green Sand cap with the same anatomy, so the header button matches the copper Enter key without a second copper key in view.</p>
+    <div class="stage">
+      <div class="state"><a class="key plain" data-k="flat" href="#"></a><small>Idle</small></div>
+      <div class="state"><a class="key plain is-press" data-k="flat" href="#"></a><small>Pressed</small></div>
+    </div>
+  </section>
+  <section class="cell">
+    <h2>Before <span>D from the last round</span></h2>
+    <p>A framed rectangle: right shape, but straight walls and no contact with a surface, so it floats.</p>
+    <div class="stage"><img src="keycap-d-before.png" alt="The previous flat Enter key" style="width:100%; max-width:600px; height:auto"></div>
+  </section>
+  <section class="cell" style="grid-column: 1 / -1">
+    <h2>In the hero <span>flat facets (left) and fully shaded (right)</span></h2>
+    <div class="stage" style="gap:80px; align-items:flex-start">
+      <div class="hero-snip"><h3>Forged by night.</h3><p class="lede">After dark, the forge is lit and a keyboard is made.</p><div><a class="key" data-k="flat" href="#"></a></div></div>
+      <div class="hero-snip"><h3>Forged by night.</h3><p class="lede">After dark, the forge is lit and a keyboard is made.</p><div><a class="key" data-k="shaded" href="#"></a></div></div>
+    </div>
+  </section>
+</div>
+<script>
+document.querySelectorAll('.key').forEach(k => {
+  k.appendChild(document.getElementById('key-' + k.dataset.k).content.cloneNode(true));
+  k.setAttribute('aria-label', 'Request a Commission');
+});
+</script>
+</body>
+</html>
