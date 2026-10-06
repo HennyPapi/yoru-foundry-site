@@ -175,7 +175,34 @@ Rules:
 | 01/02/03 on non-sequences | Gone. Numbers only for real sequences (the commission process steps) |
 | Rows of identical boxes | Gone: key-unit widths, ruled lists, scaled outlines, one full-bleed sound band |
 
-## 7. Rollout (after approval)
+## 7. Reference check
+
+Mike's references: [Alexotos build service](https://www.alexotos.com/keyboard-build-service/),
+[Keycult](https://keycult.com/), [Angry Miao](https://www.angrymiao.com/en/?p=0),
+[Mode Designs](https://modedesigns.com/).
+
+**Caveat:** this session's network policy blocks all four domains, so I couldn't load or screenshot them.
+The notes below come from my prior knowledge of these sites and may be out of date. Recheck once the
+domains are allowed or Mike sends screenshots.
+
+| Site | What it does well | What Yoru takes | What Yoru leaves |
+|---|---|---|---|
+| Keycult | Almost no UI. Studio photos of metal cases on plain neutral grounds; the object is the only color. Catalog-style names ("No. 2/TKL"). | A quiet neutral canvas so finishes carry the color (supports Bead-blast). Build serials (`YF-001`) used as real names, in the build sheet and page titles. | Drop-and-raffle scarcity. |
+| Mode Designs | Big, color-rich product photos. Each board is a system you configure (layout → case → mount → options). Light, open pages. | The layout outlines lead into the commission like a configurator: layout first, then case, mount, switches. That path matches `request-a-build`. | The full shop flow and cart (banned by `AGENTS.md`). |
+| Angry Miao | Cinematic, dark, video-first moments. Industrial-design storytelling with large type. | One full-bleed Graphite moment per page (the hero loop or sound strip) to give the page a change of pace. | Scroll-driven animation and sci-fi gloss (break the motion rules and the quiet-workshop tone). |
+| Alexotos (build service) | A person, not a brand. Sound tests are the proof. It says plainly what the service includes and how the queue works. | Sound slot on every build. A plain "what I do to every board" list (lube, tune, film, test). Honest queue status ("2 commission slots open"), never a countdown. | Video-platform layout and embed-heavy pages. |
+
+What changes in the plan:
+- **Confirmed:** light neutral canvas, build sheet, sound as proof, layout-first path. All four sites put
+  the object or its sound first and keep the UI quiet.
+- **Added:** a "what every build gets" list and an honest queue line, after Alexotos. Both need Mike's
+  copy and real numbers.
+- **Added:** placeholders must look deliberate, since these sites are carried by photography that Yoru
+  doesn't have yet. Placeholder frames show the build serial and the locked ratio in Archivo, on a
+  Graphite field, with no fake image.
+- **Unchanged:** no shop UI, no scroll animation.
+
+## 8. Rollout (after approval)
 
 One commit per item on `design-pass`:
 1. Tokens and fonts (new `:root`, first-paint values, `stylesheetVersion` bump).
@@ -187,10 +214,11 @@ One commit per item on `design-pass`:
 
 Each step: `node build.js`, `python3 scripts/site_check.py` (0 errors), and a headless pass at 390 / 820 / 1440.
 
-## 8. Decisions needed from Mike
+## 9. Decisions needed from Mike
 
 1. Approve the direction, or tell me what to change.
 2. Does the Nocturne palette have to stay? (If so, only the colors in section 3 change.)
-3. 2–3 reference sites you like. I'll check this plan against them.
-4. Hero H1 wording. It must say "keyboards."
-5. The light-led canvas flips the critical first-paint colors in `AGENTS.md` (body, header). OK to change those rules?
+3. Reference sites: received (section 7). To check them against the live sites, allow the four domains in this environment's network settings or send screenshots.
+4. Copy and real numbers for the "what every build gets" list and the queue line.
+5. Hero H1 wording. It must say "keyboards."
+6. The light-led canvas flips the critical first-paint colors in `AGENTS.md` (body, header). OK to change those rules?

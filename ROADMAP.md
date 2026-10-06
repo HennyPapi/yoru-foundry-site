@@ -39,7 +39,8 @@ through the steps below. Palette, fonts and label style are all open; the logo s
 AI-tell check). The plugins didn't load in that session, so the critique was done by hand from headless renders.
 Next: Mike reviews the plan (step 4). No redesign code yet.
 
-Still waiting on Mike: 2–3 reference sites Mike likes, and whether the palette must stay.
+Reference sites received (Alexotos, Keycult, Angry Miao, Mode Designs); see `DESIGN_PLAN.md` section 7.
+Still waiting on Mike: whether the palette must stay, and approval of the plan.
 
 Known small issues (fix when touching these areas):
 - The homepage hero placeholder caption overflows the right edge of its frame on desktop.
