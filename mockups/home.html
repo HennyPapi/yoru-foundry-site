@@ -63,10 +63,11 @@
   --key: #1B2544; --key-edge: #060A18; --accent: #FFB547; --accent-edge: #A86A12; --accent-ink: #101830;
   --signal: #6FD0C0; --frame: #1B2544; --frame-ink: #A9B1C9; --glow-mix: 26%;
 }
-[data-theme="cast-pour"] {   /* hybrid: Pour's night, the logo's copper and verdigris */
+[data-theme="cast-pour"] {   /* hybrid: Pour's night + molten copper for action, verdigris for sound, links and keys */
   --canvas: #12151C; --ink: #EEF0F3; --muted: #A3ABB8; --rule: #2C3340;
-  --band: #0A0C11; --band-ink: #EEF0F3; --band-muted: #A3ABB8;
-  --key: #1E232D; --key-edge: #07090C; --accent: #F07F3C; --accent-edge: #9F4A1C; --accent-ink: #12151C;
+  --band: #0F2A27; --band-ink: #EEF0F3; --band-muted: #B5CCC6;
+  --key: #1F2726; --key-edge: #07090C; --accent: #F07F3C; --accent-edge: #9F4A1C; --accent-ink: #12151C;
+  --accent-2: #4FB3A0;
   --signal: #4FB3A0; --frame: #1E232D; --frame-ink: #A3ABB8; --glow-mix: 28%;
 }
 [data-theme="verdigris"] {   /* the logo: raw copper and its green patina, on green-sand dark */
@@ -85,7 +86,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 ::selection { background: var(--accent); color: var(--accent-ink); }
-a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: .25em; text-decoration-thickness: 1px; }
+a { color: inherit; text-decoration-color: var(--accent-2, var(--accent)); text-underline-offset: .25em; text-decoration-thickness: 1px; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .wrap { max-width: 1240px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
 .label, .nav, .key-legend, .sheet dt, .btn, .scale-name, .status {
@@ -168,7 +169,7 @@ header .wrap { display: flex; align-items: center; gap: 32px; height: 84px; }
 .play svg { width: 16px; fill: var(--band-ink); margin-left: 3px; }
 .wave > svg { width: 100%; height: 72px; }
 .wave rect { fill: var(--band-muted); }
-.wave rect.lit { fill: var(--accent); }
+.wave rect.lit { fill: var(--accent-2, var(--accent)); }
 .band .label { font-size: .8rem; font-weight: 600; color: var(--band-muted); margin-top: 10px; }
 
 /* Standards: ruled list */
@@ -183,7 +184,7 @@ header .wrap { display: flex; align-items: center; gap: 32px; height: 84px; }
 .scale-row { display: grid; grid-template-columns: 16fr 16fr 18.25fr; gap: 28px; margin-top: 40px; align-items: end; }
 .board svg { width: 100%; height: auto; display: block; }
 .board rect { fill: none; stroke: var(--muted); stroke-width: .06; }
-.board.live rect { stroke: var(--ink); fill: var(--key); }
+.board.live rect { stroke: var(--accent-2, var(--ink)); fill: var(--key); }
 .board.live rect.esc { fill: var(--accent); stroke: var(--accent-edge); }
 .scale-name { display: flex; justify-content: space-between; margin-top: 14px; font-weight: 700; font-size: 1rem; }
 .scale-name span { color: var(--muted); font-weight: 600; font-size: .85rem; }
