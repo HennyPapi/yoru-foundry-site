@@ -14,6 +14,32 @@ Update the status column whenever a phase closes, and bump `CURRENT_PHASE` in `s
   Claude asks and doesn't guess when copy or a visual call is needed.
 - **Review gates:** finish a phase, Mike reviews the preview, then start the next phase.
 
+## Next session: start here (handoff, 2026-10-06)
+
+Mike has **reopened the visual direction**. Mike feels the site looks generic, "AI-made", with no flavor.
+That overrides the "already approved / do not redesign" lines in `AGENTS.md` for this work, but only
+through the steps below. Palette, fonts and label style are all open; the logo stays.
+
+1. Load the `frontend-design` skill (enabled in `.claude/settings.json`, along with Ponytail).
+2. Write a short design plan *before any code*: 4–6 named colors, typefaces and their roles, layout ideas
+   with ASCII wireframes, and guiding principles. Ground it in keyboards: keycaps, switches, sound, the bench.
+3. Check the plan against the AI tells the current site shows, and avoid each one unless there's a real reason:
+   - cream `#F2EFE8` with a high-contrast serif display (Cormorant), and tinted near-blacks (`#111418`, `#0C0E11`)
+   - spaced-out ALL-CAPS eyebrow labels above almost every heading
+   - details joined with dots ("FEATURED COMMISSION • YF-001")
+   - "→" appended to link text
+   - 01 / 02 / 03 numbering on cards that aren't a sequence
+   - every section a row of identical boxes (3, then 4, then 3 cards)
+4. Show Mike the plan and get approval, then build on `design-pass`. Once Mike signs off, update
+   `AGENTS.md` and `YORU_SITE_MEMORY.md` to the new direction.
+
+Still waiting on Mike: 2–3 reference sites Mike likes, and whether the palette must stay.
+
+Known small issues (fix when touching these areas):
+- The homepage hero placeholder caption overflows the right edge of its frame on desktop.
+- The Crafted Art 75% card copy says "Our first focused layout"; the rules require first person ("my").
+  Copy is Mike's call, so ask.
+
 ## Status
 
 | Phase | Scope | Status |
@@ -21,7 +47,7 @@ Update the status column whenever a phase closes, and bump `CURRENT_PHASE` in `s
 | 1 | Codify build rules (`AGENTS.md`) | Done |
 | 2 | Content as data (`content.js`, `SITE_MODE`) | Done |
 | 3 | Tokenized CSS system | Done |
-| 3.5 | Surface/texture system, footer normalization, first paint | **Finishing** — see below |
+| 3.5 | Surface/texture system, footer normalization, first paint | **Paused** — redesign may replace the texture work |
 | 4–5 | *Not defined in the repo; Mike to confirm what these were* | ? |
 | 6 | Header: one header on every page | Planned |
 | 7 | Homepage hero and message | Planned (needs Mike's copy) |
