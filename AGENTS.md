@@ -180,6 +180,7 @@ Also avoid ecommerce patterns that imply inventory scale, urgency, discounting, 
 - For broad visual changes, verify desktop, tablet, and mobile behavior.
 - Preserve the official header logo at `/assets/yoru-foundry-logo-v5.webp`.
 - Read `YORU_SITE_MEMORY.md` before beginning visual work.
+- Read `ROADMAP.md` for the current phase, the order of work, and open decisions. Update its status table when a phase closes.
 
 ### Static build workflow
 
