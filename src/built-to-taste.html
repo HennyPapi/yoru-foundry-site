@@ -8,16 +8,20 @@
   "footerVariant": "standard"
 }
 -->
-{{HEAD}}{{HEADER}}<main class="page-main-shell section-shell"><div class="section-shell-frame"><div class="page-main"><section class="page-hero-shell section-shell"><div class="section-shell-frame"><div class="page-hero"><p class="eyebrow">SOUND • FEEL • MATERIAL</p><h1>Built to Taste.</h1><p>You should not have to choose from jargon you cannot hear or feel. Select a topic to open an illustrated, scrollable guide.</p></div></div></section><section class="story-tile-grid taste-grid" data-story-grid="taste"></section>
-<section class="compare-lab-shell section-shell"><div class="section-shell-frame"><div class="compare-lab">
-  <div class="compare-intro">
-    <p class="eyebrow">A / B COMPARISON LAB</p>
-    <h2>Choose two treatments. Hear the difference.</h2>
+{{HEAD}}{{HEADER}}<main class="page-main-shell section-shell"><div class="section-shell-frame"><div class="page-main">
+<section class="page-intro">
+  <h1>Built to Taste.</h1>
+  <p>You should not have to choose from jargon you cannot hear or feel. Select a topic to open an illustrated, scrollable guide.</p>
+</section>
+<section class="guide-index" data-story-grid="taste"></section>
+<section class="ab-lab" aria-labelledby="ab-title">
+  <div class="ab-intro">
+    <h2 id="ab-title">Choose two treatments. Hear the difference.</h2>
     <p>This is a working prototype for the comparison system. Real standardized recordings will replace the test audio placeholders as the library grows.</p>
   </div>
-  <div class="compare-shell">
-    <div class="compare-side">
-      <span class="compare-label">A</span>
+  <div class="ab-sides">
+    <div class="ab-side">
+      <span class="ab-label">A</span>
       <label>Variable<select id="compareTypeA" class="compare-type">
         <option value="stabilizer">Stabilizer tuning</option><option value="switchlube">Switch lubrication</option><option value="switch">Switch type</option><option value="tape">Tape mod</option><option value="plate">Plate material</option><option value="keycap">Keycap material</option><option value="mount">Mounting style</option>
       </select></label>
@@ -25,9 +29,9 @@
       <div class="compare-audio" data-sound-player="0"></div>
       <p id="compareDescA" class="compare-desc"></p>
     </div>
-    <div class="compare-vs">VS</div>
-    <div class="compare-side">
-      <span class="compare-label">B</span>
+    <span class="ab-vs" aria-hidden="true">vs</span>
+    <div class="ab-side">
+      <span class="ab-label">B</span>
       <label>Variable<select id="compareTypeB" class="compare-type">
         <option value="stabilizer">Stabilizer tuning</option><option value="switchlube">Switch lubrication</option><option value="switch">Switch type</option><option value="tape">Tape mod</option><option value="plate">Plate material</option><option value="keycap">Keycap material</option><option value="mount">Mounting style</option>
       </select></label>
@@ -36,16 +40,12 @@
       <p id="compareDescB" class="compare-desc"></p>
     </div>
   </div>
-</div></div></section>
-<section class="materials-section-shell section-shell"><div class="section-shell-frame"><div class="materials-section">
-  <div class="compare-intro"><p class="eyebrow">MATERIAL LIBRARY</p><h2>Materials change the character of a build.</h2><p>These cards will eventually use close-up photography and real sound samples.</p></div>
-  <div class="materials-grid">
-    <article><h3>Aluminum <span class="tip" data-tip="A rigid metal commonly used for cases and plates.">i</span></h3><p>Clean, substantial and precise. Often chosen for structure, finish quality and a more direct response.</p></article>
-    <article><h3>Polycarbonate <span class="tip" data-tip="A flexible engineering plastic often used for plates or cases.">i</span></h3><p>Softer visually and mechanically, often associated with more flex and a less rigid response.</p></article>
-    <article><h3>FR4 <span class="tip" data-tip="A fiberglass laminate also used in printed circuit boards.">i</span></h3><p>A useful middle ground for plate stiffness, resonance and cost.</p></article>
-    <article><h3>Brass <span class="tip" data-tip="A dense metal often used for plates, weights and accents.">i</span></h3><p>Dense, weighty and visually rich; useful when mass and a firmer response are desired.</p></article>
-    <article><h3>PBT <span class="tip" data-tip="A durable keycap plastic known for texture and resistance to shine.">i</span></h3><p>Textured, durable and commonly associated with a slightly denser keycap feel.</p></article>
-    <article><h3>ABS <span class="tip" data-tip="A smooth keycap plastic prized for color quality and crisp legends.">i</span></h3><p>Smooth, vivid and capable of a brighter or more resonant character depending on thickness and profile.</p></article>
+</section>
+<section class="material-library" aria-labelledby="materials-title">
+  <div class="ab-intro">
+    <h2 id="materials-title">Materials change the character of a build.</h2>
+    <p>These cards will eventually use close-up photography and real sound samples.</p>
   </div>
-</div></div></section>
-</div></div></main><div class="story-modal" id="storyModal" aria-hidden="true"><div class="story-overlay" data-close-modal></div><div class="story-panel" role="dialog" aria-modal="true" aria-labelledby="storyTitle"><button class="modal-close" data-close-modal aria-label="Close">×</button><div class="story-modal-head"><p class="eyebrow">BUILT TO TASTE</p><h2 id="storyTitle">Guide</h2><p id="storyIntro"></p></div><div id="storyContent" class="story-content"></div></div></div>{{FOOTER}}{{SCRIPTS}}
+  <dl class="material-list" data-materials></dl>
+</section>
+</div></div></main><div class="story-modal" id="storyModal" data-story-type="taste" aria-hidden="true"><div class="story-overlay" data-close-modal></div><div class="story-panel" role="dialog" aria-modal="true" aria-labelledby="storyTitle"><button class="modal-close" data-close-modal aria-label="Close">×</button><div class="story-modal-head"><h2 id="storyTitle">Guide</h2><p id="storyIntro"></p></div><div id="storyContent" class="story-content"></div></div></div>{{FOOTER}}{{SCRIPTS}}

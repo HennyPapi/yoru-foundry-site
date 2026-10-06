@@ -32,6 +32,16 @@ const COMMISSION_STEPS = [
 
 const COMMISSION_INCLUDED = ["Parts and compatibility guidance", "Full assembly", "Stabilizer preparation and tuning", "Switch preparation when selected", "Firmware / keymap setup", "Functional quality-control pass", "Final typing and sound test", "Build configuration documentation"];
 
+// Built to Taste material library: what each material is, and how it tends to change a build.
+const MATERIALS = [
+  { name: "Aluminum", what: "A rigid metal commonly used for cases and plates.", character: "Clean, substantial and precise. Often chosen for structure, finish quality and a more direct response." },
+  { name: "Polycarbonate", what: "A flexible engineering plastic often used for plates or cases.", character: "Softer visually and mechanically, often associated with more flex and a less rigid response." },
+  { name: "FR4", what: "A fiberglass laminate also used in printed circuit boards.", character: "A useful middle ground for plate stiffness, resonance and cost." },
+  { name: "Brass", what: "A dense metal often used for plates, weights and accents.", character: "Dense, weighty and visually rich; useful when mass and a firmer response are desired." },
+  { name: "PBT", what: "A durable keycap plastic known for texture and resistance to shine.", character: "Textured, durable and commonly associated with a slightly denser keycap feel." },
+  { name: "ABS", what: "A smooth keycap plastic prized for color quality and crisp legends.", character: "Smooth, vivid and capable of a brighter or more resonant character depending on thickness and profile." }
+];
+
 // Keyboard layouts as rows of key widths in units (negative = a gap), drawn at one shared scale.
 const LAYOUTS = {
   "75": { name: "75%", status: "Available", href: "/crafted-art-75.html", blurb: "Balanced, compact and complete.", about: "My first focused layout: compact, functional, and balanced for daily use.", gapAfterFirst: 0.25,
@@ -269,4 +279,4 @@ keycap:[["PBT","Textured and durable with its own density and pitch."],["ABS","S
 mount:[["Gasket","Isolated mounting that can allow a softer response."],["Top Mount","More direct attachment and controlled firmness."],["Tray Mount","Simple, rigid mounting with a distinct feel."]]
 };
 
-window.YORU_CONTENT = Object.freeze({ SITE_MODE, SITE_MODE_CONTENT, COMMISSION_TERMS, COMMISSION_STEPS, COMMISSION_INCLUDED, LAYOUTS, BUILDS, SOUND_SAMPLES, STORIES, COMPARE_OPTIONS });
+window.YORU_CONTENT = Object.freeze({ SITE_MODE, SITE_MODE_CONTENT, COMMISSION_TERMS, COMMISSION_STEPS, COMMISSION_INCLUDED, MATERIALS, LAYOUTS, BUILDS, SOUND_SAMPLES, STORIES, COMPARE_OPTIONS });

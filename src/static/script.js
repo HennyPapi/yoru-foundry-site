@@ -72,20 +72,9 @@ yfRenderBuildDetail();
 
 
 
-function renderStoryGrids(){
-  document.querySelectorAll("[data-story-grid]").forEach(grid=>{
-    const type=grid.dataset.storyGrid;
-    const group=stories[type]||{};
-    grid.innerHTML=Object.entries(group).map(([id,story],index)=>{
-      const action=type==="process"?"Open process →":"Explore comparison →";
-      return '<button class="story-tile" data-story-type="'+yfEscape(type)+'" data-story="'+yfEscape(id)+'"><div class="sample-image"><img src="/img/placeholder-3x2.svg" alt="" width="1200" height="800" loading="lazy" decoding="async"></div><span>'+String(index+1).padStart(2,"0")+'</span><h2>'+yfEscape(story.title)+'</h2><p>'+yfEscape(story.intro)+'</p><b>'+action+'</b></button>';
-    }).join("");
-  });
-}
-renderStoryGrids();
 const modal=document.getElementById("storyModal");const title=document.getElementById("storyTitle");const intro=document.getElementById("storyIntro");const content=document.getElementById("storyContent");
 let lastFocus=null;
-function openStory(type,id){const story=stories[type]?.[id];if(!story||!modal)return;title.textContent=story.title;intro.textContent=story.intro;content.innerHTML=story.steps.map((s,i)=>"<section class=\"story-row "+(i%2?"reverse":"")+"\"><div class=\"story-media\"><img src=\"/img/placeholder-3x2.svg\" alt=\"\" width=\"1200\" height=\"800\" loading=\"lazy\" decoding=\"async\"><span class=\"media-label\">"+yfEscape(s[1])+"</span></div><div class=\"story-copy\"><p class=\"eyebrow\">STEP "+String(i+1).padStart(2,"0")+"</p><h3>"+yfEscape(s[0])+"</h3><p>"+yfEscape(s[2])+"</p></div></section>").join("");lastFocus=document.activeElement;modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.classList.add("modal-open");content.scrollTop=0;modal.querySelector(".modal-close")?.focus()}
+function openStory(type,id){const story=stories[type]?.[id];if(!story||!modal)return;title.textContent=story.title;intro.textContent=story.intro;content.innerHTML=story.steps.map((s,i)=>"<section class=\"guide-step\"><div class=\"guide-media\"><span>"+yfEscape(s[1])+"</span></div><div class=\"guide-copy\"><p class=\"guide-step-num\">Step "+(i+1)+"</p><h3>"+yfEscape(s[0])+"</h3><p>"+yfEscape(s[2])+"</p></div></section>").join("");lastFocus=document.activeElement;modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.classList.add("modal-open");content.scrollTop=0;modal.querySelector(".modal-close")?.focus()}
 function closeStory(){if(!modal||!modal.classList.contains("open"))return;modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("modal-open");lastFocus?.focus?.()}
 document.querySelectorAll("[data-story]").forEach(el=>el.addEventListener("click",()=>openStory(el.dataset.storyType,el.dataset.story)));document.querySelectorAll("[data-close-modal]").forEach(el=>el.addEventListener("click",closeStory));document.addEventListener("keydown",e=>{if(e.key==="Escape")closeStory()});
 

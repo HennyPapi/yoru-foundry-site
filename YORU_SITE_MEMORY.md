@@ -75,6 +75,10 @@ hero media frame.
 - Crafted Art (rebuilt 2026-10-06): intro, then each layout as a row drawn at one shared scale from `LAYOUTS`
   (name, status, `about` line); the 75% row links to the 75% page, which features YF-001 "Ember Study" large and
   lists the two future builds below, with honest "Customer build photo" frames.
+- Built to Taste (rebuilt 2026-10-06): intro; guide topics as a ruled index (`STORIES.taste`, no numbers, "Explore
+  comparison"); each opens the shared guide panel (also used by Trust the Process) with "Step 1–3" and honest media
+  frames; the A/B comparison as two raised panels; the material library (`MATERIALS`) as a ruled list with each
+  definition shown under the name instead of a hover tooltip.
 - Request a Commission (rebuilt 2026-10-06): status line with a verdigris dot, the H1 and intro on the canvas; the
   form on a raised Green Sand surface with inset Cast fields (Cinzel labels, Alegreya input text, Pewter chevrons);
   submit is the copper Enter keycap (`/assets/keys/c2.25*.webp`, legend as real text), the only copper key on the

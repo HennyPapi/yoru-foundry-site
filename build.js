@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-13-crafted",
+  stylesheetVersion: "vg-14-taste",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
 });
@@ -70,17 +70,17 @@ function renderSoundPlayer(sample) {
   return '<div class="sound-player-copy"><strong>' + escapeHtml(sample.name) + '</strong><p>' + escapeHtml(sample.description) + '</p></div><audio controls preload="metadata" src="' + escapeHtml(sample.file) + '" aria-label="' + escapeHtml(sample.name) + '"></audio>';
 }
 
+// Guide topics as a ruled index (topics are not a sequence, so no numbers); each opens its guide.
 function renderStoryGrid(type, stories) {
   const group = (stories || {})[type] || {};
-  return Object.entries(group).map(([id, story], index) => {
-    const action = type === "process" ? "Open process →" : "Explore comparison →";
-    return '<button class="story-tile" data-story-type="' + escapeHtml(type) + '" data-story="' + escapeHtml(id) + '"><div class="sample-image"><img src="/img/placeholder-3x2.svg" alt="" width="1200" height="800" loading="lazy" decoding="async"></div><span>' + String(index + 1).padStart(2, "0") + '</span><h2>' + escapeHtml(story.title) + '</h2><p>' + escapeHtml(story.intro) + '</p><b>' + action + '</b></button>';
-  }).join("");
+  const action = type === "process" ? "Open process" : "Explore comparison";
+  return Object.entries(group).map(([id, story]) => '<button class="guide-topic" type="button" data-story-type="' + escapeHtml(type) + '" data-story="' + escapeHtml(id) + '"><span class="guide-title">' + escapeHtml(story.title) + '</span><span class="guide-intro">' + escapeHtml(story.intro) + '</span><span class="guide-open">' + action + "</span></button>").join("");
 }
 
+// One guide's steps (a real sequence): an honest media frame naming what will go there, then the step.
 function renderStorySteps(story) {
   if (!story) return "";
-  return (story.steps || []).map((step, index) => '<section class="story-row ' + (index % 2 ? "reverse" : "") + '"><div class="story-media"><img src="/img/placeholder-3x2.svg" alt="" width="1200" height="800" loading="lazy" decoding="async"><span class="media-label">' + escapeHtml(step[1]) + '</span></div><div class="story-copy"><p class="eyebrow">STEP ' + String(index + 1).padStart(2, "0") + '</p><h3>' + escapeHtml(step[0]) + '</h3><p>' + escapeHtml(step[2]) + '</p></div></section>').join("");
+  return (story.steps || []).map((step, index) => '<section class="guide-step"><div class="guide-media"><span>' + escapeHtml(step[1]) + '</span></div><div class="guide-copy"><p class="guide-step-num">Step ' + (index + 1) + "</p><h3>" + escapeHtml(step[0]) + "</h3><p>" + escapeHtml(step[2]) + "</p></div></section>").join("");
 }
 
 function renderCommissionDetail(build, soundSamples) {
@@ -161,7 +161,7 @@ function renderDataBackedContent(html, content) {
   const soundSamples = Array.isArray(content.SOUND_SAMPLES) ? content.SOUND_SAMPLES : [];
   const compareOptions = content.COMPARE_OPTIONS || {};
 
-  html = html.replace(/(<section class="[^"]*story-tile-grid[^"]*" data-story-grid="([^"]+)">)[\s\S]*?(<\/section>)/g, (_, open, type, close) => open + renderStoryGrid(type, stories) + close);
+  html = html.replace(/(<section class="guide-index" data-story-grid="([^"]+)">)[\s\S]*?(<\/section>)/g, (_, open, type, close) => open + renderStoryGrid(type, stories) + close);
 
   html = html.replace(/(<div data-build-detail>)[\s\S]*?(<\/div>)/, (_, open, close) => {
     const detailBuild = content.SITE_MODE === "live" ? visible[0] : (visible[0] || builds[0]);
@@ -175,12 +175,13 @@ function renderDataBackedContent(html, content) {
   html = html.replace(/(<select id="compareOption[AB]" class="compare-option">)[\s\S]*?(<\/select>)/g, (_, open, close) => open + compareOptionHtml + close);
   html = html.replace(/(<p id="compareDesc[AB]" class="compare-desc">)[\s\S]*?(<\/p>)/g, (_, open, close) => open + escapeHtml(initialCompare[0]?.[1] || "") + close);
 
-  html = html.replace(/(<div class="story-modal" id="storyModal"[\s\S]*?<p class="eyebrow">)(TRUST THE PROCESS|BUILT TO TASTE)(<\/p><h2 id="storyTitle">)[\s\S]*?(<\/h2><p id="storyIntro">)[\s\S]*?(<\/p><\/div><div id="storyContent" class="story-content">)[\s\S]*?(<\/div>)/g, (match, a, label, b, c, d, e) => {
-    const type = label === "TRUST THE PROCESS" ? "process" : "taste";
+  html = html.replace(/(<div class="story-modal" id="storyModal" data-story-type="(\w+)"[\s\S]*?<h2 id="storyTitle">)[\s\S]*?(<\/h2><p id="storyIntro">)[\s\S]*?(<\/p><\/div><div id="storyContent" class="story-content">)[\s\S]*?(<\/div>)/g, (match, a, type, b, c, d) => {
     const first = Object.values(stories[type] || {})[0];
     if (!first) return match;
-    return a + label + b + escapeHtml(first.title) + c + escapeHtml(first.intro) + d + renderStorySteps(first) + e;
+    return a + escapeHtml(first.title) + b + escapeHtml(first.intro) + c + renderStorySteps(first) + d;
   });
+  // Built to Taste material library
+  html = html.replace(/<dl class="material-list" data-materials><\/dl>/, () => '<dl class="material-list">' + (content.MATERIALS || []).map((m) => "<div><dt>" + escapeHtml(m.name) + "<small>" + escapeHtml(m.what) + "</small></dt><dd>" + escapeHtml(m.character) + "</dd></div>").join("") + "</dl>");
 
   return html;
 }
