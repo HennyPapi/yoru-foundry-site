@@ -39,10 +39,28 @@ a.k:active .legend, a.k:active .mark, .k[aria-current] .legend, .k[aria-current]
 .k .legend { font: 700 13px/1.12 Cinzel, serif; }
 .k .mark { width: 36px; height: 36px; margin-left: calc((var(--fw) - 50px) / 2); margin-top: -3px; }
 .k:focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
+.deck { flex: 1; display: flex; align-items: flex-start; min-width: 0; }
+.deck .row { position: relative; z-index: 1; }            /* keys sit over the plug's metal tip */
+.medallion-wrap { position: relative; z-index: 2; flex-shrink: 0; }
+/* The cable: straight braided runs stretch with the page; the coil and plug stay fixed. It starts under the medallion. */
+.cable { flex: 1; display: flex; min-width: 0; margin: 2.3px -26px 0 -24px; }   /* 2.3px: the cable lies on the keys' plate line */
+.cable .run { flex: 1; min-width: 24px; height: 69px; background: url(keys/cable/tile.webp) repeat-x 0 0 / 114px 69px; }
+.cable .run.long { flex: 2; }
+.cable img { flex-shrink: 0; height: 69px; width: auto; display: block; }
+.narrow { max-width: 1000px; }
+.narrow .cable .coil, .narrow .cable .run.long { display: none; }   /* in the real header: a media query below ~1180px */
 .page-hint { height: 40px; background: linear-gradient(var(--cast), var(--deep)); }
 </style>
 </head>
 <body>
+
+<section class="cell">
+  <h2>C with the cable</h2>
+  <p>A braided USB-C cable runs from behind the medallion to the keys: a straight run, a coiled section with copper collars, another run, then the plug tucked under the first key. The straight runs stretch or shrink with the window; the coil and plug stay the same size.</p>
+  <div class="bar"><span class="medallion-wrap"><img class="medallion" src="tex/logo-trim.webp" alt=""></span><div class="deck"><div class="cable" aria-hidden="true"><span class="run"></span><img class="coil" src="keys/cable/coil.webp" alt=""><span class="run long"></span><img src="keys/cable/plug.webp" alt=""></div><div class="row" data-row="C"></div></div></div>
+  <p>The same header in a 1,000px window: there is no room for the coil, so the cable becomes one short straight run into the plug.</p>
+  <div class="bar narrow"><span class="medallion-wrap"><img class="medallion" src="tex/logo-trim.webp" alt=""></span><div class="deck"><div class="cable" aria-hidden="true"><span class="run"></span><img class="coil" src="keys/cable/coil.webp" alt=""><span class="run long"></span><img src="keys/cable/plug.webp" alt=""></div><div class="row" data-row="C"></div></div></div>
+</section>
 
 <section class="cell">
   <h2>A. The bottom row</h2>

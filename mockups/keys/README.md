@@ -21,3 +21,11 @@ A real photograph of an actual keycap can replace these files later with no layo
 Leave `text` empty for a blank cap; the page sets the legend as real text on the top face. `row-crop.py` crops
 every key's frames to one shared plate line and prints each key's base offsets and face position for the layout
 (`nav-row.html` uses them).
+
+## Braided cable (`cable/`)
+
+`render-cable.html` renders three pieces through an orthographic camera with the keycaps' viewing direction and
+lights: `tile` (a straight run, a whole number of braid periods, so it repeats seamlessly), `coil` (pigtail coil with
+copper collars hiding the joins) and `plug` (USB-C, pointing right). Run
+`node render-cable.js '{"braidColor":"#2A3432","tracer":"#2A3432","collar":"#B06C44","housing":"#2A3432"}' .`
+(serving the folder on port 8767); crop all three to one shared band. The tile is exported at 114 CSS px wide.
