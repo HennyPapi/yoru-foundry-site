@@ -37,7 +37,7 @@ function outline(hw, hd, r, z, dy) {           // rounded rect, counter-clockwis
   return pts;
 }
 // r0/r1: wall corner radius at the base/top; fil: top-edge fillet (all mm). Real Cherry-style caps: ~1mm corners, tight top edge.
-function buildGeo({ r0 = 1.8, r1 = 2.6, fil: FIL = 1.4 } = {}) {
+function buildGeo({ r0 = 1.0, r1 = 1.3, fil: FIL = 0.7 } = {}) {
 const rings = [];
 const SIDE = 18;                               // straight tapered wall
 for (let i = 0; i <= SIDE; i++) {
