@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yoru Foundry: rendered keycap button</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Cinzel:wght@400..900&family=Alegreya:wght@400..700&display=swap" rel="stylesheet">
+<style>
+/* Mockup only. The commission button as a 3D-rendered keycap image (three.js, PBR plastic, soft studio light). */
+:root { --cast: #151A1A; --deep: #0C1010; --bright: #EEF0EC; --pewter: #A7B2AE; --rule: #2B3533; --ease: cubic-bezier(.16,1,.3,1); }
+* { box-sizing: border-box; }
+html { font-synthesis: none; }
+body { margin: 0; background: var(--deep); color: var(--bright); font: 400 17px/1.5 Alegreya, Georgia, serif; padding: 28px; }
+.wrap { max-width: 1400px; margin: 0 auto; display: grid; gap: 20px; }
+.cell { background: var(--cast); padding: 26px 30px 34px; display: grid; gap: 16px; }
+.cell h2 { margin: 0; font: 700 16px/1.45 Cinzel, serif; display: flex; justify-content: space-between; gap: 12px; }
+.cell h2 span { font: 400 14px/1.45 Alegreya, serif; color: var(--pewter); }
+.cell p { margin: 0; color: var(--pewter); font-size: 15px; line-height: 1.55; max-width: 66ch; }
+.stage { display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-end; padding-top: 24px; border-top: 1px solid var(--rule); }
+.state { display: grid; gap: 10px; justify-items: start; }
+.state small { font: 600 12px/1.4 Cinzel, serif; color: var(--pewter); }
+.hero-snip { display: grid; gap: 14px; }
+.hero-snip h3 { margin: 0; font: 400 56px/1.05 Aboreto, serif; letter-spacing: .05em; }
+.hero-snip .lede { margin: 0; color: var(--pewter); font-size: 21px; line-height: 1.45; }
+.bar { display: flex; align-items: center; gap: 28px; padding: 10px 0; border-bottom: 1px solid var(--rule); font: 600 14px/1.4 Cinzel, serif; }
+.bar .logo { width: 48px; height: 48px; border-radius: 50%; }
+.bar nav { display: flex; gap: 24px; margin-left: auto; }
+
+/* The keycap button: one rendered image; key travel is a small translate. */
+.pk { display: inline-block; line-height: 0; border-radius: 12px; }
+.pk img { display: block; width: 280px; height: auto; transition: transform 140ms var(--ease), filter 140ms var(--ease); }
+.pk:hover img, .pk.is-hover img { transform: translateY(1px); }
+.pk:active img, .pk.is-press img { transform: translateY(3px); filter: brightness(.95); }
+.pk:focus-visible { outline: 2px solid #E8834D; outline-offset: 4px; }
+.pk.big img { width: 560px; }
+.pk.small img { width: 190px; }
+@media (prefers-reduced-motion: reduce) { .pk img { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="cell">
+    <h2>Rendered keycap, up close <span>2× size; a 3D model with matte PBT plastic and studio light</span></h2>
+    <p>A 2.25-unit Enter key modelled at real proportions: tapered walls, molded rounded corners, a filleted top edge, a shallow dish, the legend printed into the surface, and a soft cast shadow. It is one small image (about 20 KB), so it looks the same on every device.</p>
+    <div class="stage"><a class="pk big" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""></a></div>
+  </section>
+  <section class="cell">
+    <h2>At real size <span>idle, hover, pressed</span></h2>
+    <div class="stage">
+      <div class="state"><a class="pk" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""></a><small>Idle</small></div>
+      <div class="state"><a class="pk is-hover" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""></a><small>Hover</small></div>
+      <div class="state"><a class="pk is-press" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""></a><small>Pressed</small></div>
+    </div>
+  </section>
+  <section class="cell">
+    <h2>Header version <span>Green Sand cap, smaller</span></h2>
+    <div class="bar">
+      <img class="logo" src="tex/logo-trim.webp" alt="">
+      <nav><span>Crafted Art</span><span>Trust the Process</span><span>Built to Taste</span><span>About</span></nav>
+      <a class="pk small" href="#" aria-label="Request a Commission"><img src="keys/enter-sand.webp" alt=""></a>
+    </div>
+  </section>
+  <section class="cell">
+    <h2>In the hero</h2>
+    <div class="stage" style="align-items:flex-start">
+      <div class="hero-snip"><h3>Forged by night.</h3><p class="lede">After dark, the forge is lit and a keyboard is made.</p><div><a class="pk" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""></a></div></div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

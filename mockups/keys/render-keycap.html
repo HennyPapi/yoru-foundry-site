@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:transparent}canvas{display:block}</style>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+</head>
+<body>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+// Render a 2.25u Enter keycap (units: mm) to a transparent PNG. Driven by window.renderKey(opts).
+const W = 1632, H = 720;                     // 6x of a 272x120 CSS box (crisp at 2x density when shown large)
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.0;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.VSMShadowMap;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.32;
+
+// --- keycap geometry: lofted rounded rectangles with a filleted top edge and a dished top ---
+const B = { w: 41.8, d: 18.2 }, T = { w: 36.6, d: 13.6 }, HGT = 8.0, FIL = 1.4, DISH = 0.55;
+const N = 160;                                 // points around each outline
+function outline(hw, hd, r, z, dy) {           // rounded rect, counter-clockwise, centred (0, dy)
+  const pts = []; const per = N / 4;
+  const corners = [[hw - r, hd - r, 0], [-hw + r, hd - r, Math.PI / 2], [-hw + r, -hd + r, Math.PI], [hw - r, -hd + r, 1.5 * Math.PI]];
+  for (const [cx, cy, a0] of corners) for (let i = 0; i < per; i++) {
+    const a = a0 + (i / per) * Math.PI / 2; pts.push(new THREE.Vector3(cx + r * Math.cos(a), cy + dy + r * Math.sin(a), z));
+  }
+  return pts;
+}
+const rings = [];
+const SIDE = 18;                               // straight tapered wall
+for (let i = 0; i <= SIDE; i++) {
+  const t = i / SIDE, z = t * (HGT - FIL);
+  const hw = B.w / 2 + (T.w / 2 + FIL - B.w / 2) * t, hd = B.d / 2 + (T.d / 2 + FIL - B.d / 2) * t;
+  rings.push(outline(hw, hd, 1.8 + 0.8 * t, z, 0.7 * t));
+}
+const FILS = 10;                               // rounded top edge
+for (let i = 1; i <= FILS; i++) {
+  const a = (i / FILS) * Math.PI / 2, inset = FIL * (1 - Math.cos(a)), z = HGT - FIL + FIL * Math.sin(a);
+  rings.push(outline(T.w / 2 + FIL - inset, T.d / 2 + FIL - inset, Math.max(0.6, 2.6 - inset), z, 0.7));
+}
+const wallPos = [];
+for (let r = 0; r < rings.length - 1; r++) for (let i = 0; i < N; i++) {
+  const a = rings[r][i], b = rings[r][(i + 1) % N], c = rings[r + 1][(i + 1) % N], d = rings[r + 1][i];
+  wallPos.push(a.x, a.y, a.z, b.x, b.y, b.z, c.x, c.y, c.z, a.x, a.y, a.z, c.x, c.y, c.z, d.x, d.y, d.z);
+}
+const wallGeo = new THREE.BufferGeometry(); wallGeo.setAttribute('position', new THREE.Float32BufferAttribute(wallPos, 3));
+wallGeo.computeVertexNormals();
+// top face: rings shrinking to the centre, sunk into a shallow dish; UVs map the face for the printed legend
+const top = rings[rings.length - 1], RINGS = 24, cx = 0, cy = 0.7;
+const tx = T.w / 2, ty = T.d / 2;
+const topPos = [], topUv = [];
+const ringPt = (k, i) => { const s = 1 - k / RINGS, p = top[i % N]; const x = cx + (p.x - cx) * s, y = cy + (p.y - cy) * s;
+  const nx = (x - cx) / tx, ny = (y - cy) / ty; const z = HGT - DISH * (1 - Math.min(1, nx * nx * 0.85 + ny * ny * 0.6)); return [x, y, z, (x - cx + tx) / (2 * tx), (y - cy + ty) / (2 * ty)]; };
+for (let k = 0; k < RINGS; k++) for (let i = 0; i < N; i++) {
+  const q = [ringPt(k, i), ringPt(k, i + 1), ringPt(k + 1, i + 1), ringPt(k + 1, i)];
+  for (const idx of [0, 1, 2, 0, 2, 3]) { topPos.push(q[idx][0], q[idx][1], q[idx][2]); topUv.push(q[idx][3], q[idx][4]); }
+}
+const topGeo = new THREE.BufferGeometry(); topGeo.setAttribute('position', new THREE.Float32BufferAttribute(topPos, 3));
+topGeo.setAttribute('uv', new THREE.Float32BufferAttribute(topUv, 2)); topGeo.computeVertexNormals();
+
+// fine PBT grain as a bump map
+function grain(size) { const c = document.createElement('canvas'); c.width = c.height = size; const g = c.getContext('2d'); const im = g.createImageData(size, size);
+  for (let i = 0; i < im.data.length; i += 4) { const v = 118 + Math.random() * 20; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; }
+  g.putImageData(im, 0, 0); const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(6, 3); return t; }
+const bump = grain(256);
+
+function legendTexture(face, ink, text) {
+  const c = document.createElement('canvas'); c.width = 2048; c.height = 2048 * (T.d / T.w); const g = c.getContext('2d');
+  g.fillStyle = face; g.fillRect(0, 0, c.width, c.height);
+  g.fillStyle = ink; g.font = '700 132px Cinzel'; g.textBaseline = 'top';
+  g.fillText(text, 130, 120);
+  g.strokeStyle = ink; g.lineWidth = 20; g.lineCap = 'round'; g.lineJoin = 'round';
+  const ax = c.width - 150, ay = c.height - 200;
+  g.beginPath(); g.moveTo(ax, ay - 140); g.lineTo(ax, ay); g.lineTo(ax - 230, ay); g.moveTo(ax - 170, ay - 60); g.lineTo(ax - 230, ay); g.lineTo(ax - 170, ay + 60); g.stroke();
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; t.flipY = true; return t;
+}
+
+const capGroup = new THREE.Group(); scene.add(capGroup);
+let wallMesh, topMesh;
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(400, 400), new THREE.ShadowMaterial({ opacity: 0.5 }));
+ground.receiveShadow = true; scene.add(ground);
+
+const key = new THREE.DirectionalLight(0xfff1e2, 2.3); key.position.set(-45, 30, 80); key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048); key.shadow.radius = 9; key.shadow.blurSamples = 20; key.shadow.bias = -0.0004;
+Object.assign(key.shadow.camera, { left: -40, right: 40, top: 40, bottom: -40, near: 1, far: 300 });
+scene.add(key);
+const fill = new THREE.DirectionalLight(0xdfe8ff, 0.45); fill.position.set(60, -20, 40); scene.add(fill);
+const front = new THREE.DirectionalLight(0xffe9d6, 0.9); front.position.set(-10, -90, 22); scene.add(front);
+const amb = new THREE.AmbientLight(0xffffff, 0.12); scene.add(amb);
+
+const camera = new THREE.PerspectiveCamera(14.5, W / H, 1, 1000);
+camera.up.set(0, 0, 1);
+
+window.renderKey = async ({ face, ink, text, press = 0, exposure = 1.0 }) => {
+  await document.fonts.load('700 132px Cinzel');
+  renderer.toneMappingExposure = exposure;
+  if (wallMesh) { capGroup.remove(wallMesh, topMesh); }
+  const mat = new THREE.MeshPhysicalMaterial({ color: face, roughness: 0.5, metalness: 0, bumpMap: bump, bumpScale: 0.6, sheen: 0.25, sheenRoughness: 0.8, sheenColor: new THREE.Color(face) });
+  const topMat = mat.clone(); topMat.color = new THREE.Color(0xffffff); topMat.map = legendTexture(face, ink, text);
+  wallMesh = new THREE.Mesh(wallGeo, mat); topMesh = new THREE.Mesh(topGeo, topMat);
+  for (const m of [wallMesh, topMesh]) { m.castShadow = true; m.receiveShadow = true; capGroup.add(m); }
+  capGroup.position.z = -press;                // key travel
+  camera.position.set(0, -60, 92); camera.lookAt(0, 0.6, 3.6);
+  renderer.render(scene, camera);
+  return renderer.domElement.toDataURL('image/png');
+};
+window.ready = true;
+</script>
+</body>
+</html>
