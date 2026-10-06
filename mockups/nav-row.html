@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yoru Foundry: keyboard-row header</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Cinzel:wght@400..900&family=Alegreya:wght@400..700&display=swap" rel="stylesheet">
+<style>
+/* Mockup only. The header nav as the bottom row of a keyboard: every link is a rendered keycap,
+   the current page's key is pressed down, Commission is the Enter key. */
+:root { --cast: #151A1A; --deep: #0C1010; --bright: #EEF0EC; --pewter: #A7B2AE; --rule: #2B3533; --copper: #E8834D; }
+* { box-sizing: border-box; }
+html { font-synthesis: none; }
+body { margin: 0; background: var(--deep); color: var(--bright); font: 400 17px/1.5 Alegreya, Georgia, serif; padding: 28px 0; }
+.cell { max-width: 1440px; margin: 0 auto 24px; display: grid; gap: 14px; }
+.cell > h2, .cell > p { margin: 0; padding: 0 40px; }
+.cell > h2 { font: 700 16px/1.45 Cinzel, serif; }
+.cell > p { color: var(--pewter); font-size: 15px; max-width: 80ch; }
+.bar { display: flex; align-items: center; min-height: 92px; padding: 8px 40px; background: var(--cast); border-bottom: .5px solid var(--rule); }
+.bar .medallion { width: 64px; height: 64px; display: block; }
+.row { display: flex; align-items: flex-end; column-gap: 3.9px; }   /* 1.06mm gap between caps, as on a plate */
+.row.center { margin: 0 auto; }
+.row.right { margin-left: auto; }
+.spacer { width: 28px; }
+
+/* One key: three renders stacked (idle, hover, pressed); the legend rides the top face. */
+.k { position: relative; display: inline-grid; width: var(--w); margin-left: var(--ml); margin-right: var(--mr); line-height: 1.12; color: var(--bright); text-decoration: none; border-radius: 8px; }
+.k img { grid-area: 1 / 1; display: block; width: 100%; height: auto; }
+.k .h, .k .p { opacity: 0; }
+a.k:hover img:first-child { opacity: 0; }
+a.k:hover .h { opacity: 1; }
+a.k:active img:not(.p):not(.mark), .k[aria-current] img:not(.p):not(.mark) { opacity: 0; }
+a.k:active .p, .k[aria-current] .p { opacity: 1; }
+.k .legend, .k .mark { position: absolute; left: calc(var(--fx) + 7px); top: calc(var(--fy) + 6px); pointer-events: none; }
+a.k:hover .legend, a.k:hover .mark { left: calc(var(--fxh) + 7px); top: calc(var(--fyh) + 6px); }
+a.k:active .legend, a.k:active .mark, .k[aria-current] .legend, .k[aria-current] .mark { left: calc(var(--fxp) + 7px); top: calc(var(--fyp) + 6px); }
+.k .legend { font: 700 13px/1.12 Cinzel, serif; }
+.k .mark { width: 36px; height: 36px; margin-left: calc((var(--fw) - 50px) / 2); margin-top: -3px; }
+.k:focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
+.page-hint { height: 40px; background: linear-gradient(var(--cast), var(--deep)); }
+</style>
+</head>
+<body>
+
+<section class="cell">
+  <h2>A. The bottom row</h2>
+  <p>Read left to right like a real bottom row: the medallion on the Windows-key spot, two modifiers, a blank spacebar, two more modifiers, then Enter for the commission. Crafted Art is the current page, so its key is pressed down. Hover any key; click and hold to press it.</p>
+  <div class="bar"><div class="row center" data-row="A"></div></div>
+</section>
+
+<section class="cell">
+  <h2>B. Spacebar with the medallion</h2>
+  <p>The medallion sits on the spacebar, like an artisan spacebar on a custom board. The spacebar is the home link.</p>
+  <div class="bar"><div class="row center" data-row="B"></div></div>
+</section>
+
+<section class="cell">
+  <h2>C. Keys on the right</h2>
+  <p>The medallion stays on its own at the left; the links are a short run of keys on the right, ending in Enter. Closest to today's layout.</p>
+  <div class="bar"><img class="medallion" src="tex/logo-trim.webp" alt=""><div class="row right" data-row="C"></div></div>
+</section>
+
+<section class="cell">
+  <h2>On a phone</h2>
+  <p>A full row needs about 1,100px. Below that, the header would keep today's phone layout (medallion, the Commission key, the menu icon), and the open menu could stack the same keys as a column.</p>
+</section>
+
+<script>
+// Measured from the renders: image width, the cap base's offset from the image's left and right edges (CSS px),
+// and the top face's top-left corner in each state (% of the image).
+const CAPS = {"d1.25": {"w": 99.6, "bl": 2.2, "br": 12.8, "f": {"idle": [12.71, 3.72], "-hover": [12.98, 7.25], "-press": [13.54, 13.2]}}, "d1.5": {"w": 117.1, "bl": 2.2, "br": 12.7, "f": {"idle": [11.05, 3.72], "-hover": [11.28, 7.25], "-press": [11.87, 13.2]}}, "d1.75": {"w": 134.8, "bl": 2.1, "br": 12.7, "f": {"idle": [9.69, 3.72], "-hover": [10.0, 7.25], "-press": [10.51, 13.2]}}, "d2": {"w": 152.3, "bl": 1.9, "br": 12.5, "f": {"idle": [8.67, 3.72], "-hover": [9.03, 7.25], "-press": [9.58, 13.2]}}, "d6.25": {"w": 454.9, "bl": 3.6, "br": 12.4, "f": {"idle": [4.11, 3.72], "-hover": [4.51, 7.25], "-press": [5.17, 13.2]}}, "s2.25": {"w": 170.1, "bl": 1.9, "br": 12.7, "f": {"idle": [7.85, 3.72], "-hover": [8.17, 7.25], "-press": [8.82, 13.2]}}};
+const LINKS = {
+  crafted: { href: '#', label: 'Crafted<br>Art', name: 'Crafted Art', current: true },
+  trust: { href: '#', label: 'Trust the<br>Process', name: 'Trust the Process' },
+  taste: { href: '#', label: 'Built to<br>Taste', name: 'Built to Taste' },
+  about: { href: '#', label: 'About', name: 'About' },
+  commission: { href: '#', label: 'Commission', name: 'Request a Commission' },
+  home: { href: '#', mark: true, name: 'Yoru Foundry home' },
+};
+const ROWS = {
+  A: [['d1.25', 'home'], ['d1.5', 'crafted'], ['d1.5', 'trust'], ['d6.25'], ['d1.5', 'taste'], ['d1.25', 'about'], ['s2.25', 'commission']],
+  B: [['d1.5', 'crafted'], ['d1.5', 'trust'], ['d6.25', 'home'], ['d1.5', 'taste'], ['d1.25', 'about'], ['s2.25', 'commission']],
+  C: [['d1.75', 'crafted'], ['d2', 'trust'], ['d1.75', 'taste'], ['d1.25', 'about'], ['gap'], ['s2.25', 'commission']],
+};
+function key([cap, link]) {
+  if (cap === 'gap') return '<span class="spacer"></span>';
+  const c = CAPS[cap], u = parseFloat(cap.slice(1)), l = LINKS[link];
+  const fw = ((u * 19.05 - 6.26) * 3.6).toFixed(1);                       // top face width in CSS px
+  const v = `--w:${c.w}px;--ml:-${c.bl}px;--mr:-${c.br}px;--fw:${fw}px;--fx:${c.f.idle[0]}%;--fy:${c.f.idle[1]}%;--fxh:${c.f['-hover'][0]}%;--fyh:${c.f['-hover'][1]}%;--fxp:${c.f['-press'][0]}%;--fyp:${c.f['-press'][1]}%`;
+  const imgs = ['', '-hover', '-press'].map((s, i) => `<img${i ? ` class="${'hp'[i - 1]}"` : ''} src="keys/row/${cap}${s}.webp" alt="">`).join('');
+  if (!l) return `<span class="k" style="${v}">${imgs}</span>`;          // blank spacebar
+  const face = l.mark ? '<img class="mark" src="tex/logo-trim.webp" alt="">' : `<span class="legend" aria-hidden="true">${l.label}</span>`;
+  return `<a class="k" style="${v}" href="${l.href}" aria-label="${l.name}"${l.current ? ' aria-current="page"' : ''}>${imgs}${face}</a>`;
+}
+document.querySelectorAll('[data-row]').forEach(r => { r.innerHTML = ROWS[r.dataset.row].map(key).join(''); });
+</script>
+</body>
+</html>

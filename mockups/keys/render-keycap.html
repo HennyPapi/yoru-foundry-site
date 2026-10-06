@@ -12,7 +12,7 @@ import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 // Render a 2.25u Enter keycap (units: mm) to a transparent PNG. Driven by window.renderKey(opts).
-const W = 1632, H = 720;                     // 6x of a 272x120 CSS box (crisp at 2x density when shown large)
+let W = 1632; const H = 720;                     // 6x of a 272x120 CSS box (crisp at 2x density when shown large)
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
 renderer.setPixelRatio(1); renderer.setSize(W, H);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -68,7 +68,16 @@ for (let k = 0; k < RINGS; k++) for (let i = 0; i < N; i++) {
   for (const idx of [0, 1, 2, 0, 2, 3]) { topPos.push(q[idx][0], q[idx][1], q[idx][2]); topUv.push(q[idx][3], q[idx][4]); }
 }
 const topGeo = new THREE.BufferGeometry(); topGeo.setAttribute('position', new THREE.Float32BufferAttribute(topPos, 3));
-topGeo.setAttribute('uv', new THREE.Float32BufferAttribute(topUv, 2)); topGeo.computeVertexNormals();
+topGeo.setAttribute('uv', new THREE.Float32BufferAttribute(topUv, 2));
+// normals from the dish formula itself: the ring mesh converges along the diagonals, and averaged
+// triangle normals show those seams as faint creases (most visible on long keys like the spacebar)
+const topNrm = [];
+for (let v = 0; v < topPos.length; v += 3) {
+  const nx = (topPos[v] - cx) / tx, ny = (topPos[v + 1] - cy) / ty, inside = nx * nx * 0.85 + ny * ny * 0.6 < 1;
+  const n = new THREE.Vector3(inside ? -DISH * 1.7 * nx / tx : 0, inside ? -DISH * 1.2 * ny / ty : 0, 1).normalize();
+  topNrm.push(n.x, n.y, n.z);
+}
+topGeo.setAttribute('normal', new THREE.Float32BufferAttribute(topNrm, 3));
 return { wallGeo, topGeo };
 }
 
@@ -78,14 +87,14 @@ function grain(size) { const c = document.createElement('canvas'); c.width = c.h
   g.putImageData(im, 0, 0); const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(6, 3); return t; }
 const bump = grain(256);
 
-function legendTexture(face, ink, text) {
+function legendTexture(face, ink, text, arrow) {
   const c = document.createElement('canvas'); c.width = 2048; c.height = 2048 * (T.d / T.w); const g = c.getContext('2d');
   g.fillStyle = face; g.fillRect(0, 0, c.width, c.height);
   g.fillStyle = ink; g.font = '700 132px Cinzel'; g.textBaseline = 'top';
-  g.fillText(text, 130, 120);
+  if (text) g.fillText(text, 130, 120);   // empty text: blank cap, legend set as HTML over it
   g.strokeStyle = ink; g.lineWidth = 20; g.lineCap = 'round'; g.lineJoin = 'round';
   const ax = c.width - 150, ay = c.height - 200;
-  g.beginPath(); g.moveTo(ax, ay - 140); g.lineTo(ax, ay); g.lineTo(ax - 230, ay); g.moveTo(ax - 170, ay - 60); g.lineTo(ax - 230, ay); g.lineTo(ax - 170, ay + 60); g.stroke();
+  if (arrow) { g.beginPath(); g.moveTo(ax, ay - 140); g.lineTo(ax, ay); g.lineTo(ax - 230, ay); g.moveTo(ax - 170, ay - 60); g.lineTo(ax - 230, ay); g.lineTo(ax - 170, ay + 60); g.stroke(); }
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; t.flipY = true; return t;
 }
 
@@ -96,7 +105,7 @@ ground.receiveShadow = true; scene.add(ground);
 
 const key = new THREE.DirectionalLight(0xfff1e2, 2.3); key.position.set(-45, 30, 80); key.castShadow = true;
 key.shadow.mapSize.set(2048, 2048); key.shadow.radius = 9; key.shadow.blurSamples = 20; key.shadow.bias = -0.0004;
-Object.assign(key.shadow.camera, { left: -40, right: 40, top: 40, bottom: -40, near: 1, far: 300 });
+Object.assign(key.shadow.camera, { left: -80, right: 80, top: 40, bottom: -40, near: 1, far: 300 });
 scene.add(key);
 const fill = new THREE.DirectionalLight(0xdfe8ff, 0.45); fill.position.set(60, -20, 40); scene.add(fill);
 const front = new THREE.DirectionalLight(0xffe9d6, 0.9); front.position.set(-10, -90, 22); scene.add(front);
@@ -105,19 +114,27 @@ const amb = new THREE.AmbientLight(0xffffff, 0.12); scene.add(amb);
 const camera = new THREE.PerspectiveCamera(14.5, W / H, 1, 1000);
 camera.up.set(0, 0, 1);
 
-window.renderKey = async ({ face, ink, text, press = 0, exposure = 1.0, ...shape }) => {
+window.renderKey = async ({ face, ink, text, press = 0, exposure = 1.0, u = 2.25, arrow = true, ...shape }) => {
+  // key width in units (1u = 19.05mm pitch); the canvas widens with the key so the scale stays the same
+  B.w = u * 19.05 - 1.06; T.w = B.w - 5.2;
+  W = Math.round(1632 * (B.w + 20) / (41.8 + 20)); renderer.setSize(W, H); camera.aspect = W / H; camera.updateProjectionMatrix();
   const { wallGeo, topGeo } = buildGeo(shape);
   await document.fonts.load('700 132px Cinzel');
   renderer.toneMappingExposure = exposure;
   if (wallMesh) { capGroup.remove(wallMesh, topMesh); }
   const mat = new THREE.MeshPhysicalMaterial({ color: face, roughness: 0.5, metalness: 0, bumpMap: bump, bumpScale: 0.6, sheen: 0.25, sheenRoughness: 0.8, sheenColor: new THREE.Color(face) });
   mat.clippingPlanes = [new THREE.Plane(new THREE.Vector3(0, 0, 1), 0)]; mat.clipShadows = true;  // the plate: a pressed cap sinks below it
-  const topMat = mat.clone(); topMat.color = new THREE.Color(0xffffff); topMat.map = legendTexture(face, ink, text);
+  const topMat = mat.clone(); topMat.color = new THREE.Color(0xffffff); topMat.map = legendTexture(face, ink, text, arrow);
   wallMesh = new THREE.Mesh(wallGeo, mat); topMesh = new THREE.Mesh(topGeo, topMat);
   for (const m of [wallMesh, topMesh]) { m.castShadow = true; m.receiveShadow = true; capGroup.add(m); }
   capGroup.position.z = -press;                // key travel
   camera.position.set(0, -60, 92); camera.lookAt(0, 0.6, 3.6);
   renderer.render(scene, camera);
+  // top face corners in canvas pixels, so an HTML legend can be placed on a blank cap
+  const pts = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([sx, sy]) => new THREE.Vector3(sx * T.w / 2, 0.7 + sy * T.d / 2, HGT - press).project(camera));
+  window.lastFace = pts.map(v => [Math.round((v.x + 1) / 2 * W), Math.round((1 - v.y) / 2 * H)]);
+  const base = [-1, 1].map(sx => new THREE.Vector3(sx * B.w / 2, -B.d / 2, 0).project(camera));
+  window.lastBase = base.map(v => Math.round((v.x + 1) / 2 * W));   // front bottom corners at the plate, x in pixels
   return renderer.domElement.toDataURL('image/png');
 };
 window.ready = true;

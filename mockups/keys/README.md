@@ -14,3 +14,10 @@ To re-render (different legend, color or size):
 4. Crop to the visible pixels and save as WebP.
 
 A real photograph of an actual keycap can replace these files later with no layout change.
+
+## Keyboard-row keys (`row/`)
+
+`render-keycap.html` takes `u` (key width in units: 1.25, 1.5, 6.25 for the spacebar...) and `arrow` (Enter arrow on/off).
+Leave `text` empty for a blank cap; the page sets the legend as real text on the top face. `row-crop.py` crops
+every key's frames to one shared plate line and prints each key's base offsets and face position for the layout
+(`nav-row.html` uses them).
