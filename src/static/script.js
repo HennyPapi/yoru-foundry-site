@@ -123,7 +123,19 @@ const form=document.getElementById("buildForm");if(form){const params=new URLSea
   const dropdown=document.querySelector(".products-dropdown");
   if(dropdown){
     dropdown.classList.add("mega-menu");
-    dropdown.innerHTML='<div class="mega-col"><span>KEYBOARDS</span><a href="/products-keyboards.html">All Keyboards</a><a href="/request-a-build.html?layout=75%">75%</a><a href="/request-a-build.html?layout=65%">65% <small>Coming Soon</small></a><a href="/request-a-build.html?layout=TKL">TKL / 80% <small>Coming Soon</small></a></div><div class="mega-col"><span>DESK</span><a href="/products-deskmats.html">Desk Mats</a><a href="/products-mousepads.html">Mouse Pads</a><a href="/products-wristrests.html">Wrist Rests</a></div><div class="mega-col"><span>INPUT + MORE</span><a href="/products-mice.html">Mice</a><a href="/products-accessories.html">Accessories</a></div>';
+    dropdown.innerHTML='<div class="mega-col"><span>KEYBOARDS</span><a href="/products-keyboards.html">All Keyboards</a><a href="/request-a-build.html?layout=75%25">75%</a><a href="/request-a-build.html?layout=65%25">65% <small>Coming Soon</small></a><a href="/request-a-build.html?layout=TKL">TKL / 80% <small>Coming Soon</small></a></div><div class="mega-col"><span>DESK</span><a href="/products-deskmats.html">Desk Mats</a><a href="/products-mousepads.html">Mouse Pads</a><a href="/products-wristrests.html">Wrist Rests</a></div><div class="mega-col"><span>INPUT + MORE</span><a href="/products-mice.html">Mice</a><a href="/products-accessories.html">Accessories</a></div>';
+  }
+  const menu=document.querySelector(".products-menu");
+  if(menu){
+    const summary=menu.querySelector("summary");
+    const hover=matchMedia("(hover:hover) and (pointer:fine) and (min-width:861px)");
+    let timer;
+    document.addEventListener("click",e=>{if(menu.open&&!menu.contains(e.target))menu.open=false});
+    document.addEventListener("keydown",e=>{if(e.key==="Escape"&&menu.open){menu.open=false;summary?.focus()}});
+    menu.addEventListener("mouseenter",()=>{if(!hover.matches)return;clearTimeout(timer);menu.open=true});
+    menu.addEventListener("mouseleave",()=>{if(!hover.matches)return;clearTimeout(timer);timer=setTimeout(()=>{menu.open=false},250)});
+    summary?.addEventListener("click",e=>{if(hover.matches&&e.detail>0&&menu.open)e.preventDefault()});
+    dropdown?.addEventListener("click",e=>{if(e.target.closest("a"))menu.open=false});
   }
   document.querySelectorAll(".site-footer .footer-links").forEach(f=>{if(!f.querySelector('[href="/archive.html"]'))f.insertAdjacentHTML("afterbegin",'<a href="/archive.html">Archive</a><a href="/why-yoru.html">Why Yoru</a><a href="/journal.html">Journal</a>')});
 })();
