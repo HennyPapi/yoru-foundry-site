@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="verdigris" data-tex="cast-sand">
+<html lang="en" data-theme="verdigris">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
 <script>
-// #theme or #theme&tex=grain|cast|sand|cast-sand|none (default: verdigris + cast-sand)
+// #theme or #theme&tex=grain|cast|sand|cast-sand|light|keys (default: verdigris, no texture; studies kept for reference)
 const [t, q] = location.hash.slice(1).split('&');
 if (t) document.documentElement.dataset.theme = t;
 const tex = new URLSearchParams(q || '').get('tex');

@@ -123,10 +123,10 @@ Rules:
 - This replaces the Nocturne palette. `AGENTS.md` and `YORU_SITE_MEMORY.md` still ban green-heavy
   palettes and list the old tokens; they get rewritten once Mike signs off on the whole direction
   (rollout step 6).
-- Texture (trial, Mike 2026-10-06): cast-iron grain on the page background, sand-cast grain on raised
-  surfaces (section keys, frames); copper and the sound band stay smooth. Tiles are seamless, mean-neutral
-  detail cut from the existing `metal027` and `plaster-grey-04` textures, about 160 KB each, blended with
-  soft-light so token colors don't shift (measured under 1/255). Studies in `mockups/tex/`.
+- Texture (decided, Mike 2026-10-06): **none.** Material comes from real build photography, as on Keycult, Mode
+  and Angry Miao. A texture critique (`mockups/tex-critique.png`) found the trial at about 14% grain (the old rules
+  capped it at 3-6%), behind text, and dusting the photo frame. The studies stay in `mockups/tex/` for reference;
+  the old texture files and the texture rules in `AGENTS.md` go when the rules are rewritten.
 - Logo: the medallion image has a baked-in black ring that shows on Cast. Fix the image edge, not the
   logo design, during the header step.
 
