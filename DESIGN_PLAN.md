@@ -255,10 +255,14 @@ Each step: `node build.js`, `python3 scripts/site_check.py` (0 errors), and a he
 
 ## 9. Decisions needed from Mike
 
+**Keep (Mike, 2026-10-06):** the site's sections stay: Crafted Art, Trust the Process, Built to Taste,
+About ("who I am"), and the commission request. The redesign changes how they look and how the
+homepage leads into them, not what they are.
+
 1. Approve the direction, or tell me what to change.
-2. Does the Nocturne palette have to stay? (If so, only the colors in section 3 change.)
+2. ~~Does the Nocturne palette have to stay?~~ **Answered:** no. Everything visual is open; the palette came from AI research, not a hard requirement.
 3. Reference sites: received (section 7). To check them against the live sites, allow the four domains in this environment's network settings or send screenshots.
 4. Copy and real numbers for the "what every build gets" list, the queue line, and the hero strip (lead time, starting budget, bring-your-own-parts).
-5. Fix the P0 Bone contrast bug now on the current design, before the redesign? (Small, separate commit.)
+5. ~~Fix the P0 Bone contrast bug now?~~ **Done** in its own commit (1.72:1 → 4.75:1).
 6. Hero H1 wording. It must say "keyboards."
 7. The light-led canvas flips the critical first-paint colors in `AGENTS.md` (body, header). OK to change those rules?
