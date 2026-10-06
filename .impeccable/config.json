@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "mockups/home.html"
+        ],
+        "createdAt": "2026-10-06T15:58:04.305Z",
+        "reason": "Claude: full-bleed .band section; inset comes from the inner .wrap (clamp 16-40px padding), confirmed in 390/1440 renders"
+      }
+    ]
+  }
+}

@@ -61,7 +61,7 @@ a { color: inherit; text-decoration-color: var(--accent); text-underline-offset:
 h1, h2, h3 { font-family: Archivo, system-ui, sans-serif; font-stretch: 118%; font-weight: 750; letter-spacing: -.02em; line-height: 1.02; margin: 0; text-wrap: balance; }
 h1 { font-size: clamp(2.6rem, 6.4vw, 5.4rem); }
 h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); }
-h3 { font-size: 1.15rem; letter-spacing: -.01em; }
+h3 { font-size: 1.35rem; letter-spacing: -.01em; }
 p { margin: 0; max-width: 62ch; }
 
 /* Header */
@@ -97,7 +97,7 @@ header .wrap { display: flex; align-items: center; gap: 32px; height: 84px; }
 .actions a:not(.btn) { font-family: Archivo, sans-serif; font-stretch: 112%; font-weight: 600; font-size: .95rem; }
 .sheet-card { grid-column: 2; grid-row: 1 / span 2; align-self: start; display: flex; flex-direction: column; gap: 8px; border-top: 2px solid var(--ink); padding-top: 16px; }
 .sheet-head { display: flex; justify-content: space-between; align-items: baseline; }
-.sheet-head h3 { font-size: 1.4rem; }
+.sheet-head .sheet-title { font-size: 1.4rem; }
 .serial { font: 700 .9rem Archivo, sans-serif; font-stretch: 112%; font-variant-numeric: tabular-nums; color: var(--muted); }
 .sheet { margin: 20px 0 0; }
 .sheet div { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--rule); }
@@ -191,7 +191,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
     </div>
     <aside class="sheet-card" aria-label="Build sheet">
       <div>
-        <div class="sheet-head"><h3>Build sheet</h3><span class="serial">YF-001 · placeholder</span></div>
+        <div class="sheet-head"><h2 class="sheet-title">Build sheet</h2><span class="serial">YF-001 · placeholder</span></div>
         <dl class="sheet">
           <div><dt>Layout</dt><dd>75%</dd></div>
           <div><dt>Case</dt><dd>Aluminum</dd></div>
