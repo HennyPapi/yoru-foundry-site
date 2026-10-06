@@ -20,6 +20,15 @@
         ],
         "createdAt": "2026-10-06T20:01:51.447Z",
         "reason": "Claude: the strip is the ISO Enter keycap's front wall in a button study, not a decorative side tab"
+      },
+      {
+        "rule": "buried-raster",
+        "value": "*",
+        "files": [
+          "mockups/photo-key.html"
+        ],
+        "createdAt": "2026-10-06T20:29:11.437Z",
+        "reason": "Claude: opacity-0 imgs are the keycap's hover and pressed frames, shown on :hover/:active (verified opacities 0,0,1 on real press)"
       }
     ]
   }
