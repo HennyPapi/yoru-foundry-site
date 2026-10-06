@@ -90,33 +90,41 @@ one of those objects. If it can't, it goes.
 6. **Written like a note from the bench.** Body text is a readable serif that carries Mike's first-person
    voice. The display type is the engineered part.
 
-## 3. Color: five named colors
+## 3. Color: Verdigris (chosen by Mike, 2026-10-06)
 
-Neutral, metal-led, no cream, no near-black void. All contrast values are measured (WCAG 2.x).
+Chosen from four foundry-at-night studies (`mockups/palettes.png`, `mockups/three-compare.png`). It comes
+straight from the logo: raw copper and its green patina, on a dark green-sand ground. All contrast values
+are measured (WCAG 2.x).
 
 | Name | Hex | Object | Role |
 |---|---|---|---|
-| **Bead-blast** | `#C9CAC6` | aluminum case finish | main page canvas (light, cool grey) |
-| **Graphite** | `#232527` | anodized dark case | text on Bead-blast; dark bands (header, sound strip, footer) |
-| **Plate** | `#4A4E4F` | steel plate | secondary text, rules and hairlines |
-| **Legend** | `#ECEDE9` | printed keycap legend | text on Graphite; the raised "keycap" surface |
-| **Copper** | `#B8734F` | from the logo, the one accent key | the single action/active signal |
-| *Patina* | `#6E938B` | from the logo | status dot only (open / in progress), on Graphite |
+| **Cast** | `#151A1A` | cast iron | page background |
+| **Green Sand** | `#1F2726` | molding sand | raised surfaces: section keys, frames |
+| *Deep band* | `#0C1010` | the pit | full-width bands (sound) |
+| **Bright** | `#EEF0EC` | polished metal | primary text |
+| **Pewter** | `#A7B2AE` | dull metal | secondary text |
+| **Raw Copper** | `#E8834D` | the logo's rim | the one accent: commission action, active state, Esc key |
+| **Verdigris** | `#4FB3A0` | the logo's anvil | status only (open / in progress) |
 
 Measured contrast:
-- Graphite on Bead-blast: 9.34
-- Plate on Bead-blast: 5.11
-- Plate on Legend: 7.16
-- Legend on Graphite: 13.08
-- Copper on Graphite: 4.10 (OK for large text and UI parts, not body text)
-- Patina on Graphite: 4.55
+- Bright on Cast: 15.3:1
+- Bright on Green Sand: 13.3:1
+- Pewter on Cast: 8.1:1
+- Pewter on Green Sand: 7.0:1
+- Cast text on a Raw Copper button: 6.5:1
+- Raw Copper on Cast: 6.5:1
+- Verdigris on Cast: 6.9:1
 
 Rules:
-- Copper is never text on Bead-blast (2.27). On light surfaces it appears only as a fill or underline, with Graphite text.
-- No brown, bronze, gold, olive or green fields, so the `AGENTS.md` palette ban still holds.
-- The page is mostly light, with Graphite bands for rhythm. This flips the current dark-first site.
-  **If Mike decides the palette must stay**, sections 2, 4 and 5 still apply and these roles map onto
-  the Nocturne tokens one-for-one.
+- Raw Copper is used sparingly, as light: one primary action per view. Never a large fill, so it doesn't
+  read as a hardware-store orange.
+- Verdigris marks status. It is never a background field.
+- A faint Raw Copper glow rises from the bottom of the hero frame, like light from a pour.
+- This replaces the Nocturne palette. `AGENTS.md` and `YORU_SITE_MEMORY.md` still ban green-heavy
+  palettes and list the old tokens; they get rewritten once Mike signs off on the whole direction
+  (rollout step 6).
+- Logo: the medallion image has a baked-in black ring that shows on Cast. Fix the image edge, not the
+  logo design, during the header step.
 
 ## 4. Type: two families
 
@@ -134,10 +142,10 @@ Rules:
 ### Homepage, desktop (≥ 1040px)
 
 ```
-┌─ Graphite header ────────────────────────────────────────────────────────────┐
+┌─ Cast header ────────────────────────────────────────────────────────────────┐
 │ (logo)  Crafted Art   Process   Built to Taste   About   Products   [Commission]│ ← CTA is a "keycap"
 └──────────────────────────────────────────────────────────────────────────────┘
-  Bead-blast canvas
+  Cast canvas
   ┌──────────────────────────────────────────────┐ ┌───────────────────────┐
   │                                              │ │ Build sheet  YF-001   │
   │           HERO BUILD PHOTO / LOOP (16:9)     │ │ Layout ........ 75%   │
@@ -151,7 +159,7 @@ Rules:
   ┌────────────────────────┬──────────────┬───────────────────────────────┐
   │ Crafted Art   (2.25u)  │ Process (1.5u)│ Built to Taste       (2.75u) │
   └────────────────────────┴──────────────┴───────────────────────────────┘
-  ═══ Graphite band: THE SOUND STRIP ══════════════════════════════════════
+  ═══ Deep band: THE SOUND STRIP ═════════════════════════════════════════
    ▁▃▅▇▅▃▂▁▂▄▆▄▂▁  waveform placeholder · per-build sound test · play button
   ══════════════════════════════════════════════════════════════════════════
   What I refuse to rush            Intent before parts — one sentence
@@ -168,13 +176,13 @@ Rules:
   └───────────────────────┘  └────────────────────┘  └────────────────────────────┘
   ─────────────────────────────────────────────────────────────────────────
   One builder. (Why Yoru)  — text-led, serif, a signature, a plain link
-┌─ Graphite footer ────────────────────────────────────────────────────────────┐
+┌─ Cast footer ────────────────────────────────────────────────────────────────┐
 ```
 
 ### Homepage, phone (≤ 860px)
 
 ```
-┌ Graphite header: logo ·· [Commission] [≡] ┐
+┌ Cast header: logo ·· [Commission] [≡] ┐
 │ HERO PHOTO (16:9, full bleed)              │
 │ H1                                         │
 │ intro                                      │
@@ -193,9 +201,9 @@ Rules:
 
 ### Signature components
 
-- **Keycap button.** 4px radius, Legend face, a 2px Graphite bottom edge that shrinks to 1px with
+- **Keycap button.** 4px radius, Green Sand face, a darker bottom edge that shrinks to 1px with
   `translateY(1px)` on press. Primary = the Copper key. No shadows, no gradients.
-- **Build sheet.** A two-column definition list with Plate hairlines and tabular figures. Replaces the
+- **Build sheet.** A two-column definition list with Pewter-toned hairlines and tabular figures. Replaces the
   dot-joined meta strings and eyebrow labels.
 - **Layout outlines.** Inline SVG key grids for 75 / 65 / TKL at true relative width. Data-driven from
   `content.js`, so new sizes need no markup.
@@ -207,7 +215,7 @@ Rules:
 
 | Tell | Plan |
 |---|---|
-| Cream + high-contrast serif, tinted near-blacks | Gone: cool Bead-blast and Graphite, grotesque display, serif for body only |
+| Cream + high-contrast serif, tinted near-blacks | Gone: green-sand dark lit by raw copper (from the logo), grotesque display, serif for body only |
 | Spaced ALL-CAPS eyebrows | Gone: sentence-case labels, only where they carry information |
 | Dot-joined details | Gone: build sheet rows |
 | "→" on links | Gone: underline in Copper and the keycap press state |
@@ -226,9 +234,9 @@ domains are allowed or Mike sends screenshots.
 
 | Site | What it does well | What Yoru takes | What Yoru leaves |
 |---|---|---|---|
-| Keycult | Almost no UI. Studio photos of metal cases on plain neutral grounds; the object is the only color. Catalog-style names ("No. 2/TKL"). | A quiet neutral canvas so finishes carry the color (supports Bead-blast). Build serials (`YF-001`) used as real names, in the build sheet and page titles. | Drop-and-raffle scarcity. |
+| Keycult | Almost no UI. Studio photos of metal cases on plain neutral grounds; the object is the only color. Catalog-style names ("No. 2/TKL"). | A quiet neutral canvas so finishes carry the color (the quiet Cast ground does the same job). Build serials (`YF-001`) used as real names, in the build sheet and page titles. | Drop-and-raffle scarcity. |
 | Mode Designs | Big, color-rich product photos. Each board is a system you configure (layout → case → mount → options). Light, open pages. | The layout outlines lead into the commission like a configurator: layout first, then case, mount, switches. That path matches `request-a-build`. | The full shop flow and cart (banned by `AGENTS.md`). |
-| Angry Miao | Cinematic, dark, video-first moments. Industrial-design storytelling with large type. | One full-bleed Graphite moment per page (the hero loop or sound strip) to give the page a change of pace. | Scroll-driven animation and sci-fi gloss (break the motion rules and the quiet-workshop tone). |
+| Angry Miao | Cinematic, dark, video-first moments. Industrial-design storytelling with large type. | One full-bleed deep band per page (the hero loop or sound strip) to give the page a change of pace. | Scroll-driven animation and sci-fi gloss (break the motion rules and the quiet-workshop tone). |
 | Alexotos (build service) | A person, not a brand. Sound tests are the proof. It says plainly what the service includes and how the queue works. | Sound slot on every build. A plain "what I do to every board" list (lube, tune, film, test). Honest queue status ("2 commission slots open"), never a countdown. | Video-platform layout and embed-heavy pages. |
 
 What changes in the plan:
@@ -238,7 +246,7 @@ What changes in the plan:
   copy and real numbers.
 - **Added:** placeholders must look deliberate, since these sites are carried by photography that Yoru
   doesn't have yet. Placeholder frames show the build serial and the locked ratio in Archivo, on a
-  Graphite field, with no fake image.
+  Green Sand field, with no fake image.
 - **Unchanged:** no shop UI, no scroll animation.
 
 ## 8. Rollout (after approval)
@@ -260,9 +268,9 @@ About ("who I am"), and the commission request. The redesign changes how they lo
 homepage leads into them, not what they are.
 
 1. Approve the direction, or tell me what to change.
-2. ~~Does the Nocturne palette have to stay?~~ **Answered:** no. Everything visual is open; the palette came from AI research, not a hard requirement.
+2. ~~Does the Nocturne palette have to stay?~~ **Answered:** no. **Chosen:** Verdigris (section 3).
 3. Reference sites: received (section 7). To check them against the live sites, allow the four domains in this environment's network settings or send screenshots.
 4. Copy and real numbers for the "what every build gets" list, the queue line, and the hero strip (lead time, starting budget, bring-your-own-parts).
 5. ~~Fix the P0 Bone contrast bug now?~~ **Done** in its own commit (1.72:1 → 4.75:1).
 6. Hero H1 wording. It must say "keyboards."
-7. The light-led canvas flips the critical first-paint colors in `AGENTS.md` (body, header). OK to change those rules?
+7. Verdigris changes the critical first-paint colors in `AGENTS.md` (body `#151A1A`, header on Cast). OK to change those rules?
