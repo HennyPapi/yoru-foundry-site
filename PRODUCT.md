@@ -64,8 +64,12 @@ style, plate material, sound profiles, plus an A/B listening comparison.
 ## Capabilities and Constraints
 
 - **Layouts:** 75% is offered first; 65% and TKL/80% come later.
-- **Budget bands on the request form:** under $150, $150–$250, $250–$400, $400–$600, $600+.
-  (Assumption: these cover full builds; how bring-your-own-parts is priced is undecided.)
+- **Starting budget (Mike, 2026-10-06):** full builds start at $250, the minimum that is profitable.
+  The current request form still offers "Under $150" and "$150–$250" bands; those need to change.
+- **Bring-your-own-parts pricing (Mike, 2026-10-06):** offered as an option in the form's budget field.
+  It can't be priced up front: Mike quotes it after checking which of the customer's parts work.
+- **Named builds:** each build gets a one-of-one name (for example "Ember" for YF-001, a placeholder), so
+  it reads as a personal piece ("Mark's keyboard, Ember"). A name is not a sound profile.
 - **Keyboards only at launch.** The Mice, Mouse Pads, Desk Mats, Wrist Rests and Accessories pages are
   future ideas and are hidden at launch.
 - **Stack:** static site. Pages are assembled from `/src` by `node build.js` into `/public`, and deployed
@@ -75,7 +79,6 @@ style, plate material, sound profiles, plus an A/B listening comparison.
 - **Commission request** currently sends through `mailto:`. A replacement backend is an open decision (Phase 10).
 - **No ecommerce.** No cart, ratings, reviews, urgency, discounts or newsletter popups.
 - **Undecided:**
-  - How bring-your-own-parts is priced and requested.
   - The form backend.
   - Whether the Archive and Journal pages are kept.
 
