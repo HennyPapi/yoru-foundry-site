@@ -6,7 +6,7 @@
 <title>Yoru Foundry: font studies</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Grenze+Gotisch:wght@500..800&family=Alegreya:wght@400..700&family=Alegreya+Sans:wght@500;700&family=Big+Shoulders+Display:wght@600..900&family=Big+Shoulders+Text:wght@500..800&family=Marcellus&family=Marcellus+SC&family=Texturina:opsz,wght@12..72,400..800&family=EB+Garamond:wght@400..700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Grenze+Gotisch:wght@500..800&family=Alegreya:wght@400..700&family=Alegreya+Sans:wght@500;700&family=Big+Shoulders+Display:wght@600..900&family=Big+Shoulders+Text:wght@500..800&family=Marcellus&family=Marcellus+SC&family=Texturina:opsz,wght@12..72,400..800&family=EB+Garamond:wght@400..700&family=Barlow+Condensed:wght@500;600;700&family=Grenze:wght@500..800&family=Pirata+One&family=UnifrakturMaguntia&family=Uncial+Antiqua&family=Jacquard+24&family=IM+Fell+English&family=Almendra:wght@400;700&display=swap" rel="stylesheet">
 <style>
 /* Mockup only. One hero, five type pairings; Verdigris colors throughout. */
 :root { --cast: #151A1A; --sand: #1F2726; --edge: #070909; --bright: #EEF0EC; --pewter: #A7B2AE; --rule: #2B3533; --copper: #E8834D; --copper-edge: #9A4B22; --verdigris: #4FB3A0; }
@@ -31,19 +31,39 @@ dd { margin: 0; font-family: var(--l); font-stretch: var(--ls, 100%); font-weigh
 .p1 { --d: "Grenze Gotisch"; --dw: 700; --dsize: 80px; --dt: 0; --b: Alegreya; --l: "Alegreya Sans"; }
 .p2 { --d: "Big Shoulders Display"; --dw: 900; --dsize: 84px; --dt: .01em; --b: "Source Serif 4"; --l: "Big Shoulders Text"; --lsize: 16px; --lt: .02em; }
 .p3 { --d: Marcellus; --dw: 400; --dsize: 66px; --dt: .01em; --b: Alegreya; --l: "Marcellus SC"; --lt: .03em; }
+.p5 { --d: Grenze; --dw: 700; --dsize: 72px; --b: Alegreya; --l: "Barlow Condensed"; --lsize: 16px; }
+.p6 { --d: "Pirata One"; --dw: 400; --dsize: 78px; --dt: .01em; --b: "EB Garamond"; --l: "Barlow Condensed"; --lsize: 16px; }
+.p7 { --d: UnifrakturMaguntia; --dw: 400; --dsize: 74px; --dt: 0; --b: "EB Garamond"; --l: "Barlow Condensed"; --lsize: 16px; }
+.p8 { --d: "Jacquard 24"; --dw: 400; --dsize: 84px; --dt: 0; --b: Alegreya; --l: "Barlow Condensed"; --lsize: 16px; }
+.p9 { --d: "Uncial Antiqua"; --dw: 400; --dsize: 60px; --dt: 0; --b: Alegreya; --l: "Barlow Condensed"; --lsize: 16px; }
+.p10 { --d: "IM Fell English"; --dw: 400; --dsize: 72px; --dt: -.01em; --b: "EB Garamond"; --l: "Barlow Condensed"; --lsize: 16px; }
+.p11 { --d: Almendra; --dw: 700; --dsize: 70px; --dt: 0; --b: Alegreya; --l: "Barlow Condensed"; --lsize: 16px; }
 .p4 { --d: Texturina; --dw: 700; --dsize: 70px; --dt: -.01em; --b: "EB Garamond"; --l: "Barlow Condensed"; --lsize: 16px; }
 </style>
 </head>
 <body>
 <div class="grid">
 <script>
-const P = [
+// #set2 shows the second round (between A and D).
+const SET1 = [
   ['p0', 'Current', 'Archivo + Source Serif 4', 'Clean and modern; reads as engineering, not forge.'],
   ['p1', 'A. The smithy', 'Grenze Gotisch + Alegreya', 'Blackletter headline, like a guild mark struck into iron. Most medieval; body stays easy to read.'],
   ['p2', 'B. The foundry floor', 'Big Shoulders Display + Source Serif 4', 'Tall, heavy industrial capitals cut from steel-mill signage. Loud, physical, modern.'],
   ['p3', 'C. The forged plaque', 'Marcellus + Alegreya', 'Flared Roman letters, like an engraved maker\'s plate. Epic but calm, closest to the logo.'],
   ['p4', 'D. The armorer\'s book', 'Texturina + EB Garamond', 'Gothic-Roman hybrid with an old-book body. Story-like, medieval without full blackletter.'],
 ];
+const SET2 = [
+  ['p1', 'A. The smithy (reference)', 'Grenze Gotisch + Alegreya', 'Round-one blackletter, for comparison.'],
+  ['p4', 'D. The armorer\'s book (reference)', 'Texturina + EB Garamond', 'Round-one hybrid, for comparison.'],
+  ['p5', 'E. Grenze', 'Grenze + Alegreya', 'Same family as A, but Roman shapes with blackletter edges. Halfway between A and D.'],
+  ['p6', 'F. Pirata One', 'Pirata One + EB Garamond', 'Bold, compact blackletter with simplified capitals; reads more easily than true fraktur.'],
+  ['p7', 'G. Unifraktur Maguntia', 'UnifrakturMaguntia + EB Garamond', 'Classic German fraktur, the most authentic old-world blackletter. Hardest to read.'],
+  ['p8', 'H. Jacquard 24', 'Jacquard 24 + Alegreya', 'Square-cut textura blackletter designed on a woven grid; at headline size it reads as crisp, upright blackletter. Readable caps.'],
+  ['p9', 'I. Uncial Antiqua', 'Uncial Antiqua + Alegreya', 'Early-medieval Celtic uncial; feels like dwarven runes on a forge door.'],
+  ['p10', 'J. IM Fell English', 'IM Fell English + EB Garamond', 'A 17th-century printing type with ink-pressed edges; a smith\'s ledger, quiet and story-like.'],
+  ['p11', 'K. Almendra', 'Almendra + Alegreya', 'Calligraphic book hand with sharp pen strokes; storybook epic, softer than blackletter.'],
+];
+const P = location.hash === '#set2' ? SET2 : SET1;
 document.write(P.map(([c, name, fonts, note]) => `
 <section class="panel ${c}">
   <div class="tag"><b>${name}</b><span>${fonts}</span></div>
