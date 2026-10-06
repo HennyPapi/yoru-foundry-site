@@ -7,7 +7,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
-<script>if (location.hash) document.documentElement.dataset.theme = location.hash.slice(1);</script>
+<script>
+// #theme or #theme&tex=grain|cast|sand|cast-sand
+const [t, q] = location.hash.slice(1).split('&');
+if (t) document.documentElement.dataset.theme = t;
+const tex = new URLSearchParams(q || '').get('tex');
+if (tex) document.documentElement.dataset.tex = tex;
+</script>
 <style>
 /* Mockup only. Not site code. Two palettes, one layout: color is the only variable. */
 :root, [data-theme="bench"] {
@@ -78,6 +84,19 @@
 }
 .temper-strip { display: none; }
 [data-theme="temper"] .temper-strip { display: block; height: 4px; background: linear-gradient(90deg, #E2C77A, #D4A443, #9B6B3F, #6E4A8E, #3D5FB0, #7FA6D6); }
+/* Texture studies: grayscale tiles blended softly, so the token color underneath doesn't shift. */
+[data-tex="grain"] { --tex-page: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); --tex-page-size: 160px; --tex-page-op: .35;
+  --tex-key: var(--tex-page); --tex-key-size: 160px; --tex-key-op: .3; }
+[data-tex="cast"] { --tex-page: url("tex/cast.webp"); --tex-page-op: .9; }
+[data-tex="sand"] { --tex-key: url("tex/sand.webp"); --tex-key-op: .9; }
+[data-tex="cast-sand"] { --tex-page: url("tex/cast.webp"); --tex-page-op: .9; --tex-key: url("tex/sand.webp"); --tex-key-op: .9; }
+[data-tex] body { position: relative; background: transparent; }
+[data-tex] body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: var(--tex-page, none) center / var(--tex-page-size, 512px) repeat; opacity: var(--tex-page-op, 0); mix-blend-mode: soft-light; }
+[data-tex] .key, [data-tex] .frame { position: relative; isolation: isolate; }
+[data-tex] .key::before, [data-tex] .frame::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: var(--tex-key, none) center / var(--tex-key-size, 384px) repeat; opacity: var(--tex-key-op, 0); mix-blend-mode: soft-light; }
+[data-tex] .key.accent::before { display: none; } /* copper stays satin: no grain */
 * { box-sizing: border-box; }
 html { background: var(--canvas); }
 body {
