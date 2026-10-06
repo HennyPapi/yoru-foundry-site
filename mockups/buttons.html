@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yoru Foundry: keycap button studies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Cinzel:wght@400..900&family=Alegreya:wght@400..700&display=swap" rel="stylesheet">
+<style>
+/* Mockup only. Keycap commission buttons; solid fills only (no gradients, no shadows). */
+:root {
+  --cast: #151A1A; --deep: #0C1010; --sand: #1F2726; --sand-hi: #2A3432; --edge: #070909;
+  --bright: #EEF0EC; --pewter: #A7B2AE; --rule: #2B3533;
+  --copper: #E8834D;        /* key face: Cast text on it 6.5:1 */
+  --copper-wall: #B8622F;   /* side walls (decorative, no text) */
+  --copper-front: #8E4520;  /* front wall, darkest: the face "sits" above it */
+  --ease: cubic-bezier(.16,1,.3,1);
+}
+* { box-sizing: border-box; }
+html { font-synthesis: none; }
+body { margin: 0; background: var(--deep); color: var(--bright); font: 400 17px/1.5 Alegreya, Georgia, serif; padding: 28px; }
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 1400px; margin: 0 auto; }
+.cell { background: var(--cast); padding: 26px 30px 30px; display: grid; gap: 18px; align-content: start; }
+.cell h2 { margin: 0; font: 700 16px/1.3 Cinzel, serif; letter-spacing: .02em; display: flex; justify-content: space-between; gap: 12px; }
+.cell h2 span { font: 400 14px Alegreya, serif; color: var(--pewter); letter-spacing: 0; }
+.cell p { margin: 0; color: var(--pewter); font-size: 15px; max-width: 60ch; }
+.stage { display: flex; flex-wrap: wrap; gap: 26px; align-items: flex-end; min-height: 120px; padding: 22px 0 6px; border-top: 1px solid var(--rule); }
+.state { display: grid; gap: 10px; justify-items: start; }
+.state small { font: 600 12px Cinzel, serif; color: var(--pewter); }
+.hero-snip { display: grid; gap: 14px; }
+.hero-snip h3 { margin: 0; font: 400 46px/1 Aboreto, serif; letter-spacing: .05em; }
+.hero-snip .lede { margin: 0; color: var(--pewter); font-size: 19px; }
+
+/* --- A. Current: flat face, thick bottom edge (reference) --- */
+.a { display: inline-block; font: 700 15px Cinzel, serif; text-decoration: none; padding: 12px 20px 10px; border-radius: 6px;
+  background: var(--copper); color: var(--cast); border: 1px solid var(--copper-front); border-bottom-width: 4px;
+  transition: transform 160ms var(--ease), border-bottom-width 160ms var(--ease); }
+.a.is-hover, .a:hover { transform: translateY(2px); border-bottom-width: 2px; }
+.a.is-press, .a:active { transform: translateY(3px); border-bottom-width: 1px; }
+
+/* --- Shared keycap anatomy: walls (outer) + face (inner). The face travels; the walls stay. --- */
+.kc { display: inline-block; position: relative; text-decoration: none; color: var(--cast);
+  background: var(--copper-wall); border-radius: 10px; padding: 4px 7px 11px;
+  border-bottom: 5px solid var(--copper-front); }
+.kc .face { display: block; position: relative; background: var(--copper); border-radius: 7px;
+  border: 1px solid color-mix(in srgb, var(--bright) 26%, var(--copper)); /* the dished rim catching light */
+  transition: transform 150ms var(--ease); }
+.kc:hover .face, .kc.is-hover .face { transform: translateY(2px); }
+.kc:active .face, .kc.is-press .face { transform: translateY(6px); }
+.kc:focus-visible { outline: 2px solid var(--copper); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) { .kc .face, .a { transition: none; } }
+
+/* B. Centered legend */
+.b .face { padding: 12px 22px 11px; font: 700 15px Cinzel, serif; text-align: center; }
+
+/* C. Corner legend, like printed keycap text, with a small sub-legend */
+.c .face { width: 230px; height: 64px; padding: 9px 12px; font: 700 14px/1.15 Cinzel, serif; }
+.c .sub { position: absolute; right: 11px; bottom: 8px; font: 600 11px Cinzel, serif; opacity: .8; }
+
+/* D. Enter key: 2.25u wide, legend top-left, return arrow bottom-right */
+.d .face { width: 252px; height: 72px; padding: 10px 13px; font: 700 15px/1.15 Cinzel, serif; }
+.d svg, .e svg { position: absolute; right: 13px; bottom: 11px; width: 26px; height: 18px; fill: none; stroke: var(--cast); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+/* E. ISO Enter: the tall L-shaped key */
+.e { padding: 0; background: none; border: 0; border-radius: 0; width: 170px; height: 132px; }
+.e .walls, .e .face { position: absolute; clip-path: polygon(0 0, 100% 0, 100% 100%, 18% 100%, 18% 50%, 0 50%); }
+.e .walls { inset: 0; background: var(--copper-wall); }
+.e .walls::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 8px; background: var(--copper-front); }
+.e .face { inset: 4px 7px 14px 7px; border: 0; border-radius: 0; padding: 12px 14px; font: 700 15px/1.15 Cinzel, serif;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 17.5% 100%, 17.5% 49%, 0 49%); }
+.e .face span { display: block; max-width: 120px; }
+
+/* F. Plain keycap (header / secondary): Green Sand face, copper legend */
+.f { background: var(--edge); border-bottom-color: var(--edge); }
+.f .face { background: var(--sand); color: var(--bright); border-color: var(--sand-hi); padding: 11px 18px 10px; font: 700 14px Cinzel, serif; }
+.f .face b { color: var(--copper); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="grid">
+
+<section class="cell">
+  <h2>A. Current <span>flat face, thick bottom edge</span></h2>
+  <p>What the mockup has now. Reads as a nice button with a hint of key travel.</p>
+  <div class="stage">
+    <div class="state"><a class="a" href="#">Request a Commission</a><small>Idle</small></div>
+    <div class="state"><a class="a is-hover" href="#">Request a Commission</a><small>Hover</small></div>
+    <div class="state"><a class="a is-press" href="#">Request a Commission</a><small>Pressed</small></div>
+  </div>
+</section>
+
+<section class="cell">
+  <h2>B. Keycap <span>face inside walls, centered legend</span></h2>
+  <p>A real keycap seen from above: a flat copper face with a light rim, side walls around it, and a darker front wall. On press the face sinks into the walls.</p>
+  <div class="stage">
+    <div class="state"><a class="kc b" href="#"><span class="face">Request a Commission</span></a><small>Idle</small></div>
+    <div class="state"><a class="kc b is-hover" href="#"><span class="face">Request a Commission</span></a><small>Hover</small></div>
+    <div class="state"><a class="kc b is-press" href="#"><span class="face">Request a Commission</span></a><small>Pressed</small></div>
+  </div>
+</section>
+
+<section class="cell">
+  <h2>C. Corner legend <span>printed like a real key</span></h2>
+  <p>The legend sits top-left like keycap printing, with a small sub-legend in the corner (your build-serial style). Most "key", least "button".</p>
+  <div class="stage">
+    <div class="state"><a class="kc c" href="#"><span class="face">Request a<br>Commission<span class="sub">YF</span></span></a><small>Idle</small></div>
+    <div class="state"><a class="kc c is-press" href="#"><span class="face">Request a<br>Commission<span class="sub">YF</span></span></a><small>Pressed</small></div>
+  </div>
+</section>
+
+<section class="cell">
+  <h2>D. The Enter key <span>2.25 units wide</span></h2>
+  <p>"Start your commission" as pressing Enter: a wide key with the legend top-left and a return arrow bottom-right. The arrow is a drawn icon, not a "→" on text.</p>
+  <div class="stage">
+    <div class="state"><a class="kc d" href="#"><span class="face">Request a Commission<svg viewBox="0 0 26 18"><path d="M23 2v7H4M9 4 3.5 9 9 14"/></svg></span></a><small>Idle</small></div>
+    <div class="state"><a class="kc d is-press" href="#"><span class="face">Request a Commission<svg viewBox="0 0 26 18"><path d="M23 2v7H4M9 4 3.5 9 9 14"/></svg></span></a><small>Pressed</small></div>
+  </div>
+</section>
+
+<section class="cell">
+  <h2>E. ISO Enter <span>the tall L-shaped key</span></h2>
+  <p>The most unmistakable key on a board. Striking as a one-off signature, but its shape is harder to fit into layouts and to tap on a phone.</p>
+  <div class="stage">
+    <div class="state"><a class="kc e" href="#"><span class="walls"></span><span class="face"><span>Request a Commission</span><svg viewBox="0 0 26 18"><path d="M23 2v7H4M9 4 3.5 9 9 14"/></svg></span></a><small>Idle</small></div>
+    <div class="state"><a class="kc e is-press" href="#"><span class="walls"></span><span class="face"><span>Request a Commission</span><svg viewBox="0 0 26 18"><path d="M23 2v7H4M9 4 3.5 9 9 14"/></svg></span></a><small>Pressed</small></div>
+  </div>
+</section>
+
+<section class="cell">
+  <h2>F. Plain keycap <span>for the header and secondary actions</span></h2>
+  <p>The same keycap anatomy in Green Sand, so the header button matches without adding a second copper key to the view.</p>
+  <div class="stage">
+    <div class="state"><a class="kc f" href="#"><span class="face">Request a Commission</span></a><small>Idle</small></div>
+    <div class="state"><a class="kc f is-press" href="#"><span class="face">Request a Commission</span></a><small>Pressed</small></div>
+  </div>
+</section>
+
+<section class="cell" style="grid-column: 1 / -1">
+  <h2>In the hero <span>B, C and D next to the headline</span></h2>
+  <div class="stage" style="gap:56px; align-items:flex-start">
+    <div class="hero-snip"><h3>Forged by night.</h3><p class="lede">After dark, the forge is lit and a keyboard is made.</p><div><a class="kc b" href="#"><span class="face">Request a Commission</span></a></div></div>
+    <div class="hero-snip"><h3>Forged by night.</h3><p class="lede">After dark, the forge is lit and a keyboard is made.</p><div><a class="kc c" href="#"><span class="face">Request a<br>Commission<span class="sub">YF</span></span></a></div></div>
+    <div class="hero-snip"><h3>Forged by night.</h3><p class="lede">After dark, the forge is lit and a keyboard is made.</p><div><a class="kc d" href="#"><span class="face">Request a Commission<svg viewBox="0 0 26 18"><path d="M23 2v7H4M9 4 3.5 9 9 14"/></svg></span></a></div></div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
