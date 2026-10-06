@@ -7,13 +7,15 @@
 <meta name="description" content="Custom mechanical keyboards, hand-built, tuned and named one at a time in a small Miami workshop.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Aboreto&family=Alegreya:wght@400..700&family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
 <script>
 // #theme or #theme&tex=grain|cast|sand|cast-sand|light|keys (default: verdigris, no texture; studies kept for reference)
 const [t, q] = location.hash.slice(1).split('&');
 if (t) document.documentElement.dataset.theme = t;
 const tex = new URLSearchParams(q || '').get('tex');
 if (tex === 'none') delete document.documentElement.dataset.tex; else if (tex) document.documentElement.dataset.tex = tex;
+const font = new URLSearchParams(q || '').get('font');
+if (font) document.documentElement.dataset.font = font;
 </script>
 <style>
 /* Mockup only. Not site code. Two palettes, one layout: color is the only variable. */
@@ -104,11 +106,17 @@ if (tex === 'none') delete document.documentElement.dataset.tex; else if (tex) d
 [data-tex] .frame::before { opacity: calc(var(--tex-key-op, 0) * .55); }
 [data-tex] .key::before, [data-tex] .frame::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
   background: var(--tex-key, none) center / var(--tex-key-size, 384px) repeat; opacity: var(--tex-key-op, 0); mix-blend-mode: soft-light; }
+/* Font studies: #verdigris&font=cinzel|aboreto|cinzel-aboreto (default: Archivo + Source Serif 4). */
+:root { --f-d: Archivo, system-ui, sans-serif; --f-ui: Archivo, system-ui, sans-serif; --f-b: "Source Serif 4", Georgia, serif; }
+[data-font="cinzel"] { --f-d: Cinzel, serif; --f-ui: Cinzel, serif; --f-b: Alegreya, Georgia, serif; --f-dw: 700; --f-dt: .02em; }
+[data-font="aboreto"] { --f-d: Aboreto, serif; --f-ui: Aboreto, serif; --f-b: Alegreya, Georgia, serif; --f-dw: 400; --f-dt: .05em; }
+[data-font="cinzel-aboreto"] { --f-d: Cinzel, serif; --f-ui: Aboreto, serif; --f-b: Alegreya, Georgia, serif; --f-dw: 700; --f-dt: .02em; }
+html { font-synthesis: none; } /* never fake a bold the face doesn't have */
 * { box-sizing: border-box; }
 html { background: var(--canvas); }
 body {
   margin: 0; background: var(--canvas); color: var(--ink);
-  font: 400 1.0625rem/1.6 "Source Serif 4", Georgia, serif;
+  font: 400 1.0625rem/1.6 var(--f-b);
   -webkit-font-smoothing: antialiased;
 }
 ::selection { background: var(--accent); color: var(--accent-ink); }
@@ -116,9 +124,9 @@ a { color: inherit; text-decoration-color: var(--accent-2, var(--accent)); text-
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .wrap { max-width: 1240px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
 .label, .nav, .key-legend, .sheet dt, .btn, .scale-name, .status {
-  font-family: Archivo, system-ui, sans-serif; font-stretch: 112%;
+  font-family: var(--f-ui); font-stretch: 112%;
 }
-h1, h2, h3 { font-family: Archivo, system-ui, sans-serif; font-stretch: 118%; font-weight: 750; letter-spacing: -.02em; line-height: 1.02; margin: 0; text-wrap: balance; }
+h1, h2, h3 { font-family: var(--f-d); font-stretch: 118%; font-weight: var(--f-dw, 750); letter-spacing: var(--f-dt, -.02em); line-height: 1.02; margin: 0; text-wrap: balance; }
 h1 { font-size: clamp(2.8rem, 6.4vw, 5.2rem); }
 h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); }
 h3 { font-size: 1.35rem; letter-spacing: -.01em; }
@@ -151,7 +159,7 @@ header .wrap { display: flex; align-items: center; gap: 32px; height: 84px; }
   grid-column: 1; aspect-ratio: 16 / 9; color: var(--frame-ink);
   background-color: var(--frame);
   background-image: radial-gradient(110% 85% at 50% 118%, color-mix(in srgb, var(--accent) var(--glow-mix, 0%), transparent), transparent 70%);
-  display: grid; place-items: center; font: 600 .8rem/1.4 Archivo, sans-serif; font-stretch: 112%;
+  display: grid; place-items: center; font: 600 .8rem/1.4 var(--f-ui); font-stretch: 112%;
   text-align: center; padding: 16px; align-content: center; gap: 18px;
 }
 .frame .board.hero-board { width: 78%; }
@@ -159,22 +167,22 @@ header .wrap { display: flex; align-items: center; gap: 32px; height: 84px; }
 .hero-copy { grid-column: 1; display: grid; gap: 20px; }
 .hero-copy .lede { font-size: clamp(1.2rem, 2vw, 1.6rem); color: var(--muted); }
 .actions { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-top: 8px; }
-.actions a:not(.btn) { display: inline-block; padding: 12px 0; font-family: Archivo, sans-serif; font-stretch: 112%; font-weight: 600; font-size: .95rem; }
+.actions a:not(.btn) { display: inline-block; padding: 12px 0; font-family: var(--f-ui); font-stretch: 112%; font-weight: 600; font-size: .95rem; }
 .sheet-card { grid-column: 2; grid-row: 1 / span 2; align-self: start; display: flex; flex-direction: column; gap: 8px; border-top: 2px solid var(--ink); padding-top: 16px; }
 .sheet-head { display: flex; justify-content: space-between; align-items: baseline; }
 .sheet-head .sheet-title { font-size: 1.4rem; }
-.serial { font: 700 .9rem Archivo, sans-serif; font-stretch: 112%; font-variant-numeric: tabular-nums; color: var(--muted); }
+.serial { font: 700 .9rem var(--f-ui); font-stretch: 112%; font-variant-numeric: tabular-nums; color: var(--muted); }
 .sheet { margin: 20px 0 0; }
 .sheet div { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--rule); }
 .sheet dt { font-size: .85rem; font-weight: 600; color: var(--muted); }
-.sheet dd { margin: 0; font-family: Archivo, sans-serif; font-stretch: 112%; font-weight: 650; font-variant-numeric: tabular-nums; text-align: right; }
+.sheet dd { margin: 0; font-family: var(--f-ui); font-stretch: 112%; font-weight: 650; font-variant-numeric: tabular-nums; text-align: right; }
 .status { display: flex; align-items: center; gap: 10px; margin-top: 24px; font-size: .9rem; font-weight: 600; }
 .status::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--signal); }
 .note { font-size: .85rem; color: var(--muted); margin-top: 6px; }
-.sheet dd small { display: block; max-width: 26ch; margin-top: 3px; font: 400 .8rem/1.35 "Source Serif 4", Georgia, serif; color: var(--muted); }
+.sheet dd small { display: block; max-width: 26ch; margin-top: 3px; font: 400 .8rem/1.35 var(--f-b); color: var(--muted); }
 .tbd { color: var(--muted); font-style: italic; }
 .paths { display: flex; flex-wrap: wrap; gap: 4px 24px; margin-top: -4px; }
-.paths a { display: inline-block; padding: 14px 0; font: 600 .95rem Archivo, sans-serif; font-stretch: 112%; }
+.paths a { display: inline-block; padding: 14px 0; font: 600 .95rem var(--f-ui); font-stretch: 112%; }
 
 /* Key-unit row */
 .keys { display: grid; grid-template-columns: 2.25fr 2fr 2.75fr 1.75fr; gap: 10px; padding: 0 0 72px; }
@@ -225,11 +233,11 @@ header .wrap { display: flex; align-items: center; gap: 32px; height: 84px; }
 /* Close */
 .close { border-top: 2px solid var(--ink); padding: 56px 0 96px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: end; }
 .close p { color: var(--muted); margin-bottom: 24px; }
-footer { border-top: 1px solid var(--rule); padding: 28px 0 40px; font: 500 .85rem Archivo, sans-serif; font-stretch: 112%; color: var(--muted); }
+footer { border-top: 1px solid var(--rule); padding: 28px 0 40px; font: 500 .85rem var(--f-ui); font-stretch: 112%; color: var(--muted); }
 footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .foot-links { display: flex; gap: 20px; flex-wrap: wrap; }
 .foot-links a { padding: 10px 0; }
-.menu { display: none; position: relative; font: 600 .95rem Archivo, sans-serif; font-stretch: 112%; }
+.menu { display: none; position: relative; font: 600 .95rem var(--f-ui); font-stretch: 112%; }
 .menu summary { list-style: none; cursor: pointer; padding: 14px 4px; }
 .menu summary::-webkit-details-marker { display: none; }
 .menu nav { position: absolute; right: 0; top: 100%; z-index: 2; display: grid; min-width: 200px; padding: 8px 0; background: var(--key); border: 1px solid var(--rule); border-radius: 8px; }
