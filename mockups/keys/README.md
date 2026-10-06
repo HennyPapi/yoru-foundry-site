@@ -2,6 +2,8 @@
 
 `enter-copper.webp` and `enter-sand.webp` are renders of a 2.25u Enter keycap (three.js, matte PBT
 material, studio light, cast shadow on a transparent ground).
+`-hover` and `-press` frames are the same cap sunk 1.2mm and 3.2mm into the plate (`"press"` option);
+crop all three frames of a color to one shared box so they line up.
 
 To re-render (different legend, color or size):
 

@@ -17,7 +17,7 @@ const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserv
 renderer.setPixelRatio(1); renderer.setSize(W, H);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.0;
-renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.VSMShadowMap;
+renderer.shadowMap.enabled = true; renderer.localClippingEnabled = true; renderer.shadowMap.type = THREE.VSMShadowMap;
 document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
@@ -111,6 +111,7 @@ window.renderKey = async ({ face, ink, text, press = 0, exposure = 1.0, ...shape
   renderer.toneMappingExposure = exposure;
   if (wallMesh) { capGroup.remove(wallMesh, topMesh); }
   const mat = new THREE.MeshPhysicalMaterial({ color: face, roughness: 0.5, metalness: 0, bumpMap: bump, bumpScale: 0.6, sheen: 0.25, sheenRoughness: 0.8, sheenColor: new THREE.Color(face) });
+  mat.clippingPlanes = [new THREE.Plane(new THREE.Vector3(0, 0, 1), 0)]; mat.clipShadows = true;  // the plate: a pressed cap sinks below it
   const topMat = mat.clone(); topMat.color = new THREE.Color(0xffffff); topMat.map = legendTexture(face, ink, text);
   wallMesh = new THREE.Mesh(wallGeo, mat); topMesh = new THREE.Mesh(topGeo, topMat);
   for (const m of [wallMesh, topMesh]) { m.castShadow = true; m.receiveShadow = true; capGroup.add(m); }

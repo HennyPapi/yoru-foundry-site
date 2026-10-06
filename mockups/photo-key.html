@@ -28,30 +28,33 @@ body { margin: 0; background: var(--deep); color: var(--bright); font: 400 17px/
 .bar .logo { width: 48px; height: 48px; border-radius: 50%; }
 .bar nav { display: flex; gap: 24px; margin-left: auto; }
 
-/* The keycap button: one rendered image; key travel is a small translate. */
-.pk { display: inline-block; line-height: 0; border-radius: 12px; }
-.pk img { display: block; width: 280px; height: auto; transition: transform 140ms var(--ease), filter 140ms var(--ease); }
-.pk:hover img, .pk.is-hover img { transform: translateY(1px); }
-.pk:active img, .pk.is-press img { transform: translateY(3px); filter: brightness(.95); }
+/* The keycap button: three rendered frames (idle, hover, pressed) stacked; the state shows its frame.
+   Pressed is a real render with the cap sunk 3.2mm into the plate, so the walls visibly shorten. */
+.pk { display: inline-grid; line-height: 0; border-radius: 12px; }
+.pk img { grid-area: 1 / 1; display: block; width: 280px; height: auto; }
+.pk .h, .pk .p { opacity: 0; }
+.pk:hover img:first-child, .pk.is-hover img:first-child { opacity: 0; }
+.pk:hover .h, .pk.is-hover .h { opacity: 1; }
+.pk:active img:not(.p), .pk.is-press img:not(.p) { opacity: 0; }
+.pk:active .p, .pk.is-press .p { opacity: 1; }
 .pk:focus-visible { outline: 2px solid #E8834D; outline-offset: 4px; }
 .pk.big img { width: 560px; }
 .pk.small img { width: 190px; }
-@media (prefers-reduced-motion: reduce) { .pk img { transition: none; } }
 </style>
 </head>
 <body>
 <div class="wrap">
   <section class="cell">
-    <h2>Rendered keycap, up close <span>2× size; a 3D model with matte PBT plastic and studio light</span></h2>
-    <p>A 2.25-unit Enter key modelled at real proportions: tapered walls, molded rounded corners, a filleted top edge, a shallow dish, the legend printed into the surface, and a soft cast shadow. It is one small image (about 20 KB), so it looks the same on every device.</p>
-    <div class="stage"><a class="pk big" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""></a></div>
+    <h2>Rendered keycap, up close <span>2× size; idle and pressed</span></h2>
+    <p>A 2.25-unit Enter key modelled at real proportions: tapered walls, molded rounded corners, a filleted top edge, a shallow dish, the legend printed into the surface, and a soft cast shadow. Hover and press swap to real renders of the cap sunk into the plate (three images, about 58 KB together), so it looks the same on every device.</p>
+    <div class="stage"><div class="state"><a class="pk big" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""><img class="h" src="keys/enter-copper-hover.webp" alt=""><img class="p" src="keys/enter-copper-press.webp" alt=""></a><small>Idle</small></div><div class="state"><a class="pk big is-press" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""><img class="h" src="keys/enter-copper-hover.webp" alt=""><img class="p" src="keys/enter-copper-press.webp" alt=""></a><small>Pressed</small></div></div>
   </section>
   <section class="cell">
     <h2>At real size <span>idle, hover, pressed</span></h2>
     <div class="stage">
-      <div class="state"><a class="pk" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""></a><small>Idle</small></div>
-      <div class="state"><a class="pk is-hover" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""></a><small>Hover</small></div>
-      <div class="state"><a class="pk is-press" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""></a><small>Pressed</small></div>
+      <div class="state"><a class="pk" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""><img class="h" src="keys/enter-copper-hover.webp" alt=""><img class="p" src="keys/enter-copper-press.webp" alt=""></a><small>Idle</small></div>
+      <div class="state"><a class="pk is-hover" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""><img class="h" src="keys/enter-copper-hover.webp" alt=""><img class="p" src="keys/enter-copper-press.webp" alt=""></a><small>Hover</small></div>
+      <div class="state"><a class="pk is-press" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""><img class="h" src="keys/enter-copper-hover.webp" alt=""><img class="p" src="keys/enter-copper-press.webp" alt=""></a><small>Pressed</small></div>
     </div>
   </section>
   <section class="cell">
@@ -59,13 +62,13 @@ body { margin: 0; background: var(--deep); color: var(--bright); font: 400 17px/
     <div class="bar">
       <img class="logo" src="tex/logo-trim.webp" alt="">
       <nav><span>Crafted Art</span><span>Trust the Process</span><span>Built to Taste</span><span>About</span></nav>
-      <a class="pk small" href="#" aria-label="Request a Commission"><img src="keys/enter-sand.webp" alt=""></a>
+      <a class="pk small" href="#" aria-label="Request a Commission"><img src="keys/enter-sand.webp" alt=""><img class="h" src="keys/enter-sand-hover.webp" alt=""><img class="p" src="keys/enter-sand-press.webp" alt=""></a>
     </div>
   </section>
   <section class="cell">
     <h2>In the hero</h2>
     <div class="stage" style="align-items:flex-start">
-      <div class="hero-snip"><h3>Forged by night.</h3><p class="lede">After dark, the forge is lit and a keyboard is made.</p><div><a class="pk" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""></a></div></div>
+      <div class="hero-snip"><h3>Forged by night.</h3><p class="lede">After dark, the forge is lit and a keyboard is made.</p><div><a class="pk" href="#" aria-label="Request a Commission"><img src="keys/enter-copper.webp" alt=""><img class="h" src="keys/enter-copper-hover.webp" alt=""><img class="p" src="keys/enter-copper-press.webp" alt=""></a></div></div>
     </div>
   </section>
 </div>
