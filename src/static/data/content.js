@@ -20,6 +20,18 @@ const COMMISSION_TERMS = [
   { label: "Bring your own parts", value: "Welcome", note: "Priced after I check which of your parts work." }
 ];
 
+// How a commission works (request page) and what every build includes.
+const COMMISSION_STEPS = [
+  { title: "Request", text: "Tell me what you know, what you like, and what you want the finished board to do for you." },
+  { title: "Consultation", text: "We narrow the layout, feel, sound, materials, connectivity and budget without forcing technical jargon on you." },
+  { title: "Parts & Design", text: "I source or confirm the case, PCB, plate, switches, stabilizers, keycaps and finishing choices." },
+  { title: "Build", text: "Preparation, assembly and any selected switch or stabilizer work happen at the bench." },
+  { title: "Tuning & QC", text: "The board is tested for feel, sound, consistency, firmware, connectivity and final presentation." },
+  { title: "Delivery", text: "You receive the completed build with the final configuration documented for future reference." }
+];
+
+const COMMISSION_INCLUDED = ["Parts and compatibility guidance", "Full assembly", "Stabilizer preparation and tuning", "Switch preparation when selected", "Firmware / keymap setup", "Functional quality-control pass", "Final typing and sound test", "Build configuration documentation"];
+
 // Keyboard layouts as rows of key widths in units (negative = a gap), drawn at one shared scale.
 const LAYOUTS = {
   "75": { name: "75%", status: "Available", href: "/products-keyboards.html", blurb: "Balanced, compact and complete.", gapAfterFirst: 0.25,
@@ -257,4 +269,4 @@ keycap:[["PBT","Textured and durable with its own density and pitch."],["ABS","S
 mount:[["Gasket","Isolated mounting that can allow a softer response."],["Top Mount","More direct attachment and controlled firmness."],["Tray Mount","Simple, rigid mounting with a distinct feel."]]
 };
 
-window.YORU_CONTENT = Object.freeze({ SITE_MODE, SITE_MODE_CONTENT, COMMISSION_TERMS, LAYOUTS, BUILDS, SOUND_SAMPLES, STORIES, COMPARE_OPTIONS });
+window.YORU_CONTENT = Object.freeze({ SITE_MODE, SITE_MODE_CONTENT, COMMISSION_TERMS, COMMISSION_STEPS, COMMISSION_INCLUDED, LAYOUTS, BUILDS, SOUND_SAMPLES, STORIES, COMPARE_OPTIONS });

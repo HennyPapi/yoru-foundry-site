@@ -63,7 +63,7 @@ Known small issues (fix when touching these areas):
 | 7 | Homepage hero and message | Done: rebuilt from `mockups/home.html` (2026-10-06); "keyboards" lives in the title and meta description |
 | 8 | Media and sound readiness | Planned |
 | 9 | Footer redesign (four columns) | Planned |
-| 10 | Commission form sends without `mailto:` | Planned (needs a decision). Form restyled in Verdigris (2026-10-06); lower half of the page still old |
+| 10 | Commission form sends without `mailto:` | Planned (needs a decision). Request page fully rebuilt in Verdigris (2026-10-06) |
 | 11 | Motion and reduced motion | Planned |
 | 12 | Image and page weight | Planned — partly pulled forward |
 | 13 | Cleanup: unused files, orphan pages, dead CSS | Planned |

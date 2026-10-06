@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-11-home",
+  stylesheetVersion: "vg-12-request-lower",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
 });
@@ -123,6 +123,9 @@ function renderDataBackedContent(html, content) {
   });
   // Keyboard layouts drawn at one shared scale; the 75% is drawn live with its Esc key in copper.
   html = html.replace(/<svg data-board="([\w]+)"( class="live")?><\/svg>/g, (_, id, live) => renderBoard(content.LAYOUTS?.[id], id, Boolean(live)));
+  // Request page: the commission sequence (numbers on small keycaps) and what every build includes.
+  html = html.replace(/<ol class="step-keys" data-commission-steps><\/ol>/, () => '<ol class="step-keys">' + (content.COMMISSION_STEPS || []).map((step, i) => '<li><span class="step-cap" aria-hidden="true">' + (i + 1) + "</span><h3>" + escapeHtml(step.title) + "</h3><p>" + escapeHtml(step.text) + "</p></li>").join("") + "</ol>");
+  html = html.replace(/<ul class="included-items" data-commission-included><\/ul>/, () => '<ul class="included-items">' + (content.COMMISSION_INCLUDED || []).map((item) => "<li>" + escapeHtml(item) + "</li>").join("") + "</ul>");
   // Placeholder waveform (a fixed shape, not a recording).
   html = html.replace(/<svg data-wave><\/svg>/, () => {
     let bars = "";
