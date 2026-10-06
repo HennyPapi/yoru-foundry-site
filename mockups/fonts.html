@@ -6,7 +6,7 @@
 <title>Yoru Foundry: font studies</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Grenze+Gotisch:wght@500..800&family=Alegreya:wght@400..700&family=Alegreya+Sans:wght@500;700&family=Big+Shoulders+Display:wght@600..900&family=Big+Shoulders+Text:wght@500..800&family=Marcellus&family=Marcellus+SC&family=Texturina:opsz,wght@12..72,400..800&family=EB+Garamond:wght@400..700&family=Barlow+Condensed:wght@500;600;700&family=Grenze:wght@500..800&family=Pirata+One&family=UnifrakturMaguntia&family=Uncial+Antiqua&family=Jacquard+24&family=IM+Fell+English&family=Almendra:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Grenze+Gotisch:wght@500..800&family=Alegreya:wght@400..700&family=Alegreya+Sans:wght@500;700&family=Big+Shoulders+Display:wght@600..900&family=Big+Shoulders+Text:wght@500..800&family=Marcellus&family=Marcellus+SC&family=Texturina:opsz,wght@12..72,400..800&family=EB+Garamond:wght@400..700&family=Barlow+Condensed:wght@500;600;700&family=Grenze:wght@500..800&family=Pirata+One&family=UnifrakturMaguntia&family=Uncial+Antiqua&family=Jacquard+24&family=IM+Fell+English&family=Almendra:wght@400;700&family=UnifrakturCook:wght@700&family=New+Rocker&family=Jacquard+12&family=Jacquarda+Bastarda+9&family=IM+Fell+French+Canon&family=IM+Fell+DW+Pica&family=Goudy+Bookletter+1911&family=Sorts+Mill+Goudy&display=swap" rel="stylesheet">
 <style>
 /* Mockup only. One hero, five type pairings; Verdigris colors throughout. */
 :root { --cast: #151A1A; --sand: #1F2726; --edge: #070909; --bright: #EEF0EC; --pewter: #A7B2AE; --rule: #2B3533; --copper: #E8834D; --copper-edge: #9A4B22; --verdigris: #4FB3A0; }
@@ -24,7 +24,7 @@ dl div { display: flex; justify-content: space-between; padding: 9px 0; border-b
 dt { font-family: var(--l); font-stretch: var(--ls, 100%); font-size: var(--lsize, 14px); letter-spacing: var(--lt, 0); color: var(--pewter); }
 dd { margin: 0; font-family: var(--l); font-stretch: var(--ls, 100%); font-weight: 700; font-size: calc(var(--lsize, 14px) + 2px); letter-spacing: var(--lt, 0); font-variant-numeric: tabular-nums; }
 .key { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1.6fr; gap: 24px; align-items: start; padding: 16px 18px 18px; border-radius: 8px; background: var(--sand); border: 1px solid var(--edge); border-bottom-width: 5px; }
-.key h2 { font-family: var(--d); font-weight: var(--dw, 700); font-stretch: var(--ds, 100%); font-size: calc(var(--dsize, 68px) * .42); line-height: 1.05; margin: 0; letter-spacing: var(--dt, -.01em); }
+.key h2 { font-family: var(--d2, var(--d)); font-weight: var(--dw, 700); font-stretch: var(--ds, 100%); font-size: calc(var(--dsize, 68px) * .42); line-height: 1.05; margin: 0; letter-spacing: var(--dt, -.01em); }
 .key p { font-family: var(--b); font-size: 16px; line-height: 1.5; color: var(--pewter); margin: 0; }
 .note { grid-column: 1 / -1; font: 400 14px/1.45 Archivo, sans-serif; color: var(--pewter); margin: 0; }
 .p0 { --d: Archivo; --ds: 118%; --dw: 750; --b: "Source Serif 4"; --l: Archivo; --ls: 112%; --dt: -.02em; }
@@ -38,6 +38,16 @@ dd { margin: 0; font-family: var(--l); font-stretch: var(--ls, 100%); font-weigh
 .p9 { --d: "Uncial Antiqua"; --dw: 400; --dsize: 60px; --dt: 0; --b: Alegreya; --l: "Barlow Condensed"; --lsize: 16px; }
 .p10 { --d: "IM Fell English"; --dw: 400; --dsize: 72px; --dt: -.01em; --b: "EB Garamond"; --l: "Barlow Condensed"; --lsize: 16px; }
 .p11 { --d: Almendra; --dw: 700; --dsize: 70px; --dt: 0; --b: Alegreya; --l: "Barlow Condensed"; --lsize: 16px; }
+.p12 { --d: UnifrakturCook; --dw: 700; --dsize: 72px; --dt: 0; --b: "EB Garamond"; --l: "Barlow Condensed"; --lsize: 16px; }
+.p13 { --d: "New Rocker"; --dw: 400; --dsize: 74px; --dt: 0; --b: "EB Garamond"; --l: "Barlow Condensed"; --lsize: 16px; }
+.p14 { --d: "Jacquard 12"; --dw: 400; --dsize: 84px; --dt: 0; --b: Alegreya; --l: "Barlow Condensed"; --lsize: 16px; }
+.p15 { --d: "Jacquarda Bastarda 9"; --dw: 400; --dsize: 72px; --dt: 0; --b: Alegreya; --l: "Barlow Condensed"; --lsize: 16px; }
+.p16 { --d: "IM Fell French Canon"; --dw: 400; --dsize: 72px; --dt: -.01em; --b: "EB Garamond"; --l: "Barlow Condensed"; --lsize: 16px; }
+.p17 { --d: "IM Fell DW Pica"; --dw: 400; --dsize: 72px; --dt: -.01em; --b: "IM Fell DW Pica"; --l: "Barlow Condensed"; --lsize: 16px; }
+.p18 { --d: "Goudy Bookletter 1911"; --dw: 400; --dsize: 72px; --dt: -.01em; --b: "Sorts Mill Goudy"; --l: "Barlow Condensed"; --lsize: 16px; }
+.p19 { --d: "Sorts Mill Goudy"; --dw: 400; --dsize: 72px; --dt: -.01em; --b: "Sorts Mill Goudy"; --l: "Barlow Condensed"; --lsize: 16px; }
+.p20 { --d: "Pirata One"; --d2: "IM Fell English"; --dw: 400; --dsize: 78px; --dt: .01em; --b: "EB Garamond"; --l: "Barlow Condensed"; --lsize: 16px; }
+.p21 { --d: "Jacquard 24"; --d2: "IM Fell English"; --dw: 400; --dsize: 84px; --dt: 0; --b: "EB Garamond"; --l: "Barlow Condensed"; --lsize: 16px; }
 .p4 { --d: Texturina; --dw: 700; --dsize: 70px; --dt: -.01em; --b: "EB Garamond"; --l: "Barlow Condensed"; --lsize: 16px; }
 </style>
 </head>
@@ -63,7 +73,22 @@ const SET2 = [
   ['p10', 'J. IM Fell English', 'IM Fell English + EB Garamond', 'A 17th-century printing type with ink-pressed edges; a smith\'s ledger, quiet and story-like.'],
   ['p11', 'K. Almendra', 'Almendra + Alegreya', 'Calligraphic book hand with sharp pen strokes; storybook epic, softer than blackletter.'],
 ];
-const P = location.hash === '#set2' ? SET2 : SET1;
+const SET3 = [
+  ['p6', 'F. Pirata One (your pick)', 'Pirata One + EB Garamond', 'Reference.'],
+  ['p8', 'H. Jacquard 24 (your pick)', 'Jacquard 24 + Alegreya', 'Reference.'],
+  ['p10', 'J. IM Fell English (your pick)', 'IM Fell English + EB Garamond', 'Reference.'],
+  ['p20', 'F + J combined', 'Pirata One headline, IM Fell English headings', 'One blackletter moment; every other heading stays letterpress and easy to read.'],
+  ['p21', 'H + J combined', 'Jacquard 24 headline, IM Fell English headings', 'Same idea with the square blackletter.'],
+  ['p12', 'L. Unifraktur Cook', 'UnifrakturCook + EB Garamond', 'Heavy, inky fraktur, like F with more weight and swash. Near F.'],
+  ['p13', 'M. New Rocker', 'New Rocker + EB Garamond', 'Blackletter with sharp, modern cuts; edgier and more rock than F. Near F.'],
+  ['p14', 'N. Jacquard 12', 'Jacquard 12 + Alegreya', 'Same family as H on a coarser grid; the stepped pixel edges show. Near H.'],
+  ['p15', 'O. Jacquarda Bastarda 9', 'Jacquarda Bastarda 9 + Alegreya', 'Pixel-grid bastarda, a looser medieval hand; looks like an old loom or bitmap. Near H.'],
+  ['p16', 'P. IM Fell French Canon', 'IM Fell French Canon + EB Garamond', 'Larger cut of the Fell types: bolder, more ink spread. Near J.'],
+  ['p17', 'Q. IM Fell DW Pica', 'IM Fell DW Pica throughout', 'The Fell text cut used for everything; the whole page reads like an old printed ledger. Near J.'],
+  ['p18', 'R. Goudy Bookletter 1911', 'Goudy Bookletter 1911 + Sorts Mill Goudy', 'Arts and Crafts era letterpress (1911); hand-made printing, warmer than Fell. Near J.'],
+  ['p19', 'S. Sorts Mill Goudy', 'Sorts Mill Goudy throughout', 'Classic Goudy old style with a slightly rough edge; bookish and calm. Near J.'],
+];
+const P = location.hash === '#set3' ? SET3 : location.hash === '#set2' ? SET2 : SET1;
 document.write(P.map(([c, name, fonts, note]) => `
 <section class="panel ${c}">
   <div class="tag"><b>${name}</b><span>${fonts}</span></div>
