@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-12-request-lower",
+  stylesheetVersion: "vg-13-crafted",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
 });
@@ -126,6 +126,17 @@ function renderDataBackedContent(html, content) {
   // Request page: the commission sequence (numbers on small keycaps) and what every build includes.
   html = html.replace(/<ol class="step-keys" data-commission-steps><\/ol>/, () => '<ol class="step-keys">' + (content.COMMISSION_STEPS || []).map((step, i) => '<li><span class="step-cap" aria-hidden="true">' + (i + 1) + "</span><h3>" + escapeHtml(step.title) + "</h3><p>" + escapeHtml(step.text) + "</p></li>").join("") + "</ol>");
   html = html.replace(/<ul class="included-items" data-commission-included><\/ul>/, () => '<ul class="included-items">' + (content.COMMISSION_INCLUDED || []).map((item) => "<li>" + escapeHtml(item) + "</li>").join("") + "</ul>");
+  // Crafted Art: every layout as a row, drawn at one shared scale (the widest board fills its column).
+  html = html.replace(/<section class="layout-rows" aria-label="Layouts" data-layout-rows><\/section>/, () => {
+    const layouts = Object.entries(content.LAYOUTS || {});
+    const widest = Math.max(...layouts.map(([, l]) => Math.max(...l.rows.map((r) => r.reduce((a, u) => a + Math.abs(u), 0)))));
+    return '<section class="layout-rows" aria-label="Layouts">' + layouts.sort(([a], [b]) => (a === "75" ? -1 : b === "75" ? 1 : 0)).map(([id, l]) => {
+      const width = Math.max(...l.rows.map((r) => r.reduce((a, u) => a + Math.abs(u), 0)));
+      const live = Boolean(l.href);
+      const name = live ? '<a href="' + escapeHtml(l.href) + '">' + escapeHtml(l.name) + "</a>" : escapeHtml(l.name);
+      return '<article class="layout-row' + (live ? "" : " is-later") + '"><div class="layout-drawing" style="--scale:' + (width / widest).toFixed(4) + '">' + renderBoard(l, id, live) + '</div><div class="layout-copy"><h2>' + name + '</h2><p class="scale-status' + (live ? " is-live" : "") + '">' + escapeHtml(l.status) + "</p><p>" + escapeHtml(l.about || l.blurb) + "</p></div></article>";
+    }).join("") + "</section>";
+  });
   // Placeholder waveform (a fixed shape, not a recording).
   html = html.replace(/<svg data-wave><\/svg>/, () => {
     let bars = "";

@@ -47,8 +47,6 @@ Reference sites received (Alexotos, Keycult, Angry Miao, Mode Designs); see `DES
 Still waiting on Mike: whether the palette must stay, and approval of the plan.
 
 Known small issues (fix when touching these areas):
-- The Crafted Art 75% card copy says "Our first focused layout"; the rules require first person ("my").
-  Copy is Mike's call, so ask.
 
 ## Status
 

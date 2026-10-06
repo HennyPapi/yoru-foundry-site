@@ -34,11 +34,11 @@ const COMMISSION_INCLUDED = ["Parts and compatibility guidance", "Full assembly"
 
 // Keyboard layouts as rows of key widths in units (negative = a gap), drawn at one shared scale.
 const LAYOUTS = {
-  "75": { name: "75%", status: "Available", href: "/products-keyboards.html", blurb: "Balanced, compact and complete.", gapAfterFirst: 0.25,
+  "75": { name: "75%", status: "Available", href: "/crafted-art-75.html", blurb: "Balanced, compact and complete.", about: "My first focused layout: compact, functional, and balanced for daily use.", gapAfterFirst: 0.25,
     rows: [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,2,1],[1.5,1,1,1,1,1,1,1,1,1,1,1,1,1.5,1],[1.75,1,1,1,1,1,1,1,1,1,1,1,2.25,1],[2.25,1,1,1,1,1,1,1,1,1,1,1.75,1,1],[1.25,1.25,1.25,6.25,1,1,1,1,1,1]] },
-  "65": { name: "65%", status: "Coming soon", blurb: "Compact, practical, and enthusiast-friendly.", gapAfterFirst: 0, noEsc: true,
+  "65": { name: "65%", status: "Coming soon", blurb: "Compact, practical, and enthusiast-friendly.", about: "A compact layout with dedicated arrows and strong everyday usability.", gapAfterFirst: 0, noEsc: true,
     rows: [[1,1,1,1,1,1,1,1,1,1,1,1,1,2,1],[1.5,1,1,1,1,1,1,1,1,1,1,1,1,1.5,1],[1.75,1,1,1,1,1,1,1,1,1,1,1,2.25,1],[2.25,1,1,1,1,1,1,1,1,1,1,1.75,1,1],[1.25,1.25,1.25,6.25,1,1,1,1,1,1]] },
-  "tkl": { name: "TKL / 80%", status: "Coming soon", blurb: "Traditional control with a cleaner footprint.", gapAfterFirst: 0.5,
+  "tkl": { name: "TKL / 80%", status: "Coming soon", blurb: "Traditional control with a cleaner footprint.", about: "A familiar tenkeyless layout with full navigation and a cleaner desk footprint.", gapAfterFirst: 0.5,
     rows: [[1,-1,1,1,1,1,-0.5,1,1,1,1,-0.5,1,1,1,1,-0.25,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,2,-0.25,1,1,1],[1.5,1,1,1,1,1,1,1,1,1,1,1,1,1.5,-0.25,1,1,1],[1.75,1,1,1,1,1,1,1,1,1,1,1,2.25],[2.25,1,1,1,1,1,1,1,1,1,1,2.75,-1.25,1],[1.25,1.25,1.25,6.25,1.25,1.25,1.25,1.25,-0.25,1,1,1]] }
 };
 
