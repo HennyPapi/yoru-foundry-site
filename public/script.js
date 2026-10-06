@@ -57,17 +57,18 @@ const stories={
  }
 };
 const modal=document.getElementById("storyModal");const title=document.getElementById("storyTitle");const intro=document.getElementById("storyIntro");const content=document.getElementById("storyContent");
-function openStory(type,id){const story=stories[type]?.[id];if(!story||!modal)return;title.textContent=story.title;intro.textContent=story.intro;content.innerHTML=story.steps.map((s,i)=>`<section class="story-row ${i%2?"reverse":""}"><div class="story-media">${s[1]}</div><div class="story-copy"><p class="eyebrow">STEP 0${i+1}</p><h3>${s[0]}</h3><p>${s[2]}</p></div></section>`).join("");modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.classList.add("modal-open");content.scrollTop=0}
-function closeStory(){if(!modal)return;modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("modal-open")}
+let lastFocus=null;
+function openStory(type,id){const story=stories[type]?.[id];if(!story||!modal)return;title.textContent=story.title;intro.textContent=story.intro;content.innerHTML=story.steps.map((s,i)=>`<section class="story-row ${i%2?"reverse":""}"><div class="story-media">${s[1]}</div><div class="story-copy"><p class="eyebrow">STEP 0${i+1}</p><h3>${s[0]}</h3><p>${s[2]}</p></div></section>`).join("");lastFocus=document.activeElement;modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.classList.add("modal-open");content.scrollTop=0;modal.querySelector(".modal-close")?.focus()}
+function closeStory(){if(!modal||!modal.classList.contains("open"))return;modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("modal-open");lastFocus?.focus?.()}
 document.querySelectorAll("[data-story]").forEach(el=>el.addEventListener("click",()=>openStory(el.dataset.storyType,el.dataset.story)));document.querySelectorAll("[data-close-modal]").forEach(el=>el.addEventListener("click",closeStory));document.addEventListener("keydown",e=>{if(e.key==="Escape")closeStory()});
 
 const form=document.getElementById("buildForm");if(form){const params=new URLSearchParams(location.search);const layoutParam=params.get("layout");const layoutSelect=form.querySelector('[name="layout"]');const locked=form.querySelector('[data-layout-locked]');if(layoutParam&&layoutSelect){let option=[...layoutSelect.options].find(o=>o.value===layoutParam||o.textContent===layoutParam);if(!option){option=new Option(layoutParam,layoutParam);layoutSelect.add(option)}layoutSelect.value=layoutParam;layoutSelect.disabled=true;layoutSelect.classList.add("locked-layout");if(locked)locked.value=layoutParam}form.addEventListener("submit",event=>{event.preventDefault();const data=new FormData(form);const layout=layoutParam||data.get("layout");const subject=`Yoru Foundry Build Request — ${data.get("name")}`;const body=["YORU FOUNDRY BUILD REQUEST","",`Name: ${data.get("name")}`,`Email: ${data.get("email")}`,`Layout: ${layout}`,`Budget range: ${data.get("budget")}`,`Switch feel: ${data.get("feel")}`,`Sound preference: ${data.get("sound")}`,"","Build details:",data.get("details")||"No additional details provided."].join("\n");location.href=`mailto:hello@yorufoundry.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`})}
-;(()=>{const path=location.pathname;document.querySelectorAll(".nav>a").forEach(a=>{const href=new URL(a.href,location.origin).pathname;if(href===path)a.classList.add("active")});const products=document.querySelector(".products-menu");if(products&&path.startsWith("/products-"))products.classList.add("active");})();
+;(()=>{const norm=p=>p.replace(/\/index(\.html)?$/,"/").replace(/\.html$/,"").replace(/(.)\/$/,"$1");const path=norm(location.pathname);document.querySelectorAll(".nav>a").forEach(a=>{const href=norm(new URL(a.href,location.origin).pathname);if(href===path)a.classList.add("active")});const products=document.querySelector(".products-menu");if(products&&path.startsWith("/products-"))products.classList.add("active");})();
 ;(()=>{
   const dropdown=document.querySelector(".products-dropdown");
   if(dropdown){
     dropdown.classList.add("mega-menu");
-    dropdown.innerHTML='<div class="mega-col"><span>KEYBOARDS</span><a href="/products-keyboards.html">All Keyboards</a><a href="/request-a-build.html?layout=75%">75%</a><a href="/request-a-build.html?layout=65%">65% <small>Coming Soon</small></a><a href="/request-a-build.html?layout=TKL">TKL / 80% <small>Coming Soon</small></a></div><div class="mega-col"><span>DESK</span><a href="/products-deskmats.html">Desk Mats</a><a href="/products-mousepads.html">Mouse Pads</a><a href="/products-wristrests.html">Wrist Rests</a></div><div class="mega-col"><span>INPUT + MORE</span><a href="/products-mice.html">Mice</a><a href="/products-accessories.html">Accessories</a></div>';
+    dropdown.innerHTML='<div class="mega-col"><span>KEYBOARDS</span><a href="/products-keyboards.html">All Keyboards</a><a href="/request-a-build.html?layout=75%25">75%</a><a href="/request-a-build.html?layout=65%25">65% <small>Coming Soon</small></a><a href="/request-a-build.html?layout=TKL">TKL / 80% <small>Coming Soon</small></a></div><div class="mega-col"><span>DESK</span><a href="/products-deskmats.html">Desk Mats</a><a href="/products-mousepads.html">Mouse Pads</a><a href="/products-wristrests.html">Wrist Rests</a></div><div class="mega-col"><span>INPUT + MORE</span><a href="/products-mice.html">Mice</a><a href="/products-accessories.html">Accessories</a></div>';
   }
   document.querySelectorAll(".site-footer .footer-links").forEach(f=>{if(!f.querySelector('[href="/archive.html"]'))f.insertAdjacentHTML("afterbegin",'<a href="/archive.html">Archive</a><a href="/why-yoru.html">Why Yoru</a><a href="/journal.html">Journal</a>')});
 })();
@@ -97,5 +98,9 @@ function fill(side){
   });
 })();
 
-
-
+;(()=>{
+  const menu=document.querySelector(".products-menu");
+  if(!menu)return;
+  document.addEventListener("click",e=>{if(menu.open&&!menu.contains(e.target))menu.open=false});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&menu.open){menu.open=false;menu.querySelector("summary")?.focus()}});
+})();
