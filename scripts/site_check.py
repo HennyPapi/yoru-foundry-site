@@ -41,11 +41,11 @@ CURRENT_PHASE = 3.5                 # <- bump this when a phase closes
 PUBLIC_DIR = "public"               # generated output (what Cloudflare serves)
 SOURCE_DIR = "src"                  # where edits actually go
 SITE_HOSTS = {"yorufoundry.com", "www.yorufoundry.com"}
-THEME_TOKEN = "--night"             # <meta name="theme-color"> must equal this token
+THEME_TOKEN = "--cast"              # <meta name="theme-color"> must equal this token (Verdigris)
 CRITICAL_STYLE_MARKER = "critical-yf-theme"
 HERO_KEYWORD = "keyboard"           # Phase 7: homepage headline must contain this
-MIN_CREAM_PER_PAGE = 1              # Phase 14: every page gets a cream section...
-MAX_CREAM_PER_PAGE = 1              # ...and only one (cream cards count individually)
+MIN_CREAM_PER_PAGE = 0              # Verdigris has no light section (2026-10-06); old pages keep interim ones...
+MAX_CREAM_PER_PAGE = 0              # ...until each page is rebuilt (cream cards count individually)
 CREAM_EXTRA_SELECTORS = [".story-tile"]          # cream surfaces the checker can't detect on its own, e.g. [".process-card"]
 IGNORE_MARKER = "site-check: ignore"
 
