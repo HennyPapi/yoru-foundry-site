@@ -109,7 +109,7 @@ Rules:
 - If a layout or implementation requires copy that has not been supplied, stop and ask rather than filling the gap with invented text.
 - Write approved copy in **first person singular**.
 - Use “I build”, “I source”, “I tune”, “I’ll work with you”.
-- Never use “we”, “our team”, or copy that implies employees or a larger operation.
+- Never use “our team” or copy that implies employees or a larger operation. **“We” is allowed only when it means Mike and the client working together** (“We can work through the technical choices together.”), never a company “we” (Mike, 2026-10-06).
 - Tone: knowledgeable, precise, patient, personal, craft-led, and transparent.
 - Avoid generic luxury filler, aggressive sales language, urgency manipulation, and mass-market ecommerce phrasing.
 
