@@ -115,7 +115,8 @@ header .wrap { display: flex; align-items: center; gap: 32px; height: 84px; }
 .hero { display: grid; grid-template-columns: 1.55fr 1fr; gap: 24px clamp(24px, 4vw, 56px); padding: clamp(40px, 7vw, 88px) 0 56px; align-items: end; }
 .frame {
   grid-column: 1; aspect-ratio: 16 / 9; color: var(--frame-ink);
-  background: radial-gradient(90% 70% at 50% 115%, color-mix(in srgb, var(--accent) var(--glow-mix, 0%), transparent), transparent 70%), var(--frame);
+  background-color: var(--frame);
+  background-image: radial-gradient(90% 70% at 50% 115%, color-mix(in srgb, var(--accent) var(--glow-mix, 0%), transparent), transparent 70%);
   display: grid; place-items: center; font: 600 .8rem/1.4 Archivo, sans-serif; font-stretch: 112%;
   text-align: center; padding: 16px;
 }
