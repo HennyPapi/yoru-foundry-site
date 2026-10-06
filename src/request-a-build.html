@@ -10,18 +10,26 @@
 -->
 {{HEAD}}{{HEADER}}
 <main class="page-main-shell section-shell"><div class="section-shell-frame"><div class="page-main">
-<section class="commission-status">
-  <span class="status-dot"></span><strong>Currently accepting commissions</strong>
-  <span>Typical build window: approximately 2–5 weeks after parts are confirmed.</span>
-</section>
-<section class="request-layout"><div class="page-hero-shell section-shell"><div class="section-shell-frame"><div class="page-hero form-intro"><p class="eyebrow">COMMISSION</p><h1>Request a Commission.</h1><p>This route is intentionally more open-ended. If you are not sure what layout, switch, mount, or sound profile you want yet, tell me what you use the keyboard for and what you want it to feel like. We can work through the technical choices together.</p><div class="contact-mini"><span>General: hello@yorufoundry.com</span><span>Founder: mike@yorufoundry.com</span></div></div></div></div>
-<form id="buildForm" class="build-form">
-<div class="form-row"><label>Name<input required name="name" type="text" placeholder="Your name"></label><label>Email<input required name="email" type="email" placeholder="you@example.com"></label></div>
-<div class="form-row"><label>Layout<select name="layout"><option value="Not sure yet">Not sure yet</option><option value="65%">65%</option><option value="75%" selected>75%</option><option value="TKL">TKL / 80%</option></select></label><label>Budget range<select name="budget"><option>Still deciding</option><option>Under $150</option><option>$150–$250</option><option selected>$250–$400</option><option>$400–$600</option><option>$600+</option></select></label></div>
-<div class="form-row"><label>Switch feel<select name="feel"><option>Not sure</option><option>Linear</option><option>Tactile</option><option>Clicky</option></select></label><label>Sound preference<select name="sound"><option selected>We’ll define these next</option></select></label></div>
+<section class="request">
+<div class="request-intro">
+  <p class="request-status"><span class="status-light" aria-hidden="true"></span><strong>Currently accepting commissions</strong><span>Typical build window: approximately 2–5 weeks after parts are confirmed.</span></p>
+  <h1>Request a Commission.</h1>
+  <p>This route is intentionally more open-ended. If you are not sure what layout, switch, mount, or sound profile you want yet, tell me what you use the keyboard for and what you want it to feel like. We can work through the technical choices together.</p>
+  <p class="request-contact">General: <a href="mailto:hello@yorufoundry.com">hello@yorufoundry.com</a><br>Founder: <a href="mailto:mike@yorufoundry.com">mike@yorufoundry.com</a></p>
+</div>
+<form id="buildForm" class="request-form">
+<label>Name<input required name="name" type="text" placeholder="Your name" autocomplete="name"></label>
+<label>Email<input required name="email" type="email" placeholder="you@example.com" autocomplete="email"></label>
+<label>Layout<select name="layout"><option value="Not sure yet">Not sure yet</option><option value="65%">65%</option><option value="75%" selected>75%</option><option value="TKL">TKL / 80%</option></select></label>
+<label>Budget range<select name="budget"><option>Still deciding</option><option selected>$250–$400</option><option>$400–$600</option><option>$600+</option><option>Bring your own parts</option></select></label>
+<label>Switch feel<select name="feel"><option>Not sure</option><option>Linear</option><option>Tactile</option><option>Clicky</option></select></label>
+<label>Sound preference<select name="sound"><option selected>We’ll define these next</option></select></label>
 <label data-products-lock style="display:none">Selected product layout<input data-layout-locked type="text" readonly></label>
-<label>Build details<textarea name="details" rows="8" placeholder="Tell me about your setup, what you use the keyboard for, colors or materials you like, wired/wireless goals, examples you have seen, features you care about, and anything you absolutely do or do not want."></textarea></label>
-<button class="button primary submit" type="submit">Create Commission Request</button><p class="form-note">This opens a pre-filled email draft to hello@yorufoundry.com.</p>
+<label class="wide">Build details<textarea name="details" rows="7" placeholder="Tell me about your setup, what you use the keyboard for, colors or materials you like, wired/wireless goals, examples you have seen, features you care about, and anything you absolutely do or do not want."></textarea></label>
+<div class="request-send">
+  <button class="k send" type="submit" style="--w:252px;--ml:0px;--mr:0px;--fx:7.85%;--fy:3.72%;--fxh:8.17%;--fyh:7.25%;--fxp:8.82%;--fyp:13.2%"><img src="/assets/keys/c2.25.webp" alt="" width="252" height="110"><img class="h" src="/assets/keys/c2.25-hover.webp" alt="" width="252" height="110"><img class="p" src="/assets/keys/c2.25-press.webp" alt="" width="252" height="110"><span class="legend">Create Commission <br>Request</span></button>
+  <p class="request-note">This opens a pre-filled email draft to hello@yorufoundry.com.</p>
+</div>
 </form></section>
 <section class="commission-flow-shell section-shell"><div class="section-shell-frame"><div class="commission-flow">
   <div class="compare-intro"><p class="eyebrow">HOW A COMMISSION WORKS</p><h2>From first conversation to final handoff.</h2></div>

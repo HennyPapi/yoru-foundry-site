@@ -66,6 +66,10 @@ hero media frame.
   is pressed. Key data: `src/static/data/header-keys.json`, rendered by `build.js`. Renders and their tools:
   `mockups/keys/`. Coil hidden below 1180px, cable below 1000px; at 860px and below: medallion, Commission key and a
   menu icon, with the links as text in a panel. No Products menu at launch.
+- Request a Commission (rebuilt 2026-10-06): status line with a verdigris dot, the H1 and intro on the canvas; the
+  form on a raised Green Sand surface with inset Cast fields (Cinzel labels, Alegreya input text, Pewter chevrons);
+  submit is the copper Enter keycap (`/assets/keys/c2.25*.webp`, legend as real text), the only copper key on the
+  page. Budget options: Still deciding, $250–$400, $400–$600, $600+, Bring your own parts.
 - Homepage order: hero (75% drawing frame, headline, one copper button, two entry links, build sheet) → section
   keys (Crafted Art, Trust the Process, Built to Taste, About) → sound band → "What I refuse to rush" ruled list
   → layouts drawn to relative scale (75 / 65 / TKL) → closing statement → footer.

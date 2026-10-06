@@ -59,7 +59,7 @@ Rules:
 - **One colored key per view.** Raw Copper fills only the primary commission button (and the Esc key in layout drawings). Everything else that needs emphasis uses a copper edge or underline, never a copper block. Copper is light, not paint: no large copper fields.
 - Verdigris marks status. It is never a background field or a large fill.
 - The old Nocturne token names (`--night-void`, `--bone`, `--copper`, `--patina`, `--gunmetal` and their aliases) remain only as compatibility aliases that resolve to Verdigris tokens, until each page is rebuilt. New work uses the Verdigris names.
-- Tier backgrounds go on full-bleed shells only, never on `.page-main`, `.page-hero`, or any max-width container. Exception: the request-a-build hero shell fills a grid area by design. Do not "fix" it.
+- Tier backgrounds go on full-bleed shells only, never on `.page-main`, `.page-hero`, or any max-width container.
 - Section rhythm comes from dark tiers and one full-width deep band, not from alternating light and dark. Verdigris has no light section; `--bright` surfaces are interim and disappear as pages are rebuilt.
 - Borders use the hairline scale: quiet, standard, strong, and accent. No raw border values.
 - `box-shadow: none`, except focus indicators, which use `outline`.
