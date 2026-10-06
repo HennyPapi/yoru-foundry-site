@@ -91,6 +91,9 @@ if (tex === 'none') delete document.documentElement.dataset.tex; else if (tex) d
 [data-tex="cast"] { --tex-page: url("tex/cast.webp"); --tex-page-op: .9; }
 [data-tex="sand"] { --tex-key: url("tex/sand.webp"); --tex-key-op: .9; }
 [data-tex="cast-sand"] { --tex-page: url("tex/cast.webp"); --tex-page-op: .9; --tex-key: url("tex/sand.webp"); --tex-key-op: .9; --tex-key-size: 256px; }
+[data-tex="light"] { --tex-page: url("tex/cast.webp"); --tex-page-op: .4; --tex-key: url("tex/sand.webp"); --tex-key-op: .55; --tex-key-size: 256px; }
+[data-tex="keys"] { --tex-key: url("tex/sand.webp"); --tex-key-op: .65; --tex-key-size: 256px; }
+[data-tex="light"] .frame::before, [data-tex="keys"] .frame::before { display: none; } /* the frame will hold photos */
 [data-tex] body { position: relative; background: transparent; }
 [data-tex] body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: var(--tex-page, none) center / var(--tex-page-size, 512px) repeat; opacity: var(--tex-page-op, 0); mix-blend-mode: soft-light; }
