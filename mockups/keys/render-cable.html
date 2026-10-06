@@ -11,121 +11,173 @@ import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 
-// Braided USB-C cable pieces for the header (units: mm), lit and viewed like the keycaps but through an
-// orthographic camera, so a straight run looks identical at every x and tiles seamlessly.
-// Pieces: 'tile' (straight run, a whole number of braid periods wide), 'coil' (pigtail coil with metal
-// collars at both ends to hide the joins), 'plug' (strain relief, housing, USB-C shell pointing right).
-const PX = 15;                                  // render px per mm (4x the header's CSS scale)
-const H = 480, W = 1600;
+// Braided USB-C cable pieces for the header (units: mm). Same lights and viewing direction as the keycaps,
+// through an orthographic camera, so a straight run looks identical at every x and tiles seamlessly.
+// Pieces: 'tile' (straight run, whole braid periods), 'coil' (coiled section, patina-copper collars hide the joins),
+// 'plug' (heat-shrink tail, patina-copper housing, steel USB-C shell pointing right).
+// glow: true renders the same piece lit only from inside (copper light through the gaps in the weave), for the LED.
+const PX = 15;                                  // render px per mm
+const H = 480, W = 1800;
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
 renderer.setPixelRatio(1); renderer.setSize(W, H);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.NeutralToneMapping;
 renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.VSMShadowMap;
 document.body.appendChild(renderer.domElement);
 const scene = new THREE.Scene();
-scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
-scene.environmentIntensity = 0.32;
+const envTex = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
 const ground = new THREE.Mesh(new THREE.PlaneGeometry(600, 600), new THREE.ShadowMaterial({ opacity: 0.5 }));
 ground.receiveShadow = true; scene.add(ground);
 const key = new THREE.DirectionalLight(0xfff1e2, 2.3); key.position.set(-45, 30, 80); key.castShadow = true;
-key.shadow.mapSize.set(4096, 4096); key.shadow.radius = 6; key.shadow.blurSamples = 16; key.shadow.bias = -0.0004;
+key.shadow.mapSize.set(4096, 4096); key.shadow.radius = 5; key.shadow.blurSamples = 16; key.shadow.bias = -0.0003;
 Object.assign(key.shadow.camera, { left: -70, right: 70, top: 40, bottom: -40, near: 1, far: 300 });
-scene.add(key);
-const fill = new THREE.DirectionalLight(0xdfe8ff, 0.45); fill.position.set(60, -20, 40); scene.add(fill);
-const front = new THREE.DirectionalLight(0xffe9d6, 0.9); front.position.set(-10, -90, 22); scene.add(front);
-scene.add(new THREE.AmbientLight(0xffffff, 0.12));
+const fill = new THREE.DirectionalLight(0xdfe8ff, 0.45); fill.position.set(60, -20, 40);
+const front = new THREE.DirectionalLight(0xffe9d6, 0.9); front.position.set(-10, -90, 22);
+const amb = new THREE.AmbientLight(0xffffff, 0.12);
+const lights = [key, fill, front, amb]; lights.forEach(l => scene.add(l));
 
-// same viewing direction as the keycap camera
-const dir = new THREE.Vector3(0, 0.6, 3.6).sub(new THREE.Vector3(0, -60, 92)).normalize();
+const dir = new THREE.Vector3(0, 0.6, 3.6).sub(new THREE.Vector3(0, -60, 92)).normalize();   // keycap camera direction
 const camera = new THREE.OrthographicCamera(-W / 2 / PX, W / 2 / PX, H / 2 / PX, -H / 2 / PX, 1, 1000);
 camera.up.set(0, 0, 1);
-camera.position.copy(new THREE.Vector3(0, 0, 2.3).addScaledVector(dir, -200)); camera.lookAt(0, 0, 2.3);
 
-// braid: two strand families at 45 degrees, over-under, one copper tracer; one texture tile = one period
-const R = 2.3, P = 4;                            // cable radius, braid period along the cable
-function braid(base, tracer) {
-  const w = 256, h = 1024, c = document.createElement('canvas'); c.width = w; c.height = h;
-  const hex = s => ({ r: parseInt(s.slice(1, 3), 16) / 255, g: parseInt(s.slice(3, 5), 16) / 255, b: parseInt(s.slice(5, 7), 16) / 255 });  // sRGB as drawn, no linear conversion
-  const g = c.getContext('2d'), im = g.createImageData(w, h), b = hex(base), t = hex(tracer);
-  const hc = document.createElement('canvas'); hc.width = w; hc.height = h; const hg = hc.getContext('2d'), him = hg.createImageData(w, h);
+// ---- braid: 16 carriers (8 each way), 2-over-2 twill, fibres along each strand; one texture = one period P ----
+const R = 2.0, P = 2.8;                          // cable radius, braid period along the cable (mm)
+const N = 12, M = 3;                              // strands per direction around (24 carriers); twists per period
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const strandTone = Array.from({ length: 2 * N }, () => 0.85 + 0.3 * rnd());
+function braidCanvases() {
+  const w = 512, h = 1024, mk = () => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
+  const col = mk(), hgt = mk(), glo = mk();
+  const ci = col.getContext('2d').createImageData(w, h), hi = hgt.getContext('2d').createImageData(w, h), gi = glo.getContext('2d').createImageData(w, h);
   for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
-    const a = x / w, cy = (y % 256) / 256, s1 = (a + cy) % 1, s2 = ((a - cy) % 1 + 1) % 1;
-    const i1 = Math.floor(s1 * 2), i2 = Math.floor(s2 * 2), t1 = s1 * 2 % 1, t2 = s2 * 2 % 1;
-    const top1 = (i1 + i2) % 2 === 0, tt = top1 ? t1 : t2;
-    const fib = 0.9 + 0.1 * Math.sin((top1 ? s2 : s1) * Math.PI * 2 * 24);        // fibres across the strand
-    const lum = (0.45 + 0.55 * Math.sin(Math.PI * tt)) * fib;
-    const col = top1 && i1 === 0 && Math.floor(y / 256) === 0 ? t : b;
+    const u = x / w, v = y / h, a1 = v * N + u * M, a2 = v * N - u * M + 64;
+    const i1 = Math.floor(a1), i2 = Math.floor(a2), t1 = a1 - i1, t2 = a2 - i2;
+    const first = ((i1 + i2) % 4 + 4) % 4 < 2;   // 2-over-2 twill: which family is on top here
+    const t = first ? t1 : t2, along = first ? t2 : t1, idx = first ? i1 % N : N + (i2 % N);
+    const crown = Math.pow(Math.sin(Math.PI * t), 0.55);                       // strand cross-section
+    const dip = 0.75 + 0.25 * Math.sin(Math.PI * along);                       // strand dives under at the crossings
+    const fib = 0.82 + 0.18 * Math.pow(Math.sin(t * Math.PI * 9), 2);          // individual fibres
+    const height = crown * dip;
+    const lum = 0.10 * strandTone[idx] * fib * (0.35 + 0.65 * height);         // near-black PET
     const k = (y * w + x) * 4;
-    im.data[k] = col.r * 255 * lum; im.data[k + 1] = col.g * 255 * lum; im.data[k + 2] = col.b * 255 * lum; im.data[k + 3] = 255;
-    him.data[k] = him.data[k + 1] = him.data[k + 2] = 255 * Math.sin(Math.PI * tt) * fib; him.data[k + 3] = 255;
+    ci.data[k] = ci.data[k + 1] = ci.data[k + 2] = Math.min(255, lum * 255 * 1.35); ci.data[k + 3] = 255;
+    hi.data[k] = hi.data[k + 1] = hi.data[k + 2] = 255 * height * fib; hi.data[k + 3] = 255;
+    const g = Math.pow(1 - height, 2.2) + 0.18 * height * fib;                 // light leaks through the gaps
+    gi.data[k] = 255 * g; gi.data[k + 1] = 150 * g; gi.data[k + 2] = 82 * g; gi.data[k + 3] = 255;
   }
-  g.putImageData(im, 0, 0); hg.putImageData(him, 0, 0);
-  const map = new THREE.CanvasTexture(c); map.colorSpace = THREE.SRGBColorSpace;
-  const bump = new THREE.CanvasTexture(hc);
-  for (const tx of [map, bump]) { tx.wrapS = tx.wrapT = THREE.RepeatWrapping; tx.anisotropy = 8; }
-  return { map, bump };
+  col.getContext('2d').putImageData(ci, 0, 0); hgt.getContext('2d').putImageData(hi, 0, 0); glo.getContext('2d').putImageData(gi, 0, 0);
+  return { col, hgt, glo };
 }
-function cableMesh(curve, tex, segs) {
-  const len = curve.getLength(), geo = new THREE.TubeGeometry(curve, segs, R, 32, false);
-  const reps = Math.max(1, Math.round(len / P));  // whole periods, so the braid phase is 0 at both ends
-  const map = tex.map.clone(), bump = tex.bump.clone(); map.repeat.set(reps, 1); bump.repeat.set(reps, 1);
-  map.needsUpdate = bump.needsUpdate = true;
-  const m = new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({ map, bumpMap: bump, bumpScale: 1.2, roughness: 0.7, sheen: 0.4, sheenRoughness: 0.6, sheenColor: new THREE.Color(0x8a9692) }));
+const BR = braidCanvases();
+function tex(canvas, srgb, reps) {
+  const t = new THREE.CanvasTexture(canvas); if (srgb) t.colorSpace = THREE.SRGBColorSpace;
+  t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 16; t.repeat.set(reps, 1); return t;
+}
+
+// ---- patina copper: copper with verdigris settled in patches, rough and non-metallic where it has turned ----
+function noise2(sz, oct, f0 = 4) {                 // tileable value-noise fbm
+  const out = new Float32Array(sz * sz); let tot = 0;
+  for (let o = 0, amp = 1, f = f0; o < oct; o++, amp *= 0.5, f *= 2) {
+    const g = Array.from({ length: f * f }, () => rnd()), s = q => q * q * (3 - 2 * q), at = (i, j) => g[((j % f) * f) + (i % f)];
+    for (let y = 0; y < sz; y++) for (let x = 0; x < sz; x++) {
+      const fx = x / sz * f, fy = y / sz * f, x0 = Math.floor(fx), y0 = Math.floor(fy), sx = fx - x0, sy = fy - y0;
+      const a = at(x0, y0) + (at(x0 + 1, y0) - at(x0, y0)) * s(sx), b = at(x0, y0 + 1) + (at(x0 + 1, y0 + 1) - at(x0, y0 + 1)) * s(sx);
+      out[y * sz + x] += amp * (a + (b - a) * s(sy));
+    }
+    tot += amp;
+  }
+  for (let i = 0; i < out.length; i++) out[i] /= tot;
+  return out;
+}
+function patinaMat(f0) {
+  const sz = 512, n = noise2(sz, 6, f0), fine = noise2(sz, 6, f0 * 2), c = document.createElement('canvas'), r = document.createElement('canvas');
+  c.width = c.height = r.width = r.height = sz;
+  const ci = c.getContext('2d').createImageData(sz, sz), ri = r.getContext('2d').createImageData(sz, sz);
+  for (let i = 0; i < sz * sz; i++) {
+    // mostly aged, darkened copper; verdigris settles as fine speckle that thickens in patches
+    const p = Math.min(1, Math.max(0, (n[i] * 0.55 + fine[i] * 0.45 - 0.47) * 4.5)) * 0.9;
+    const age = 0.55 + 0.45 * fine[i];                                          // uneven darkening
+    const cu = [112 * age + 14, 62 * age + 8, 40 * age + 6];                    // aged, darkened copper
+    const vg = [70 + 22 * fine[i], 112 + 22 * fine[i], 100 + 18 * fine[i]];     // muted verdigris
+    for (let ch = 0; ch < 3; ch++) ci.data[i * 4 + ch] = cu[ch] + (vg[ch] - cu[ch]) * p;
+    ci.data[i * 4 + 3] = 255;
+    ri.data[i * 4] = 0; ri.data[i * 4 + 1] = 255 * (0.32 + 0.55 * p); ri.data[i * 4 + 2] = 255 * (1 - p); ri.data[i * 4 + 3] = 255;   // G rough, B metal
+  }
+  c.getContext('2d').putImageData(ci, 0, 0); r.getContext('2d').putImageData(ri, 0, 0);
+  const map = new THREE.CanvasTexture(c); map.colorSpace = THREE.SRGBColorSpace;
+  const rm = new THREE.CanvasTexture(r);
+  for (const t of [map, rm]) { t.wrapS = t.wrapT = THREE.RepeatWrapping; }
+  return new THREE.MeshPhysicalMaterial({ map, roughnessMap: rm, metalnessMap: rm, roughness: 1, metalness: 1 });
+}
+const patina = patinaMat(4);
+const housing = patinaMat(6);                      // the box maps the texture once per face, so it needs finer detail
+const steel = new THREE.MeshPhysicalMaterial({ color: 0x6f7774, metalness: 1, roughness: 0.5 });
+const rubber = new THREE.MeshPhysicalMaterial({ color: 0x141617, roughness: 0.55, sheen: 0.3, sheenColor: new THREE.Color(0x667070) });
+const BLACK = new THREE.MeshBasicMaterial({ color: 0x000000 });
+
+function cableMesh(curve, segs) {
+  const len = curve.getLength(), reps = Math.max(1, Math.round(len / P));   // whole periods: braid phase 0 at both ends
+  const m = new THREE.Mesh(new THREE.TubeGeometry(curve, segs, R, 48, false), new THREE.MeshPhysicalMaterial({
+    map: tex(BR.col, true, reps), bumpMap: tex(BR.hgt, false, reps), bumpScale: 2.2,
+    roughness: 0.42, sheen: 0.7, sheenRoughness: 0.45, sheenColor: new THREE.Color(0x8e9a98), clearcoat: 0.15, clearcoatRoughness: 0.5 }));
+  m.userData.glow = new THREE.MeshBasicMaterial({ map: tex(BR.glo, true, reps) });
   m.castShadow = m.receiveShadow = true; return m;
 }
-const metal = (color, rough = 0.35) => new THREE.MeshPhysicalMaterial({ color, metalness: 1, roughness: rough });
-function along(geo) { geo.rotateZ(-Math.PI / 2); return geo; }       // cylinders along +x
-function piece(mesh, x, z = R) { mesh.position.set(x, 0, z); mesh.castShadow = mesh.receiveShadow = true; return mesh; }
+function lathe(profile, x, mat) {                  // profile: [radius, length] pairs along the cable (+x)
+  const g = new THREE.LatheGeometry(profile.map(([r, l]) => new THREE.Vector2(r, l)), 64);
+  g.rotateZ(-Math.PI / 2);
+  const m = new THREE.Mesh(g, mat); m.position.set(x, 0, R); m.castShadow = m.receiveShadow = true; return m;
+}
+const collarProfile = [[R, 0], [R + 0.45, 0], [R + 0.85, 0.4], [R + 0.85, 1.6], [R + 0.7, 1.8], [R + 0.7, 2.2], [R + 0.85, 2.4], [R + 0.85, 5.1], [R + 0.45, 5.5], [R, 5.5]];
 
 const group = new THREE.Group(); scene.add(group);
-window.renderPiece = async ({ name, braidColor, tracer, collar, housing }) => {
-  group.clear();
-  const tex = braid(braidColor, tracer);
-  let x0, x1;                                   // crop span in mm
+window.renderPiece = async ({ name, glow = false }) => {
+  group.clear(); seed = 11;
+  let x0, x1, path = null;
   if (name === 'tile') {
-    // a long straight run; the crop window starts a whole number of periods from the tube start
-    group.add(cableMesh(new THREE.LineCurve3(new THREE.Vector3(-60, 0, R), new THREE.Vector3(60, 0, R)), tex, 60));
-    x0 = -60 + 11 * P; x1 = x0 + 8 * P;
+    group.add(cableMesh(new THREE.LineCurve3(new THREE.Vector3(-60, 0, R), new THREE.Vector3(60, 0, R)), 120));
+    x0 = -60 + 9 * P; x1 = x0 + 12 * P;                      // 12 periods = 33.6mm = 504 render px
   } else if (name === 'coil') {
-    const turns = 6, pitch = 5.0, CR = 4.4, lead = 5, pts = [];
+    const turns = 11, pitch = 2 * R + 0.12, CR = 6.0, lead = 9, pts = [];
     const span = turns * pitch, start = -span / 2 - lead;
-    pts.push(new THREE.Vector3(start, 0, R), new THREE.Vector3(start + lead * 0.6, 0, R));
-    for (let i = 0; i <= turns * 48; i++) {
-      const th = i / 48 * Math.PI * 2, x = -span / 2 + th / (Math.PI * 2) * pitch;
-      pts.push(new THREE.Vector3(x, -CR * Math.sin(th), R + CR - CR * Math.cos(th)));
+    pts.push(new THREE.Vector3(start, 0, R), new THREE.Vector3(start + 4, 0, R), new THREE.Vector3(-span / 2 - 1.2, -0.6, R + 0.1));
+    for (let i = 0; i <= turns * 64; i++) {
+      const th = i / 64 * Math.PI * 2, wob = 1 + 0.025 * Math.sin(th * 0.43 + 1.3) + 0.012 * Math.sin(th * 1.7);
+      const x = -span / 2 + th / (Math.PI * 2) * pitch + 0.15 * Math.sin(th * 0.31);
+      const r = CR * wob;
+      pts.push(new THREE.Vector3(x, -r * Math.sin(th), R + CR - r * Math.cos(th) + 0.25 * Math.sin(th * 0.2)));
     }
-    pts.push(new THREE.Vector3(span / 2 + lead * 0.4, 0, R), new THREE.Vector3(span / 2 + lead, 0, R));
-    window.coilCurve = new THREE.CatmullRomCurve3(pts, false, 'centripetal');
-    window.coilAxisZ = R + CR;
-    group.add(cableMesh(window.coilCurve, tex, 900));
-    for (const sx of [-1, 1]) {
-      const c = piece(new THREE.Mesh(along(new THREE.CylinderGeometry(R + 0.55, R + 0.55, 5, 40)), metal(collar)), sx * (span / 2 + lead - 2.5), R);
-      group.add(c);
-    }
+    pts.push(new THREE.Vector3(span / 2 + 1.2, 0.6, R + 0.1), new THREE.Vector3(span / 2 + lead - 4, 0, R), new THREE.Vector3(span / 2 + lead, 0, R));
+    const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal');
+    group.add(cableMesh(curve, 2200));
+    group.add(lathe(collarProfile, start, patina), lathe(collarProfile, span / 2 + lead - 5.5, patina));
     x0 = start; x1 = span / 2 + lead;
-  } else {                                      // plug, pointing right
-    const lead = 2;
-    group.add(cableMesh(new THREE.LineCurve3(new THREE.Vector3(-lead, 0, R), new THREE.Vector3(1, 0, R)), tex, 4));
-    group.add(piece(new THREE.Mesh(along(new THREE.CylinderGeometry(R + 0.7, R + 0.25, 6, 40)), metal(collar)), 3));
-    const body = piece(new THREE.Mesh(new RoundedBoxGeometry(15, 8.2, 5.2, 4, 1.6), metal(housing, 0.4)), 13.5, 2.75);
-    group.add(body);
-    group.add(piece(new THREE.Mesh(new RoundedBoxGeometry(6.6, 8.3, 2.5, 4, 1.1), metal(0x8e9794, 0.45)), 24, 2.75));
-    x0 = -lead; x1 = 27.3;
+    path = { curve, axisZ: R + CR };
+  } else {                                                    // plug, pointing right
+    group.add(cableMesh(new THREE.LineCurve3(new THREE.Vector3(0, 0, R), new THREE.Vector3(4, 0, R)), 8));
+    group.add(lathe([[R, 0], [R + 0.25, 0], [R + 0.4, 5], [R + 0.9, 8], [R + 0.9, 9]], 0, rubber));   // heat-shrink tail
+    const body = new THREE.Mesh(new RoundedBoxGeometry(15, 8.6, 5.8, 5, 1.8), housing);
+    body.position.set(16.2, 0, 2.9); body.castShadow = body.receiveShadow = true; group.add(body);
+    const shell = new THREE.Mesh(new RoundedBoxGeometry(6.6, 8.3, 2.5, 5, 1.1), steel);
+    shell.position.set(26.9, 0, 2.9); shell.castShadow = shell.receiveShadow = true; group.add(shell);
+    x0 = 0; x1 = 30.2;
   }
+  // glow pass: only the braid's inner light shows; everything else is black (neutral under a screen blend)
+  group.traverse(o => { if (o.isMesh) { o.userData.lit ??= o.material; o.material = glow ? (o.userData.glow || BLACK) : o.userData.lit; } });
+  scene.environment = glow ? null : envTex; scene.environmentIntensity = 0.32;
+  lights.forEach(l => l.visible = !glow); ground.visible = !glow;
+  renderer.toneMapping = glow ? THREE.NoToneMapping : THREE.NeutralToneMapping;
+  camera.position.copy(new THREE.Vector3(0, 0, R).addScaledVector(dir, -200)); camera.lookAt(0, 0, R);
   renderer.render(scene, camera);
-  const sx = v => Math.round((v.clone().project(camera).x + 1) / 2 * W);
-  const sy = v => Math.round((1 - v.clone().project(camera).y) / 2 * H);
-  // the coil's centreline on screen, with whether each point is on the near side of the coil (for LED beads)
-  const path = name === 'coil' ? window.coilCurve.getSpacedPoints(600).map(p => [sx(p), sy(p), +(p.clone().sub(new THREE.Vector3(p.x, 0, window.coilAxisZ)).dot(dir) < 0.5)]) : null;
-  window.lastSpan = { path, x0: sx(new THREE.Vector3(x0, 0, R)), x1: sx(new THREE.Vector3(x1, 0, R)), groundY: sy(new THREE.Vector3(0, 0, 0)), axisY: sy(new THREE.Vector3(0, 0, R)) };
+  const sx = v => (v.clone().project(camera).x + 1) / 2 * W, sy = v => (1 - v.clone().project(camera).y) / 2 * H;
+  const span = { x0: Math.round(sx(new THREE.Vector3(x0, 0, R))), x1: Math.round(sx(new THREE.Vector3(x1, 0, R))), groundY: sy(new THREE.Vector3(0, 0, 0)), axisY: sy(new THREE.Vector3(0, 0, R)) };
+  // the coil's centreline on screen, and whether each point is on the near side of its loop (for the LED beads)
+  if (path) span.path = path.curve.getSpacedPoints(700).map(p => [sx(p), sy(p), +(p.clone().sub(new THREE.Vector3(p.x, 0, path.axisZ)).dot(dir) < 0.5)]);
+  window.lastSpan = span;
   return renderer.domElement.toDataURL('image/png');
 };
-// where the plate (ground at depth 0) lands in a keycap render, for lining the cable up with the keys
 const kc = new THREE.PerspectiveCamera(14.5, 1632 / 720, 1, 1000); kc.up.set(0, 0, 1);
 kc.position.set(0, -60, 92); kc.lookAt(0, 0.6, 3.6); kc.updateMatrixWorld();
-window.keyGroundY = Math.round((1 - new THREE.Vector3(0, 0, 0).project(kc).y) / 2 * 720);
-window.keyPxPerMm = (new THREE.Vector3(10, 0, 0).project(kc).x - new THREE.Vector3(-10, 0, 0).project(kc).x) / 2 * 1632 / 20;
+window.keyGroundY = (1 - new THREE.Vector3(0, 0, 0).project(kc).y) / 2 * 720;
 window.ready = true;
 </script>
 </body>

@@ -25,7 +25,8 @@ every key's frames to one shared plate line and prints each key's base offsets a
 ## Braided cable (`cable/`)
 
 `render-cable.html` renders three pieces through an orthographic camera with the keycaps' viewing direction and
-lights: `tile` (a straight run, a whole number of braid periods, so it repeats seamlessly), `coil` (pigtail coil with
-copper collars hiding the joins) and `plug` (USB-C, pointing right). Run
-`node render-cable.js '{"braidColor":"#2A3432","tracer":"#2A3432","collar":"#B06C44","housing":"#2A3432"}' .`
-(serving the folder on port 8767); crop all three to one shared band. The tile is exported at 114 CSS px wide.
+lights: `tile` (a straight run of black 24-carrier braid, a whole number of periods, so it repeats seamlessly),
+`coil` (11 touching loops with patina-copper collars hiding the joins) and `plug` (heat-shrink tail, patina-copper
+housing, steel USB-C shell). Each also renders as `-glow`: lit only from inside, copper light through the gaps in
+the weave, for the LED beads. Serve the folder on port 8767, run `node render-cable.js '{}' <scratch>/cable`,
+then `python3 cable-export.py <scratch> cable` (it also writes the coil path the LED script follows).
