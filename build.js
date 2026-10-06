@@ -222,9 +222,7 @@ function renderPage(entry, partials, content) {
       DESCRIPTION_META: description,
       HEAD_EXTRA: redirect
         ? `<meta http-equiv="refresh" content="0; url=${page.redirectUrl}">`
-        : page.output === "index.html"
-          ? `<link rel="preload" as="image" type="image/webp" href="/img/textures/metal027-color-luma-4k.webp"><link rel="preload" as="image" type="image/webp" href="/img/textures/plaster-grey-04.webp">`
-          : "",
+        : "",
       FULL_TITLE: `${page.title} | ${config.siteTitle}`,
       CRITICAL_CSS: redirect
         ? "html,body{margin:0;background:#151A1A;color:#EEF0EC;min-height:100%;font-family:Archivo,system-ui,sans-serif}main{max-width:760px;margin:auto;padding:15vh 24px}a{color:#E8834D}"
