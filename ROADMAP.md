@@ -35,6 +35,10 @@ through the steps below. Palette, fonts and label style are all open; the logo s
 4. Show Mike the plan and get approval, then build on `design-pass`. Once Mike signs off, update
    `AGENTS.md` and `YORU_SITE_MEMORY.md` to the new direction.
 
+**Progress (2026-10-06):** Steps 1–3 are drafted in `DESIGN_PLAN.md` (critique, palette, type, wireframes,
+AI-tell check). The plugins didn't load in that session, so the critique was done by hand from headless renders.
+Next: Mike reviews the plan (step 4). No redesign code yet.
+
 Still waiting on Mike: 2–3 reference sites Mike likes, and whether the palette must stay.
 
 Known small issues (fix when touching these areas):
