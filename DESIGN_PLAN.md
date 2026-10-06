@@ -279,6 +279,8 @@ homepage leads into them, not what they are.
    Still open: approval of the two entry-link labels, the "what every build gets" list and the queue line.
    Site follow-ups: change the request form's budget bands, and fix `content.js` where "Ember" is labelled "Sound".
 5. ~~Fix the P0 Bone contrast bug now?~~ **Done** in its own commit (1.72:1 → 4.75:1).
-6. ~~Hero H1 wording~~ **Chosen:** "One-of-one keyboards, built by hand in Miami." "Refined by Craft." moves to the footer as the motto.
-   Entry links "New to custom boards? Start here" and "I know my spec" kept for now.
+6. ~~Hero H1 wording~~ **Trial:** H1 "Forged by night." with the line "After dark, the forge is lit and a keyboard is made."
+   under it. The page title and meta description say "custom mechanical keyboards" for search and link previews.
+   "Refined by Craft." moves to the footer as the motto. Entry links kept for now.
+   Site follow-up: the Phase 7 site check requires "keyboards" in the H1; change it to accept the hero line or title.
 7. Verdigris changes the critical first-paint colors in `AGENTS.md` (body `#151A1A`, header on Cast). OK to change those rules?
