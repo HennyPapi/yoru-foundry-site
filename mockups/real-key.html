@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yoru Foundry: realistic Enter keycap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Cinzel:wght@400..900&family=Alegreya:wght@400..700&display=swap" rel="stylesheet">
+<style>
+/* Mockup only. The commission button as a rendered keycap: rounded silhouette, smooth wall shading,
+   curved top face, bevel light, two-layer shadow. Built from SVG so it scales crisply. */
+:root { --cast: #151A1A; --deep: #0C1010; --bright: #EEF0EC; --pewter: #A7B2AE; --rule: #2B3533; --ease: cubic-bezier(.16,1,.3,1); }
+* { box-sizing: border-box; }
+html { font-synthesis: none; }
+body { margin: 0; background: var(--deep); color: var(--bright); font: 400 17px/1.5 Alegreya, Georgia, serif; padding: 28px; }
+.wrap { max-width: 1400px; margin: 0 auto; display: grid; gap: 20px; }
+.cell { background: var(--cast); padding: 26px 30px 34px; display: grid; gap: 16px; }
+.cell h2 { margin: 0; font: 700 16px/1.45 Cinzel, serif; display: flex; justify-content: space-between; gap: 12px; }
+.cell h2 span { font: 400 14px/1.45 Alegreya, serif; color: var(--pewter); }
+.cell p { margin: 0; color: var(--pewter); font-size: 15px; line-height: 1.55; max-width: 66ch; }
+.stage { display: flex; flex-wrap: wrap; gap: 44px; align-items: flex-end; padding-top: 24px; border-top: 1px solid var(--rule); }
+.state { display: grid; gap: 12px; justify-items: start; }
+.state small { font: 600 12px/1.4 Cinzel, serif; color: var(--pewter); }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.hero-snip { display: grid; gap: 16px; }
+.hero-snip h3 { margin: 0; font: 400 56px/1.05 Aboreto, serif; letter-spacing: .05em; }
+.hero-snip .lede { margin: 0; color: var(--pewter); font-size: 21px; line-height: 1.45; }
+
+.key { position: relative; display: inline-block; width: 272px; height: 106px; text-decoration: none; --s: 1; }
+.key.big { transform: scale(1.8); transform-origin: left bottom; margin: 90px 220px 0 0; }
+.key .body, .key .legend { transition: transform 140ms var(--ease); }
+.key .cap { position: absolute; left: 0; top: 0; width: 272px; height: 106px; overflow: visible; }
+.key .legend { position: absolute; left: 25px; top: 15px; font: 700 15px/1.3 Cinzel, serif; color: var(--ink); pointer-events: none; }
+.key .shadows { transition: opacity 140ms var(--ease); }
+.key:hover .body, .key.is-hover .body, .key:hover .legend, .key.is-hover .legend { transform: translateY(2px); }
+.key:active .body, .key.is-press .body, .key:active .legend, .key.is-press .legend { transform: translateY(5px); }
+.key:active .shadows, .key.is-press .shadows { opacity: .6; }
+.key:focus-visible { outline: 2px solid #E8834D; outline-offset: 8px; border-radius: 12px; }
+@media (prefers-reduced-motion: reduce) { .key .body, .key .legend, .key .shadows { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="cell">
+    <h2>D4. Rendered keycap, up close <span>shown at 1.8× so the detail is visible</span></h2>
+    <p>Rounded vertical edges; side walls shaded smoothly from the light (upper left) to shadow; a deeper front wall; a gently curved top face; a bevel that catches light along the top edge and darkens along the bottom; a tight contact shadow plus a soft ambient one.</p>
+    <div class="stage">
+      <div class="state"><a class="key big" data-c="copper" href="#"></a><small>Idle</small></div>
+      <div class="state"><a class="key big is-press" data-c="copper" href="#"></a><small>Pressed</small></div>
+    </div>
+  </section>
+  <div class="row">
+    <section class="cell">
+      <h2>At real size <span>idle, hover, pressed</span></h2>
+      <div class="stage" style="gap:28px">
+        <div class="state"><a class="key" data-c="copper" href="#"></a><small>Idle</small></div>
+        <div class="state"><a class="key is-hover" data-c="copper" href="#"></a><small>Hover</small></div>
+        <div class="state"><a class="key is-press" data-c="copper" href="#"></a><small>Pressed</small></div>
+      </div>
+    </section>
+    <section class="cell">
+      <h2>Header version <span>same render in Green Sand</span></h2>
+      <div class="stage" style="gap:28px">
+        <div class="state"><a class="key" data-c="sand" href="#"></a><small>Idle</small></div>
+        <div class="state"><a class="key is-press" data-c="sand" href="#"></a><small>Pressed</small></div>
+      </div>
+    </section>
+  </div>
+  <section class="cell">
+    <h2>In the hero <span>with the headline and the line beneath</span></h2>
+    <div class="stage" style="align-items:flex-start">
+      <div class="hero-snip"><h3>Forged by night.</h3><p class="lede">After dark, the forge is lit and a keyboard is made.</p><div><a class="key" data-c="copper" href="#"></a></div></div>
+    </div>
+  </section>
+</div>
+<script>
+// One function draws every cap, so each instance gets its own gradient ids and colors.
+const PALETTES = {
+  copper: { face: '#E8834D', faceTop: '#F3A273', faceLow: '#DA7642', rim: '#FFC39C', wallLight: '#D57340', wallDark: '#9C4E26', front: '#7E3D1B', frontLow: '#5E2C13', bevelDark: '#B05A2C', ink: '#151A1A' },
+  sand:   { face: '#2A3432', faceTop: '#36423F', faceLow: '#25302E', rim: '#56635F', wallLight: '#26302E', wallDark: '#161C1B', front: '#121716', frontLow: '#0B0F0E', bevelDark: '#1B2322', ink: '#EEF0EC' },
+};
+let n = 0;
+function cap(c) {
+  const i = 'k' + (n++);
+  return `
+<svg class="cap" viewBox="0 0 272 106" aria-hidden="true">
+  <defs>
+    <linearGradient id="${i}w" x1="0" x2="1"><stop offset="0" stop-color="${c.wallLight}"/><stop offset=".55" stop-color="${c.wallDark}"/><stop offset="1" stop-color="${c.wallDark}"/></linearGradient>
+    <linearGradient id="${i}f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c.front}"/><stop offset="1" stop-color="${c.frontLow}"/></linearGradient>
+    <linearGradient id="${i}t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c.faceTop}"/><stop offset=".28" stop-color="${c.face}"/><stop offset=".8" stop-color="${c.face}"/><stop offset="1" stop-color="${c.faceLow}"/></linearGradient>
+    <linearGradient id="${i}b" x1="0" y1="0" x2=".25" y2="1"><stop offset="0" stop-color="${c.rim}" stop-opacity=".9"/><stop offset=".45" stop-color="${c.rim}" stop-opacity="0"/><stop offset=".7" stop-color="${c.bevelDark}" stop-opacity="0"/><stop offset="1" stop-color="${c.bevelDark}" stop-opacity=".9"/></linearGradient>
+    <radialGradient id="${i}g" cx=".3" cy=".15" r=".9"><stop offset="0" stop-color="#EEF0EC" stop-opacity=".16"/><stop offset=".6" stop-color="#EEF0EC" stop-opacity="0"/></radialGradient>
+    <filter id="${i}s1" x="-10%" y="-200%" width="120%" height="500%"><feGaussianBlur stdDeviation="7"/></filter>
+    <filter id="${i}s2" x="-10%" y="-200%" width="120%" height="500%"><feGaussianBlur stdDeviation="1.6"/></filter>
+  </defs>
+  <g class="shadows">
+    <ellipse cx="136" cy="96" rx="132" ry="8" fill="#0C1010" opacity=".85" filter="url(#${i}s1)"/>
+    <rect x="6" y="86" width="260" height="6" rx="3" fill="#0C1010" opacity=".9" filter="url(#${i}s2)"/>
+  </g>
+  <g class="body">
+    <path d="M17 1h238q9 0 10.5 8.5L271 79q1 9-9 9H10q-10 0-9-9L6.5 9.5Q8 1 17 1z" fill="url(#${i}w)"/>
+    <path d="M7 62h258l6 17q1 9-9 9H10q-10 0-9-9z" fill="url(#${i}f)"/>
+    <rect x="14" y="5" width="244" height="61" rx="9" fill="url(#${i}t)"/>
+    <rect x="14" y="5" width="244" height="61" rx="9" fill="url(#${i}g)"/>
+    <rect x="14.75" y="5.75" width="242.5" height="59.5" rx="8.5" fill="none" stroke="url(#${i}b)" stroke-width="1.5"/>
+    <path d="M25 6.6h222" stroke="${c.rim}" stroke-opacity=".55" stroke-width="1" stroke-linecap="round"/>
+    <path d="M244 40v12h-26m7-7-7 7 7 7" fill="none" stroke="${c.ink}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg><span class="legend" style="--ink:${c.ink}">Request a Commission</span>`;
+}
+document.querySelectorAll('.key').forEach(k => { k.innerHTML = cap(PALETTES[k.dataset.c]); k.setAttribute('aria-label', 'Request a Commission'); });
+</script>
+</body>
+</html>
