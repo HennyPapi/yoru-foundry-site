@@ -3,19 +3,18 @@
 Before making any visual, CSS, layout, branding, navigation, responsive, or component change:
 
 1. Treat this `AGENTS.md` file as the authoritative build and implementation rule set.
-2. Read `YORU_SITE_MEMORY.md` for supplemental project history, dimensions, page architecture, and approved visual context. If it conflicts with `AGENTS.md`, follow `AGENTS.md`.
-3. Do not reintroduce old brown / bronze / gold / olive / green-heavy experimental palettes.
+2. Read `YORU_SITE_MEMORY.md` for project history and page architecture, `PRODUCT.md` for product truth, and `DESIGN_PLAN.md` plus `mockups/home.html` for the approved direction. If they conflict with `AGENTS.md`, follow `AGENTS.md`.
+3. The approved direction is **Verdigris** (Mike, 2026-10-06): a dark green-sand ground lit by raw copper, from the logo. The old Yoru Nocturne palette (cream `#F2EFE8`, night-void `#0C0E11`, Cormorant Garamond, Manrope) is retired. Do not reintroduce it, and do not reintroduce brown / bronze / gold / olive experimental palettes.
 4. Do not redesign the site from scratch unless Mike explicitly asks.
-5. Preserve `/assets/yoru-foundry-logo-v5.webp` as the official header logo.
+5. Preserve the logo medallion (`/assets/yoru-foundry-logo-v5.webp` or its trimmed derivative). Never redraw or recolor it.
 6. If `src/static/styles.css` changes, bump `config.stylesheetVersion` once in `build.js`, then rebuild so stale CSS cannot flash an old palette.
 7. Keep first-paint critical colors consistent:
-   - body: `#0C0E11`
-   - header: `#F2EFE8`
-   - nav text: `#171A1D`
-   - header CTA: Night Iron + `#B8734F` border + Forged Bone text
+   - body and header: Cast `#151A1A`
+   - text and nav text: Bright `#EEF0EC`
+   - header CTA: Green Sand `#1F2726` keycap, Bright text
 8. Verify desktop, tablet, and mobile behavior after broad changes.
 
-When in doubt, preserve the current live appearance and ask before making a major visual departure.
+When in doubt, preserve the current approved appearance and ask before making a major visual departure.
 
 ## Build rules
 
@@ -26,74 +25,68 @@ These rules are standing constraints for all future work in this repository. Rea
 - Yoru Foundry is a solo, commission-first workshop. One person hand-builds custom mechanical keyboards to order.
 - The site must read as a workshop / atelier and portfolio, **not** as a conventional ecommerce store.
 - Low volume and long lead times are part of the operating model; do not introduce UI that implies mass retail, instant fulfillment, or a large team.
-- The current visual direction is already approved. Systematize and refine it; do not repaint or redesign it from scratch unless Mike explicitly asks.
+- The Verdigris direction is approved. Systematize and refine it; do not repaint or redesign it from scratch unless Mike explicitly asks.
 - Real photography, video, audio, and completed-build content do not exist yet. Keep honest placeholders that can be replaced later without layout changes. Never fabricate finished builds or use stock keyboard imagery as a substitute.
 
 ### Canonical design tokens
 
-Use the Yoru Nocturne tokens below. Prefer CSS custom properties over literal color values. Do not introduce ad-hoc palette colors.
+Use the Verdigris tokens below. Prefer CSS custom properties over literal color values. Do not introduce ad-hoc palette colors.
 
-- `--night-void` `#0C0E11`: page canvas, body, and footer.
-- `--night-deep` `#111418`: alternate dark sections.
-- `--night` `#181B1F`: elevated dark surfaces, header pairing, and theme color.
-- `--gunmetal` `#2B2F32`: cards and media on dark surfaces.
-- `--iron` `#3A3F43`: hover and active surfaces on dark cards.
-- `--bone` / `--bone-text` `#F2EFE8`: the sole light surface and primary text on night.
-- `--ink` `#171A1D`: primary text on Bone. This color is not a dark surface tier.
-- `--muted-dark` `#B8B9B5`: secondary text on night.
-- `--muted-light` `#6D6962`: secondary text on Bone.
-- `--muted-deep` `#8A8C88`: tertiary text on `--night` only; never use it on cards.
-- `--copper` `#B8734F`: night-only borders, fills, hairlines, and large/bold text.
-- `--copper-text` `#CB9560`: body-size copper text on night and Gunmetal.
-- `--copper-deep` `#915A37`: copper on Bone only.
-- `--patina` `#6E938B`: night-only status and micro-accent.
-- `--patina-deep` `#4E6A64`: patina on Bone only.
-- `--state-error` `#C96A5A`: error state on night.
-- `--state-error-deep` `#A34430`: error state on Bone.
-- Success aliases Patina on night and Patina Deep on Bone.
+| Token | Hex | Role |
+|---|---|---|
+| `--deep` | `#0C1010` | Full-width bands (sound band) |
+| `--cast` | `#151A1A` | Page canvas, body, header, footer, theme color |
+| `--cast-low` | `#181E1E` | Alternate sections on pages not yet rebuilt |
+| `--cast-hi` | `#1A2120` | Elevated sections |
+| `--green-sand` | `#1F2726` | Raised surfaces: section keys, cards, frames, plain keycap buttons |
+| `--green-sand-hi` | `#2A3432` | Hover and active on raised surfaces |
+| `--bright` | `#EEF0EC` | Primary text on dark; interim light surface on pages not yet rebuilt |
+| `--ink` | `#151A1A` | Text on `--bright` only |
+| `--pewter` | `#A7B2AE` | Secondary text on dark |
+| `--pewter-deep` | `#8C9894` | Tertiary text on dark (never body copy) |
+| `--muted-on-bright` | `#5A6461` | Secondary text on `--bright` |
+| `--raw-copper` | `#E8834D` | The one accent: primary commission action, active state, Esc key |
+| `--copper-deep` | `#A14E22` | Copper on `--bright` only |
+| `--verdigris` | `#4FB3A0` | Status only (open, in progress, playback) |
+| `--verdigris-deep` | `#2B6E62` | Verdigris on `--bright` only |
+| `--state-error` | `#E0786A` | Error on dark |
+| `--state-error-deep` | `#A63A2A` | Error on `--bright` |
 
-Never use pure `#FFFFFF` or pure `#000000` anywhere.
+Measured contrast (WCAG 2.x): Bright on Cast 15.3:1, on Green Sand 13.3:1, on Green Sand Hi 11.2:1. Pewter on Cast 8.1:1, on Green Sand 7.0:1, on Green Sand Hi 5.9:1. Pewter Deep on Green Sand 5.1:1. Cast text on a Raw Copper fill 6.5:1. Raw Copper on Green Sand 5.7:1. Verdigris on Cast 6.9:1, on Green Sand 6.0:1. Muted, copper-deep and verdigris-deep on Bright are all 5.0:1 or higher.
 
-Patina is a micro-accent only. Copper is an interaction/material accent, not a generic ecommerce-orange fill. No legacy brown, bronze, gold, olive, rust, or green-heavy palette may be reintroduced.
-
-- Tier backgrounds go on full-bleed shells only, never on `.page-main`, `.page-hero`, or any max-width container.
-- Exception: the request-a-build hero shell fills a grid area by design. Do not “fix” it.
-- `body` and `footer` are both `--night-void` so short pages have no visible seam below the footer. Content sections use a higher tier so the footer still reads as distinct.
-- Cream (`--bone`) is an accent, not a surface family. Maximum one light section per page. If a page needs two, the second is wrong.
-- `--copper` and `--patina` are night-only. `--copper-deep` and `--patina-deep` are Bone-only. Neither crosses over.
-- `--copper` is 3.60:1 on `--gunmetal`. Use it for borders, fills, and text at 24px+ or 19px bold only. Use `--copper-text` at body size.
-- `--muted-deep` is 3.98:1 on `--gunmetal`. Never use it on cards.
-- Section rhythm comes from alternating night tiers, not from alternating light and dark.
-- Borders use the four-tier hairline scale: quiet, standard, strong, and accent. No raw border values.
+Rules:
+- Never use pure `#FFFFFF` or pure `#000000` anywhere.
+- **One colored key per view.** Raw Copper fills only the primary commission button (and the Esc key in layout drawings). Everything else that needs emphasis uses a copper edge or underline, never a copper block. Copper is light, not paint: no large copper fields.
+- Verdigris marks status. It is never a background field or a large fill.
+- The old Nocturne token names (`--night-void`, `--bone`, `--copper`, `--patina`, `--gunmetal` and their aliases) remain only as compatibility aliases that resolve to Verdigris tokens, until each page is rebuilt. New work uses the Verdigris names.
+- Tier backgrounds go on full-bleed shells only, never on `.page-main`, `.page-hero`, or any max-width container. Exception: the request-a-build hero shell fills a grid area by design. Do not "fix" it.
+- Section rhythm comes from dark tiers and one full-width deep band, not from alternating light and dark. Verdigris has no light section; `--bright` surfaces are interim and disappear as pages are rebuilt.
+- Borders use the hairline scale: quiet, standard, strong, and accent. No raw border values.
 - `box-shadow: none`, except focus indicators, which use `outline`.
 - Any new color must state its legal surfaces and measured contrast ratio before being added.
 
-### Texture roles
+### Texture
 
-- Forged Bone: subtle archival-paper / uncoated-stock grain, approximately 2–4%.
-- Night Iron: fine bead-blasted / anodized-metal micro-grain, approximately 3–6%.
-- Gunmetal: same material family as Night Iron, but smoother and lower contrast, approximately 2–4%.
-- Copper: satin finish only; no grain, rust, roughness, or patina wash.
-- Patina: color only; never a textured surface.
-- Texture must add physicality without noticeably shifting the underlying token color.
+- **No interface texture** (Mike, 2026-10-06). Material comes from real build photography. A texture critique (`mockups/tex-critique.png`) found the trial grain too strong, behind text, and dusting the photo frame.
+- Do not add grain, noise, paper, or metal overlays. The old texture files in `src/static/img/textures/` are slated for deletion.
+- The only atmospheric effect is the faint Raw Copper glow at the bottom of the hero media frame ("light from a pour"). It sits behind media, never behind text.
 
 ### Type roles
 
-- Display headings and navigation: **Cormorant Garamond**.
-- Body copy, forms, metadata, and UI: **Manrope**.
-- Do not add **Inter**.
-- Keep the editorial hierarchy: large serif headlines, compact readable body copy, restrained technical labels.
-- Do not replace the typography with a generic SaaS-style sans-serif hierarchy.
+- Display, headings, navigation, labels, buttons, and spec values: **Archivo** (variable, width axis; set at a wide stretch, 600–800 weight).
+- Body copy, long-form, captions, and notes: **Source Serif 4**.
+- Spec numbers use tabular figures. No monospace font as a "technical" costume.
+- Do not add **Inter**. Cormorant Garamond and Manrope are retired.
+- Labels are sentence case at normal tracking. No spaced ALL-CAPS eyebrow labels above headings.
+- Minimum text size 12px.
 
 ### Button system
 
-- Header “Request a Commission”: Night Iron fill, 0.5px Burnished Copper border, Forged Bone text, 4px control radius, subtle hover lift.
-- Primary CTA on a dark surface: hollow / transparent with a 0.5px Burnished Copper border and Forged Bone text; Copper fill may appear on hover.
-- Secondary CTA on a dark surface: transparent with a restrained Forged Bone / Warm Steel border and no competing accent fill.
-- Light-surface buttons must remain within the same Night Iron / Copper / Forged Bone system.
-- No gradient buttons.
-- No glossy, glass, neon, or oversized ecommerce-style CTAs.
-- Buttons must never flash pure white, pure black, brown, bronze, or a legacy palette color during hover, active, focus, navigation, or first paint.
+- Buttons are **keycaps**: 6px radius, 1px edge, a thicker bottom edge (4px) that shortens as the key travels down on hover (2px) and press (1px). Section keys use the same press at 8px radius with a 5px bottom edge.
+- **Primary** (commission): Raw Copper face, Cast text, darker copper edge. Only one per view.
+- **Plain** (header commission, secondary actions): Green Sand face, Bright text, near-black edge.
+- Text links: Archivo, underlined with a copper or verdigris underline; no "→" appended.
+- No gradient buttons. No glossy, glass, neon, or oversized ecommerce-style CTAs. Buttons never flash pure white or black.
 
 ### Motion specification
 
@@ -148,20 +141,20 @@ Also avoid ecommerce patterns that imply inventory scale, urgency, discounting, 
 
 ### Layout and hero guardrails
 
-- Preserve the existing editorial / atelier composition and asymmetry.
-- Do not convert the site to a generic centered landing-page template.
-- The hero must not become a centered H1 with two CTAs.
-- Product photography and real build media will become the visual artwork later; UI chrome should remain restrained enough to support it.
+- Follow the approved homepage composition in `mockups/home.html`: media frame with the 75% layout drawing (until real footage exists), headline and line beneath, one copper commission button, two entry links, and a build sheet beside it.
+- The homepage H1 is "Forged by night." with "After dark, the forge is lit and a keyboard is made." beneath it (Mike, 2026-10-06). The page `<title>` and meta description say "custom mechanical keyboards".
+- Avoid the AI-template tells: eyebrow labels, details joined with dots, "→" on links, 01/02/03 on non-sequences, and rows of identical cards.
+- Do not convert the site to a generic centered landing-page template. The hero must not become a centered H1 with two CTAs.
+- Product photography and real build media will become the visual artwork. UI chrome stays restrained enough to support it.
 
 ### First paint, palette, and cache discipline
 
-- Every HTML page must keep `<meta name="theme-color" content="#181B1F">`.
+- Every HTML page must keep `<meta name="theme-color" content="#151A1A">`.
 - Every HTML page must keep the critical first-paint theme so navigation never flashes an old palette.
 - Critical first-paint roles:
-  - body: Night Void `#0C0E11`
-  - header: Forged Bone `#F2EFE8`
-  - nav text: Night Ink `#171A1D`
-  - header CTA: Night Iron + Copper border + Forged Bone text
+  - body and header: Cast `#151A1A`
+  - text and nav text: Bright `#EEF0EC`
+  - header CTA: Green Sand `#1F2726` keycap with Bright text
 - If `src/static/styles.css` changes, update `config.stylesheetVersion` in `build.js` and rebuild. This is the single source of truth for the stylesheet query version.
 - Never leave pages pointing at mixed stylesheet versions.
 
@@ -178,7 +171,7 @@ Also avoid ecommerce patterns that imply inventory scale, urgency, discounting, 
 - A missing local render is not a blocker. Complete static validation, push to the assigned non-production branch, state the rendering limitation explicitly, and leave final visual verification to Mike in the Cloudflare branch preview.
 - Commit after each completed phase/item with a clear phase-specific message.
 - For broad visual changes, verify desktop, tablet, and mobile behavior.
-- Preserve the official header logo at `/assets/yoru-foundry-logo-v5.webp`.
+- Preserve the logo medallion (`/assets/yoru-foundry-logo-v5.webp` or its trimmed derivative).
 - Read `YORU_SITE_MEMORY.md` before beginning visual work.
 - Read `ROADMAP.md` for the current phase, the order of work, and open decisions. Update its status table when a phase closes.
 
@@ -210,9 +203,9 @@ These rules are canonical for `src/static/styles.css` and must be preserved by f
 - No hardcoded hex, RGB, or RGBA color literals outside `:root`.
 - Canonical semantic color tokens are the surface, text, accent, state, status, hairline, and grain tokens listed above. Compatibility aliases may only resolve to those canonical roles and must not introduce another color value.
 - Required font tokens:
-  - `--font-display`: Cormorant Garamond
-  - `--font-body`: Manrope
-  - `--font-mono`: system monospace stack
+  - `--font-display`: Archivo
+  - `--font-body`: Source Serif 4
+  - `--font-mono`: system monospace stack (code only)
 - Required type primitives: `--step-1` through `--step-5`.
 - Font sizes, font-family declarations, spacing declarations, radii, color values, and transition durations must use custom properties rather than anonymous repeated literals.
 - A spacing token must never be applied to a declaration whose original value was a percentage, `em`, `rem`, `vw`, `vh`, or `ch`. Only original `px` values may receive `px` spacing tokens.
@@ -220,11 +213,11 @@ These rules are canonical for `src/static/styles.css` and must be preserved by f
 
 ### Geometry
 
-- `box-shadow: none`, with the sole exception of focus indicators, which must use `outline` instead.
-- Images and card-like surfaces use `border-radius: 0`.
-- Buttons, inputs, selects, and textareas use `border-radius: 4px`.
-- True circular micro-controls such as status dots or information tips may use the circular radius token.
-- Standard border width is `--border-width: 0.5px`.
+- `box-shadow: none`, with the sole exception of focus indicators, which must use `outline`.
+- Images and media frames use `border-radius: 0`.
+- Keycap buttons use a 6px radius; section keys use 8px; inputs, selects, and textareas use 4px.
+- True circular micro-controls such as status dots or play buttons may use the circular radius token.
+- Standard border width is `--border-width: 0.5px`; keycap edges use 1px with the thicker bottom edge described in the button system.
 - Borders must remain low contrast. Use the defined line tokens rather than high-opacity hardcoded borders.
 
 ### Motion

@@ -35,7 +35,11 @@ through the steps below. Palette, fonts and label style are all open; the logo s
 4. Show Mike the plan and get approval, then build on `design-pass`. Once Mike signs off, update
    `AGENTS.md` and `YORU_SITE_MEMORY.md` to the new direction.
 
-**Progress (2026-10-06):** Steps 1–3 are drafted in `DESIGN_PLAN.md` (critique, palette, type, wireframes,
+**Direction approved (2026-10-06):** Mike approved the Verdigris direction in `mockups/home.html` (see
+`DESIGN_PLAN.md`): Verdigris palette, no texture, Archivo + Source Serif 4, "Forged by night." headline. `AGENTS.md`
+and `YORU_SITE_MEMORY.md` are rewritten to match. Build order: tokens and fonts, header, homepage, then the other pages.
+
+**Earlier progress (2026-10-06):** Steps 1–3 are drafted in `DESIGN_PLAN.md` (critique, palette, type, wireframes,
 AI-tell check). The plugins didn't load in that session, so the critique was done by hand from headless renders.
 Next: Mike reviews the plan (step 4). No redesign code yet.
 
