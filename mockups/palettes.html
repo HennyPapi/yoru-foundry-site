@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yoru Foundry — palette studies</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+/* Mockup only. Swatch sheet for the four foundry-at-night studies. */
+body { margin: 0; background: #E9EAE6; color: #1B1D20; font: 400 1rem/1.5 "Source Serif 4", Georgia, serif; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 48px 32px 64px; }
+h1, h2, .name, .hex, .role, .ratio { font-family: Archivo, sans-serif; font-stretch: 112%; }
+h1 { font-size: 2.4rem; letter-spacing: -.02em; margin: 0 0 8px; }
+.intro { max-width: 68ch; color: #4A4E52; margin: 0 0 40px; }
+section { display: grid; grid-template-columns: 260px 1fr; gap: 32px; padding: 28px 0; border-top: 1px solid #B9BBB6; }
+h2 { font-size: 1.5rem; margin: 0 0 8px; letter-spacing: -.01em; }
+section p { margin: 0; color: #4A4E52; font-size: .95rem; }
+.chips { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.chip { min-height: 150px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; border-radius: 6px; }
+.name { font-weight: 750; font-size: .95rem; }
+.hex { font-size: .8rem; font-variant-numeric: tabular-nums; opacity: .85; }
+.role { font-size: .75rem; font-weight: 600; }
+.ratio { font-size: .75rem; font-variant-numeric: tabular-nums; }
+@media (max-width: 860px) { section { grid-template-columns: 1fr; } .chips { grid-template-columns: repeat(3, 1fr); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Foundry at night: four palettes</h1>
+  <p class="intro">Each palette is a tinted darkness, one hot accent that reads as light, and a cooler status color. Contrast is measured against each palette's own background (WCAG 2.x).</p>
+  <div id="list"></div>
+</div>
+<script>
+const L = h => [0, 2, 4].map(i => parseInt(h.slice(i + 1, i + 3), 16) / 255)
+  .map(c => c <= .03928 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4)
+  .reduce((s, c, i) => s + c * [.2126, .7152, .0722][i], 0);
+const cr = (a, b) => { const x = L(a), y = L(b); return ((Math.max(x, y) + .05) / (Math.min(x, y) + .05)).toFixed(1); };
+const P = [
+  ['Pour', 'The pour: a dark yard lit by molten iron. The most heat and the most drama.', [
+    ['Night Iron', '#12151C', 'background'], ['Flask', '#1E232D', 'raised / keys'], ['Moonlight', '#EEF0F3', 'text'],
+    ['Slag', '#A3ABB8', 'secondary text'], ['Molten', '#FF8A2A', 'the one accent'], ['Spark', '#F2C14E', 'status']]],
+  ['Temper', 'The colors steel turns when heated: straw, bronze, purple, blue. Cool and precise, with a heat-tint signature strip.', [
+    ['Quench', '#17191D', 'background'], ['Mill Scale', '#23262C', 'raised / keys'], ['Bright Steel', '#ECEBE6', 'text'],
+    ['Ground Finish', '#A8ACB3', 'secondary text'], ['Temper Blue', '#6F9BF2', 'the one accent'], ['Straw', '#E0B65A', 'status']]],
+  ['Yoru', 'Night itself: deep indigo under a sodium street lamp. Most literal to the name.', [
+    ['Yoru', '#101830', 'background'], ['Ai', '#1B2544', 'raised / keys'], ['Moon', '#EDEFF5', 'text'],
+    ['Mist', '#A9B1C9', 'secondary text'], ['Sodium Lamp', '#FFB547', 'the one accent'], ['Verdigris', '#6FD0C0', 'status']]],
+  ['Verdigris', 'Straight from the logo: raw copper and its green patina, on a green-sand dark.', [
+    ['Cast', '#151A1A', 'background'], ['Green Sand', '#1F2726', 'raised / keys'], ['Bright', '#EEF0EC', 'text'],
+    ['Pewter', '#A7B2AE', 'secondary text'], ['Raw Copper', '#E8834D', 'the one accent'], ['Verdigris', '#4FB3A0', 'status']]],
+];
+document.getElementById('list').innerHTML = P.map(([name, note, cols]) => {
+  const bg = cols[0][1], text = cols[2][1];
+  return `<section><div><h2>${name}</h2><p>${note}</p></div><div class="chips">${cols.map(([n, h, r], i) => {
+    const fg = L(h) > .25 ? bg : text;
+    const ratio = i === 0 ? `text ${cr(text, h)}:1` : i === 1 ? `text ${cr(text, h)}:1` : `on bg ${cr(h, bg)}:1`;
+    return `<div class="chip" style="background:${h};color:${fg}"><div><div class="name">${n}</div><div class="hex">${h}</div></div><div><div class="role">${r}</div><div class="ratio">${ratio}</div></div></div>`;
+  }).join('')}</div></section>`;
+}).join('');
+</script>
+</body>
+</html>

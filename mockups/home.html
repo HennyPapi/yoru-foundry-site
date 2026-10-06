@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
-<script>if (location.hash === '#night') document.documentElement.dataset.theme = 'night';</script>
+<script>if (location.hash) document.documentElement.dataset.theme = location.hash.slice(1);</script>
 <style>
 /* Mockup only. Not site code. Two palettes, one layout: color is the only variable. */
 :root, [data-theme="bench"] {
@@ -44,6 +44,33 @@
   --frame: #2E3338;
   --frame-ink: #A9AEB2;
 }
+/* Foundry-at-night studies: tinted darkness + one luminous, hot accent + a glow of that light. */
+[data-theme="pour"] {        /* the pour: night lit by molten iron */
+  --canvas: #12151C; --ink: #EEF0F3; --muted: #A3ABB8; --rule: #2C3340;
+  --band: #0A0C11; --band-ink: #EEF0F3; --band-muted: #A3ABB8;
+  --key: #1E232D; --key-edge: #07090C; --accent: #FF8A2A; --accent-edge: #A84B12; --accent-ink: #12151C;
+  --signal: #F2C14E; --frame: #1E232D; --frame-ink: #A3ABB8; --glow-mix: 30%;
+}
+[data-theme="temper"] {      /* heat-tint colors on steel: straw, bronze, purple, blue */
+  --canvas: #17191D; --ink: #ECEBE6; --muted: #A8ACB3; --rule: #30343A;
+  --band: #0E1013; --band-ink: #ECEBE6; --band-muted: #A8ACB3;
+  --key: #23262C; --key-edge: #0A0B0D; --accent: #6F9BF2; --accent-edge: #2F4F94; --accent-ink: #0E1013;
+  --signal: #E0B65A; --frame: #23262C; --frame-ink: #A8ACB3; --glow-mix: 22%;
+}
+[data-theme="yoru"] {        /* night indigo under a sodium street lamp */
+  --canvas: #101830; --ink: #EDEFF5; --muted: #A9B1C9; --rule: #26314F;
+  --band: #0A1024; --band-ink: #EDEFF5; --band-muted: #A9B1C9;
+  --key: #1B2544; --key-edge: #060A18; --accent: #FFB547; --accent-edge: #A86A12; --accent-ink: #101830;
+  --signal: #6FD0C0; --frame: #1B2544; --frame-ink: #A9B1C9; --glow-mix: 26%;
+}
+[data-theme="verdigris"] {   /* the logo: raw copper and its green patina, on green-sand dark */
+  --canvas: #151A1A; --ink: #EEF0EC; --muted: #A7B2AE; --rule: #2B3533;
+  --band: #0C1010; --band-ink: #EEF0EC; --band-muted: #A7B2AE;
+  --key: #1F2726; --key-edge: #070909; --accent: #E8834D; --accent-edge: #9A4B22; --accent-ink: #151A1A;
+  --signal: #4FB3A0; --frame: #1F2726; --frame-ink: #A7B2AE; --glow-mix: 26%;
+}
+.temper-strip { display: none; }
+[data-theme="temper"] .temper-strip { display: block; height: 4px; background: linear-gradient(90deg, #E2C77A, #D4A443, #9B6B3F, #6E4A8E, #3D5FB0, #7FA6D6); }
 * { box-sizing: border-box; }
 html { background: var(--canvas); }
 body {
@@ -87,7 +114,8 @@ header .wrap { display: flex; align-items: center; gap: 32px; height: 84px; }
 /* Hero */
 .hero { display: grid; grid-template-columns: 1.55fr 1fr; gap: 24px clamp(24px, 4vw, 56px); padding: clamp(40px, 7vw, 88px) 0 56px; align-items: end; }
 .frame {
-  grid-column: 1; aspect-ratio: 16 / 9; background: var(--frame); color: var(--frame-ink);
+  grid-column: 1; aspect-ratio: 16 / 9; color: var(--frame-ink);
+  background: radial-gradient(90% 70% at 50% 115%, color-mix(in srgb, var(--accent) var(--glow-mix, 0%), transparent), transparent 70%), var(--frame);
   display: grid; place-items: center; font: 600 .8rem/1.4 Archivo, sans-serif; font-stretch: 112%;
   text-align: center; padding: 16px;
 }
@@ -180,6 +208,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   <nav class="nav" aria-label="Main"><a href="#">Crafted Art</a><a href="#">Trust the Process</a><a href="#">Built to Taste</a><a href="#">About</a></nav>
   <a class="btn primary" href="#">Request a Commission</a>
 </div></header>
+<div class="temper-strip" aria-hidden="true"></div>
 
 <main class="wrap">
   <section class="hero">
