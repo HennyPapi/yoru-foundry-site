@@ -1040,7 +1040,7 @@ body{
 .editorial-light .featured-copy>p{color:var(--gunmetal)}
 .editorial-light .eyebrow{color:var(--copper-deep)}
 .editorial-light .commission-specs{border-color:var(--line)}
-.editorial-light .commission-specs dt{color:var(--muted-dark)}
+.editorial-light .commission-specs dt{color:var(--muted-light)}
 .editorial-light .commission-specs dd{color:var(--gunmetal)}
 .editorial-light .text-link{color:var(--gunmetal)}
 
@@ -1393,7 +1393,7 @@ body{
 }
 .products-dropdown a{color:var(--night)!important}
 .products-dropdown a:hover{background:var(--bone)!important;color:var(--night-deep)!important}
-.mega-col>span{color:var(--muted-dark)!important}
+.mega-col>span{color:var(--muted-light)!important}
 .mega-col small{color:var(--muted-light)!important}
 
 /* Hero */
@@ -1684,7 +1684,7 @@ body,
 .text-link,
 .dark-link,
 .layout-tile .status.live,
-a[href*="request-a-build"]:not(.nav-cta):not(.button),
+a[href*="request-a-build"]:not(.nav-cta):not(.button):not(.products-dropdown a),
 a[href*="commission"]:not(.nav-cta):not(.button){
   color:var(--copper)!important;
 }
@@ -3734,7 +3734,7 @@ main,
 .archive-entry p,
 .build-card p,
 .compare-desc{
-  color:var(--muted-dark)!important;
+  color:var(--muted-light)!important;
 }
 .portal-card span,
 .story-tile span,
