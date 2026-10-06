@@ -26,7 +26,7 @@ scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 scene.environmentIntensity = 0.32;
 
 // --- keycap geometry: lofted rounded rectangles with a filleted top edge and a dished top ---
-const B = { w: 41.8, d: 18.2 }, T = { w: 36.6, d: 13.6 }, HGT = 8.0, FIL = 1.4, DISH = 0.55;
+const B = { w: 41.8, d: 18.2 }, T = { w: 36.6, d: 13.6 }, HGT = 8.0, DISH = 0.55;
 const N = 160;                                 // points around each outline
 function outline(hw, hd, r, z, dy) {           // rounded rect, counter-clockwise, centred (0, dy)
   const pts = []; const per = N / 4;
@@ -36,17 +36,19 @@ function outline(hw, hd, r, z, dy) {           // rounded rect, counter-clockwis
   }
   return pts;
 }
+// r0/r1: wall corner radius at the base/top; fil: top-edge fillet (all mm). Real Cherry-style caps: ~1mm corners, tight top edge.
+function buildGeo({ r0 = 1.8, r1 = 2.6, fil: FIL = 1.4 } = {}) {
 const rings = [];
 const SIDE = 18;                               // straight tapered wall
 for (let i = 0; i <= SIDE; i++) {
   const t = i / SIDE, z = t * (HGT - FIL);
   const hw = B.w / 2 + (T.w / 2 + FIL - B.w / 2) * t, hd = B.d / 2 + (T.d / 2 + FIL - B.d / 2) * t;
-  rings.push(outline(hw, hd, 1.8 + 0.8 * t, z, 0.7 * t));
+  rings.push(outline(hw, hd, r0 + (r1 - r0) * t, z, 0.7 * t));
 }
 const FILS = 10;                               // rounded top edge
 for (let i = 1; i <= FILS; i++) {
   const a = (i / FILS) * Math.PI / 2, inset = FIL * (1 - Math.cos(a)), z = HGT - FIL + FIL * Math.sin(a);
-  rings.push(outline(T.w / 2 + FIL - inset, T.d / 2 + FIL - inset, Math.max(0.6, 2.6 - inset), z, 0.7));
+  rings.push(outline(T.w / 2 + FIL - inset, T.d / 2 + FIL - inset, Math.max(Math.min(0.6, r1 * 0.5), r1 - inset), z, 0.7));
 }
 const wallPos = [];
 for (let r = 0; r < rings.length - 1; r++) for (let i = 0; i < N; i++) {
@@ -67,6 +69,8 @@ for (let k = 0; k < RINGS; k++) for (let i = 0; i < N; i++) {
 }
 const topGeo = new THREE.BufferGeometry(); topGeo.setAttribute('position', new THREE.Float32BufferAttribute(topPos, 3));
 topGeo.setAttribute('uv', new THREE.Float32BufferAttribute(topUv, 2)); topGeo.computeVertexNormals();
+return { wallGeo, topGeo };
+}
 
 // fine PBT grain as a bump map
 function grain(size) { const c = document.createElement('canvas'); c.width = c.height = size; const g = c.getContext('2d'); const im = g.createImageData(size, size);
@@ -101,7 +105,8 @@ const amb = new THREE.AmbientLight(0xffffff, 0.12); scene.add(amb);
 const camera = new THREE.PerspectiveCamera(14.5, W / H, 1, 1000);
 camera.up.set(0, 0, 1);
 
-window.renderKey = async ({ face, ink, text, press = 0, exposure = 1.0 }) => {
+window.renderKey = async ({ face, ink, text, press = 0, exposure = 1.0, ...shape }) => {
+  const { wallGeo, topGeo } = buildGeo(shape);
   await document.fonts.load('700 132px Cinzel');
   renderer.toneMappingExposure = exposure;
   if (wallMesh) { capGroup.remove(wallMesh, topMesh); }
