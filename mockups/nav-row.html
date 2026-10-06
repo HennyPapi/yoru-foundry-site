@@ -47,6 +47,10 @@ a.k:active .legend, a.k:active .mark, .k[aria-current] .legend, .k[aria-current]
 .cable .run { flex: 1; min-width: 24px; height: 69px; background: url(keys/cable/tile.webp) repeat-x 0 0 / 114px 69px; }
 .cable .run.long { flex: 2; }
 .cable img { flex-shrink: 0; height: 69px; width: auto; display: block; }
+.cable { position: relative; }
+/* LED beads: warm light travelling inside the braid, added over the cable with a screen blend */
+.bead { position: absolute; left: 0; top: 0; width: 26px; height: 11px; margin: -5.5px 0 0 -13px; border-radius: 50%; pointer-events: none; mix-blend-mode: screen; opacity: 0;
+  background: radial-gradient(closest-side, rgba(255,214,176,.95), rgba(232,131,77,.6) 45%, rgba(232,131,77,0)); }
 .narrow { max-width: 1000px; }
 .narrow .cable .coil, .narrow .cable .run.long { display: none; }   /* in the real header: a media query below ~1180px */
 .page-hint { height: 40px; background: linear-gradient(var(--cast), var(--deep)); }
@@ -60,6 +64,12 @@ a.k:active .legend, a.k:active .mark, .k[aria-current] .legend, .k[aria-current]
   <div class="bar"><span class="medallion-wrap"><img class="medallion" src="tex/logo-trim.webp" alt=""></span><div class="deck"><div class="cable" aria-hidden="true"><span class="run"></span><img class="coil" src="keys/cable/coil.webp" alt=""><span class="run long"></span><img src="keys/cable/plug.webp" alt=""></div><div class="row" data-row="C"></div></div></div>
   <p>The same header in a 1,000px window: there is no room for the coil, so the cable becomes one short straight run into the plug.</p>
   <div class="bar narrow"><span class="medallion-wrap"><img class="medallion" src="tex/logo-trim.webp" alt=""></span><div class="deck"><div class="cable" aria-hidden="true"><span class="run"></span><img class="coil" src="keys/cable/coil.webp" alt=""><span class="run long"></span><img src="keys/cable/plug.webp" alt=""></div><div class="row" data-row="C"></div></div></div>
+</section>
+
+<section class="cell">
+  <h2>C with an LED cable</h2>
+  <p>The same cable with beads of warm light travelling through it from left to right, one after another, spiralling through the coil (dimmer where they pass behind a loop) and fading into the plug. Turned off for anyone who has reduced motion set on their device.</p>
+  <div class="bar"><span class="medallion-wrap"><img class="medallion" src="tex/logo-trim.webp" alt=""></span><div class="deck"><div class="cable led" aria-hidden="true"><span class="run"></span><img class="coil" src="keys/cable/coil.webp" alt=""><span class="run long"></span><img src="keys/cable/plug.webp" alt=""></div><div class="row" data-row="C"></div></div></div>
 </section>
 
 <section class="cell">
@@ -113,6 +123,39 @@ function key([cap, link]) {
   return `<a class="k" style="${v}" href="${l.href}" aria-label="${l.name}"${l.current ? ' aria-current="page"' : ''}>${imgs}${face}</a>`;
 }
 document.querySelectorAll('[data-row]').forEach(r => { r.innerHTML = ROWS[r.dataset.row].map(key).join(''); });
+
+// LED beads. The coil's centreline comes from the 3D render (CSS px within coil.webp; 1 = on the near side of a loop).
+const LED = {"axis": 34.2, "coil": [[0.0, 34.2, 1], [4.8, 34.2, 1], [9.3, 34.2, 1], [13.1, 34.2, 1], [18.1, 34.7, 0], [18.5, 37.3, 0], [19.2, 39.4, 0], [20.2, 40.9, 0], [20.9, 40.9, 1], [21.6, 39.9, 1], [22.3, 38.0, 1], [23.0, 35.1, 1], [23.8, 31.6, 1], [24.7, 27.5, 1], [25.4, 23.5, 1], [26.1, 19.5, 1], [26.8, 15.9, 1], [27.5, 12.8, 1], [28.3, 10.9, 1], [29.2, 9.7, 1], [29.9, 9.7, 0], [30.6, 10.9, 0], [31.3, 13.1, 0], [32.1, 15.9, 0], [32.8, 19.7, 0], [33.7, 23.8, 0], [34.4, 27.8, 0], [35.1, 31.8, 0], [35.9, 35.4, 0], [36.6, 38.2, 0], [37.3, 40.1, 0], [38.2, 40.9, 1], [38.9, 40.9, 1], [39.7, 39.4, 1], [40.4, 37.3, 1], [41.1, 34.2, 1], [41.8, 30.4, 1], [42.8, 26.4, 1], [43.5, 22.1, 1], [44.2, 18.3, 1], [44.9, 14.7, 1], [45.6, 12.1, 1], [46.3, 10.4, 1], [47.3, 9.7, 1], [48.0, 10.0, 0], [48.7, 11.4, 0], [49.4, 14.0, 0], [50.1, 17.1, 0], [50.8, 20.9, 0], [51.8, 25.2, 0], [52.5, 29.2, 0], [53.2, 33.0, 0], [53.9, 36.3, 0], [54.6, 38.9, 0], [55.3, 40.4, 0], [56.3, 41.1, 1], [57.0, 40.4, 1], [57.7, 38.7, 1], [58.4, 36.3, 1], [59.1, 33.0, 1], [59.8, 29.0, 1], [60.8, 24.9, 1], [61.5, 20.9, 1], [62.2, 17.1, 1], [62.9, 13.8, 1], [63.6, 11.4, 1], [64.4, 10.0, 1], [65.3, 9.7, 1], [66.0, 10.4, 0], [66.7, 12.1, 0], [67.5, 15.0, 0], [68.2, 18.3, 0], [68.9, 22.3, 0], [69.8, 26.4, 0], [70.5, 30.4, 0], [71.2, 34.2, 0], [72.0, 37.3, 0], [72.7, 39.4, 0], [73.6, 40.9, 0], [74.3, 40.9, 1], [75.0, 40.1, 1], [75.8, 38.0, 1], [76.5, 35.1, 1], [77.2, 31.6, 1], [78.1, 27.8, 1], [78.8, 23.5, 1], [79.6, 19.5, 1], [80.3, 15.9, 1], [81.0, 13.1, 1], [81.7, 10.9, 1], [82.6, 9.7, 1], [83.4, 9.7, 0], [84.1, 10.9, 0], [84.8, 13.1, 0], [85.5, 15.9, 0], [86.2, 19.7, 0], [87.2, 23.8, 0], [87.9, 27.8, 0], [88.6, 31.8, 0], [89.3, 35.4, 0], [90.0, 38.2, 0], [90.7, 40.1, 0], [91.7, 40.9, 1], [92.4, 40.9, 1], [93.1, 39.4, 1], [93.8, 37.3, 1], [94.5, 34.2, 1], [95.2, 30.4, 1], [96.2, 26.4, 1], [96.9, 22.1, 1], [97.6, 18.3, 1], [98.3, 15.0, 1], [99.0, 12.1, 1], [99.8, 10.4, 1], [100.7, 9.7, 1], [101.4, 10.0, 0], [102.1, 11.4, 0], [102.8, 14.0, 0], [103.5, 17.1, 0], [104.3, 20.9, 0], [105.2, 24.9, 0], [105.9, 29.2, 0], [106.6, 33.0, 0], [107.3, 36.3, 0], [108.1, 38.9, 0], [108.8, 40.4, 0], [109.7, 41.1, 1], [110.4, 40.4, 1], [111.1, 38.9, 1], [111.9, 36.3, 1], [112.6, 33.0, 1], [113.3, 29.0, 1], [114.2, 24.9, 1], [114.9, 20.9, 1], [115.7, 17.1, 1], [116.4, 13.8, 1], [117.1, 11.4, 1], [117.8, 10.0, 1], [118.8, 9.7, 1], [119.5, 10.4, 0], [120.2, 12.1, 0], [120.9, 15.0, 0], [121.6, 18.3, 0], [122.3, 22.3, 0], [123.3, 26.4, 0], [124.0, 30.4, 0], [124.4, 33.7, 0], [129.4, 34.2, 1], [133.2, 34.2, 1], [137.8, 34.2, 1], [142.5, 34.2, 1], [142.5, 34.2, 1]]};
+const COLLAR = 18, SPEED = 150, EVERY = 1300;                 // collar width px, bead speed px/s, ms between beads
+function ledPath(cable) {                                     // the whole route in cable coordinates, rebuilt on resize
+  const [run1, coil, run2, plug] = cable.children, pts = [];
+  const line = (a, b) => { for (let x = a; x < b; x += 3) pts.push([x, LED.axis, 1]); };
+  line(0, run1.offsetLeft + run1.offsetWidth);
+  for (const [x, y, v] of LED.coil) pts.push([coil.offsetLeft + x, y, v && x > COLLAR && x < coil.offsetWidth - COLLAR ? 1 : 0]);
+  line(run2.offsetLeft, run2.offsetLeft + run2.offsetWidth);
+  pts.push([plug.offsetLeft + 4, LED.axis, 0]);                // fades out into the strain relief
+  const len = [0]; for (let i = 1; i < pts.length; i++) len.push(len[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+  return { pts, len };
+}
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.querySelectorAll('.cable.led').forEach(cable => {
+  let route = ledPath(cable); addEventListener('resize', () => { route = ledPath(cable); });
+  const GAP = SPEED * EVERY / 1000, beads = [];               // px between beads; enough beads to fill the route
+  const t0 = performance.now();
+  (function frame(now) {
+    const total = route.len[route.len.length - 1], n = Math.ceil((total + GAP) / GAP);
+    while (beads.length < n) { const b = document.createElement('span'); b.className = 'bead'; cable.appendChild(b); beads.push(b); }
+    beads.forEach((b, k) => {
+      const s = ((now - t0) / 1000 * SPEED - k * GAP) % (n * GAP);
+      if (k >= n || s < 0 || s > total) { b.style.opacity = 0; return; }
+      let i = route.len.findIndex(l => l >= s); i = Math.max(1, i);
+      const [ax, ay, av] = route.pts[i - 1], [bx, by, bv] = route.pts[i], f = (s - route.len[i - 1]) / (route.len[i] - route.len[i - 1] || 1);
+      const ang = Math.atan2(by - ay, bx - ax) * 180 / Math.PI;
+      b.style.transform = 'translate(' + (ax + (bx - ax) * f) + 'px, ' + (ay + (by - ay) * f) + 'px) rotate(' + ang + 'deg)';
+      b.style.opacity = (av && bv) ? 1 : 0.15;
+    });
+    requestAnimationFrame(frame);
+  })(t0);
+});
 </script>
 </body>
 </html>

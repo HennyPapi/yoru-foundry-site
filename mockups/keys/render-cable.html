@@ -96,7 +96,9 @@ window.renderPiece = async ({ name, braidColor, tracer, collar, housing }) => {
       pts.push(new THREE.Vector3(x, -CR * Math.sin(th), R + CR - CR * Math.cos(th)));
     }
     pts.push(new THREE.Vector3(span / 2 + lead * 0.4, 0, R), new THREE.Vector3(span / 2 + lead, 0, R));
-    group.add(cableMesh(new THREE.CatmullRomCurve3(pts, false, 'centripetal'), tex, 900));
+    window.coilCurve = new THREE.CatmullRomCurve3(pts, false, 'centripetal');
+    window.coilAxisZ = R + CR;
+    group.add(cableMesh(window.coilCurve, tex, 900));
     for (const sx of [-1, 1]) {
       const c = piece(new THREE.Mesh(along(new THREE.CylinderGeometry(R + 0.55, R + 0.55, 5, 40)), metal(collar)), sx * (span / 2 + lead - 2.5), R);
       group.add(c);
@@ -114,7 +116,9 @@ window.renderPiece = async ({ name, braidColor, tracer, collar, housing }) => {
   renderer.render(scene, camera);
   const sx = v => Math.round((v.clone().project(camera).x + 1) / 2 * W);
   const sy = v => Math.round((1 - v.clone().project(camera).y) / 2 * H);
-  window.lastSpan = { x0: sx(new THREE.Vector3(x0, 0, R)), x1: sx(new THREE.Vector3(x1, 0, R)), groundY: sy(new THREE.Vector3(0, 0, 0)), axisY: sy(new THREE.Vector3(0, 0, R)) };
+  // the coil's centreline on screen, with whether each point is on the near side of the coil (for LED beads)
+  const path = name === 'coil' ? window.coilCurve.getSpacedPoints(600).map(p => [sx(p), sy(p), +(p.clone().sub(new THREE.Vector3(p.x, 0, window.coilAxisZ)).dot(dir) < 0.5)]) : null;
+  window.lastSpan = { path, x0: sx(new THREE.Vector3(x0, 0, R)), x1: sx(new THREE.Vector3(x1, 0, R)), groundY: sy(new THREE.Vector3(0, 0, 0)), axisY: sy(new THREE.Vector3(0, 0, R)) };
   return renderer.domElement.toDataURL('image/png');
 };
 // where the plate (ground at depth 0) lands in a keycap render, for lining the cable up with the keys
