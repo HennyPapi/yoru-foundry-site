@@ -58,13 +58,13 @@ Known small issues (fix when touching these areas):
 | 1 | Codify build rules (`AGENTS.md`) | Done |
 | 2 | Content as data (`content.js`, `SITE_MODE`) | Done |
 | 3 | Tokenized CSS system | Done |
-| 3.5 | Surface/texture system, footer normalization, first paint | **Paused** — redesign may replace the texture work |
+| 3.5 | Surface/texture system, footer normalization, first paint | Done: no texture (Mike), one footer on all 17 pages (measured identical: 245px desktop, 410px phone), Cast first paint |
 | 4–5 | *Not defined in the repo; Mike to confirm what these were* | ? |
-| 6 | Header: one header on every page | Done (Verdigris header, 2026-10-06) |
+| 6 | Header: one header on every page | Done: keyboard-row header with the LED cable (2026-10-06) |
 | 7 | Homepage hero and message | Planned (needs Mike's copy) |
 | 8 | Media and sound readiness | Planned |
 | 9 | Footer redesign (four columns) | Planned |
-| 10 | Commission form sends without `mailto:` | Planned (needs a decision) |
+| 10 | Commission form sends without `mailto:` | Planned (needs a decision). Form restyled in Verdigris (2026-10-06); lower half of the page still old |
 | 11 | Motion and reduced motion | Planned |
 | 12 | Image and page weight | Planned — partly pulled forward |
 | 13 | Cleanup: unused files, orphan pages, dead CSS | Planned |
@@ -73,19 +73,14 @@ Known small issues (fix when touching these areas):
 
 ## Phase details
 
-### 3.5 — finish (next up)
-- Lock the texture decision. The homepage currently uses `metal027-color-luma-4k.webp` (Night) and
-  `plaster-grey-04.webp` (Bone), left over from the diagnostic commits. Mike confirms these are the keepers.
-- Delete the 7 texture files nothing references (~19 MB): `metal027-microtexture`, `metal027-roughness-4k`,
-  `metal027-roughness`, `night-iron-beadblast`, `paper001-color`, `paper001-displacement`, `wallpaper002b-paper`.
-- Shrink the two kept textures. They are 2.3 MB and 3.5 MB; the target is under 500 KB each, with no
-  visible change. Pulled forward from Phase 12 because every homepage visit downloads them.
-- Bump `CURRENT_PHASE` to the next phase.
+### 3.5 — done
+- Texture: none (Mike, 2026-10-06); the texture files are deleted.
+- Footer: every page uses the one `standard` footer; its size is identical on all 17 pages. The size jumps Mike saw
+  are on the old production site and go away at launch.
 
-### 6 — Header
-- One header on every page; the site check already watches for header variants.
-- Products menu behavior is settled: hover on desktop, tap on touch, and Escape / outside click close it.
-- Check the mobile panel at 860px and below, the logo at 68px / 54px, and the CTA styling against `AGENTS.md`.
+### 6 — Header (done)
+- The bottom row of a keyboard: rendered keycaps for the links and the Enter key for the commission, a braided USB-C
+  cable with an LED from the medallion to the keys. See `YORU_SITE_MEMORY.md` and `mockups/keys/`.
 
 ### 7 — Homepage hero
 - The H1 must say what the business makes ("keyboards"). The site check enforces this.
