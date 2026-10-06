@@ -89,6 +89,7 @@ Rules:
 - **Plain** (header commission, secondary actions): Green Sand face, Bright text, near-black edge.
 - Text links: Cinzel, underlined with a copper or verdigris underline; no "→" appended.
 - No gradient buttons. No glossy, glass, neon, or oversized ecommerce-style CTAs. Buttons never flash pure white or black.
+- **Exception: the rendered commission keycap** (Mike, 2026-10-06). The commission button may be a 3D-rendered Enter keycap image (`/assets/keys/`): its shading and baked-in cast shadow are part of the photo-real render, not CSS gradients or `box-shadow`. Idle, hover and pressed are separate renders (the pressed cap sinks into the plate) swapped instantly by state. Sharp corners (1.0–1.3mm walls, 0.7mm top edge). Re-render with `mockups/keys/render-keycap.html`; never fake it with CSS gradients or shadows.
 
 ### Motion specification
 
