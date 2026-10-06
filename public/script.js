@@ -103,4 +103,11 @@ function fill(side){
   if(!menu)return;
   document.addEventListener("click",e=>{if(menu.open&&!menu.contains(e.target))menu.open=false});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&menu.open){menu.open=false;menu.querySelector("summary")?.focus()}});
+  const hover=matchMedia("(hover:hover) and (pointer:fine) and (min-width:861px)");
+  const summary=menu.querySelector("summary");
+  let timer;
+  menu.addEventListener("mouseenter",()=>{if(!hover.matches)return;clearTimeout(timer);menu.open=true});
+  menu.addEventListener("mouseleave",()=>{if(!hover.matches)return;clearTimeout(timer);timer=setTimeout(()=>{menu.open=false},250)});
+  summary?.addEventListener("click",e=>{if(hover.matches&&e.detail>0&&menu.open){e.preventDefault()}});
+  menu.querySelectorAll(".products-dropdown").forEach(d=>d.addEventListener("click",e=>{if(e.target.closest("a"))menu.open=false}));
 })();
