@@ -452,72 +452,30 @@ html{font-synthesis:none}
 
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:var(--space-0);background:radial-gradient(circle at 78% -10%,var(--alpha-surface-080),transparent 36rem),var(--night-void);color:var(--bone-text);font-family:var(--font-body);line-height:1.65;-webkit-font-smoothing:antialiased}body.modal-open{overflow:hidden}a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
 
-.home-hero{max-width:var(--max);margin:var(--space-auto);min-height:70vh;padding:var(--space-pattern-005);display:flex;align-items:center}.home-copy{max-width:930px}
-.kicker,.eyebrow{color:var(--patina);font-size:var(--type-11);font-weight:700;letter-spacing:var(--space-pattern-006);text-transform:uppercase}
-.home-hero h1,.page-hero h1{font-family:var(--font-display);font-weight:600;letter-spacing:var(--space-pattern-007);line-height:.92;margin:var(--space-pattern-008)}.home-hero h1{font-size:var(--type-fluid-01);color:var(--patina)}
-.manifesto{max-width:900px;font-family:var(--font-body);font-size:var(--type-fluid-02);line-height:1.47;color:var(--copper-text)}
-.hero-actions{display:flex;gap:var(--space-12);flex-wrap:wrap;margin-top:var(--space-34)}.button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:var(--space-pattern-009);border-radius:var(--radius-8px);font-size:var(--type-13);font-weight:700}.primary{background:linear-gradient(var(--patina),var(--gunmetal));box-shadow:none}.secondary{border:var(--border-width-accent) solid var(--line-accent);background:var(--alpha-bone-015)}
-.portal-section{max-width:var(--max);margin:var(--space-auto);padding:var(--space-pattern-010);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-16)}.portal-card{padding:var(--space-30);min-height:290px;border:var(--border-width) solid var(--line);border-radius:var(--radius-18px);background:linear-gradient(180deg,var(--night-deep),var(--night-deep));transition:transform var(--duration-base),border-color var(--duration-base)}.portal-card:hover{transform:translateY(-4px);border-color:var(--line-accent)}.portal-card span{color:var(--patina);font-size:var(--type-11);letter-spacing:var(--space-pattern-011)}.portal-card h2{font-family:var(--font-display);font-size:var(--type-39);line-height:1;margin:var(--space-pattern-012)}.portal-card p{color:var(--muted-light);font-size:var(--step-3)}
+.eyebrow{color:var(--patina);font-size:var(--type-11);font-weight:700;letter-spacing:var(--space-pattern-006);text-transform:uppercase}
+.page-hero h1{font-family:var(--font-display);font-weight:600;letter-spacing:var(--space-pattern-007);line-height:.92;margin:var(--space-pattern-008)}
+
+.button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:var(--space-pattern-009);border-radius:var(--radius-8px);font-size:var(--type-13);font-weight:700}.secondary{border:var(--border-width-accent) solid var(--line-accent);background:var(--alpha-bone-015)}
+
 .page-main{max-width:var(--max);margin:var(--space-auto);padding:var(--space-pattern-010)}.page-hero{padding:var(--space-pattern-013);max-width:940px}.page-hero.narrow{max-width:820px}.page-hero h1{font-size:var(--type-fluid-03);color:var(--patina)}.page-hero>p:last-child{font-family:var(--font-body);font-size:var(--type-fluid-04);line-height:1.5;color:var(--copper)}
 .layout-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-18)}.layout-tile{background:var(--panel);border:var(--border-width) solid var(--line);border-radius:var(--radius-18px);overflow:hidden;transition:transform var(--duration-base) var(--ease),border-color var(--duration-base) var(--ease)}.layout-tile.active:hover{transform:translateY(-3px);border-color:var(--line-accent)}.layout-tile.coming{opacity:.68}.tile-copy{padding:var(--space-22)}.tile-copy h2{font-family:var(--font-display);font-size:var(--type-38);margin:var(--space-pattern-014)}.tile-copy p{color:var(--muted-dark);font-size:var(--step-3)}.tile-copy b{color:var(--copper);font-size:var(--step-2)}.status{display:inline-block;font-size:var(--step-1);letter-spacing:var(--space-pattern-015);text-transform:uppercase;color:var(--muted-dark)}.status.live{color:var(--muted-dark)}
 .keyboard-diagram{position:relative;min-height:220px;padding:var(--space-pattern-016);background:linear-gradient(145deg,var(--night),var(--night-deep));border-bottom:var(--border-width) solid var(--line);display:flex;flex-direction:column;justify-content:center;gap:var(--space-5)}.diagram-label{position:absolute;top:var(--space-16);left:var(--space-18);color:var(--alpha-bone-720);font-size:var(--type-11);letter-spacing:var(--space-pattern-017)}.key-row{display:flex;gap:var(--space-4);justify-content:center}.key{width:18px;height:18px;border:var(--border-width) solid var(--line);border-radius:var(--radius-3px);background:var(--night-deep)}.key.wide{width:34px}
-.education-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-18)}.education-tile{appearance:none;width:100%;text-align:left;background:var(--panel);color:inherit;border:var(--border-width) solid var(--line);border-radius:var(--radius-18px);padding:var(--space-20);cursor:pointer;transition:transform var(--duration-base),border-color var(--duration-base);font:inherit}.education-tile:hover{transform:translateY(-3px);border-color:var(--line-accent)}.education-tile span{color:var(--patina);font-size:var(--type-11);letter-spacing:var(--space-pattern-011)}.education-tile h2{font-family:var(--font-display);font-size:var(--type-36);margin:var(--space-pattern-018)}.education-tile p{color:var(--muted-light)}.education-tile b{color:var(--patina);font-size:var(--step-2)}.audio-placeholder{min-height:220px;border-radius:var(--radius-12px);border:var(--border-width) solid var(--line);background:radial-gradient(circle at 30% 30%,var(--alpha-patina-180),transparent 34%),var(--night-deep);display:flex;align-items:flex-end;padding:var(--space-14);color:var(--muted-dark);font-size:var(--step-2)}
 
-.about-editorial{display:grid;grid-template-columns:.8fr 1.2fr;gap:var(--space-pattern-022);border-top:var(--border-width) solid var(--line)}.about-editorial>div{padding:var(--space-pattern-023);border-bottom:var(--border-width) solid var(--line)}.about-editorial h2{font-family:var(--font-display);font-size:var(--type-42);line-height:1.08;margin:var(--space-0)}.about-editorial p{font-family:var(--font-body);font-size:var(--type-22);line-height:1.55;color:var(--muted-dark)}.about-editorial .motto{font-size:var(--type-42);color:var(--patina);margin-bottom:var(--space-8)}
 label{display:grid;gap:var(--space-8);margin-bottom:var(--space-14);color:var(--copper-text);font-size:var(--step-2);font-weight:600}input,select,textarea{width:100%;padding:var(--space-pattern-024);border:var(--border-width) solid var(--line);border-radius:var(--radius-8px);background:var(--night-deep);color:var(--bone-text);font:inherit;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--line-accent);box-shadow:none}
 
 @media(max-width:1120px){.layout-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:980px){.portal-section{grid-template-columns:1fr 1fr}.about-editorial{grid-template-columns:1fr}}
 
-@media(max-width:680px){.home-hero,.portal-section,.page-main{padding-left:var(--space-18);padding-right:var(--space-18)}.portal-section,.layout-grid,.education-grid{grid-template-columns:1fr}.home-hero{min-height:auto;padding-top:var(--space-85)}}
+@media(max-width:680px){.page-main{padding-left:var(--space-18);padding-right:var(--space-18)}.layout-grid{grid-template-columns:1fr}}
 
 /* 2026-09-10 refinement pass */
 
-.standards-section,.layout-preview{max-width:var(--max);margin:var(--space-auto);padding:var(--space-pattern-030);border-top:var(--border-width) solid var(--line)}
-.standards-head{max-width:760px;margin-bottom:var(--space-36)}
-.standards-head h2{font-family:var(--font-display);font-size:var(--type-fluid-05);line-height:1;margin:var(--space-pattern-031);font-weight:600}
-.standards-head>p:last-child{color:var(--muted-dark);font-size:var(--step-4)}
-.standards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-14)}
-.standards-grid article{min-height:250px;padding:var(--space-26);border:var(--border-width) solid var(--line);border-radius:var(--radius-16px);background:linear-gradient(180deg,var(--night-deep),var(--night-deep))}
-.standards-grid span{color:var(--patina);font-size:var(--step-1);letter-spacing:var(--space-pattern-011)}
-.standards-grid h3{font-family:var(--font-display);font-size:var(--type-30);line-height:1.05;margin:var(--space-pattern-032)}
-.standards-grid p{color:var(--muted-dark);font-size:var(--type-13)}
-.mini-layout-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-14)}
-.mini-layout{display:grid;gap:var(--space-10);min-height:190px;padding:var(--space-26);border:var(--border-width) solid var(--line);border-radius:var(--radius-16px);background:var(--night-deep);transition:transform var(--duration-base),border-color var(--duration-base)}
-.mini-layout.live:hover{transform:translateY(-3px);border-color:var(--line-accent)}
-.mini-layout span{font-size:var(--step-1);letter-spacing:var(--space-pattern-017);color:var(--patina)}
-.mini-layout strong{align-self:end;font-family:var(--font-display);font-size:var(--type-42);font-weight:600}
-.mini-layout small{color:var(--muted-dark)}
-.mini-layout.muted{opacity:.58}
-@media(max-width:1000px){.standards-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:680px){.standards-section,.layout-preview{padding:var(--space-pattern-033)}.standards-grid,.mini-layout-grid{grid-template-columns:1fr}}
-
 /* Boutique commission expansion */
-.featured-commission{max-width:var(--max);margin:var(--space-auto);padding:var(--space-pattern-034);display:grid;grid-template-columns:1.25fr .75fr;gap:var(--space-52);align-items:center;border-top:var(--border-width) solid var(--line)}
-.featured-photo{min-height:620px;border-radius:var(--radius-18px);border:var(--border-width) solid var(--line);background:radial-gradient(circle at 32% 25%,var(--alpha-patina-220),transparent 30%),linear-gradient(135deg,var(--night-deep),var(--night-deep) 70%);display:flex;align-items:flex-end;padding:var(--space-20);color:var(--muted-dark);font-size:var(--step-2)}
-.featured-copy h2{font-family:var(--font-display);font-size:var(--type-fluid-06);line-height:1.03;font-weight:600;margin:var(--space-pattern-035)}.featured-copy>p{color:var(--muted-light);font-size:var(--step-4)}
-.commission-specs{display:grid;grid-template-columns:1fr 1fr;margin:var(--space-pattern-036);border-top:var(--border-width) solid var(--line);border-bottom:var(--border-width) solid var(--line)}.commission-specs>div{padding:var(--space-pattern-037)}.commission-specs dt{font-size:var(--step-1);letter-spacing:var(--space-pattern-015);text-transform:uppercase;color:var(--muted-dark)}.commission-specs dd{margin:var(--space-pattern-038);font-family:var(--font-display);font-size:var(--type-23)}
 
 .compare-audio{margin:var(--space-pattern-042);padding:var(--space-pattern-043);border:var(--border-width-accent) dashed var(--line-accent);border-radius:var(--radius-10px);text-align:center;color:var(--muted-dark);font-size:var(--step-2)}
-
-@media(max-width:900px){.featured-commission{grid-template-columns:1fr}.featured-photo{min-height:420px}}
-@media(max-width:640px){.featured-commission{padding-left:var(--space-18);padding-right:var(--space-18)}}
 
 /* Warm ivory editorial tile system */
 
 /* Homepage gateway cards */
-.portal-card{
-  background:linear-gradient(180deg,var(--bone),var(--bone));
-  color:var(--ink);
-  border-color:var(--line);
-  box-shadow:none;
-}
-.portal-card span{color:var(--gunmetal)}
-.portal-card p{color:var(--muted-light)}
-.portal-card:hover{
-  border-color:var(--line-strong);
-  box-shadow:none;
-}
 
 /* Crafted Art + Products layout tiles */
 .layout-tile{
@@ -541,66 +499,24 @@ label{display:grid;gap:var(--space-8);margin-bottom:var(--space-14);color:var(--
 .layout-tile .diagram-label{color:var(--patina)}
 
 /* Trust the Process + Built to Taste tiles */
-.education-tile{
-  background:linear-gradient(180deg,var(--bone),var(--bone));
-  color:var(--ink);
-  border-color:var(--line);
-  box-shadow:none;
-}
-.education-tile span{color:var(--gunmetal)}
-.education-tile p{color:var(--muted-light)}
-.education-tile b{color:var(--gunmetal)}
-.education-tile:hover{
-  border-color:var(--line-strong);
-  box-shadow:none;
-}
 
 /* Built to Taste comparison cards */
 
 /* Keep hierarchy clean on smaller screens */
 @media(max-width:680px){
-  .portal-card,.layout-tile,.education-tile{
+  .layout-tile{
     box-shadow:none;
   }
 }
 
 /* Dark cards that were disappearing into the background now use ivory surfaces */
-.standards-grid article{
-  background:linear-gradient(180deg,var(--bone),var(--bone));
-  color:var(--ink);
-  border-color:var(--line);
-  box-shadow:none;
-}
-.standards-grid article span{
-  color:var(--gunmetal);
-}
-.standards-grid article p{
-  color:var(--muted-light);
-}
-.standards-grid article h3{
-  color:var(--ink);
-}
 
 /* Keep image/media zones dark so photography still pops */
 
 /* Sharper separation for remaining dark interactive tiles */
-.feature-grid>div,
-.product-card,
-.family-card{
-  background:linear-gradient(180deg,var(--night-deep),var(--night-deep));
-  border-color:var(--line);
-  box-shadow:none;
-}
-.feature-grid p,
-.product-card p,
-.family-card p{
-  color:var(--copper);
-}
 
 /* Make green accents legible on black without becoming bright/neon */
-.eyebrow,.kicker,
-.portal-card span,
-.timeline-grid span,
+.eyebrow,
 .layout-tile .status.live{
   color:var(--patina);
 }
@@ -615,168 +531,27 @@ body{
 }
 
 /* Cinematic editorial hero */
-.gallery-hero{
-  max-width:var(--max);
-  min-height:calc(100vh - 102px);
-  display:grid;
-  grid-template-columns:.9fr 1.1fr;gap:var(--space-pattern-068);
-  align-items:center;padding:var(--space-pattern-069);
-}
-.gallery-hero .home-copy{max-width:720px}
-.gallery-hero h1{
-  color:var(--patina);
-  font-size:var(--type-fluid-09);
-  line-height:.88;
-}
-.gallery-hero .manifesto{
-  max-width:680px;
-  font-size:var(--type-fluid-10);
-  color:var(--copper-text);
-}
-.gallery-hero .kicker{
-  color:var(--copper-text);
-}
-.hero-micro{
-  display:flex;
-  flex-wrap:wrap;gap:var(--space-0);margin-top:var(--space-27);
-  color:var(--muted-dark);
-  font-size:var(--step-1);letter-spacing:var(--space-pattern-011);
-  text-transform:uppercase;
-}
-.hero-micro span+span:before{
-  content:"•";
-  color:var(--copper);margin:var(--space-pattern-070);
-}
-.hero-showpiece{min-width:0}
-.hero-showpiece-frame{
-  min-height:610px;
-  position:relative;
-  overflow:hidden;
-  display:flex;
-  align-items:flex-end;padding:var(--space-24);
-  border:var(--border-width) solid var(--line);
-  background:
-    linear-gradient(180deg,var(--alpha-night-deep-020),var(--alpha-night-deep-380)),
-    radial-gradient(circle at 60% 32%,var(--alpha-patina-200),transparent 28%),
-    linear-gradient(135deg,var(--night-deep) 0%,var(--night-deep) 52%,var(--night-deep) 100%);
-  box-shadow:none;
-}
-.hero-showpiece-frame:before{
-  content:"";
-  position:absolute;inset:var(--space-18);
-  border:var(--border-width) solid var(--line);
-  pointer-events:none;
-}
-.showpiece-index{
-  position:absolute;top:var(--space-34);left:var(--space-38);
-  color:var(--copper-text);
-  font-size:var(--type-11);font-weight:700;letter-spacing:var(--space-pattern-006);
-}
-.showpiece-caption{
-  max-width:320px;
-  color:var(--muted-dark);
-  font-size:var(--step-2);letter-spacing:var(--space-pattern-071);
-}
-.showpiece-specs{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);gap:var(--space-0);
-  border:var(--border-width) solid var(--line);
-  border-top:0;
-}
-.showpiece-specs span{padding:var(--space-pattern-024);
-  text-align:center;
-  color:var(--muted-dark);
-  font-size:var(--type-9);letter-spacing:var(--space-pattern-072);
-  border-right:var(--border-width) solid var(--line-quiet);
-}
-.showpiece-specs span:last-child{border-right:0}
 
 /* CTA treatment */
-.button.primary{
-  background:linear-gradient(180deg,var(--patina),var(--gunmetal));
-  box-shadow:none;
-}
+
 .button.secondary{
   border-color:var(--line-accent);
   color:var(--bone);
 }
 
 /* Cream editorial rhythm */
-.editorial-light{
-  max-width:none;padding:var(--space-pattern-073);
-  background:linear-gradient(180deg,var(--bone),var(--bone));
-  color:var(--night-deep);
-  border-top:var(--border-width) solid var(--line-strong);
-  border-bottom:var(--border-width) solid var(--line);
-}
-.editorial-light .featured-photo{
-  background:
-    radial-gradient(circle at 35% 30%,var(--alpha-patina-180),transparent 34%),
-    linear-gradient(145deg,var(--night-deep),var(--night-deep));
-  border-color:var(--line);
-}
-.editorial-light .featured-copy h2{color:var(--night-deep)}
-.editorial-light .featured-copy>p{color:var(--gunmetal)}
-.editorial-light .eyebrow{color:var(--copper-deep)}
-.editorial-light .commission-specs{border-color:var(--line)}
-.editorial-light .commission-specs dt{color:var(--muted-light)}
-.editorial-light .commission-specs dd{color:var(--gunmetal)}
 
 /* Technical brochure details */
-.commission-specs dt{letter-spacing:var(--space-pattern-041);
-}
-.commission-specs dd{
-  font-size:var(--type-26);
-}
 
 /* Dark showroom areas */
-.standards-section,.layout-preview{
-  background:transparent;
-}
-.standards-section{
-  border-top:var(--border-width) solid var(--line-quiet);
-}
-.standards-head h2{
-  color:var(--bone);
-}
-.standards-grid article{
-  background:linear-gradient(180deg,var(--night-deep),var(--night-deep))!important;
-  color:var(--bone)!important;
-  border-color:var(--line)!important;
-  box-shadow:none;
-}
-.standards-grid article h3{color:var(--bone)!important}
-.standards-grid article p{color:var(--muted-dark)!important}
-.standards-grid article span{color:var(--copper-text)!important}
 
 /* Layout preview as architecture cards */
-.mini-layout{
-  background:var(--bone);
-  color:var(--night-deep);
-  border-color:var(--line);
-}
-.mini-layout span{color:var(--copper-deep)}
-.mini-layout.live:hover{border-color:var(--line-strong)}
-.mini-layout strong{color:var(--night)}
-.mini-layout small{color:var(--muted-dark)}
 
 /* Footer becomes intentionally quiet */
 
 /* Request page as a light configurator on dark canvas */
 
 /* Mobile */
-@media(max-width:1040px){
-  .gallery-hero{grid-template-columns:1fr;min-height:auto}
-  .hero-showpiece-frame{min-height:480px}
-  
-}
-
-@media(max-width:680px){
-  .gallery-hero{padding-left:var(--space-18);padding-right:var(--space-18)}
-  .hero-showpiece-frame{min-height:360px}
-  .showpiece-specs{grid-template-columns:1fr}
-  .showpiece-specs span{border-right:0;border-bottom:var(--border-width) solid var(--line-quiet)}
-}
 
 /* ===== GILDED EARTH COLOR TEST — exact warm luxury palette ===== */
 
@@ -785,51 +560,28 @@ body{
   background:var(--night-deep);
   color:var(--copper-text);
 }
-.home-hero,.page-main,.standards-section,.layout-preview{
+.page-main{
   background:var(--night-deep);
 }
 
 /* Dropdown follows the cream gallery language */
 
 /* Hero: warm dark metal + champagne typography */
-.gallery-hero{
-  background:
-    radial-gradient(circle at 78% 28%,var(--alpha-accent-080),transparent 28rem),
-    linear-gradient(180deg,var(--night-deep) 0%,var(--night-deep) 70%);
-}
-.gallery-hero h1,.home-hero h1,.page-hero h1{
+
+.page-hero h1{
   color:var(--copper-text)!important;
 }
-.gallery-hero .kicker,.kicker,.eyebrow{
+.eyebrow{
   color:var(--copper)!important;
 }
-.gallery-hero .manifesto,.manifesto,.page-hero>p:last-child{
+.page-hero>p:last-child{
   color:var(--bone)!important;
 }
-.hero-micro{color:var(--copper)!important}
-.hero-micro span+span:before{color:var(--copper)!important}
 
 /* Hero image placeholder uses charcoal bronze instead of green */
-.hero-showpiece-frame{
-  background:
-    linear-gradient(180deg,var(--alpha-night-deep-020),var(--alpha-night-deep-460)),
-    radial-gradient(circle at 60% 30%,var(--alpha-accent-120),transparent 30%),
-    linear-gradient(135deg,var(--gunmetal) 0%,var(--night-deep) 58%,var(--night-deep) 100%)!important;
-  border-color:var(--line)!important;
-}
-.hero-showpiece-frame:before{border-color:var(--line)!important}
-.showpiece-index{color:var(--copper)!important}
-.showpiece-caption,.showpiece-specs span{color:var(--copper)!important}
-.showpiece-specs{border-color:var(--line)!important}
-.showpiece-specs span{border-color:var(--line)!important}
 
 /* Buttons */
-.button.primary{
-  background:var(--copper)!important;
-  color:var(--night-deep)!important;
-  box-shadow:none;
-}
-.button.primary:hover{background:var(--copper)!important}
+
 .button.secondary{
   background:var(--night-deep)!important;
   border-color:var(--line-accent)!important;
@@ -837,37 +589,22 @@ body{
 }
 
 /* Light cards: keep ivory, warm all text */
-.portal-card,.layout-tile,.education-tile,
-.standards-grid article,.mini-layout{
+.layout-tile{
   background:var(--bone)!important;
   color:var(--ink)!important;
   border-color:var(--line)!important;
 }
-.portal-card h2,.layout-tile h2,.education-tile h2,
-.standards-grid h3,.mini-layout strong{
+.layout-tile h2{
   color:var(--ink)!important;
 }
-.portal-card p,.layout-tile p,.education-tile p,
-.standards-grid p,
-.mini-layout small{
+.layout-tile p{
   color:var(--copper-deep)!important;
 }
-.portal-card span,.layout-tile .status.live,.education-tile span,
-.standards-grid span,.mini-layout span{
+.layout-tile .status.live{
   color:var(--copper-deep)!important;
 }
 
 /* What’s Included / Why Yoru cream panels */
-.editorial-light{
-  background:var(--bone)!important;
-  color:var(--night-deep)!important;
-  border-top-color:var(--line-strong)!important;
-  border-bottom-color:var(--line-strong)!important;
-}
-.editorial-light h2,.editorial-light p{
-  color:var(--night-deep)!important;
-}
-.editorial-light .eyebrow{color:var(--copper-deep)!important}
 
 /* Form fields stay warm paper, not bright white */
 
@@ -880,51 +617,28 @@ body{
   background:var(--night-deep)!important;
   color:var(--bone)!important;
 }
-.home-hero,.page-main,.standards-section,.layout-preview{
+.page-main{
   background:var(--night-deep)!important;
 }
 
 /* Dropdown */
 
 /* Hero */
-.gallery-hero{
-  background:
-    radial-gradient(circle at 78% 28%,var(--alpha-bone-035),transparent 28rem),
-    linear-gradient(180deg,var(--night) 0%,var(--night-deep) 72%)!important;
-}
-.gallery-hero h1,.home-hero h1,.page-hero h1{
+
+.page-hero h1{
   color:var(--bone)!important;
 }
-.gallery-hero .kicker,.kicker,.eyebrow{
+.eyebrow{
   color:var(--muted-dark)!important;
 }
-.gallery-hero .manifesto,.manifesto,.page-hero>p:last-child{
+.page-hero>p:last-child{
   color:var(--bone)!important;
 }
-.hero-micro{color:var(--muted-dark)!important}
-.hero-micro span+span:before{color:var(--muted-dark)!important}
 
 /* Hero media / product showroom */
-.hero-showpiece-frame{
-  background:
-    linear-gradient(180deg,var(--alpha-night-deep-020),var(--alpha-night-deep-460)),
-    radial-gradient(circle at 60% 30%,var(--alpha-bone-050),transparent 30%),
-    linear-gradient(135deg,var(--night) 0%,var(--night-deep) 58%,var(--night-deep) 100%)!important;
-  border-color:var(--line)!important;
-}
-.hero-showpiece-frame:before{border-color:var(--line)!important}
-.showpiece-index{color:var(--bone-text)!important}
-.showpiece-caption,.showpiece-specs span{color:var(--muted-dark)!important}
-.showpiece-specs{border-color:var(--line)!important}
-.showpiece-specs span{border-color:var(--line-quiet)!important}
 
 /* Buttons */
-.button.primary{
-  background:var(--muted-dark)!important;
-  color:var(--night-deep)!important;
-  box-shadow:none;
-}
-.button.primary:hover{background:var(--muted-dark)!important}
+
 .button.secondary{
   background:var(--night-deep)!important;
   border-color:var(--line-strong)!important;
@@ -932,38 +646,23 @@ body{
 }
 
 /* Structural cards */
-.portal-card,.layout-tile,.education-tile,
-.standards-grid article,.mini-layout{
+.layout-tile{
   background:var(--bone)!important;
   color:var(--ink)!important;
   border-color:var(--line-quiet)!important;
   box-shadow:none;
 }
-.portal-card h2,.layout-tile h2,.education-tile h2,
-.standards-grid h3,.mini-layout strong{
+.layout-tile h2{
   color:var(--night-deep)!important;
 }
-.portal-card p,.layout-tile p,.education-tile p,
-.standards-grid p,
-.mini-layout small{
+.layout-tile p{
   color:var(--muted-dark)!important;
 }
-.portal-card span,.layout-tile .status.live,.education-tile span,
-.standards-grid span,.mini-layout span{
+.layout-tile .status.live{
   color:var(--muted-dark)!important;
 }
 
 /* Light editorial blocks */
-.editorial-light{
-  background:var(--bone)!important;
-  color:var(--night-deep)!important;
-  border-top-color:var(--line-quiet)!important;
-  border-bottom-color:var(--line-quiet)!important;
-}
-.editorial-light h2,.editorial-light p{
-  color:var(--night)!important;
-}
-.editorial-light .eyebrow{color:var(--muted-dark)!important}
 
 /* Form controls */
 
@@ -977,18 +676,11 @@ body{
 
 /* Core dark canvases */
 body,
-.home-hero,
-.page-main,
-.gallery-hero,
-.standards-section,
-.layout-preview{
+.page-main{
   background:var(--night-deep)!important;
 }
 
 /* Dark media placeholders / showroom blocks */
-.hero-showpiece-frame,
-.featured-photo,
-.audio-placeholder,
 .layout-tile .keyboard-diagram{
   background:
     linear-gradient(180deg,var(--alpha-bone-012),var(--alpha-night-deep-160)),
@@ -998,42 +690,21 @@ body,
 }
 
 /* Remove residual green glows from image placeholders */
-.hero-showpiece-frame:before{
-  border-color:var(--line-quiet)!important;
-}
-.featured-photo,
-.audio-placeholder{
-  color:var(--muted-dark)!important;
-}
 
 /* Dark sections use soft off-white + silver only */
-.page-hero h1,
-.gallery-hero h1,
-.home-hero h1,
-.standards-head h2{
+.page-hero h1{
   color:var(--bone)!important;
 }
-.page-hero>p:last-child,
-.gallery-hero .manifesto,
-.manifesto{
+.page-hero>p:last-child{
   color:var(--bone-text)!important;
 }
-.eyebrow,.kicker,.showpiece-index{
+.eyebrow{
   color:var(--muted-dark)!important;
 }
 
 /* Clean borders across dark regions */
-.standards-section,
-.layout-preview{
-  border-color:var(--line-quiet)!important;
-}
 
 /* Featured commission remains light, but media is the same dark studio tone */
-.editorial-light .featured-photo{
-  background:
-    linear-gradient(180deg,var(--alpha-bone-012),var(--alpha-night-deep-160)),
-    linear-gradient(145deg,var(--night),var(--night-deep))!important;
-}
 
 /* Footer harmonizes with the same family */
 
@@ -1041,59 +712,29 @@ body,
 
 /* Exact unified dark studio background */
 body,
-.home-hero,
-.page-main,
-.gallery-hero,
-.standards-section,
-.layout-preview{
+.page-main{
   background:var(--night)!important;
 }
 
 /* Remove green radial glow from all media placeholders */
-.hero-showpiece-frame,
-.featured-photo,
-.audio-placeholder,
 .layout-tile .keyboard-diagram{
   background:linear-gradient(145deg,var(--night),var(--night-deep))!important;
   border-color:var(--line)!important;
   box-shadow:none;
 }
-.hero-showpiece-frame:before{
-  border-color:var(--line)!important;
-}
 
 /* Modal backgrounds match the site instead of pure black */
-.modal-panel,
-.modal-content{
-  background:var(--night)!important;
-  color:var(--bone)!important;
-  border-color:var(--line)!important;
-}
-
-.modal-shell{
-  background:var(--night)!important;
-  border:var(--border-width) solid var(--line)!important;
-  box-shadow:none;
-}
 
 /* Copper interaction language */
 .layout-tile .status.live{
   color:var(--copper)!important;
 }
 
-.button.primary{
-  background:var(--copper)!important;
-  color:var(--night-deep)!important;
-}
-.button.primary:hover{
-  background:var(--copper-text)!important;
-}
-
 /* Keep the rest restrained */
-.eyebrow,.kicker,.showpiece-index{
+.eyebrow{
   color:var(--muted-dark)!important;
 }
-.page-hero h1,.gallery-hero h1,.home-hero h1{
+.page-hero h1{
   color:var(--bone)!important;
 }
 
@@ -1101,11 +742,7 @@ body,
 
 /* 3) Tactile linen rather than flat light gray.
    Tiny tonal variation + micro paper grain, intentionally almost invisible. */
-.editorial-light,
-.portal-card,
-.layout-tile,
-.education-tile,
-.mini-layout{
+.layout-tile{
   background-color:var(--bone)!important;
   background-image:
     radial-gradient(circle at 12% 18%,var(--alpha-night-deep-018) 0 1px,transparent 1.2px),
@@ -1115,36 +752,14 @@ body,
 }
 
 /* Cards remain understated with blueprint-like precision */
-.portal-card,
-.layout-tile,
-.education-tile,
-.mini-layout{
+.layout-tile{
   border:var(--border-width) solid var(--line)!important;
   box-shadow:none;
 }
 
 /* 4) Occasional copper hairlines between editorial transitions */
-.editorial-light,
-.standards-section,
-.layout-preview,
-.about-editorial{
-  position:relative;
-}
-.editorial-light::before,
-.standards-section::before{
-  content:"";
-  position:absolute;left:var(--space-50);top:var(--space-0);
-  width:min(1180px,82vw);
-  height:1px;
-  transform:translateX(-50%);
-  background:linear-gradient(90deg,transparent,var(--copper),transparent);
-  pointer-events:none;
-}
 
 /* 5) Dark media stays clean, matte and neutral — product photography supplies color */
-.hero-showpiece-frame,
-.featured-photo,
-.audio-placeholder,
 .layout-tile .keyboard-diagram{
   background:linear-gradient(145deg,var(--night),var(--night-deep))!important;
   background-image:linear-gradient(145deg,var(--night),var(--night-deep))!important;
@@ -1153,8 +768,6 @@ body,
 }
 
 /* Copper stays at roughly 10% of the visual system: interactions and micro-details */
-.button.primary{background:var(--copper)!important;color:var(--night-deep)!important}
-.button.primary:hover{background:var(--copper)!important}
 
 /* ===== LAYOUT STATUS BADGES — MONOCHROMATIC ARCHITECTURAL =====
    Remove the remaining green status treatment from keyboard layout cards.
@@ -1257,12 +870,8 @@ body,
 
 /* Large structural dark fields only — not media/photo placeholders. */
 body,
-.home-hero,
 .page-main,
-.gallery-hero,
-.page-hero,
-.standards-section,
-.layout-preview{
+.page-hero{
   background-color:var(--night)!important;
   background-image:
     linear-gradient(118deg,var(--alpha-bone-012) 0%,var(--alpha-bone-000) 34%,var(--alpha-night-deep-028) 66%,var(--alpha-bone-010) 100%),
@@ -1273,33 +882,19 @@ body,
 }
 
 /* Keep dark media areas deliberately matte and cleaner than the surrounding metal surface. */
-.hero-showpiece-frame,
-.featured-photo,
-.audio-placeholder,
 .layout-tile .keyboard-diagram{
   background-image:linear-gradient(145deg,var(--night),var(--night-deep))!important;
   background-color:var(--night)!important;
 }
 
 /* Modals get a whisper of the same finish, but remain visually quieter than full sections. */
-.modal-panel,
-.modal-content{
-  background-color:var(--night)!important;
-  background-image:
-    linear-gradient(135deg,var(--alpha-bone-008),var(--alpha-night-deep-020))!important;
-  background-size:150px 150px,100% 100%!important;
-}
 
 /* ===== DARK SURFACES — VISIBLE SATIN ANODIZED GRAIN v2 =====
    Stronger than the first pass: visible at normal zoom, but still restrained.
    Fine noise simulates bead-blasted/anodized aluminum rather than concrete. */
 body,
-.home-hero,
 .page-main,
-.gallery-hero,
-.page-hero,
-.standards-section,
-.layout-preview{
+.page-hero{
   background-color:var(--night)!important;
   background-image:
     linear-gradient(118deg,var(--alpha-bone-028) 0%,var(--alpha-bone-006) 28%,var(--alpha-night-deep-050) 63%,var(--alpha-bone-018) 100%),
@@ -1311,68 +906,15 @@ body,
 }
 
 /* Dark modals use a slightly quieter version of the same material. */
-.modal-panel,
-.modal-content{
-  background-color:var(--night)!important;
-  background-image:
-    linear-gradient(135deg,var(--alpha-bone-014),var(--alpha-night-deep-035))!important;
-  background-size:120px 120px,100% 100%!important;
-  background-repeat:repeat,no-repeat!important;
-  background-blend-mode:soft-light,normal!important;
-}
 
 /* Keep photography/media zones smoother so the texture reads as architecture, not noise everywhere. */
-.hero-showpiece-frame,
-.featured-photo,
-.audio-placeholder,
 .layout-tile .keyboard-diagram{
   background-color:var(--night)!important;
   background-image:linear-gradient(145deg,var(--night),var(--night-deep))!important;
   background-blend-mode:normal!important;
 }
 
-/* One restrained architectural baseline only. */
-
-/* Commission CTA: precision outlined component, not a flat orange block. */
-
-/* Remove the older decorative line floating 8px above the bottom edge. */
-
-/* 2) Hero CTA now mirrors the precision-outline language of the header CTA,
-      inverted for the dark hero canvas. */
-.home-hero .hero-actions .button.primary{
-  background:transparent!important;
-  background-image:none!important;
-  color:var(--bone)!important;
-  border:var(--border-width-accent) solid var(--line-accent)!important;
-  border-radius:var(--radius-control)!important;
-  box-shadow:none;
-  text-shadow:none!important;
-  transition:background-color var(--duration-slow) var(--ease),
-    color var(--duration-slow) var(--ease),
-    border-color var(--duration-slow) var(--ease),
-    transform var(--duration-slow) var(--ease)!important;
-}
-.home-hero .hero-actions .button.primary:hover{
-  background:var(--copper)!important;
-  color:var(--night-deep)!important;
-  border-color:var(--line-accent)!important;
-  transform:translateY(-1px)!important;
-  box-shadow:none;
-}
-
 /* The secondary hero action stays quieter so the copper-outline CTA leads. */
-.home-hero .hero-actions .button.secondary{
-  background:transparent!important;
-  color:var(--bone)!important;
-  border:var(--border-width) solid var(--line-strong)!important;
-  border-radius:var(--radius-control)!important;
-  box-shadow:none;
-}
-.home-hero .hero-actions .button.secondary:hover{
-  border-color:var(--line-strong)!important;
-  background:var(--alpha-bone-035)!important;
-  color:var(--bone)!important;
-}
 
 /* Fix the blank copper rectangles: old cascade accidentally applied a copper
    background to editorial text links while also making their text copper. */
@@ -1389,24 +931,16 @@ body,
 
 /* --- DARK ARCHITECTURE: Yoru = night --- */
 body,
-.home-hero,
 .page-main,
-.gallery-hero,
-.page-hero,
-.standards-section,
-.layout-preview{
+.page-hero{
   background-color:var(--night)!important;
   color:var(--bone)!important;
 }
 
 /* Keep the anodized-metal grain, but tint it to Night Iron rather than green-charcoal. */
 body,
-.home-hero,
 .page-main,
-.gallery-hero,
-.page-hero,
-.standards-section,
-.layout-preview{
+.page-hero{
   background-image:
     linear-gradient(118deg,var(--alpha-bone-020),var(--alpha-bone-004) 33%,var(--alpha-night-deep-050) 66%,var(--alpha-bone-012)),
     linear-gradient(180deg,var(--night-deep) 0%,var(--night) 60%,var(--night-deep) 100%)!important;
@@ -1416,9 +950,6 @@ body,
 }
 
 /* Dark media blocks = Gunmetal: physical, machined, separate from the night canvas. */
-.hero-showpiece-frame,
-.featured-photo,
-.audio-placeholder,
 .layout-tile .keyboard-diagram{
   background-color:var(--gunmetal)!important;
   background-image:linear-gradient(145deg,var(--gunmetal) 0%,var(--gunmetal) 50%,var(--night-deep) 100%)!important;
@@ -1428,11 +959,7 @@ body,
 }
 
 /* --- LIGHT ARCHITECTURE: handmade paper / atelier --- */
-.editorial-light,
-.portal-card,
-.layout-tile,
-.education-tile,
-.mini-layout{
+.layout-tile{
   background-color:var(--bone)!important;
   background-image:
     radial-gradient(circle at 12% 18%,var(--alpha-night-deep-020) 0 1px,transparent 1.2px),
@@ -1444,76 +971,41 @@ body,
 }
 
 /* Strong light-surface typography. */
-.editorial-light h1,.editorial-light h2,.editorial-light h3,
-.portal-card h2,.layout-tile h2,.education-tile h2,.mini-layout strong{
+.layout-tile h2{
   color:var(--ink)!important;
 }
-.editorial-light p,
-.portal-card p,.layout-tile p,.education-tile p,.mini-layout small{
+.layout-tile p{
   color:var(--muted-dark)!important;
 }
 
 /* Dark-surface hierarchy. */
-.home-hero h1,
-.page-hero h1,
-.gallery-hero h1,
-.standards-head h2{
+.page-hero h1{
   color:var(--bone)!important;
 }
-.manifesto,
-.page-hero>p:last-child,
-.gallery-hero .manifesto{
+.page-hero>p:last-child{
   color:var(--copper-text)!important;
 }
 
 /* Patina becomes a secret brand color: only tiny labels / micro-details. */
-.kicker,
-.eyebrow,
-.showpiece-index{
+.eyebrow{
   color:var(--patina)!important;
-}
-.hero-micro,
-.showpiece-caption,
-.showpiece-specs span{
-  color:var(--muted-dark)!important;
 }
 
 /* --- COPPER = heat / foundry / action --- */
 
 /* Dark hero button harmony. */
-.home-hero .hero-actions .button.primary,
-.button.primary{
-  background:transparent!important;
-  background-image:none!important;
-  color:var(--bone)!important;
-  border:var(--border-width-accent) solid var(--line-accent)!important;
-  box-shadow:none;
-}
-.home-hero .hero-actions .button.primary:hover,
-.button.primary:hover{
-  background:var(--copper)!important;
-  color:var(--night-deep)!important;
-  border-color:var(--line-accent)!important;
-  box-shadow:none;
-}
-.button.secondary,
-.home-hero .hero-actions .button.secondary{
+
+.button.secondary{
   background:transparent!important;
   color:var(--bone)!important;
   border-color:var(--line-strong)!important;
 }
-.button.secondary:hover,
-.home-hero .hero-actions .button.secondary:hover{
+.button.secondary:hover{
   background:var(--alpha-bone-045)!important;
   border-color:var(--line-strong)!important;
 }
 
 /* Editorial copper links and separators. */
-
-.editorial-light::before,
-.standards-section::before{
-  background:linear-gradient(90deg,transparent,var(--alpha-accent-520),transparent)!important;
-}
 
 /* --- FORMS --- */
 
@@ -1542,18 +1034,6 @@ body,
 }
 
 /* --- MODALS --- */
-.modal-panel,
-.modal-content,
-.modal-shell{
-  background-color:var(--night)!important;
-  color:var(--bone)!important;
-  border-color:var(--line)!important;
-}
-
-.story-step-label,
-.story-step .eyebrow{
-  color:var(--muted-dark)!important;
-}
 
 /* --- FOOTER --- */
 
@@ -1575,22 +1055,9 @@ body,
 
 /* 1) FORGED BONE — subtle archival paper grain.
       Large light fields receive the richest paper treatment. */
-.editorial-light{
-  background-color:var(--bone)!important;
-  background-image:
-    radial-gradient(circle at 18% 14%,var(--alpha-bone-340),transparent 34%),
-    linear-gradient(118deg,var(--alpha-bone-220),var(--alpha-bone-100) 52%,var(--alpha-accent-hi-055)),
-    linear-gradient(180deg,var(--bone),var(--bone))!important;
-  background-size:128px 128px,100% 100%,100% 100%,100% 100%!important;
-  background-repeat:repeat,no-repeat,no-repeat,no-repeat!important;
-  background-blend-mode:soft-light,normal,normal,normal!important;
-}
 
 /* Light cards/forms use a quieter paper grain so text remains the focus. */
-.portal-card,
-.layout-tile,
-.education-tile,
-.mini-layout{
+.layout-tile{
   background-color:var(--bone)!important;
   background-image:
     linear-gradient(125deg,var(--alpha-bone-240),var(--alpha-bone-080) 54%,var(--alpha-accent-hi-035))!important;
@@ -1602,12 +1069,8 @@ body,
 /* 2) NIGHT IRON — visible-but-refined anodized/bead-blasted texture.
       This is the primary dark "material" of the site. */
 body,
-.home-hero,
 .page-main,
-.gallery-hero,
-.page-hero,
-.standards-section,
-.layout-preview{
+.page-hero{
   background-color:var(--night)!important;
   background-image:
     radial-gradient(ellipse at 72% 14%,var(--alpha-muted-040),transparent 38%),
@@ -1619,23 +1082,9 @@ body,
 }
 
 /* Dark modals echo Night Iron at lower intensity so they feel quieter. */
-.modal-panel,
-.modal-content,
-.modal-shell{
-  background-color:var(--night)!important;
-  background-image:
-    linear-gradient(135deg,var(--alpha-bone-010),var(--alpha-night-deep-028)),
-    linear-gradient(180deg,var(--night-deep),var(--night))!important;
-  background-size:140px 140px,100% 100%,100% 100%!important;
-  background-repeat:repeat,no-repeat,no-repeat!important;
-  background-blend-mode:soft-light,normal,normal!important;
-}
 
 /* 3) GUNMETAL — photo/media zones stay deliberately smooth and matte.
       No noise here: future product photography must provide the visual richness. */
-.hero-showpiece-frame,
-.featured-photo,
-.audio-placeholder,
 .layout-tile .keyboard-diagram{
   background-color:var(--gunmetal)!important;
   background-image:
@@ -1655,50 +1104,25 @@ body,
 
 /* 4) BURNISHED COPPER — smooth satin treatment only when copper fills.
       No grain: it should read as machined metal, not rust or leather. */
-.home-hero .hero-actions .button.primary:hover,
-.button.primary:hover{
-  background-color:var(--copper)!important;
-  background-image:
-    linear-gradient(180deg,var(--alpha-bone-160),var(--alpha-bone-000) 42%,var(--alpha-surface-080)),
-    linear-gradient(105deg,var(--copper-text) 0%,var(--copper) 47%,var(--copper) 100%)!important;
-  background-size:100% 100%,100% 100%!important;
-  background-repeat:no-repeat,no-repeat!important;
-}
 
 /* Copper hairlines remain crisp, not textured. */
-.editorial-light::before,
-.standards-section::before{
-  height:1px!important;
-  opacity:.82!important;
-}
 
 /* 5) AGED PATINA — intentionally restricted to micro typography/icon accents.
       Never use it as a large background, card fill, button fill, or status badge. */
-.kicker,
-.eyebrow,
-.showpiece-index{
+.eyebrow{
   color:var(--patina)!important;
 }
 
 /* Material hierarchy: textures should never interfere with readability. */
-.portal-card,
-.layout-tile,
-.education-tile,
-.mini-layout,
-.modal-panel,
-.modal-content{
+.layout-tile{
   -webkit-font-smoothing:antialiased;
 }
 
 /* Mobile: keep texture density but soften it slightly on smaller screens. */
 @media(max-width:860px){
   body,
-  .home-hero,
   .page-main,
-  .gallery-hero,
-  .page-hero,
-  .standards-section,
-  .layout-preview{
+  .page-hero{
     background-blend-mode:soft-light,soft-light,normal,normal,normal!important;
   }
 }
@@ -1726,44 +1150,23 @@ body{
 /* Dark structural sections become transparent windows onto that one canvas.
    Their max-width still controls the content, not the background material. */
 main,
-.home-hero,
 .page-main,
-.gallery-hero,
-.page-hero,
-.portal-section,
-.standards-section,
-.layout-preview{
+.page-hero{
   background:transparent!important;
   background-color:transparent!important;
   background-image:none!important;
 }
 
 /* Dark-to-dark transitions should not announce themselves with UI borders. */
-.standards-section,
-.layout-preview{
-  border-top-color:transparent!important;
-  border-bottom-color:transparent!important;
-}
 
 /* Remove decorative copper separators on dark-to-dark section changes.
    Copper remains for real hierarchy and interactive details. */
-.standards-section::before{
-  content:none!important;
-}
 
 /* Light material sections still create an intentional, clean material change.
    No extra line is needed because the color/material shift already separates them. */
-.editorial-light{
-  border-top-color:transparent!important;
-  border-bottom-color:transparent!important;
-}
 
 /* Preserve copper detail inside light editorial regions without creating
    a full-width separator between dark and light materials. */
-.editorial-light::before{
-  opacity:.34!important;
-  width:min(760px,58vw)!important;
-}
 
 /* On mobile, fixed backgrounds can be expensive/janky, so keep the same
    seamless canvas without forcing fixed attachment. */
@@ -1782,20 +1185,9 @@ main,
 
 /* FORGED BONE — stop the light material from washing out toward white.
    Paper grain is now stronger and includes faint directional fibers. */
-.editorial-light{
-  background-color:var(--bone)!important;
-  background-image:
-    linear-gradient(180deg,var(--bone) 0%,var(--bone) 46%,var(--bone) 100%)!important;
-  background-size:96px 96px,100% 100%,100% 100%,100% 100%!important;
-  background-repeat:repeat,no-repeat,no-repeat,no-repeat!important;
-  background-blend-mode:multiply,normal,soft-light,normal!important;
-}
 
 /* Cards get the same material at lower strength. */
-.portal-card,
-.layout-tile,
-.education-tile,
-.mini-layout{
+.layout-tile{
   background-color:var(--bone)!important;
   background-image:
     linear-gradient(180deg,var(--bone),var(--bone))!important;
@@ -1819,9 +1211,6 @@ body{
 
 /* GUNMETAL — make media panels clearly distinct from Night Iron.
    Keep them matte; no obvious texture competing with future photography. */
-.hero-showpiece-frame,
-.featured-photo,
-.audio-placeholder,
 .layout-tile .keyboard-diagram{
   background-color:var(--gunmetal)!important;
   background-image:
@@ -1841,13 +1230,6 @@ body{
 }
 
 /* Avoid visible separator lines where the material change already does the work. */
-.editorial-light{
-  border-top-color:transparent!important;
-  border-bottom-color:transparent!important;
-}
-.editorial-light::before{
-  content:none!important;
-}
 
 /* Keep mobile texture present, but avoid fixed-background rendering issues. */
 @media(max-width:860px){
@@ -1874,64 +1256,14 @@ a,button,summary{
 
 /* FORGED BONE: keep the intended color visible.
    Texture adds material without darkening the surface into gray/taupe. */
-.editorial-light{
-  background-color:var(--bone)!important;
-  background-image:
-    linear-gradient(180deg,var(--alpha-bone-075),var(--alpha-bone-035))!important;
-  background-size:110px 110px,100% 100%!important;
-  background-repeat:repeat,no-repeat!important;
-  background-blend-mode:normal,normal!important;
-}
 
 /* Commission CTA = precision-machined Night Iron with a burnished copper edge.
    This avoids the pale generic form-button appearance. */
 
 /* True Gunmetal for the compact layout cards.
    Availability is conveyed with type/accent, never a brown-tinted card fill. */
-.mini-layout,
-.mini-layout.live,
-.mini-layout.muted{
-  background-color:var(--gunmetal)!important;
-  background-image:
-    radial-gradient(ellipse at 72% 14%,var(--alpha-bone-035),transparent 38%),
-    linear-gradient(145deg,var(--iron) 0%,var(--gunmetal) 56%,var(--gunmetal) 100%)!important;
-  color:var(--bone)!important;
-  border:var(--border-width) solid var(--line)!important;
-  box-shadow:none;
-  opacity:1!important;
-}
-.mini-layout strong{
-  color:var(--bone)!important;
-}
-.mini-layout small{
-  color:var(--muted-dark)!important;
-}
-.mini-layout span{
-  color:var(--muted-dark)!important;
-}
-.mini-layout.live span{
-  color:var(--copper-text)!important;
-}
-.mini-layout.live:hover{
-  border-color:var(--line-accent)!important;
-  transform:translateY(-2px)!important;
-}
-.mini-layout.muted strong,
-.mini-layout.muted small,
-.mini-layout.muted span{
-  opacity:.58!important;
-}
 
 /* Gunmetal media is neutral/cool and does not pick up copper or brown. */
-.hero-showpiece-frame,
-.featured-photo,
-.audio-placeholder{
-  background-color:var(--gunmetal)!important;
-  background-image:
-    radial-gradient(ellipse at 72% 16%,var(--alpha-bone-040),transparent 40%),
-    linear-gradient(145deg,var(--iron) 0%,var(--gunmetal) 58%,var(--gunmetal) 100%)!important;
-  background-blend-mode:normal,normal!important;
-}
 
 /* =====================================================================
    YORU NOCTURNE — SITE-WIDE COMPONENT LOCK
@@ -1948,31 +1280,20 @@ html,body{
 }
 main,
 .page-main,
-.home-hero,
-.gallery-hero,
-.page-hero,
-.portal-section,
-.standards-section,
-.layout-preview{
+.page-hero{
   background:transparent!important;
   background-color:transparent!important;
   background-image:none!important;
 }
 
 /* Page introductions / hero typography. */
-.page-hero h1,
-.gallery-hero h1,
-.home-hero h1{
+.page-hero h1{
   color:var(--bone)!important;
 }
-.page-hero>p:last-child,
-.gallery-hero .manifesto,
-.manifesto{
+.page-hero>p:last-child{
   color:var(--bone-text)!important;
 }
-.kicker,
-.eyebrow,
-.showpiece-index{
+.eyebrow{
   color:var(--patina)!important;
 }
 
@@ -2047,87 +1368,14 @@ main,
 
 /* EDITORIAL / EDUCATION CARDS:
    paper material for reading-oriented content. */
-.portal-card,
-.education-tile{
-  background-color:var(--bone)!important;
-  background-image:
-    linear-gradient(180deg,var(--bone),var(--bone))!important;
-  background-size:112px 112px,100% 100%!important;
-  background-repeat:repeat,no-repeat!important;
-  background-blend-mode:normal,normal!important;
-  color:var(--ink)!important;
-  border-color:var(--line)!important;
-}
-.portal-card h2,
-.education-tile h2{
-  color:var(--ink)!important;
-}
-.portal-card p,
-.education-tile p{
-  color:var(--muted-light)!important;
-}
-.portal-card span,
-.education-tile span{
-  color:var(--patina)!important;
-}
 
 /* Dark structural cards on the home/commission workflow. */
-.standards-grid article,
-.mini-layout,
-.mini-layout.live,
-.mini-layout.muted{
-  background-color:var(--gunmetal)!important;
-  background-image:linear-gradient(145deg,var(--gunmetal),var(--gunmetal) 58%,var(--gunmetal))!important;
-  color:var(--bone)!important;
-  border:var(--border-width) solid var(--line)!important;
-  box-shadow:none;
-  opacity:1!important;
-}
-.standards-grid h3,
-.mini-layout strong{
-  color:var(--bone)!important;
-}
-.standards-grid p,
-.mini-layout small{
-  color:var(--muted-dark)!important;
-}
-.standards-grid span,
-.mini-layout span{
-  color:var(--muted-dark)!important;
-}
-.mini-layout.live span{color:var(--copper-text)!important}
-.mini-layout.muted>*{opacity:.58!important}
 
 /* Large light editorial sections remain true Forged Bone, not taupe. */
-.editorial-light{
-  background-color:var(--bone)!important;
-  background-image:none!important;
-  background-size:110px 110px!important;
-  color:var(--ink)!important;
-}
-.editorial-light h2,
-.editorial-light p{
-  color:var(--ink)!important;
-}
 
 /* Media / photography zones always Gunmetal until real imagery replaces them. */
-.hero-showpiece-frame,
-.featured-photo,
-.audio-placeholder{
-  background-color:var(--gunmetal)!important;
-  background-image:linear-gradient(145deg,var(--iron),var(--gunmetal) 58%,var(--gunmetal))!important;
-  color:var(--muted-dark)!important;
-  border-color:var(--line)!important;
-}
 
 /* Modal / footer role locks. */
-.modal-panel,
-.modal-content,
-.modal-shell{
-  background:var(--night)!important;
-  color:var(--bone)!important;
-  border-color:var(--line)!important;
-}
 
 /* ===== PALETTE SANITIZER LOCK — DO NOT REMOVE =====
    All legacy experiments above are constrained to the approved Yoru Nocturne family.
@@ -2146,15 +1394,6 @@ main,
 /* A — FORGED BONE: soft matte paper.
    Two extremely low-contrast layers: irregular fiber/noise + faint directional tooth.
    No multiply/color-burn so var(--bone) stays visually true. */
-.editorial-light,
-.portal-card,
-.education-tile{
-  background-color:var(--bone)!important;
-  background-image:none!important;
-  background-size:128px 128px,100% 100%!important;
-  background-repeat:repeat,no-repeat!important;
-  background-blend-mode:soft-light,normal!important;
-}
 
 /* Inputs stay mostly smooth paper for maximum legibility. */
 
@@ -2174,12 +1413,7 @@ body{
 /* Keep structural dark sections transparent so the Night Iron texture is continuous. */
 main,
 .page-main,
-.home-hero,
-.gallery-hero,
-.page-hero,
-.portal-section,
-.standards-section,
-.layout-preview{
+.page-hero{
   background-color:transparent!important;
   background-image:none!important;
 }
@@ -2189,14 +1423,7 @@ main,
 .layout-grid .layout-tile,
 .product-layouts .layout-tile,
 .layout-tile.active,
-.layout-tile.coming,
-.standards-grid article,
-.mini-layout,
-.mini-layout.live,
-.mini-layout.muted,
-.hero-showpiece-frame,
-.featured-photo,
-.audio-placeholder{
+.layout-tile.coming{
   background-color:var(--gunmetal)!important;
   background-image:
     linear-gradient(145deg,var(--alpha-bone-016),var(--alpha-night-deep-018))!important;
@@ -2217,22 +1444,11 @@ main,
 }
 
 /* D — COPPER: no grain. Only a satin highlight when copper becomes a fill. */
-.home-hero .hero-actions .button.primary:hover,
-.button.primary:hover{
-  background-color:var(--copper)!important;
-  background-image:
-    linear-gradient(180deg,var(--copper-text) 0%,var(--copper) 52%,var(--copper-deep) 100%)!important;
-  background-size:100% 100%!important;
-  background-repeat:no-repeat!important;
-  background-blend-mode:normal!important;
-}
 
 /* Copper hairlines / text accents remain perfectly crisp. */
 
 /* E — PATINA: color-only micro accent. Never a material field. */
-.kicker,
-.eyebrow,
-.showpiece-index{
+.eyebrow{
   color:var(--patina)!important;
   background:transparent!important;
   background-image:none!important;
@@ -2247,10 +1463,6 @@ main,
 }
 
 /* ===== PHASE 2 — CONTENT ARCHITECTURE / LOCKED MEDIA RATIOS ===== */
-.hero-showpiece-frame{aspect-ratio:16 / 9;min-height:0!important;overflow:hidden}
-
-.hero-showpiece-frame img,.featured-photo img{display:block;width:100%;height:100%;object-fit:cover}
-.featured-photo{overflow:hidden}
 
 .compare-audio{text-align:left!important}
 .compare-audio audio{display:block;width:100%;margin-top:var(--space-14)}
@@ -2261,10 +1473,10 @@ main,
 
 /* Phase 3 geometry and border rules */
 *,*::before,*::after{box-shadow:none!important}
-img,.portal-card,.layout-tile,.education-tile,.standards-grid article,.mini-layout,.modal-panel,.modal-content,.modal-shell,.hero-showpiece-frame,.featured-photo{border-radius:var(--radius-square)!important}
+img,.layout-tile{border-radius:var(--radius-square)!important}
 button:not(.guide-topic),.button,input,select,textarea{border-radius:var(--radius-control)!important}   /* guide topics are ruled rows */
 
-.portal-card,.layout-tile,.education-tile,.standards-grid article,.mini-layout,.hero-showpiece-frame,.featured-photo{border-width:var(--border-width)!important}
+.layout-tile{border-width:var(--border-width)!important}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:var(--duration-none)!important;animation-duration:var(--duration-none)!important;animation-iteration-count:1!important}}
 /* Approved accessibility/state corrections — 2026-09-14 */
@@ -2322,12 +1534,7 @@ main,
   padding-right:24px;
 }
 .page-main,
-.page-hero,
-.home-hero,
-.gallery-hero,
-.portal-section,
-.standards-section,
-.layout-preview{
+.page-hero{
   background:var(--night)!important;
   background-color:var(--night)!important;
   background-image:none!important;
@@ -2340,16 +1547,6 @@ main,
 }
 
 /* ===== PRE-PHASE 3.5 — FOOTER TEMPORARY SIZE NORMALIZATION ===== */
-.footer-brand{
-  display:flex;
-  align-items:flex-start;
-  gap:12px;
-}
-.footer-brand img{
-  width:48px;
-  height:48px;
-  flex:0 0 48px;
-}
 
 /* ===== PHASE 3.5 — PALETTE, STATUS, HAIRLINES, AND GRAIN ===== */
 html,
@@ -2359,84 +1556,26 @@ body{
 }
 main:not(.section-shell),
 .page-main,
-.page-hero,
-.home-hero,
-.gallery-hero,
-.portal-section,
-.standards-section,
-.layout-preview{
+.page-hero{
   background-color:transparent!important;
   background-image:none!important;
 }
 .section-shell{background-color:var(--cast)!important}
 
-.standards-section,
-.layout-preview,
-.about-editorial{border-color:var(--line-quiet)!important}
-
 /* The same four hierarchy roles adapt to Bone without adding a fifth tier. */
-.editorial-light,
-.portal-card,
-.education-tile{
-  --line-quiet:var(--line-quiet-on-light);
-  --line:var(--line-default-on-light);
-  --line-strong:var(--line-strong-on-light);
-  --line-accent:var(--line-accent-on-light);
-}
 
-.status,
-.status-coming-soon,
-.status-built{color:var(--status-coming-soon)!important}
-.status.live,
-.status-available,
-.status-open,
-.mini-layout.live span{color:var(--status-available)!important}
-.status-in-progress{color:var(--status-in-progress)!important}
-.status-coming-soon,
-.status-built,
-.layout-tile.coming .status,
-.mini-layout.muted span{opacity:.58!important}
+.status{color:var(--status-coming-soon)!important}
+.status.live{color:var(--status-available)!important}
+
+.layout-tile.coming .status{opacity:.58!important}
 .layout-grid .layout-tile p,
 .product-layouts .layout-tile p{color:var(--muted-dark)!important}
 .layout-grid .layout-tile .tile-copy b,
 .product-layouts .layout-tile .tile-copy b{color:var(--copper-text)!important}
 
 /* Bone-only accent pairing. */
-.editorial-light .kicker,
-.editorial-light .eyebrow,
-.portal-card>span,
-.education-tile>span{color:var(--patina-deep)!important}
-
-.grain-subtle,
-.grain{position:relative;isolation:isolate}
-.grain-subtle::after,
-.grain::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  /* No interface texture (Mike, 2026-10-06): overlay disabled. */
-  display:none;
-}
-.grain-subtle::after{opacity:var(--grain-subtle)}
-.grain::after{opacity:var(--grain)}
-.grain-subtle>*,.grain>*{position:relative;z-index:1}
-.editorial-light.grain-subtle::after,
-.editorial-light.grain::after{content:none}
 
 /* Approved Bone treatment (locked): Plaster Grey 04 mineral. Homepage Bone base sections. */
-.paper-subtle{position:relative;isolation:isolate}
-.paper-subtle::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  /* No interface texture (Mike, 2026-10-06): overlay disabled. */
-  display:none;
-}
-.paper-subtle>*{position:relative;z-index:1}
 
 /* Header (Verdigris): the bottom row of a keyboard. The medallion at the left, a braided USB-C cable running from
    behind it to the keys (straight runs stretch with the page; the coil and plug stay fixed; the plug's tip tucks
