@@ -1,8 +1,5 @@
 <footer class="site-footer">
-  <div class="site-footer-inner">
-    {{FOOTER_LEAD}}
-    <div class="footer-links">{{FOOTER_LINKS}}</div>
-    <p class="footer-status" data-site-footer-status>{{FOOTER_STATUS}}</p>
-    <p{{COPYRIGHT_CLASS}}>© {{COPYRIGHT_YEAR}} Yoru Foundry</p>
-  </div>
+  <nav class="kb-board" aria-label="Footer" style="aspect-ratio:{{BOARD_RATIO}}">{{FOOTER_BOARD}}</nav>
+  <ul class="kb-list">{{FOOTER_LIST}}</ul>
+  <p class="kb-line"><span data-site-footer-status>{{FOOTER_STATUS}}</span><a href="mailto:hello@yorufoundry.com">hello@yorufoundry.com</a><span>© {{COPYRIGHT_YEAR}} Yoru Foundry</span></p>
 </footer>

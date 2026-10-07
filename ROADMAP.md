@@ -62,7 +62,7 @@ Known small issues (fix when touching these areas):
 | 7 | Homepage hero and message | Done: rebuilt from `mockups/home.html` (2026-10-06); "keyboards" lives in the title and meta description |
 | — | Inner pages in Verdigris | Done (2026-10-07): request, Crafted Art + 75%, Built to Taste, Trust the Process, Why Yoru, About, Journal, Archive, build records. Still old: the five hidden product stub pages |
 | 8 | Media and sound readiness | Done (2026-10-07): every media spot takes a real file with no layout change; see `MEDIA.md`. Waiting on Mike's media |
-| 9 | Footer redesign (four columns) | Planned |
+| 9 | Footer redesign | Done (2026-10-07): a rendered 75% keyboard (Mike's concept). Links spelled on the keys press as a word, copper underglow rises on view, Esc = logo, home. Phone: picture plus link list. Links are in the HTML |
 | 10 | Commission form sends without `mailto:` | Done (2026-10-07): Worker at `/api/commission` sends through Resend to hello@ (Zoho); test request delivered to the inbox. Trap field on; Turnstile ready but off (README) |
 | 11 | Motion and reduced motion | Planned |
 | 12 | Image and page weight | Planned — partly pulled forward |

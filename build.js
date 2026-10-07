@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-21-form",
+  stylesheetVersion: "vg-22-kbfoot",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
   // Cloudflare Turnstile site key (public). Empty = no widget; the Worker's TURNSTILE_SECRET must be set with it.
@@ -294,7 +294,29 @@ function parsePage(file) {
   return { file, page, template };
 }
 
-function renderPage(entry, partials, content, headerKeys) {
+// Footer: a rendered keyboard whose linked words press on hover (desktop), and the same links as a list (phone).
+function renderFooterBoard(data) {
+  if (!data.w) fail("src/static/data/footer-board.json: no board size; run mockups/keys/board-export.py");
+  const box = (r) => `left:${r[0]}%;top:${r[1]}%;width:${r[2]}%;height:${r[3]}%`;
+  const ext = (href) => (/^https?:/.test(href) ? ' target="_blank" rel="noopener"' : "");
+  const keys = Object.entries(data.keys).map(([id, k]) => {
+    if (!k.hit || !k.h || !k.p) fail(`footer-board.json: key "${id}" has no boxes`);
+    const img = (st) => `<img class="${st}" src="/assets/footer-board/${id}-${st}.webp" alt="" loading="lazy" decoding="async" style="${box(k[st])}">`;
+    return `<a href="${k.href}" aria-label="${escapeHtml(k.name)}"${ext(k.href)}>${img("h")}${img("p")}<span class="hit" style="${box(k.hit)}"></span></a>`;
+  });
+  const list = data.list.map((id) => {
+    const k = data.keys[id];
+    if (!k) fail(`footer-board.json: list names unknown key "${id}"`);
+    return `<li><a href="${k.href}"${ext(k.href)}>${escapeHtml(k.name)}</a></li>`;
+  });
+  return {
+    board: `<img src="/assets/footer-board/board.webp" alt="" width="${data.w}" height="${data.h}" loading="lazy" decoding="async"><img class="lit" src="/assets/footer-board/board-lit.webp" alt="" loading="lazy" decoding="async">${keys.join("")}`,
+    list: list.join(""),
+    ratio: `${data.w}/${data.h}`,
+  };
+}
+
+function renderPage(entry, partials, content, headerKeys, footerBoard) {
   const { page, template, file } = entry;
   const label = path.basename(file);
   const redirect = page.layout === "redirect";
@@ -327,19 +349,15 @@ function renderPage(entry, partials, content, headerKeys) {
         },
         `${label} header`,
       );
-  const footerLead =
-    '<div class="socials"><span>Follow the Foundry</span><a href="https://www.instagram.com/yorufoundry/" target="_blank" rel="noopener">Instagram&nbsp; @yorufoundry</a><a href="https://www.tiktok.com/@yoru.foundry" target="_blank" rel="noopener">TikTok&nbsp; @yoru.foundry</a></div>';
-  const footerLinks =
-    '<a href="/crafted-art.html">Crafted Art</a><a href="/about.html">About</a><a href="mailto:hello@yorufoundry.com">hello@yorufoundry.com</a>';
   const modeContent = (content.SITE_MODE_CONTENT || {})[content.SITE_MODE] || (content.SITE_MODE_CONTENT || {}).prelaunch || {};
   const footer = redirect
     ? ""
     : replaceTokens(
         partials.footer,
         {
-          FOOTER_LEAD: footerLead,
-          FOOTER_LINKS: footerLinks,
-          COPYRIGHT_CLASS: ' class="copyright"',
+          FOOTER_BOARD: footerBoard.board,
+          FOOTER_LIST: footerBoard.list,
+          BOARD_RATIO: footerBoard.ratio,
           FOOTER_STATUS: escapeHtml(modeContent.footerStatus || "Built one at a time."),
           COPYRIGHT_YEAR: String(new Date().getFullYear()),
         },
@@ -380,6 +398,7 @@ function injectSiteMode() {
 function build() {
   const content = loadSiteContent();
   const headerKeys = JSON.parse(read(path.join(SRC, "static", "data", "header-keys.json")));
+  const footerBoard = renderFooterBoard(JSON.parse(read(path.join(SRC, "static", "data", "footer-board.json"))));
   const partials = Object.fromEntries(
     ["head", "header", "footer", "scripts"].map((name) => [
       name,
@@ -396,7 +415,7 @@ function build() {
   const rendered = entries.map((entry) => {
     if (outputs.has(entry.page.output)) fail(`Duplicate output: ${entry.page.output}`);
     outputs.add(entry.page.output);
-    return [entry.page.output, renderPage(entry, partials, content, headerKeys)];
+    return [entry.page.output, renderPage(entry, partials, content, headerKeys, footerBoard)];
   });
 
   if (!fs.existsSync(STATIC)) fail("Missing required directory: src/static");

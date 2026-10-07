@@ -1,0 +1,261 @@
+{
+  "note": "Footer keyboard links. href/name are edited by hand; w, h and the hit/h/p boxes (percent of the board image) are written by mockups/keys/board-export.py.",
+  "keys": {
+    "home": {
+      "href": "/",
+      "name": "Yoru Foundry home",
+      "hit": [
+        7.771,
+        5.408,
+        5.011,
+        12.937
+      ],
+      "h": [
+        7.389,
+        5.408,
+        6.242,
+        15.483
+      ],
+      "p": [
+        7.389,
+        5.408,
+        6.242,
+        15.483
+      ]
+    },
+    "taste": {
+      "href": "/built-to-taste.html",
+      "name": "Built to Taste",
+      "hit": [
+        12.909,
+        5.408,
+        71.253,
+        12.937
+      ],
+      "h": [
+        11.847,
+        5.408,
+        73.418,
+        15.483
+      ],
+      "p": [
+        11.805,
+        5.408,
+        73.461,
+        15.483
+      ]
+    },
+    "crafted": {
+      "href": "/crafted-art.html",
+      "name": "Crafted Art",
+      "hit": [
+        12.272,
+        18.134,
+        56.9,
+        13.256
+      ],
+      "h": [
+        11.805,
+        18.134,
+        58.047,
+        15.907
+      ],
+      "p": [
+        11.805,
+        18.134,
+        58.047,
+        15.907
+      ]
+    },
+    "instagram": {
+      "href": "https://www.instagram.com/yorufoundry/",
+      "name": "Instagram @yorufoundry",
+      "hit": [
+        74.565,
+        18.134,
+        10.234,
+        13.256
+      ],
+      "h": [
+        73.588,
+        18.134,
+        12.102,
+        15.907
+      ],
+      "p": [
+        73.588,
+        18.134,
+        12.102,
+        15.907
+      ]
+    },
+    "whyyoru": {
+      "href": "/why-yoru.html",
+      "name": "Why Yoru",
+      "hit": [
+        14.395,
+        28.738,
+        41.911,
+        13.468
+      ],
+      "h": [
+        13.928,
+        28.738,
+        43.057,
+        16.119
+      ],
+      "p": [
+        13.928,
+        28.738,
+        43.057,
+        16.119
+      ]
+    },
+    "tiktok": {
+      "href": "https://www.tiktok.com/@yoru.foundry",
+      "name": "TikTok @yoru.foundry",
+      "hit": [
+        77.537,
+        28.738,
+        7.771,
+        13.468
+      ],
+      "h": [
+        76.645,
+        28.738,
+        9.554,
+        15.801
+      ],
+      "p": [
+        76.645,
+        28.738,
+        9.554,
+        15.907
+      ]
+    },
+    "about": {
+      "href": "/about.html",
+      "name": "About",
+      "hit": [
+        15.244,
+        39.555,
+        26.497,
+        13.786
+      ],
+      "h": [
+        14.777,
+        39.661,
+        27.728,
+        16.331
+      ],
+      "p": [
+        14.777,
+        39.661,
+        27.771,
+        16.331
+      ]
+    },
+    "commission": {
+      "href": "/request-a-build.html",
+      "name": "Request a Commission",
+      "hit": [
+        73.97,
+        39.555,
+        11.847,
+        13.786
+      ],
+      "h": [
+        73.036,
+        39.661,
+        13.715,
+        16.331
+      ],
+      "p": [
+        73.036,
+        39.661,
+        13.715,
+        16.331
+      ]
+    },
+    "journal": {
+      "href": "/journal.html",
+      "name": "Journal",
+      "hit": [
+        17.495,
+        50.795,
+        37.665,
+        13.892
+      ],
+      "h": [
+        16.985,
+        50.795,
+        38.896,
+        16.649
+      ],
+      "p": [
+        16.985,
+        50.795,
+        38.896,
+        16.755
+      ]
+    },
+    "archive": {
+      "href": "/archive.html",
+      "name": "Archive",
+      "hit": [
+        71.635,
+        50.795,
+        9.299,
+        13.892
+      ],
+      "h": [
+        70.743,
+        50.795,
+        11.125,
+        16.649
+      ],
+      "p": [
+        70.743,
+        50.795,
+        11.125,
+        16.755
+      ]
+    },
+    "process": {
+      "href": "/trust-the-process.html",
+      "name": "Trust the Process",
+      "hit": [
+        25.308,
+        62.248,
+        34.098,
+        14.21
+      ],
+      "h": [
+        24.713,
+        62.354,
+        35.414,
+        14.528
+      ],
+      "p": [
+        24.713,
+        62.354,
+        35.414,
+        14.528
+      ]
+    }
+  },
+  "list": [
+    "crafted",
+    "process",
+    "taste",
+    "whyyoru",
+    "about",
+    "journal",
+    "archive",
+    "commission",
+    "instagram",
+    "tiktok"
+  ],
+  "w": 2355,
+  "h": 943
+}

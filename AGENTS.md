@@ -90,6 +90,7 @@ Rules:
 - Text links: Cinzel, underlined with a copper or verdigris underline; no "→" appended.
 - No gradient buttons. No glossy, glass, neon, or oversized ecommerce-style CTAs. Buttons never flash pure white or black.
 - **Exception: the rendered commission keycap** (Mike, 2026-10-06). The commission button may be a 3D-rendered Enter keycap image (`/assets/keys/`): its shading and baked-in cast shadow are part of the photo-real render, not CSS gradients or `box-shadow`. Idle, hover and pressed are separate renders (the pressed cap sinks into the plate) swapped instantly by state. Sharp corners (1.0–1.3mm walls, 0.7mm top edge). Re-render with `mockups/keys/render-keycap.html`; never fake it with CSS gradients or shadows.
+- **Exception: the footer keyboard** (Mike, 2026-10-07). The footer is a 3D-rendered 75% keyboard (`/assets/footer-board/`, data in `src/static/data/footer-board.json`): links are words spelled on the keys or named wide keys, and a word's rendered hover and pressed frames swap in instantly, like the commission keycap. The copper Enter key is the one copper key. The Esc key carries the logo medallion printed on the cap (the image unaltered apart from render lighting) and links home. Phones show the board as a picture with the links as a list. Re-render with `mockups/keys/render-board.html`; never fake it with CSS.
 
 ### Motion specification
 
@@ -100,6 +101,7 @@ Rules:
 - Animate only properties that communicate state: opacity, transform, border-color, background-color, and text color.
 - No bounce, spring, elastic, parallax, scroll-jacking, or decorative continuous animation.
 - **Exception: the header cable LED** (Mike asked for it, 2026-10-06). Beads of copper light travel inside the header's braided cable, from the medallion to the first key, one after another. It is the only continuous animation on the site; it reveals a glow render of the cable through a moving mask (`script.js`), never sits behind text, and is fully off under `prefers-reduced-motion: reduce` and wherever the cable is hidden. When the first bead reaches the keys, a soft copper underglow and legend glow rise once on the header keys over 2.6s (Mike, 2026-10-06); with reduced motion, or with no cable on screen, the keys are simply lit.
+- **The footer keyboard's light** (Mike, 2026-10-07) follows the same rule as the header keys: when the board is half in view, the linked keys' copper underglow and legend glow rise once over 2.6s; the hovered word glows brighter. With reduced motion they are simply lit. Nothing loops.
 - Respect `prefers-reduced-motion: reduce`; nonessential transitions and animations must collapse or disable.
 - Motion should make the interface feel machined and deliberate, not app-like.
 
@@ -190,7 +192,7 @@ Also avoid ecommerce patterns that imply inventory scale, urgency, discounting, 
 - A stylesheet version bump is one edit to `config.stylesheetVersion`; `node build.js` propagates it to every generated page.
 - Active navigation is rendered from each page's `activeNav` metadata. Do not restore client-side pathname-based active-nav detection.
 - `src/static/data/content.js` has a dual role: `build.js` evaluates it at build time for prerendering, and the built copy is also available for client-side hydration. **Critical content must exist in generated HTML at build time; client-side JavaScript may hydrate/enhance it but must never be required for the content to exist.** Do not regress to empty client-side shells.
-- The existing `footerVariant` values (`standard`, `archive`, `emblem`) are temporary compatibility scaffolding. **The current Phase 3.5 task is to collapse them into one existing/current footer across all 17 footer-bearing pages.** This is a normalization task, not the future Phase 9 four-column footer redesign. Do not add new footer variants. A later phase may redesign the already-unified footer when Mike explicitly starts that phase.
+- Every page has the one footer (`footerVariant: standard`), the Phase 9 keyboard footer (2026-10-07). Do not add footer variants.
 - Every generated HTML page must begin with `<!-- GENERATED FILE — DO NOT EDIT. Edit /src and run node build.js. -->`.
 - The build must fail with a non-zero exit code for missing placeholders, invalid navigation values, duplicate/invalid outputs, or any source page that fails to create a non-empty output file.
 - Cloudflare Workers Builds runs `node build.js` before uploading `/public`. Non-production branches use version uploads and preview URLs; only `main` may deploy to production.

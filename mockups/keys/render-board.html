@@ -60,8 +60,10 @@ function legendTex(T, face, ink, lg, mask) {
   if (mask) { face = '#000'; ink = '#fff'; }
   const c = document.createElement('canvas'); c.width = Math.round(T.w * 40); c.height = Math.round(T.d * 40); const g = c.getContext('2d');
   g.fillStyle = face; g.fillRect(0, 0, c.width, c.height); g.fillStyle = ink;
+  if (lg.img) { const im = images[lg.img], h = c.height * lg.scale; g.imageSmoothingQuality = 'high'; g.drawImage(im, (c.width - h) / 2, (c.height - h) / 2 + 6, h, h); }
   if (lg.big) { g.font = '700 290px Cinzel'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(lg.big, c.width / 2, c.height / 2 + 14); }
   if (lg.small) { g.font = '700 118px Cinzel'; g.textBaseline = 'top'; g.fillText(lg.small, 50, 44); }
+  if (lg.fit) { let sz = 300; g.font = `700 ${sz}px Cinzel`; while (g.measureText(lg.lines[0]).width > c.width * lg.fit) { sz -= 4; g.font = `700 ${sz}px Cinzel`; } lg.size = sz; }
   if (lg.lines) { g.font = `700 ${lg.size || 150}px Cinzel`; g.textAlign = 'center'; g.textBaseline = 'middle'; const n = lg.lines.length, lh = (lg.size || 150) * 1.12;
     lg.lines.forEach((l, i) => g.fillText(l, c.width / 2, c.height / 2 + (i - (n - 1) / 2) * lh + 10)); }
   if (lg.dir) { g.strokeStyle = ink; g.lineWidth = 22; g.lineCap = 'round'; g.lineJoin = 'round'; g.save(); g.translate(c.width / 2, c.height / 2 + 8);
@@ -71,9 +73,10 @@ function legendTex(T, face, ink, lg, mask) {
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t;
 }
 const clip = [new THREE.Plane(new THREE.Vector3(0, 0, 1), 0)];
-const keys = {};
+const keys = {}; const images = {};
 window.build = async (layout) => {
   await document.fonts.load('700 100px Cinzel');
+  for (const r of layout.rows) for (const k of r) if (k.lg && k.lg.img && !images[k.lg.img]) { const im = new Image(); im.src = k.lg.img; await im.decode(); images[k.lg.img] = im; }
   const totalU = 16, rowsY = layout.rows.map((r, i) => -(i * P + (i > 0 ? 0.25 * P : 0)));
   const midY = (rowsY[0] + rowsY[rowsY.length - 1]) / 2;
   layout.rows.forEach((row, ri) => { let x = -totalU * P / 2;
@@ -81,7 +84,8 @@ window.build = async (layout) => {
       const mat = new THREE.MeshPhysicalMaterial({ color: face, roughness: 0.5, bumpMap: bump, bumpScale: 0.6, sheen: 0.25, sheenRoughness: 0.8, sheenColor: new THREE.Color(face), clippingPlanes: clip, clipShadows: true });
       const topMat = mat.clone(); topMat.color = new THREE.Color(0xffffff); topMat.map = legendTex(T, face, ink, k.lg || {});
       if (k.id) { topMat.emissiveMap = legendTex(T, face, ink, k.lg || {}, true); topMat.emissive = new THREE.Color(LED); topMat.emissiveIntensity = 0;
-        if (k.id === 'commission') topMat.emissiveMap = null, topMat.emissive = new THREE.Color(0);   // copper cap: keep its dark legend
+        if (k.id === 'commission' || k.noGlowLegend) topMat.emissiveMap = null, topMat.emissive = new THREE.Color(0);
+        if (k.lg && k.lg.img) { topMat.emissiveMap = topMat.map; topMat.emissive = new THREE.Color(0xffffff); topMat.userData.selfLit = 0.45; }   // copper cap: keep its dark legend
         mat.emissive = new THREE.Color(LED); mat.emissiveIntensity = 0;
         // light from under the cap: the walls glow at the bottom and fade by ~3.5mm up
         mat.onBeforeCompile = (sh) => { sh.vertexShader = 'varying float vZ;\n' + sh.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\nvZ = position.z;');
@@ -98,9 +102,11 @@ window.build = async (layout) => {
   // case: anodized aluminium tray around the plate
   const cw = totalU * P + 2 * 11, ch = (6.25 * P) + 2 * 11, ow = cw / 2, oh = ch / 2, iw = totalU * P / 2 + 0.6, ih = 6.25 * P / 2 + 0.6;
   const shape = new THREE.Shape(); const rr = (s, w, h, r) => { s.moveTo(-w + r, -h); s.lineTo(w - r, -h); s.quadraticCurveTo(w, -h, w, -h + r); s.lineTo(w, h - r); s.quadraticCurveTo(w, h, w - r, h); s.lineTo(-w + r, h); s.quadraticCurveTo(-w, h, -w, h - r); s.lineTo(-w, -h + r); s.quadraticCurveTo(-w, -h, -w + r, -h); };
-  rr(shape, ow, oh, 7); const hole = new THREE.Path(); rr(hole, iw, ih, 1.5); shape.holes.push(hole);
-  const caseGeo = new THREE.ExtrudeGeometry(shape, { depth: 22, bevelEnabled: true, bevelThickness: 1.2, bevelSize: 1.2, bevelSegments: 4, curveSegments: 24 });
-  const caseMat = new THREE.MeshPhysicalMaterial({ color: layout.caseColor, metalness: 0.7, roughness: 0.52 });
+  rr(shape, ow, oh, 2.6); const hole = new THREE.Path(); rr(hole, iw, ih, 0.8); shape.holes.push(hole);
+  const caseGeo = new THREE.ExtrudeGeometry(shape, { depth: 22, bevelEnabled: true, bevelThickness: 0.9, bevelSize: 0.9, bevelSegments: 1, curveSegments: 16 });
+  // bead-blasted anodised aluminium: fine grain in the bump, a crisp machined chamfer on every edge
+  const blast = grain(256); blast.repeat.set(0.045, 0.045);
+  const caseMat = new THREE.MeshPhysicalMaterial({ color: layout.caseColor, metalness: 0.65, roughness: 0.36, bumpMap: blast, bumpScale: 0.3, envMapIntensity: 1.8 });
   const kase = new THREE.Mesh(caseGeo, caseMat); kase.position.z = -21; kase.castShadow = kase.receiveShadow = true; scene.add(kase);
   const plate = new THREE.Mesh(new THREE.PlaneGeometry(iw * 2, ih * 2), new THREE.MeshStandardMaterial({ color: '#0C1010', metalness: 0.3, roughness: 0.7 }));
   plate.position.z = -0.4; plate.receiveShadow = true; scene.add(plate);
@@ -116,7 +122,7 @@ const camera = new THREE.PerspectiveCamera(17, W / H, 10, 3000); camera.up.set(0
 camera.position.set(0, -430, 640); camera.lookAt(0, 6, 0);
 window.renderBoard = ({ pressed = {}, lit = 0, boost = {} } = {}) => {
   for (const [id, list] of Object.entries(keys)) for (const k of list) { k.grp.position.z = -(pressed[id] || 0); const b = lit * (boost[id] || 1);
-    k.glow.material.opacity = Math.min(1, 0.24 * b); k.topMat.emissiveIntensity = 0.5 * b; k.mat.emissiveIntensity = 0.32 * b; }
+    k.glow.material.opacity = Math.min(1, 0.24 * b); k.topMat.emissiveIntensity = k.topMat.userData.selfLit ?? 0.5 * b; k.mat.emissiveIntensity = 0.32 * b; }
   renderer.render(scene, camera);
   // screen boxes of each linked key's top face (for the link hit areas)
   const boxes = {};

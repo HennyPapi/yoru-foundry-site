@@ -138,6 +138,17 @@ commission-yf-001.
 - Sound references live in `SOUND_SAMPLES`; prelaunch audio is a 3-second silent MP3.
 - Known data fix: `content.js` labels "Ember" as a sound; it is a build name.
 
+## 9a. Footer: the keyboard (2026-10-07)
+
+- Mike's concept: a rendered 75% board (matte black bead-blasted case, sharp chamfered edges, green-sand caps).
+  Layout: Esc = logo medallion (home); top row BUILT TO TASTE; CRAFTED ART; WHY YORU; ABOUT; JOURNAL; Backspace =
+  Instagram, the 1.5u key under it = TikTok; copper Enter = Request a Commission; right Shift (under Enter) =
+  Archive; spacebar = Trust the Process.
+- Hover sinks the whole word (2.4mm) and glows brighter; press sinks 4.4mm. The linked keys' underglow rises once
+  on view (2.6s). Under 700px the board is a picture and the links are a list.
+- Files: `src/static/data/footer-board.json` (links + boxes), `/assets/footer-board/`, renderer
+  `mockups/keys/render-board.html` + `board-layout.json`, export `mockups/keys/board-export.py`.
+
 ## 10a. Commission form and mail (2026-10-07)
 
 - Mail for yorufoundry.com (hello@, mike@) is hosted by **Zoho** (MX mx/mx2/mx3.zoho.com). **Never enable
