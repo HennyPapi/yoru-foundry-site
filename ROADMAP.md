@@ -91,16 +91,16 @@ Known small issues (fix when touching these areas):
 - Add a video-loop slot for the hero. Nothing autoplays with sound (blocked on iPhone).
 - Write a short "how to drop in real photos/audio" note so new content needs no code changes.
 
-### 9 — Footer redesign
-- Four columns, built on the already-unified footer. Mike starts this phase explicitly.
-- Footer links go in the HTML itself. Right now Archive / Why Yoru / Journal are added by JavaScript.
+### 9 — Footer (done)
+- A rendered 75% keyboard instead of four columns (Mike's concept); links are in the HTML. The homepage adds the
+  hub and cable above it. See `YORU_SITE_MEMORY.md` 9a/9b and `mockups/keys/README.md`.
 
 ### 10 — Commission form
 - Replace `mailto:`, which fails when the visitor has no mail app set up.
 - Recommended: a small Cloudflare Worker endpoint that emails Mike. It stays on the current host and
   needs no third-party form service. Alternatives: Formspree, Basin.
 - Add spam protection (Cloudflare Turnstile), success/error states, and a no-JS fallback.
-- Confirm hello@yorufoundry.com actually receives mail (Cloudflare Email Routing).
+- ~~Confirm hello@ receives mail~~ Done: Zoho inbox; sending through Resend; tested end to end.
 - One name everywhere: the nav says "Request a Commission" but the file is `request-a-build.html` and README says
   "Request a Build". If the file is renamed, redirect the old URL.
 
@@ -141,7 +141,7 @@ Known small issues (fix when touching these areas):
 1. ~~Phases 4 and 5~~ Type scale and button system (from Mike's earlier plan); both done in the redesign.
 2. ~~Homepage textures~~ Answered: no texture (Mike, 2026-10-06).
 3. ~~Cream rule~~ Retired with the Verdigris direction.
-4. Form backend: Cloudflare Worker (recommended) or a form service?
+4. ~~Form backend~~ Answered: Cloudflare Worker, sending through Resend (mail is on Zoho).
 5. ~~Archive and Journal~~ Kept and rebuilt (2026-10-07); Phase 9 puts their footer links into the HTML.
 6. The Mice / Mouse Pads / Desk Mats / Wrist Rests / Accessories pages are stubs. Keep them for launch, or hide them?
 
