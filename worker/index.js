@@ -81,6 +81,10 @@ export async function handleCommission(request, env, send) {
 export default {
   async fetch(request, env) {
     if (new URL(request.url).pathname === "/api/commission") return handleCommission(request, env, resendSender(env.RESEND_API_KEY));
-    return env.ASSETS.fetch(request);
+    const res = await env.ASSETS.fetch(request);
+    if (res.status !== 404) return res;
+    // unknown address: the site's own 404 page, with a real 404 status
+    const page = await env.ASSETS.fetch(new Request(new URL("/404.html", request.url)));
+    return new Response(page.body, { status: 404, headers: page.headers });
   },
 };

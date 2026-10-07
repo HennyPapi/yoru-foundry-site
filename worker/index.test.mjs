@@ -55,4 +55,11 @@ assert.equal(JSON.parse(call.init.body).reply_to, "ada@example.com");
 globalThis.fetch = async () => new Response("domain not verified", { status: 403 });
 res = await handleCommission(post(good), {}, resendSender("re_test"));
 assert.equal(res.status, 502, "Resend error reaches the page as a failed send");
+const { default: worker } = await import("./index.js");
+const assets = { fetch: async (req) => new URL(req.url).pathname === "/404.html" ? new Response("not found page", { headers: { "content-type": "text/html" } })
+  : new URL(req.url).pathname === "/" ? new Response("home") : new Response("", { status: 404 }) };
+res = await worker.fetch(new Request("https://yorufoundry.com/"), { ASSETS: assets });
+assert.equal(res.status, 200); assert.equal(await res.text(), "home");
+res = await worker.fetch(new Request("https://yorufoundry.com/nope.html"), { ASSETS: assets });
+assert.equal(res.status, 404); assert.equal(await res.text(), "not found page", "unknown paths get the site's 404 page");
 console.log("commission handler: all checks pass");

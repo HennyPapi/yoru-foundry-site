@@ -4,7 +4,8 @@ const path = require("node:path");
 const config = Object.freeze({
   stylesheetVersion: "vg-36-privacy",
   siteTitle: "Yoru Foundry",
-  SITE_MODE: "prelaunch",
+  siteUrl: "https://yorufoundry.com",   // absolute links for the sitemap and share previews
+  SITE_MODE: "live",
   // Cloudflare Turnstile site key (public). Empty = no widget; the Worker's TURNSTILE_SECRET must be set with it.
   turnstileSiteKey: "",
 });
@@ -294,6 +295,19 @@ function parsePage(file) {
   return { file, page, template };
 }
 
+// Link previews (iMessage, social, search) and indexing. Hidden pages carry noindex and stay out of the sitemap.
+const pageUrl = (page) => `${config.siteUrl}/${page.output === "index.html" ? "" : page.output}`;
+function shareMeta(page) {
+  const title = escapeHtml(page.output === "index.html" ? page.title : `${page.title} | ${config.siteTitle}`);
+  const description = escapeHtml(page.description || "Custom mechanical keyboards, hand-built, tuned and named one at a time in a small Miami workshop.");
+  const image = `${config.siteUrl}/assets/share.jpg?v=${config.stylesheetVersion}`;
+  return (page.noindex ? '<meta name="robots" content="noindex">' : `<link rel="canonical" href="${pageUrl(page)}">`) +
+    `<meta property="og:type" content="website"><meta property="og:site_name" content="${config.siteTitle}"><meta property="og:title" content="${title}">` +
+    `<meta property="og:description" content="${description}"><meta property="og:url" content="${pageUrl(page)}">` +
+    `<meta property="og:image" content="${image}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">` +
+    `<meta property="og:image:alt" content="A Yoru Foundry 75% keyboard, its keys lit copper from below"><meta name="twitter:card" content="summary_large_image">`;
+}
+
 // Homepage close: the rendered hub (screen off / on) with its cable, and the cable's centreline for the LED bead.
 function renderHub() {
   const h = JSON.parse(read(path.join(SRC, "static", "data", "hub.json")));
@@ -345,7 +359,7 @@ function renderPage(entry, partials, content, headerKeys, footerBoard) {
       DESCRIPTION_META: description,
       HEAD_EXTRA: redirect
         ? `<meta http-equiv="refresh" content="0; url=${page.redirectUrl}">`
-        : "",
+        : shareMeta(page),
       FULL_TITLE: `${page.title} | ${config.siteTitle}`,
       CRITICAL_CSS: redirect
         ? "html,body{margin:0;background:#151A1A;color:#EEF0EC;min-height:100%;font-family:Alegreya,Georgia,serif}main{max-width:760px;margin:auto;padding:15vh 24px}a{color:#E8834D}"
@@ -449,6 +463,10 @@ function build() {
       fail(`${output}: output file was not created`);
     }
   }
+  const listed = entries.filter((e) => e.page.layout !== "redirect" && !e.page.noindex).map((e) => e.page);
+  const today = new Date().toISOString().slice(0, 10);
+  fs.writeFileSync(path.join(OUTPUT, "sitemap.xml"), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    listed.map((p) => `  <url><loc>${pageUrl(p)}</loc><lastmod>${today}</lastmod></url>`).join("\n") + "\n</urlset>\n");
   console.log(`Built ${rendered.length} pages in /public (${config.SITE_MODE}).`);
 }
 

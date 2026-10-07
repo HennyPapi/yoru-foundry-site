@@ -842,7 +842,9 @@ def main():
         report.warn("Launch", "No custom 404 page", f"{PUBLIC_DIR}/404.html", "broken links show a blank error")
     if os.path.isfile("wrangler.jsonc"):
         with open("wrangler.jsonc", encoding="utf-8") as fh:
-            if "not_found_handling" not in fh.read():
+            # either Cloudflare's asset setting, or the Worker serving /404.html for unknown paths
+            worker = open("worker/index.js", encoding="utf-8").read() if os.path.isfile("worker/index.js") else ""
+            if "not_found_handling" not in fh.read() and "/404.html" not in worker:
                 report.warn("Launch", "404 page not enabled", "wrangler.jsonc",
                             'add "not_found_handling": "404-page" inside "assets"')
     for f in ("robots.txt", "sitemap.xml"):

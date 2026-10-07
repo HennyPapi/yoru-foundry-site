@@ -9,7 +9,7 @@ const SITE_MODE_CONTENT = {
   live: {
     heroStatus: "Currently accepting commissions",
     statusNote: "Typical build window: approximately 2–5 weeks after parts are confirmed.",
-    footerStatus: "Commission-built one at a time • I document each finished build after tuning, testing, and photography."
+    footerStatus: "Built one at a time in Miami."
   }
 };
 
