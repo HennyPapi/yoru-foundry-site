@@ -1180,6 +1180,7 @@ main:not(.section-shell),
 .request-form{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-22) var(--space-18);padding:var(--space-30);background:var(--green-sand);border:var(--border-width) solid var(--line);border-radius:var(--radius-8px)}
 .request-form label{display:grid;gap:var(--space-8);font-family:var(--font-display);font-size:var(--step-3);font-weight:700;color:var(--bright)}
 .request-form .wide,.request-send{grid-column:1/-1}
+.request-form .optional{font-family:var(--font-body);font-size:var(--step-3);font-weight:400;color:var(--pewter)}
 .request-form input,.request-form select,.request-form textarea{width:100%;min-height:48px;padding:var(--space-12) var(--space-14);font-family:var(--font-body);font-size:var(--type-17);font-weight:400;color:var(--bright);background:var(--cast);border:var(--border-width) solid var(--line-strong);border-radius:var(--radius-control);transition:border-color var(--duration-base) var(--ease)}
 .request-form textarea{min-height:180px;resize:vertical;line-height:1.5}
 .request-form select{appearance:none;padding-right:var(--space-40);background-image:var(--chevron);background-repeat:no-repeat;background-position:right var(--space-14) center;cursor:pointer}

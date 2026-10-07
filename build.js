@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-40-rhythm2",
+  stylesheetVersion: "vg-41-copy",
   siteTitle: "Yoru Foundry",
   siteUrl: "https://yorufoundry.com",   // absolute links for the sitemap and share previews
   SITE_MODE: "live",
@@ -83,7 +83,7 @@ function renderStoryGrid(type, stories) {
 // One guide's steps (a real sequence): an honest media frame naming what will go there, then the step.
 function renderStorySteps(story) {
   if (!story) return "";
-  return (story.steps || []).map((step, index) => '<section class="guide-step"><div class="guide-media">' + mediaInner(step[3], step[1], step[1]) + '</div><div class="guide-copy"><p class="guide-step-num">Step ' + (index + 1) + "</p><h3>" + escapeHtml(step[0]) + "</h3><p>" + escapeHtml(step[2]) + "</p></div></section>").join("");
+  return (story.steps || []).map((step, index) => '<section class="guide-step"><div class="guide-media">' + mediaInner(step[3], step[1], step[1]) + '</div><div class="guide-copy">' + "<h3>" + escapeHtml(step[0]) + "</h3><p>" + escapeHtml(step[2]) + "</p></div></section>").join("");
 }
 
 // A photo frame: the real image when there is one, otherwise an honest placeholder that names what goes there.

@@ -207,17 +207,17 @@ const SOUND_SAMPLES = [
   {
     name: "Reference A — Untuned Baseline",
     file: "/audio/silence-3s.mp3",
-    description: "Three-second silent placeholder used to validate player sizing, controls, spacing, and metadata before standardized keyboard recordings exist."
+    description: "Recording on the way."
   },
   {
     name: "Reference B — Tuned Stabilizer",
     file: "/audio/silence-3s.mp3",
-    description: "Three-second silent placeholder preserving the production-length description and player footprint for a future matched stabilizer comparison."
+    description: "Recording on the way."
   },
   {
     name: "Reference C — Material Comparison",
     file: "/audio/silence-3s.mp3",
-    description: "Three-second silent placeholder reserved for a controlled plate, switch, or keycap comparison recorded with the same microphone and desk setup."
+    description: "Recording on the way."
   }
 ];
 
@@ -253,7 +253,7 @@ const STORIES = {
   2:{title:"Stabilizer Tuning",intro:"Spacebars, shifts, enter and backspace reveal poor tuning immediately.",steps:[
    ["Untuned","Sample audio — rattle/tick","An untuned stabilizer can add wire rattle, ticking and uneven travel."],
    ["Tuned","Sample audio — tuned stabilizer","Lubrication, wire correction and balance can make large keys sound cleaner and feel more consistent."],
-   ["Why It Matters","Sample video — side-by-side","This comparison makes one of the most audible build-quality differences easy to understand."]
+   ["What changed","Sample video — side-by-side","This comparison makes one of the most audible build-quality differences easy to understand."]
   ]},
   3:{title:"Keycap Material & Profile",intro:"Shape, thickness and material all influence the way a keyboard speaks back.",steps:[
    ["Material","Sample photo — ABS vs PBT","ABS and PBT differ in texture, wear, density and often perceived pitch."],
@@ -270,7 +270,7 @@ const STORIES = {
    ["Polycarbonate / FR4","Sample plate comparison","Softer or more flexible materials can change rebound, pitch and perceived softness."],
    ["Choose by Feel","Sample typing comparison","The plate is selected as part of the full system, not in isolation."]
   ]},
-  6:{title:"Sound Profiles",intro:"Rather than vague internet labels, we will use real recordings so you can choose by ear.",steps:[
+  6:{title:"Sound Profiles",intro:"Rather than vague internet labels, I use real recordings so you can choose by ear.",steps:[
    ["Profile A","Sample audio — sound profile","A controlled recording with notes describing pitch, resonance and character."],
    ["Profile B","Sample audio — alternate profile","A contrasting tuning direction on comparable hardware."],
    ["Your Preference","Sample comparison player","These examples will become the vocabulary used in the build request form."]

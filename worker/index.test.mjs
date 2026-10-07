@@ -62,4 +62,9 @@ res = await worker.fetch(new Request("https://yorufoundry.com/"), { ASSETS: asse
 assert.equal(res.status, 200); assert.equal(await res.text(), "home");
 res = await worker.fetch(new Request("https://yorufoundry.com/nope.html"), { ASSETS: assets });
 assert.equal(res.status, 404); assert.equal(await res.text(), "not found page", "unknown paths get the site's 404 page");
+sent = null;
+res = await handleCommission(post({ ...good, spec: "Mode Envoy, PC plate, Oil Kings" }), {}, send);
+assert.match(sent.text, /Exact spec:\nMode Envoy, PC plate, Oil Kings/, "optional spec reaches the email");
+res = await handleCommission(post(good), {}, send);
+assert.doesNotMatch(sent.text, /Exact spec/, "no spec section when left empty");
 console.log("commission handler: all checks pass");
