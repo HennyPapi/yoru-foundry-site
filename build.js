@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-16-align",
+  stylesheetVersion: "vg-17-sweep",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
 });
@@ -44,7 +44,7 @@ function escapeHtml(value) {
 function buildHref(build) { return "/commission.html?id=" + encodeURIComponent(build.id); }
 
 function statusLabel(status) {
-  return ({ placeholder: "PRELAUNCH STUDY", "in-progress": "IN PROGRESS", built: "BUILT", available: "AVAILABLE" })[status] || String(status || "").toUpperCase();
+  return ({ placeholder: "Prelaunch study", "in-progress": "In progress", built: "Built", available: "Available" })[status] || String(status || "");
 }
 
 function loadSiteContent() {
@@ -83,13 +83,29 @@ function renderStorySteps(story) {
   return (story.steps || []).map((step, index) => '<section class="guide-step"><div class="guide-media"><span>' + escapeHtml(step[1]) + '</span></div><div class="guide-copy"><p class="guide-step-num">Step ' + (index + 1) + "</p><h3>" + escapeHtml(step[0]) + "</h3><p>" + escapeHtml(step[2]) + "</p></div></section>").join("");
 }
 
+// A photo frame: the real image when there is one, otherwise an honest placeholder that names what goes there.
+function mediaFrame(src, cls, label = "Customer build photo") {
+  const real = src && !/placeholder/.test(src);
+  return '<div class="build-media' + (cls ? " " + cls : "") + '">' + (real ? '<img src="' + escapeHtml(src) + '" alt="" loading="lazy" decoding="async">' : "<span>" + escapeHtml(label) + "</span>") + "</div>";
+}
+
+function buildIdLine(build) {
+  return '<p class="build-id">' + escapeHtml(build.id) + '<span class="build-state">' + escapeHtml(statusLabel(build.status)) + "</span>" + (build.layout ? '<span class="build-layout">' + escapeHtml(build.layout) + "</span>" : "") + "</p>";
+}
+
+const SPEC_LABELS = [["case", "Case"], ["plate", "Plate"], ["switches", "Switches"], ["lube", "Lube"], ["keycaps", "Keycaps"], ["mount", "Mount"]];
+
+// One build record. commission.html carries every published record; script.js shows the one named by ?id=.
 function renderCommissionDetail(build, soundSamples) {
-  if (!build) {
-    return '<section class="page-hero-shell section-shell"><div class="section-shell-frame"><div class="page-hero"><p class="eyebrow">BUILD RECORD</p><h1>This record is not published.</h1><p>I publish build records after the work is ready to document.</p></div></div></section>';
-  }
-  const details = (build.detailImages?.length ? build.detailImages : ["/img/placeholder-1x1.svg", "/img/placeholder-1x1.svg", "/img/placeholder-1x1.svg"]).slice(0, 3);
+  const details = (build.detailImages?.length ? build.detailImages : [null, null, null]).slice(0, 3);
   const audioSample = build.audio ? { name: build.id + " standardized sound test", file: build.audio, description: "Recorded using the standardized Yoru Foundry comparison setup." } : soundSamples[0];
-  return '<section class="page-hero-shell section-shell"><div class="section-shell-frame"><div class="page-hero"><p class="eyebrow">' + escapeHtml(statusLabel(build.status)) + ' • ' + escapeHtml(build.id) + ' • ' + escapeHtml(build.layout) + '</p><h1>' + escapeHtml(build.name) + '</h1><p>' + escapeHtml(build.summary) + '</p></div></div></section><section class="commission-hero-media"><img src="' + escapeHtml(build.heroImage || "/img/placeholder-16x9.svg") + '" alt="" width="1600" height="900"></section><section class="commission-story"><div><p class="eyebrow">THE RECORD</p><h2>Documented around intent, not a catalog SKU.</h2></div><div><p>' + escapeHtml(build.notes) + '</p></div></section><section class="commission-detail-grid"><article><span>Case</span><strong>' + escapeHtml(build.specs.case) + '</strong></article><article><span>Plate</span><strong>' + escapeHtml(build.specs.plate) + '</strong></article><article><span>Switches</span><strong>' + escapeHtml(build.specs.switches) + '</strong></article><article><span>Lube</span><strong>' + escapeHtml(build.specs.lube) + '</strong></article><article><span>Keycaps</span><strong>' + escapeHtml(build.specs.keycaps) + '</strong></article><article><span>Mount</span><strong>' + escapeHtml(build.specs.mount) + '</strong></article></section><section class="commission-media-grid">' + details.map((src) => '<div class="detail-media"><img src="' + escapeHtml(src) + '" alt="" width="1000" height="1000" loading="lazy" decoding="async"></div>').join("") + '</section><section class="sound-sample"><div><p class="eyebrow">STANDARDIZED SOUND TEST</p><h2>Hear the build under the same conditions.</h2><p>The player footprint is already locked so a real recording can replace the silent reference without moving the layout.</p></div><div class="compare-audio build-audio">' + renderSoundPlayer(audioSample) + '</div></section><section class="commission-story"><div><p class="eyebrow">PROCESS NOTES</p><h2>Why these choices.</h2></div><div><p>' + escapeHtml(build.processNotes || build.notes) + '</p><a class="text-link" href="/request-a-build.html?layout=' + encodeURIComponent(build.layout) + '">Request a ' + escapeHtml(build.layout) + ' commission →</a></div></section>';
+  return '<section class="page-intro">' + buildIdLine(build) + "<h1>" + escapeHtml(build.name) + "</h1><p>" + escapeHtml(build.summary) + "</p></section>"
+    + mediaFrame(build.heroImage, "record-hero")
+    + '<section class="chapter"><h2>Documented around intent, not a catalog SKU.</h2><div><p>' + escapeHtml(build.notes) + "</p></div></section>"
+    + '<dl class="spec-sheet">' + SPEC_LABELS.filter(([key]) => build.specs?.[key]).map(([key, label]) => "<div><dt>" + label + "</dt><dd>" + escapeHtml(build.specs[key]) + "</dd></div>").join("") + "</dl>"
+    + '<div class="record-details">' + details.map((src) => mediaFrame(src, "square")).join("") + "</div>"
+    + '<section class="chapter"><h2>Hear the build under the same conditions.</h2><div><p>The player footprint is already locked so a real recording can replace the silent reference without moving the layout.</p><div class="compare-audio record-audio">' + renderSoundPlayer(audioSample) + "</div></div></section>"
+    + '<section class="chapter"><h2>Why these choices.</h2><div><p>' + escapeHtml(build.processNotes || build.notes) + '</p><p><a class="text-link" href="/request-a-build.html?layout=' + encodeURIComponent(build.layout) + '">Request a ' + escapeHtml(build.layout) + " commission</a></p></div></section>";
 }
 
 function renderBoard(layout, id, live) {
@@ -147,14 +163,10 @@ function renderDataBackedContent(html, content) {
     return '<svg class="wave" viewBox="0 0 600 72" preserveAspectRatio="none" aria-hidden="true">' + bars + "</svg>";
   });
 
-  html = html.replace(/(<section class="archive-grid" data-archive-grid aria-live="polite">)[\s\S]*?(<\/section>)/, (_, open, close) => {
-    if (!visible.length) return open + '<div class="archive-empty"><p class="eyebrow">ARCHIVE IN PROGRESS</p><h2>I will add finished commissions here as they are completed and documented.</h2></div>' + close;
-    const entries = visible.map((item) => {
-      const placeholder = item.status === "placeholder";
-      const image = item.images?.[0] || "/img/placeholder-4x5.svg";
-      return '<a href="' + buildHref(item) + '" class="archive-entry' + (placeholder ? " is-placeholder" : "") + '"><div class="archive-media"><img src="' + escapeHtml(image) + '" alt="" width="1200" height="1500" loading="lazy" decoding="async"></div><div class="archive-copy"><span class="archive-status">' + escapeHtml(statusLabel(item.status)) + " • " + escapeHtml(item.id) + " • " + escapeHtml(item.layout || "") + "</span><h2>" + escapeHtml(item.name) + "</h2><p>" + escapeHtml(item.summary) + '</p><div class="archive-specs" aria-label="Build specifications"><span><b>CASE</b><em>' + escapeHtml(item.specs?.case || "") + "</em></span><span><b>SWITCHES</b><em>" + escapeHtml(item.specs?.switches || "") + "</em></span><span><b>MOUNT</b><em>" + escapeHtml(item.specs?.mount || "") + "</em></span></div></div></a>";
-    }).join("");
-    return open + entries + close;
+  // The archive: every published build as a ruled entry.
+  html = html.replace(/<section class="archive-list" data-archive-list><\/section>/, () => {
+    if (!visible.length) return '<section class="archive-list"><div class="chapter"><h2>I will add finished commissions here as they are completed and documented.</h2></div></section>';
+    return '<ul class="build-list archive-list">' + visible.map((item) => '<li><a href="' + buildHref(item) + '" tabindex="-1" aria-hidden="true">' + mediaFrame(item.images?.[0], "small") + "</a><div>" + buildIdLine(item) + '<h3><a href="' + buildHref(item) + '">' + escapeHtml(item.name) + "</a></h3><p>" + escapeHtml(item.summary) + '</p><dl class="mini-specs">' + [["case", "Case"], ["switches", "Switches"], ["mount", "Mount"]].map(([k, l]) => "<div><dt>" + l + "</dt><dd>" + escapeHtml(item.specs?.[k] || "") + "</dd></div>").join("") + "</dl></div></li>").join("") + "</ul>";
   });
 
   const stories = content.STORIES || {};
@@ -163,10 +175,8 @@ function renderDataBackedContent(html, content) {
 
   html = html.replace(/(<section class="guide-index" data-story-grid="([^"]+)">)[\s\S]*?(<\/section>)/g, (_, open, type, close) => open + renderStoryGrid(type, stories) + close);
 
-  html = html.replace(/(<div data-build-detail>)[\s\S]*?(<\/div>)/, (_, open, close) => {
-    const detailBuild = content.SITE_MODE === "live" ? visible[0] : (visible[0] || builds[0]);
-    return open + renderCommissionDetail(detailBuild, soundSamples) + close;
-  });
+  // Build records: every published record, the first shown; script.js switches to the one named by ?id=.
+  html = html.replace(/<div class="records" data-build-records><\/div>/, () => '<div class="records">' + visible.map((item, n) => '<article class="record" data-record="' + escapeHtml(item.id) + '"' + (n ? " hidden" : "") + ">" + (n ? renderCommissionDetail(item, soundSamples).replace(/preload="metadata"/g, 'preload="none"') : renderCommissionDetail(item, soundSamples)) + "</article>").join("") + '<article class="record" data-record="none"' + (visible.length ? " hidden" : "") + '><section class="page-intro"><h1>This record is not published.</h1><p>I publish build records after the work is ready to document.</p></section></article></div>');
 
   html = html.replace(/(<div class="compare-audio" data-sound-player="(\d+)">)[\s\S]*?(<\/div>)/g, (_, open, index, close) => open + renderSoundPlayer(soundSamples[Number(index)] || soundSamples[0]) + close);
 

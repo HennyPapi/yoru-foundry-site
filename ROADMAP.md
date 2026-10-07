@@ -59,6 +59,7 @@ Known small issues (fix when touching these areas):
 | 4–5 | *Not defined in the repo; Mike to confirm what these were* | ? |
 | 6 | Header: one header on every page | Done: keyboard-row header with the LED cable (2026-10-06) |
 | 7 | Homepage hero and message | Done: rebuilt from `mockups/home.html` (2026-10-06); "keyboards" lives in the title and meta description |
+| — | Inner pages in Verdigris | Done (2026-10-07): request, Crafted Art + 75%, Built to Taste, Trust the Process, Why Yoru, About, Journal, Archive, build records. Still old: the five hidden product stub pages |
 | 8 | Media and sound readiness | Planned |
 | 9 | Footer redesign (four columns) | Planned |
 | 10 | Commission form sends without `mailto:` | Planned (needs a decision). Request page fully rebuilt in Verdigris (2026-10-06) |

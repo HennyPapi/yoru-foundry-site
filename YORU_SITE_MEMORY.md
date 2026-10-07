@@ -82,6 +82,12 @@ hero media frame.
   definition shown under the name instead of a hover tooltip.
 - Trust the Process (rebuilt 2026-10-07): intro, then the four stages (`STORIES.process`) in one numbered column
   ("Stage 1–4", a real sequence), each opening the shared guide panel.
+- Why Yoru, About, Journal, Archive and build records (rebuilt 2026-10-07): shared editorial blocks: `.chapter`
+  (heading left, prose right on a hairline), ruled lists instead of card rows (`.reason-list`, `.note-list`,
+  `.build-list`), honest photo frames (`.build-media`). Small plain labels are kept only where they carry meaning
+  (About's byline, Why “Yoru” / Why “Foundry”, Five years from now). The archive and every published build record
+  are rendered at build time from `BUILDS`; commission.html carries all records and script.js shows the one named
+  by `?id=` (unknown ids show "This record is not published.").
 - Request a Commission (rebuilt 2026-10-06): status line with a verdigris dot, the H1 and intro on the canvas; the
   form on a raised Green Sand surface with inset Cast fields (Cinzel labels, Alegreya input text, Pewter chevrons);
   submit is the copper Enter keycap (`/assets/keys/c2.25*.webp`, legend as real text), the only copper key on the

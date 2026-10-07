@@ -10,9 +10,6 @@ const stories=yoruContent.STORIES||{};
 const compareOptions=yoruContent.COMPARE_OPTIONS||{};
 document.documentElement.dataset.siteMode=siteMode;
 function yfEscape(value){return String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char]))}
-function yfBuildHref(build){return "/commission.html?id="+encodeURIComponent(build.id)}
-function yfVisibleBuilds(){return siteMode==="live"?builds.filter(build=>build.status!=="placeholder"):builds}
-function yfStatusLabel(status){return ({placeholder:"PRELAUNCH STUDY","in-progress":"IN PROGRESS",built:"BUILT",available:"AVAILABLE"})[status]||String(status||"").toUpperCase()}
 function yfApplySiteMode(){
   document.querySelectorAll(".site-footer").forEach(footer=>{
     let line=footer.querySelector("[data-site-footer-status]");
@@ -26,20 +23,6 @@ function yfApplySiteMode(){
     line.textContent=siteModeContent.footerStatus||"Built one at a time.";
   });
 }
-function yfRenderArchive(){
-  const grid=document.querySelector("[data-archive-grid]");
-  if(!grid)return;
-  const visible=yfVisibleBuilds();
-  if(!visible.length){
-    grid.innerHTML='<div class="archive-empty"><p class="eyebrow">ARCHIVE IN PROGRESS</p><h2>I will add finished commissions here as they are completed and documented.</h2></div>';
-    return;
-  }
-  grid.innerHTML=visible.map(build=>{
-    const placeholder=build.status==="placeholder";
-    const image=build.images?.[0]||"/img/placeholder-4x5.svg";
-    return '<a href="'+yfBuildHref(build)+'" class="archive-entry'+(placeholder?' is-placeholder':'')+'"><div class="archive-media"><img src="'+yfEscape(image)+'" alt="" width="1200" height="1500" loading="lazy" decoding="async"></div><div class="archive-copy"><span class="archive-status">'+yfEscape(yfStatusLabel(build.status))+' • '+yfEscape(build.id)+' • '+yfEscape(build.layout||"")+'</span><h2>'+yfEscape(build.name)+'</h2><p>'+yfEscape(build.summary)+'</p><div class="archive-specs" aria-label="Build specifications"><span><b>CASE</b><em>'+yfEscape(build.specs?.case||"")+'</em></span><span><b>SWITCHES</b><em>'+yfEscape(build.specs?.switches||"")+'</em></span><span><b>MOUNT</b><em>'+yfEscape(build.specs?.mount||"")+'</em></span></div></div></a>';
-  }).join("");
-}
 function yfSoundPlayer(sample){
   if(!sample)return '<p>Audio reference is not available yet.</p>';
   return '<div class="sound-player-copy"><strong>'+yfEscape(sample.name)+'</strong><p>'+yfEscape(sample.description)+'</p></div><audio controls preload="metadata" src="'+yfEscape(sample.file)+'" aria-label="'+yfEscape(sample.name)+'"></audio>';
@@ -51,24 +34,18 @@ function yfRenderSoundPlayers(){
     slot.innerHTML=yfSoundPlayer(sample);
   });
 }
-function yfRenderBuildDetail(){
-  const root=document.querySelector("[data-build-detail]");
-  if(!root)return;
-  const id=new URLSearchParams(location.search).get("id")||"YF-001";
-  const build=builds.find(item=>item.id===id);
-  if(!build||(siteMode==="live"&&build.status==="placeholder")){
-    root.innerHTML='<section class="page-hero-shell section-shell"><div class="section-shell-frame"><div class="page-hero"><p class="eyebrow">BUILD RECORD</p><h1>This record is not published.</h1><p>I publish build records after the work is ready to document.</p></div></div></section>';
-    return;
-  }
-  document.title=build.id+" | Yoru Foundry";
-  const details=(build.detailImages?.length?build.detailImages:["/img/placeholder-1x1.svg","/img/placeholder-1x1.svg","/img/placeholder-1x1.svg"]).slice(0,3);
-  const audioSample=build.audio?{name:build.id+" standardized sound test",file:build.audio,description:"Recorded using the standardized Yoru Foundry comparison setup."}:soundSamples[0];
-  root.innerHTML='<section class="page-hero-shell section-shell"><div class="section-shell-frame"><div class="page-hero"><p class="eyebrow">'+yfEscape(yfStatusLabel(build.status))+' • '+yfEscape(build.id)+' • '+yfEscape(build.layout)+'</p><h1>'+yfEscape(build.name)+'</h1><p>'+yfEscape(build.summary)+'</p></div></div></section><section class="commission-hero-media"><img src="'+yfEscape(build.heroImage||"/img/placeholder-16x9.svg")+'" alt="" width="1600" height="900"></section><section class="commission-story"><div><p class="eyebrow">THE RECORD</p><h2>Documented around intent, not a catalog SKU.</h2></div><div><p>'+yfEscape(build.notes)+'</p></div></section><section class="commission-detail-grid"><article><span>Case</span><strong>'+yfEscape(build.specs.case)+'</strong></article><article><span>Plate</span><strong>'+yfEscape(build.specs.plate)+'</strong></article><article><span>Switches</span><strong>'+yfEscape(build.specs.switches)+'</strong></article><article><span>Lube</span><strong>'+yfEscape(build.specs.lube)+'</strong></article><article><span>Keycaps</span><strong>'+yfEscape(build.specs.keycaps)+'</strong></article><article><span>Mount</span><strong>'+yfEscape(build.specs.mount)+'</strong></article></section><section class="commission-media-grid">'+details.map(src=>'<div class="detail-media"><img src="'+yfEscape(src)+'" alt="" width="1000" height="1000" loading="lazy" decoding="async"></div>').join("")+'</section><section class="sound-sample"><div><p class="eyebrow">STANDARDIZED SOUND TEST</p><h2>Hear the build under the same conditions.</h2><p>The player footprint is already locked so a real recording can replace the silent reference without moving the layout.</p></div><div class="compare-audio build-audio">'+yfSoundPlayer(audioSample)+'</div></section><section class="commission-story"><div><p class="eyebrow">PROCESS NOTES</p><h2>Why these choices.</h2></div><div><p>'+yfEscape(build.processNotes||build.notes)+'</p><a class="text-link" href="/request-a-build.html?layout='+encodeURIComponent(build.layout)+'">Request a '+yfEscape(build.layout)+' commission →</a></div></section>';
+function yfShowRecord(){   // commission.html carries every published record; show the one named by ?id=
+  const records=[...document.querySelectorAll("[data-record]")];
+  if(!records.length)return;
+  const id=new URLSearchParams(location.search).get("id");
+  const match=id&&records.find(r=>r.dataset.record===id);
+  if(!id)return;
+  records.forEach(r=>{r.hidden=r!==(match||records.find(x=>x.dataset.record==="none"))});
+  if(match)document.title=id+" | Yoru Foundry";
 }
 yfApplySiteMode();
-yfRenderArchive();
 yfRenderSoundPlayers();
-yfRenderBuildDetail();
+yfShowRecord();
 
 
 
