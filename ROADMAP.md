@@ -101,8 +101,8 @@ Known small issues (fix when touching these areas):
   needs no third-party form service. Alternatives: Formspree, Basin.
 - Add spam protection (Cloudflare Turnstile), success/error states, and a no-JS fallback.
 - ~~Confirm hello@ receives mail~~ Done: Zoho inbox; sending through Resend; tested end to end.
-- One name everywhere: the nav says "Request a Commission" but the file is `request-a-build.html` and README says
-  "Request a Build". If the file is renamed, redirect the old URL.
+- ~~One name everywhere~~ Done (2026-10-07): the page is `request-a-commission.html`; the old
+  `request-a-build.html` 301-redirects to it (`src/static/_redirects`).
 
 ### 11 — Motion
 - Audit transitions against the 180–220ms spec and the canonical easing.

@@ -133,8 +133,8 @@
   }
  ],
  "commission": {
-  "activeNav": "request-a-build",
-  "href": "/request-a-build.html",
+  "activeNav": "request-a-commission",
+  "href": "/request-a-commission.html",
   "name": "Request a Commission",
   "legend": "Commission",
   "cap": "s2.25"

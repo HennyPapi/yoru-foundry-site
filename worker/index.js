@@ -54,7 +54,7 @@ export async function handleCommission(request, env, send) {
   const wantsJson = (request.headers.get("accept") || "").includes("application/json");
   const reply = (ok, status, error) => wantsJson
     ? Response.json(ok ? { ok } : { ok, error }, { status })
-    : Response.redirect(new URL(ok ? "/request-a-build.html#sent" : "/request-a-build.html#send-failed", request.url), 303);
+    : Response.redirect(new URL(ok ? "/request-a-commission.html#sent" : "/request-a-commission.html#send-failed", request.url), 303);
 
   // Opening the endpoint in a browser shows whether email is set up (no secrets revealed).
   if (request.method === "GET") return new Response(send ? "Commission form: email is set up." : "Commission form: RESEND_API_KEY is not set, so the form falls back to a mail draft.", { headers: { "content-type": "text/plain; charset=utf-8" } });

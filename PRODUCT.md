@@ -43,7 +43,7 @@ real person will build it.
 - **Full builds:** Mike sources every part and delivers a finished, tuned board.
 - **Bring-your-own-parts:** Mike assembles and tunes a board from parts the customer already owns.
 
-**Commission flow** (`request-a-build`):
+**Commission flow** (`request-a-commission`):
 1. Request
 2. Consultation (layout, feel, sound, materials, connectivity, budget)
 3. Parts and design

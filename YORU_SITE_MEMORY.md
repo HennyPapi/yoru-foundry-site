@@ -121,7 +121,7 @@ Primary nav: Crafted Art · Trust the Process · Built to Taste · About · Requ
 launch; the Mice / Mouse Pads / Desk Mats / Wrist Rests / Accessories pages are hidden at launch.
 
 Source pages live in `/src`: index, crafted-art, crafted-art-75, trust-the-process, built-to-taste, about,
-products-keyboards (and the hidden product stubs), request-a-build, archive, why-yoru, journal, commission,
+products-keyboards (and the hidden product stubs), request-a-commission, archive, why-yoru, journal, commission,
 commission-yf-001.
 
 ## 9. Flash-of-wrong-color / cache rules

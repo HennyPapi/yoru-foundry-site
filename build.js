@@ -24,7 +24,7 @@ const VALID_NAV = new Set([
   "built-to-taste",
   "about",
   "products",
-  "request-a-build",
+  "request-a-commission",
 ]);
 const VALID_FOOTERS = new Set(["standard"]);
 
@@ -117,7 +117,7 @@ function renderCommissionDetail(build, soundSamples) {
     + '<dl class="spec-sheet">' + SPEC_LABELS.filter(([key]) => build.specs?.[key]).map(([key, label]) => "<div><dt>" + label + "</dt><dd>" + escapeHtml(build.specs[key]) + "</dd></div>").join("") + "</dl>"
     + '<div class="record-details">' + details.map((src) => mediaFrame(src, "square")).join("") + "</div>"
     + '<section class="chapter"><h2>Hear the build under the same conditions.</h2><div><p>The player footprint is already locked so a real recording can replace the silent reference without moving the layout.</p><div class="compare-audio record-audio">' + renderSoundPlayer(audioSample) + "</div></div></section>"
-    + '<section class="chapter"><h2>Why these choices.</h2><div><p>' + escapeHtml(build.processNotes || build.notes) + '</p><p><a class="text-link" href="/request-a-build.html?layout=' + encodeURIComponent(build.layout) + '">Request a ' + escapeHtml(build.layout) + " commission</a></p></div></section>";
+    + '<section class="chapter"><h2>Why these choices.</h2><div><p>' + escapeHtml(build.processNotes || build.notes) + '</p><p><a class="text-link" href="/request-a-commission.html?layout=' + encodeURIComponent(build.layout) + '">Request a ' + escapeHtml(build.layout) + " commission</a></p></div></section>";
 }
 
 function renderBoard(layout, id, live) {

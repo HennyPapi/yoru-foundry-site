@@ -100,11 +100,6 @@ function fill(side){
 })();
 
 
-;(()=>{
-  document.querySelectorAll('a[href="/request-a-build.html"]').forEach(a=>{
-    if(a.textContent.trim()==="Request a Build") a.textContent="Request a Commission";
-  });
-})();
 
 
 
