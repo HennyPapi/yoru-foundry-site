@@ -25,14 +25,15 @@
 <label>Switch feel<select name="feel"><option>Not sure</option><option>Linear</option><option>Tactile</option><option>Clicky</option></select></label>
 <label data-products-lock style="display:none">Selected product layout<input data-layout-locked type="text" readonly></label>
 <label class="wide">Build details<textarea name="details" rows="7" placeholder="Tell me about your setup, what you use the keyboard for, colors or materials you like, wired/wireless goals, examples you have seen, features you care about, and anything you absolutely do or do not want."></textarea></label>
-<label class="wide"><span>Exact spec <span class="optional">(optional)</span></span><textarea name="spec" rows="4" placeholder="If you already know your spec, list it here: case, plate, mount, switches, stabilizers, keycaps."></textarea></label>
+<label class="wide"><span>Exact spec <span class="optional">(optional)</span></span><textarea id="spec" name="spec" rows="4" placeholder="If you already know your spec, list it here: case, plate, mount, switches, stabilizers, keycaps."></textarea></label>
 <label class="trap" aria-hidden="true">Leave this empty<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
 <yf-turnstile></yf-turnstile>
 <div class="request-send">
   <yf-key cap="c2.25" type="submit" class="copper">Send <br>Request</yf-key>
   <p class="request-note">Your request comes straight to me at hello@yorufoundry.com. <a href="/commission-policy.html">How a commission works</a><a href="/privacy.html">How I handle your details</a></p>
-  <p class="form-status is-sent" id="sent" role="status">Request sent. I reply within 1–3 business days.</p>
-  <p class="form-status is-failed" id="send-failed" role="alert">It didn’t send. Please email <a href="mailto:hello@yorufoundry.com">hello@yorufoundry.com</a> directly.</p>
+  <p class="visually-hidden" id="form-live" role="status"></p>
+  <p class="form-status is-sent" id="sent">Request sent. I reply within 1–3 business days.</p>
+  <p class="form-status is-failed" id="send-failed">It didn’t send. Please email <a href="mailto:hello@yorufoundry.com">hello@yorufoundry.com</a> directly.</p>
 </div>
 </form></section>
 <section class="commission-steps" aria-labelledby="steps-title">
