@@ -13,6 +13,15 @@ const SITE_MODE_CONTENT = {
   }
 };
 
+// Homepage hero frame. Set video (silent MP4/WebM loop) or image, and the 75% drawing gives way to it.
+// See MEDIA.md for sizes and formats.
+const HOME_MEDIA = { video: null, poster: null, image: null, alt: "" };
+
+// Homepage sound band: up to four recordings. Set file to an MP3/M4A in /media/sound/ to switch a slot on.
+const HOME_SOUNDS = [
+  { label: "YF-001 sound test", file: null }
+];
+
 // Commission terms shown on the homepage build sheet (Mike, 2026-10-06).
 const COMMISSION_TERMS = [
   { label: "Build window", value: "2–5 weeks" },
@@ -279,4 +288,4 @@ keycap:[["PBT","Textured and durable with its own density and pitch."],["ABS","S
 mount:[["Gasket","Isolated mounting that can allow a softer response."],["Top Mount","More direct attachment and controlled firmness."],["Tray Mount","Simple, rigid mounting with a distinct feel."]]
 };
 
-window.YORU_CONTENT = Object.freeze({ SITE_MODE, SITE_MODE_CONTENT, COMMISSION_TERMS, COMMISSION_STEPS, COMMISSION_INCLUDED, MATERIALS, LAYOUTS, BUILDS, SOUND_SAMPLES, STORIES, COMPARE_OPTIONS });
+window.YORU_CONTENT = Object.freeze({ SITE_MODE, SITE_MODE_CONTENT, HOME_MEDIA, HOME_SOUNDS, COMMISSION_TERMS, COMMISSION_STEPS, COMMISSION_INCLUDED, MATERIALS, LAYOUTS, BUILDS, SOUND_SAMPLES, STORIES, COMPARE_OPTIONS });

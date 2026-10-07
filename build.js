@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-18-canvas",
+  stylesheetVersion: "vg-19-media",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
 });
@@ -80,13 +80,23 @@ function renderStoryGrid(type, stories) {
 // One guide's steps (a real sequence): an honest media frame naming what will go there, then the step.
 function renderStorySteps(story) {
   if (!story) return "";
-  return (story.steps || []).map((step, index) => '<section class="guide-step"><div class="guide-media"><span>' + escapeHtml(step[1]) + '</span></div><div class="guide-copy"><p class="guide-step-num">Step ' + (index + 1) + "</p><h3>" + escapeHtml(step[0]) + "</h3><p>" + escapeHtml(step[2]) + "</p></div></section>").join("");
+  return (story.steps || []).map((step, index) => '<section class="guide-step"><div class="guide-media">' + mediaInner(step[3], step[1], step[1]) + '</div><div class="guide-copy"><p class="guide-step-num">Step ' + (index + 1) + "</p><h3>" + escapeHtml(step[0]) + "</h3><p>" + escapeHtml(step[2]) + "</p></div></section>").join("");
 }
 
 // A photo frame: the real image when there is one, otherwise an honest placeholder that names what goes there.
-function mediaFrame(src, cls, label = "Customer build photo") {
-  const real = src && !/placeholder/.test(src);
-  return '<div class="build-media' + (cls ? " " + cls : "") + '">' + (real ? '<img src="' + escapeHtml(src) + '" alt="" loading="lazy" decoding="async">' : "<span>" + escapeHtml(label) + "</span>") + "</div>";
+// Real media is any file that isn't one of the placeholder files (placeholder-*.svg, silence-3s.mp3).
+function isRealMedia(src) { return Boolean(src) && !/placeholder|silence/.test(src); }
+
+// The inside of a media frame: a looping silent video, a photo, or an honest label naming what goes there.
+// Frames fix their aspect ratio in CSS, so real media drops in without moving the layout.
+function mediaInner(src, label, alt = "", poster = "") {
+  if (!isRealMedia(src)) return "<span>" + escapeHtml(label) + "</span>";
+  if (/\.(mp4|webm)$/i.test(src)) return '<video src="' + escapeHtml(src) + '"' + (poster ? ' poster="' + escapeHtml(poster) + '"' : "") + ' muted loop playsinline preload="metadata" data-autoplay aria-label="' + escapeHtml(alt || label) + '"></video>';
+  return '<img src="' + escapeHtml(src) + '" alt="' + escapeHtml(alt) + '" loading="lazy" decoding="async">';
+}
+
+function mediaFrame(src, cls, label = "Customer build photo", alt = "") {
+  return '<div class="build-media' + (cls ? " " + cls : "") + '">' + mediaInner(src, label, alt) + "</div>";
 }
 
 function buildIdLine(build) {
@@ -152,6 +162,21 @@ function renderDataBackedContent(html, content) {
       const name = live ? '<a href="' + escapeHtml(l.href) + '">' + escapeHtml(l.name) + "</a>" : escapeHtml(l.name);
       return '<article class="layout-row' + (live ? "" : " is-later") + '"><div class="layout-drawing" style="--scale:' + (width / widest).toFixed(4) + '">' + renderBoard(l, id, live) + '</div><div class="layout-copy"><h2>' + name + '</h2><p class="scale-status' + (live ? " is-live" : "") + '">' + escapeHtml(l.status) + "</p><p>" + escapeHtml(l.about || l.blurb) + "</p></div></article>";
     }).join("") + "</section>";
+  });
+  // Homepage hero frame: HOME_MEDIA's video or photo once there is one; the 75% drawing until then.
+  html = html.replace(/<div class="forge-frame">([\s\S]*?)<\/div>/, (match, drawing) => {
+    const media = content.HOME_MEDIA || {};
+    const src = isRealMedia(media.video) ? media.video : media.image;
+    return isRealMedia(src) ? '<div class="forge-frame has-media">' + mediaInner(src, "", media.alt || "", media.poster) + "</div>" : match;
+  });
+  // Homepage sound band: up to four slots; a slot gets a player once it has a real recording.
+  html = html.replace(/<ul class="sound-slots" data-sound-slots><\/ul>/, () => '<ul class="sound-slots">' + (content.HOME_SOUNDS || []).slice(0, 4).map((slot) => isRealMedia(slot.file)
+    ? '<li><span class="sound-label">' + escapeHtml(slot.label) + '</span><audio controls preload="none" src="' + escapeHtml(slot.file) + '"></audio></li>'
+    : '<li><span class="sound-label">' + escapeHtml(slot.label) + ": recording coming soon</span></li>").join("") + "</ul>");
+  // Page media written as <yf-media src="" label="..." class="portrait">: a frame now, a photo or video later.
+  html = html.replace(/<yf-media([^>]*)><\/yf-media>/g, (_, attrs) => {
+    const attr = (name) => (attrs.match(new RegExp(`${name}="([^"]*)"`)) || [])[1] || "";
+    return mediaFrame(attr("src"), attr("class"), attr("label"), attr("alt"));
   });
   // Placeholder waveform (a fixed shape, not a recording).
   html = html.replace(/<svg data-wave><\/svg>/, () => {

@@ -51,7 +51,12 @@ yfShowRecord();
 
 const modal=document.getElementById("storyModal");const title=document.getElementById("storyTitle");const intro=document.getElementById("storyIntro");const content=document.getElementById("storyContent");
 let lastFocus=null;
-function openStory(type,id){const story=stories[type]?.[id];if(!story||!modal)return;title.textContent=story.title;intro.textContent=story.intro;content.innerHTML=story.steps.map((s,i)=>"<section class=\"guide-step\"><div class=\"guide-media\"><span>"+yfEscape(s[1])+"</span></div><div class=\"guide-copy\"><p class=\"guide-step-num\">Step "+(i+1)+"</p><h3>"+yfEscape(s[0])+"</h3><p>"+yfEscape(s[2])+"</p></div></section>").join("");lastFocus=document.activeElement;modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.classList.add("modal-open");content.scrollTop=0;modal.querySelector(".modal-close")?.focus()}
+function yfMedia(src,label){   // same rules as build.js mediaInner: video, photo, or an honest label
+  if(!src||/placeholder|silence/.test(src))return "<span>"+yfEscape(label)+"</span>";
+  if(/\.(mp4|webm)$/i.test(src))return '<video src="'+yfEscape(src)+'" muted loop playsinline preload="metadata" data-autoplay aria-label="'+yfEscape(label)+'"></video>';
+  return '<img src="'+yfEscape(src)+'" alt="'+yfEscape(label)+'" loading="lazy" decoding="async">';
+}
+function openStory(type,id){const story=stories[type]?.[id];if(!story||!modal)return;title.textContent=story.title;intro.textContent=story.intro;content.innerHTML=story.steps.map((s,i)=>"<section class=\"guide-step\"><div class=\"guide-media\">"+yfMedia(s[3],s[1])+"</div><div class=\"guide-copy\"><p class=\"guide-step-num\">Step "+(i+1)+"</p><h3>"+yfEscape(s[0])+"</h3><p>"+yfEscape(s[2])+"</p></div></section>").join("");lastFocus=document.activeElement;modal.classList.add("open");yfVideos(content);modal.setAttribute("aria-hidden","false");document.body.classList.add("modal-open");content.scrollTop=0;modal.querySelector(".modal-close")?.focus()}
 function closeStory(){if(!modal||!modal.classList.contains("open"))return;modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("modal-open");lastFocus?.focus?.()}
 document.querySelectorAll("[data-story]").forEach(el=>el.addEventListener("click",()=>openStory(el.dataset.storyType,el.dataset.story)));document.querySelectorAll("[data-close-modal]").forEach(el=>el.addEventListener("click",closeStory));document.addEventListener("keydown",e=>{if(e.key==="Escape")closeStory()});
 
@@ -123,3 +128,12 @@ function fill(side){
     requestAnimationFrame(frame);
   })(t0);
 })();
+
+
+// Silent looping videos (hero, guide steps) play on their own, except with reduced motion: then they stay on
+// their first frame with controls, so nothing moves unless the visitor asks.
+function yfVideos(root){
+  const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  (root||document).querySelectorAll("video[data-autoplay]").forEach(v=>{v.muted=true;if(still){v.controls=true}else{v.play().catch(()=>{v.controls=true})}});
+}
+yfVideos();

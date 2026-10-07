@@ -88,6 +88,10 @@ hero media frame.
   (About's byline, Why “Yoru” / Why “Foundry”, Five years from now). The archive and every published build record
   are rendered at build time from `BUILDS`; commission.html carries all records and script.js shows the one named
   by `?id=` (unknown ids show "This record is not published.").
+- Media (Phase 8, 2026-10-07): every photo, video and sound spot has a fixed-shape frame and switches to real media
+  when its setting points at a real file (`HOME_MEDIA`, `HOME_SOUNDS`, `BUILDS`, `SOUND_SAMPLES`, `STORIES` step 4th
+  item, `<yf-media src>` in about / 75% pages). Placeholders are anything named `placeholder-*` or `silence-3s.mp3`.
+  Videos are muted loops that stay still under reduced motion; sound never autoplays. How-to: `MEDIA.md`.
 - Request a Commission (rebuilt 2026-10-06): status line with a verdigris dot, the H1 and intro on the canvas; the
   form on a raised Green Sand surface with inset Cast fields (Cinzel labels, Alegreya input text, Pewter chevrons);
   submit is the copper Enter keycap (`/assets/keys/c2.25*.webp`, legend as real text), the only copper key on the

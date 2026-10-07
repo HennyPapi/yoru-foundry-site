@@ -2297,7 +2297,7 @@ main,
 /* Phase 3 geometry and border rules */
 *,*::before,*::after{box-shadow:none!important}
 img,.portal-card,.layout-tile,.education-tile,.standards-grid article,.mini-layout,.modal-panel,.modal-content,.modal-shell,.hero-showpiece-frame,.featured-photo{border-radius:var(--radius-square)!important}
-button:not(.sound-play):not(.guide-topic),.button,input,select,textarea{border-radius:var(--radius-control)!important}   /* the play button is a true circle; guide topics are ruled rows */
+button:not(.guide-topic),.button,input,select,textarea{border-radius:var(--radius-control)!important}   /* guide topics are ruled rows */
 
 .portal-card,.layout-tile,.education-tile,.standards-grid article,.mini-layout,.hero-showpiece-frame,.featured-photo{border-width:var(--border-width)!important}
 
@@ -2636,9 +2636,6 @@ button.k{padding:var(--space-0);font:inherit;text-align:left;background:none;bor
 .sound-band .home-wrap{display:grid;grid-template-columns:1fr 1.6fr;gap:var(--space-40);align-items:center}
 .sound-band p{margin-top:var(--space-14);color:var(--pewter)}
 .sound-wave{display:flex;align-items:center;gap:var(--space-14)}
-.sound-play{flex:none;display:grid;place-items:center;width:52px;height:52px;padding:var(--space-0);background:none;border:var(--border-width-accent) solid var(--pewter-deep);border-radius:var(--radius-circle)}
-.sound-play:disabled{opacity:.45;cursor:not-allowed}
-.sound-play svg{width:16px;margin-left:var(--space-3);fill:var(--bright)}
 .wave{width:100%;height:72px}
 .wave rect{fill:var(--pewter-deep)}
 .wave rect.lit{fill:var(--verdigris)}
@@ -2835,3 +2832,11 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
 .record-audio .sound-player-copy p{margin:var(--space-4) var(--space-0) var(--space-0);font-size:var(--step-3);color:var(--pewter)}
 .record-audio audio{width:100%}
 @media(max-width:860px){.chapter,.chapter.with-photo,.founder-intro,.name-pair,.note-list li,.reason-list,.spec-sheet{grid-template-columns:1fr}.chapter{gap:var(--space-20)}.record-details{grid-template-columns:1fr 1fr}}
+
+/* Media readiness (Phase 8): real photos and videos fill their frame edge to edge; frames keep their aspect
+   ratio, so swapping a placeholder for real media never moves the layout. */
+.build-media img,.build-media video,.guide-media img,.guide-media video,.forge-frame.has-media img,.forge-frame.has-media video{display:block;width:100%;height:100%;object-fit:cover}
+.guide-media:has(img,video),.forge-frame.has-media{padding:var(--space-0);background-image:none}
+.sound-slots{display:grid;gap:var(--space-12);margin:var(--space-14) var(--space-0) var(--space-0);padding:var(--space-0);list-style:none}
+.sound-slots li{display:grid;gap:var(--space-6)}
+.sound-slots audio{width:100%}
