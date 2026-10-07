@@ -59,24 +59,30 @@ const form=document.getElementById("buildForm");if(form){const params=new URLSea
   // homepage: the hub's display fades on as it comes into view
   const hub=document.querySelector("[data-hub]"),art=hub&&hub.querySelector(".hub-art");
   if(hub){if(still||!canWatch)hub.classList.add("on");else new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){hub.classList.add("on");o.disconnect()}},{threshold:.5}).observe(hub)}
-  // homepage: a copper bead travels the hub's cable once, in step with the scroll going down (never back up);
-  // when it reaches the keyboard the keys light and the bead goes out
+  // homepage: copper light runs down inside the hub's cable once, following the scroll going down (never back up):
+  // a bright head with a long soft tail, easing toward the scroll position; at the keyboard the keys light and the
+  // cable's light fades out
   if(art&&!still&&getComputedStyle(art).display!=="none"){
-    const svg=art.querySelector(".hub-led"),route=svg.querySelector(".hub-route"),mask=svg.querySelector(".hub-bead-path"),bead=svg.querySelector(".hub-bead");
-    const total=route.getTotalLength(),TAIL=240;let end=total,best=0,done=false;
+    const svg=art.querySelector(".hub-led"),route=svg.querySelector(".hub-route"),head=svg.querySelector(".hub-head"),tail=svg.querySelector(".hub-tail");
+    const total=route.getTotalLength(),HEAD=150,TAIL=620;let end=total,target=0,cur=0,done=false,raf=0;
     const scale=()=>art.getBoundingClientRect().width/svg.viewBox.baseVal.width;
     const pageY=l=>art.getBoundingClientRect().top+scrollY+route.getPointAtLength(l).y*scale();
-    const measure=()=>{const top=board.getBoundingClientRect().top+scrollY+board.getBoundingClientRect().height*.07;end=total;for(let l=0;l<=total;l+=4)if(pageY(l)>=top){end=l;break}};
-    const draw=b=>{mask.style.strokeDasharray=`${TAIL} 100000`;mask.style.strokeDashoffset=`${TAIL-b}`;const pt=route.getPointAtLength(b);bead.setAttribute("cx",pt.x);bead.setAttribute("cy",pt.y);svg.classList.toggle("moving",b>0&&!done)};
+    const measure=()=>{const r=board.getBoundingClientRect(),top=r.top+scrollY+r.height*.07;end=total;for(let l=0;l<=total;l+=4)if(pageY(l)>=top){end=l;break}};
+    const seg=(el,len,b)=>{el.style.strokeDasharray=`${len} 100000`;el.style.strokeDashoffset=`${len-b}`};
+    const step=()=>{
+      raf=0;cur+=(target-cur)*.14;if(target-cur<1)cur=target;
+      seg(head,HEAD,cur);seg(tail,TAIL,cur);
+      if(cur>=end-1){done=true;svg.classList.add("done");lightUp();return}
+      if(cur<target)raf=requestAnimationFrame(step);
+    };
     const ride=()=>{
       if(done)return;
       const vh=innerHeight,start=pageY(0)-vh*.85,stop=Math.min(document.documentElement.scrollHeight-vh,pageY(end)-vh*.3);
       const b=Math.max(0,Math.min(1,(scrollY-start)/Math.max(1,stop-start)))*end;
-      if(b<=best)return;best=b;draw(best);
-      if(best>=end-1){done=true;lightUp();svg.classList.remove("moving");mask.style.strokeDasharray="0 100000"}
+      if(b>target){target=b;if(!raf)raf=requestAnimationFrame(step)}
     };
     measure();addEventListener("resize",()=>{measure();ride()});addEventListener("load",()=>{measure();ride()});
-    addEventListener("scroll",()=>requestAnimationFrame(ride),{passive:true});ride();
+    addEventListener("scroll",ride,{passive:true});ride();
     return;
   }
   if(still||!canWatch){lightUp();return}

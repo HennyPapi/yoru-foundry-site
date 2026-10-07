@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-25-header-scrolls",
+  stylesheetVersion: "vg-26-cable-light",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
   // Cloudflare Turnstile site key (public). Empty = no widget; the Worker's TURNSTILE_SECRET must be set with it.
@@ -300,9 +300,8 @@ function renderHub() {
   const img = (cls) => `<img class="${cls}" src="/assets/hub/${cls}.webp" alt="" width="${h.w}" height="${h.h}" loading="lazy" decoding="async">`;
   return `<div class="hub" data-hub style="aspect-ratio:${h.w}/${h.hubH}"><div class="hub-art" style="aspect-ratio:${h.w}/${h.h}">${img("hub-off")}${img("hub-on")}` +
     `<svg class="hub-led" viewBox="0 0 ${h.w} ${h.h}" aria-hidden="true"><defs><filter id="hub-soft"><feGaussianBlur stdDeviation="7"/></filter>` +
-    `<mask id="hub-bead-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="${h.w}" height="${h.h}"><path class="hub-bead-path" d="${h.d}" filter="url(#hub-soft)"/></mask>` +
-    `<radialGradient id="hub-bead-light"><stop offset="0" class="hub-bead-core"/><stop offset="1" class="hub-bead-edge"/></radialGradient></defs>` +
-    `<image href="/assets/hub/hub-glow.webp" width="${h.w}" height="${h.h}" mask="url(#hub-bead-mask)"/><circle class="hub-bead" r="40" fill="url(#hub-bead-light)"/><path class="hub-route" d="${h.d}"/></svg></div>` +
+    `<mask id="hub-light-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="${h.w}" height="${h.h}"><path class="hub-tail" d="${h.d}" filter="url(#hub-soft)"/><path class="hub-head" d="${h.d}" filter="url(#hub-soft)"/></mask></defs>` +
+    `<image class="hub-light" href="/assets/hub/hub-glow.webp" width="${h.w}" height="${h.h}" mask="url(#hub-light-mask)"/><path class="hub-route" d="${h.d}"/></svg></div>` +
     `<p class="hub-line">The forge is lit. Pick a key, and I’ll meet you at the anvil.</p></div>`;
 }
 

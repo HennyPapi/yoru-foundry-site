@@ -2811,9 +2811,9 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
 @media(prefers-reduced-motion:reduce){.kb-board>img.lit{transition:none}}
 
 /* Homepage close: a rendered USB dock whose display carries the closing line, with a braided cable plugged into its
-   front port and hanging down into the footer keyboard. The display fades on as the hub comes into view. A copper
-   bead travels the cable once, in step with the scroll going down (never back up); when it reaches the board the
-   keys light and the bead goes out (script.js). Mike's exceptions (2026-10-07). Reduced motion: display on, no bead.
+   front port and hanging down into the footer keyboard. The display fades on as the hub comes into view. Copper
+   light runs down inside the braid once, following the scroll going down (never back up); when it reaches the board
+   the keys light and the cable's light fades out (script.js). Mike's exceptions (2026-10-07). Reduced motion: display on, no bead.
    Phones: the line as text. */
 .hub{position:relative;z-index:1;max-width:440px;margin-top:var(--space-30)}
 .hub-art{position:absolute;left:0;top:0;width:100%;pointer-events:none}
@@ -2821,12 +2821,12 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
 .hub-art .hub-on{position:absolute;inset:0;opacity:0;transition:opacity var(--duration-screen-on) ease}
 .hub.on .hub-on{opacity:1}
 .hub-led{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:screen;overflow:visible}
-.hub-bead-path{fill:none;stroke:var(--bright);stroke-width:46;stroke-linecap:round;stroke-dasharray:0 100000}
+.hub-tail,.hub-head{fill:none;stroke-width:46;stroke-linecap:round;stroke-dasharray:0 100000}
+.hub-tail{stroke:var(--pewter-deep)}
+.hub-head{stroke:var(--bright)}
 .hub-route{fill:none;stroke:none}
-.hub-bead{opacity:0;transition:opacity var(--duration-slow) ease}
-.hub-led.moving .hub-bead{opacity:.9}
-.hub-bead-core{stop-color:var(--raw-copper);stop-opacity:.85}
-.hub-bead-edge{stop-color:var(--raw-copper);stop-opacity:0}
+.hub-light{transition:opacity var(--duration-led-rise) ease}
+.hub-led.done .hub-light{opacity:0}
 .home .hub .hub-line{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:var(--space-0)}
 .site-footer .kb-board{z-index:2}
 @media(max-width:700px){
