@@ -1113,6 +1113,8 @@ main:not(.section-shell),
    key shows pressed. LED: beads of copper light travel inside the cable (script.js), revealing a glow render of the
    same cable through a moving mask. Below 1180px the coil goes, below 1000px the cable, and at 860px and below the
    links fold into a panel under the bar. */
+.skip-link{position:absolute;left:var(--space-16);top:var(--space-8);z-index:200;padding:var(--space-8) var(--space-16);font-family:var(--font-display);font-size:var(--step-3);font-weight:700;color:var(--bright);background:var(--green-sand);border:var(--border-width) solid var(--line-strong);border-radius:var(--radius-control);transform:translateY(-300%)}
+.skip-link:focus{transform:none;outline:2px solid var(--line-accent);outline-offset:var(--space-0)}
 .site-header{position:relative;z-index:100;display:flex;align-items:center;min-height:92px;padding:var(--space-4) max(var(--space-24),calc((100% - var(--max)) / 2 + var(--space-24)));background:var(--cast);color:var(--bright);border-bottom:var(--border-width) solid var(--line)}
 .brand{position:relative;z-index:2;display:block;flex-shrink:0;border-radius:var(--radius-circle)}
 .brand-mark{display:block;width:64px;height:64px}
@@ -1475,7 +1477,7 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
 .kb-board a:hover img.h,.kb-board a:focus-visible img.h{opacity:1}
 .kb-board a:active img.h{opacity:0}
 .kb-board a:active img.p{opacity:1}
-.kb-board a:focus-visible .hit{outline:2px solid var(--raw-copper);outline-offset:2px}
+.kb-board a:focus-visible .hit{outline:2px solid var(--raw-copper);outline-offset:-2px}   /* inside the key, so it never crosses into the next row */
 .kb-list{display:none}
 .kb-line{max-width:1180px;margin:var(--space-18) auto var(--space-0);display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--space-8) var(--space-24);font-size:var(--step-3);color:var(--pewter)}
 .kb-line a{color:var(--bright);text-decoration-color:var(--raw-copper);text-underline-offset:3px}

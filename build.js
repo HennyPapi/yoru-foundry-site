@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-42-polish",
+  stylesheetVersion: "vg-43-a11y",
   siteTitle: "Yoru Foundry",
   siteUrl: "https://yorufoundry.com",   // absolute links for the sitemap and share previews
   SITE_MODE: "live",
@@ -70,7 +70,9 @@ function visibleBuilds(content) {
 
 function renderSoundPlayer(sample) {
   if (!sample) return "<p>Audio reference is not available yet.</p>";
-  return '<div class="sound-player-copy"><strong>' + escapeHtml(sample.name) + '</strong><p>' + escapeHtml(sample.description) + '</p></div><audio controls preload="metadata" src="' + escapeHtml(sample.file) + '" aria-label="' + escapeHtml(sample.name) + '"></audio>';
+  // No player until a real recording exists: a silent file would play as if it were one.
+  const audio = isRealMedia(sample.file) ? '<audio controls preload="metadata" src="' + escapeHtml(sample.file) + '" aria-label="' + escapeHtml(sample.name) + '"></audio>' : "";
+  return '<div class="sound-player-copy"><strong>' + escapeHtml(sample.name) + '</strong><p>' + escapeHtml(sample.description) + '</p></div>' + audio;
 }
 
 // Guide topics as a ruled index; each opens its guide. Process stages are a sequence, so they are numbered.
@@ -208,12 +210,12 @@ function renderDataBackedContent(html, content) {
   // Build records: every published record, the first shown; script.js switches to the one named by ?id=.
   html = html.replace(/<div class="records" data-build-records><\/div>/, () => '<div class="records">' + visible.map((item, n) => '<article class="record" data-record="' + escapeHtml(item.id) + '"' + (n ? " hidden" : "") + ">" + (n ? renderCommissionDetail(item, soundSamples).replace(/preload="metadata"/g, 'preload="none"') : renderCommissionDetail(item, soundSamples)) + "</article>").join("") + '<article class="record" data-record="none"' + (visible.length ? " hidden" : "") + '><section class="page-intro"><h1>This record is not published.</h1><p>I publish build records after the work is ready to document.</p><p><a class="text-back" href="/crafted-art.html">Back to Layouts</a></p></section></article></div>');
 
-  html = html.replace(/(<div class="compare-audio" data-sound-player="(\d+)">)[\s\S]*?(<\/div>)/g, (_, open, index, close) => open + renderSoundPlayer(soundSamples[Number(index)] || soundSamples[0]) + close);
-
+  // A/B sides start on different options (A the first, B the second); each player is titled with its side's option.
   const initialCompare = Array.isArray(compareOptions.stabilizer) ? compareOptions.stabilizer : [];
-  const compareOptionHtml = initialCompare.map((item, index) => '<option value="' + index + '">' + escapeHtml(item[0]) + '</option>').join("");
-  html = html.replace(/(<select id="compareOption[AB]" class="compare-option">)[\s\S]*?(<\/select>)/g, (_, open, close) => open + compareOptionHtml + close);
-  html = html.replace(/(<p id="compareDesc[AB]" class="compare-desc">)[\s\S]*?(<\/p>)/g, (_, open, close) => open + escapeHtml(initialCompare[0]?.[1] || "") + close);
+  const startIndex = (side) => (side === "B" ? Math.min(1, initialCompare.length - 1) : 0);
+  html = html.replace(/(<div class="compare-audio" data-sound-player="(\d+)">)[\s\S]*?(<\/div>)/g, (_, open, index, close) => { const sample = soundSamples[Number(index)] || soundSamples[0]; const option = initialCompare[startIndex(index === "1" ? "B" : "A")]; return open + renderSoundPlayer(sample && option ? { ...sample, name: option[0] } : sample) + close; });
+  html = html.replace(/(<select id="compareOption([AB])" class="compare-option">)[\s\S]*?(<\/select>)/g, (_, open, side, close) => open + initialCompare.map((item, index) => '<option value="' + index + '"' + (index === startIndex(side) ? " selected" : "") + ">" + escapeHtml(item[0]) + "</option>").join("") + close);
+  html = html.replace(/(<p id="compareDesc([AB])" class="compare-desc">)[\s\S]*?(<\/p>)/g, (_, open, side, close) => open + escapeHtml(initialCompare[startIndex(side)]?.[1] || "") + close);
 
   html = html.replace(/(<div class="story-modal" id="storyModal" data-story-type="(\w+)"[\s\S]*?<h2 id="storyTitle">)[\s\S]*?(<\/h2><p id="storyIntro">)[\s\S]*?(<\/p><\/div><div id="storyContent" class="story-content">)[\s\S]*?(<\/div>)/g, (match, a, type, b, c, d) => {
     const first = Object.values(stories[type] || {})[0];
@@ -406,6 +408,7 @@ function renderPage(entry, partials, content, headerKeys, footerBoard) {
   );
 
   let html = replaceTokens(template, { HEAD: head, HEADER: header, FOOTER: footer, SCRIPTS: scripts }, label);
+  html = html.replace(/<main(?![^>]*\bid=)/, '<main id="main"');   // the header's skip link lands here
   html = html.replace(/<yf-key([^>]*)>([\s\S]*?)<\/yf-key>/g, (_, attrs, legend) => {
     const attr = (name) => (attrs.match(new RegExp(`${name}="([^"]*)"`)) || [])[1];
     return renderKey({ cap: attr("cap"), href: attr("href"), type: attr("type"), legend }, page, headerKeys, attr("class") || "", false);

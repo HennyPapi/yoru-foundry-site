@@ -1,28 +1,16 @@
-const menuButton=document.querySelector(".menu-toggle");const nav=document.querySelector(".nav");menuButton?.addEventListener("click",()=>{const open=nav.classList.toggle("open");menuButton.setAttribute("aria-expanded",String(open))});document.querySelectorAll(".nav>a").forEach(link=>link.addEventListener("click",()=>{nav.classList.remove("open");menuButton?.setAttribute("aria-expanded","false")}));const year=document.getElementById("year");if(year)year.textContent=new Date().getFullYear();
+const menuButton=document.querySelector(".menu-toggle");const nav=document.querySelector(".nav");menuButton?.addEventListener("click",()=>{const open=nav.classList.toggle("open");menuButton.setAttribute("aria-expanded",String(open));if(open)nav.querySelector("a")?.focus()});document.addEventListener("keydown",e=>{if(e.key==="Escape"&&nav?.classList.contains("open")){nav.classList.remove("open");menuButton.setAttribute("aria-expanded","false");menuButton.focus()}});document.querySelectorAll(".nav>a").forEach(link=>link.addEventListener("click",()=>{nav.classList.remove("open");menuButton?.setAttribute("aria-expanded","false")}));const year=document.getElementById("year");if(year)year.textContent=new Date().getFullYear();
 
 /* Phase 2 — content architecture */
 const yoruContent=window.YORU_CONTENT||{};
 const siteMode=yoruContent.SITE_MODE||"prelaunch";
 const siteModeContent=(yoruContent.SITE_MODE_CONTENT||{})[siteMode]||(yoruContent.SITE_MODE_CONTENT||{}).prelaunch||{};
 const builds=Array.isArray(yoruContent.BUILDS)?yoruContent.BUILDS:[];
-const soundSamples=Array.isArray(yoruContent.SOUND_SAMPLES)?yoruContent.SOUND_SAMPLES:[];
 const stories=yoruContent.STORIES||{};
 const compareOptions=yoruContent.COMPARE_OPTIONS||{};
 document.documentElement.dataset.siteMode=siteMode;
 function yfEscape(value){return String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char]))}
 function yfApplySiteMode(){
   document.querySelectorAll("[data-site-footer-status]").forEach(line=>{line.textContent=siteModeContent.footerStatus||"Built one at a time."});
-}
-function yfSoundPlayer(sample){
-  if(!sample)return '<p>Audio reference is not available yet.</p>';
-  return '<div class="sound-player-copy"><strong>'+yfEscape(sample.name)+'</strong><p>'+yfEscape(sample.description)+'</p></div><audio controls preload="metadata" src="'+yfEscape(sample.file)+'" aria-label="'+yfEscape(sample.name)+'"></audio>';
-}
-function yfRenderSoundPlayers(){
-  document.querySelectorAll("[data-sound-player]").forEach((slot,index)=>{
-    const requested=Number(slot.dataset.soundPlayer);
-    const sample=soundSamples[Number.isFinite(requested)?requested:index]||soundSamples[0];
-    slot.innerHTML=yfSoundPlayer(sample);
-  });
 }
 function yfShowRecord(){   // commission.html carries every published record; show the one named by ?id=
   const records=[...document.querySelectorAll("[data-record]")];
@@ -34,7 +22,7 @@ function yfShowRecord(){   // commission.html carries every published record; sh
   if(match)document.title=id+" | Yoru Foundry";
 }
 yfApplySiteMode();
-yfRenderSoundPlayers();
+
 yfShowRecord();
 
 
@@ -98,7 +86,9 @@ const options=compareOptions;
 function fill(side){
  const type=document.getElementById("compareType"+side),opt=document.getElementById("compareOption"+side),desc=document.getElementById("compareDesc"+side);if(!type||!opt)return;
  const list=options[type.value]||[];opt.innerHTML=list.map((x,i)=>'<option value="'+i+'">'+x[0]+'</option>').join("");
- const render=()=>{desc.textContent=list[Number(opt.value)]?.[1]||""};opt.onchange=render;render();
+ opt.value=String(side==="B"?Math.min(1,list.length-1):0);   // the two sides start on different options
+ const title=opt.closest(".ab-side")?.querySelector(".sound-player-copy strong");
+ const render=()=>{const item=list[Number(opt.value)];desc.textContent=item?.[1]||"";if(title&&item)title.textContent=item[0]};opt.onchange=render;render();
 }
 ["A","B"].forEach(side=>{const type=document.getElementById("compareType"+side);if(type){type.onchange=()=>fill(side);fill(side)}})
 })();
