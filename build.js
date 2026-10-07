@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-44-sheet",
+  stylesheetVersion: "vg-45-next",
   siteTitle: "Yoru Foundry",
   siteUrl: "https://yorufoundry.com",   // absolute links for the sitemap and share previews
   SITE_MODE: "live",
@@ -155,7 +155,7 @@ function renderDataBackedContent(html, content) {
   // Keyboard layouts drawn at one shared scale; the 75% is drawn live with its Esc key in copper.
   html = html.replace(/<svg data-board="([\w]+)"( class="live")?><\/svg>/g, (_, id, live) => renderBoard(content.LAYOUTS?.[id], id, Boolean(live)));
   // Request page: the commission sequence (numbers on small keycaps) and what every build includes.
-  html = html.replace(/<ol class="step-keys" data-commission-steps><\/ol>/, () => '<ol class="step-keys">' + (content.COMMISSION_STEPS || []).map((step, i) => '<li><span class="step-cap" aria-hidden="true">' + (i + 1) + "</span><h3>" + escapeHtml(step.title) + "</h3><p>" + escapeHtml(step.text) + "</p></li>").join("") + "</ol>");
+  html = html.replace(/<ol class="step-keys" data-commission-steps><\/ol>/, () => '<ol class="step-keys">' + (content.COMMISSION_STEPS || []).map((step, i) => '<li><span class="step-cap" aria-hidden="true">' + (i + 1) + "</span><h3>" + (step.href ? '<a href="' + escapeHtml(step.href) + '">' + escapeHtml(step.title) + "</a>" : escapeHtml(step.title)) + "</h3><p>" + escapeHtml(step.text) + "</p></li>").join("") + "</ol>");
   html = html.replace(/<ul class="included-items" data-commission-included><\/ul>/, () => '<ul class="included-items">' + (content.COMMISSION_INCLUDED || []).map((item) => "<li>" + escapeHtml(item) + "</li>").join("") + "</ul>");
   // Crafted Art: every layout as a row, drawn at one shared scale (the widest board fills its column).
   html = html.replace(/<section class="layout-rows" aria-label="Layouts" data-layout-rows><\/section>/, () => {

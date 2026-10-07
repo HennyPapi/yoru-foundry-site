@@ -1407,6 +1407,8 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
 .archive-empty{max-width:62ch;margin:var(--space-0);padding:var(--space-40) var(--space-0);border-top:var(--border-width) solid var(--line-strong);font-size:var(--type-21);line-height:1.5;color:var(--pewter)}
 .chapter.with-photo{grid-template-columns:1.3fr 1fr;align-items:center}
 .chapter.with-photo h2{margin-bottom:var(--space-20)}
+.page-next{margin:var(--space-0);padding:var(--space-40) var(--space-0) var(--space-70)}
+.step-keys h3 a{text-decoration:underline;text-decoration-color:var(--raw-copper);text-decoration-thickness:1px;text-underline-offset:var(--space-6)}
 .text-link{font-family:var(--font-display);font-size:var(--step-4);font-weight:700;color:var(--bright);text-decoration:underline;text-decoration-color:var(--raw-copper);text-decoration-thickness:1px;text-underline-offset:var(--space-6)}
 .label{margin:var(--space-0) var(--space-0) var(--space-10);font-family:var(--font-display);font-size:var(--step-3);font-weight:700;color:var(--pewter)}
 .build-media.portrait{aspect-ratio:4/5}

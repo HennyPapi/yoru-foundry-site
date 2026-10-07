@@ -34,7 +34,7 @@ const COMMISSION_STEPS = [
   { title: "Request", text: "Tell me what you know, what you like, and what you want the finished board to do for you." },
   { title: "Consultation", text: "We narrow the layout, feel, sound, materials, connectivity and budget without forcing technical jargon on you." },
   { title: "Parts & Design", text: "I source or confirm the case, PCB, plate, switches, stabilizers, keycaps and finishing choices." },
-  { title: "Build", text: "Preparation, assembly and any selected switch or stabilizer work happen at the bench." },
+  { title: "Build", href: "/trust-the-process.html", text: "Preparation, assembly and any selected switch or stabilizer work happen at the bench." },
   { title: "Tuning & QC", text: "The board is tested for feel, sound, consistency, firmware, connectivity and final presentation." },
   { title: "Delivery", text: "You receive the completed build with the final configuration documented for future reference." }
 ];
