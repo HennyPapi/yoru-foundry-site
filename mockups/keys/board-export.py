@@ -3,7 +3,7 @@ Usage: python3 board-export.py <render dir> <repo root>
 Reads base.png (unlit), lit.png and <id>-h.png / <id>-p.png (hover / pressed, both lit) from render-board.js.
 Writes src/static/assets/footer-board/*.webp and the boxes in src/static/data/footer-board.json."""
 import json, sys
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageFilter
 src, root = sys.argv[1], sys.argv[2]
 out = root + '/src/static/assets/footer-board'
 data_path = root + '/src/static/data/footer-board.json'
@@ -21,9 +21,16 @@ for id, key in data['keys'].items():
     key['hit'] = pct(x0 - crop[0], y0 - crop[1], x1 - crop[0], y1 - crop[1])
     for st in 'hp':
         im = Image.open(f'{src}/{id}-{st}.png').crop(crop)
-        d = ImageChops.difference(im, L).convert('L').point(lambda v: 255 if v > 3 else 0).getbbox()
-        d = (max(0, d[0] - 6), max(0, d[1] - 6), min(W, d[2] + 6), min(H, d[3] + 6))
-        im.crop(d).save(f'{out}/{id}-{st}.webp', quality=86, method=6)
+        # keep only what changes (the word and its light), feathered: unchanged neighbours stay the board's own
+        # pixels, so a frame scaled by the browser can never shift or blur the keys around it
+        diff = ImageChops.difference(im.convert('RGB'), L.convert('RGB'))
+        mask = diff.split()[0]
+        for ch in diff.split()[1:]: mask = ImageChops.lighter(mask, ch)
+        mask = mask.point(lambda v: 0 if v <= 2 else min(255, (v - 2) * 24)).filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.GaussianBlur(2))
+        a = ImageChops.multiply(mask, im.getchannel('A'))
+        im.putalpha(a)
+        d = a.getbbox()
+        im.crop(d).save(f'{out}/{id}-{st}.webp', quality=88, method=6)
         key[st] = pct(*d)
 json.dump(data, open(data_path, 'w'), indent=2)
 print('board', W, H, 'keys', len(data['keys']))
