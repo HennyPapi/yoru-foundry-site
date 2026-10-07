@@ -143,7 +143,8 @@ Known small issues (fix when touching these areas):
 3. ~~Cream rule~~ Retired with the Verdigris direction.
 4. ~~Form backend~~ Answered: Cloudflare Worker, sending through Resend (mail is on Zoho).
 5. ~~Archive and Journal~~ Kept and rebuilt (2026-10-07); Phase 9 puts their footer links into the HTML.
-6. The Mice / Mouse Pads / Desk Mats / Wrist Rests / Accessories pages are stubs. Keep them for launch, or hide them?
+6. ~~Product stub pages~~ Answered: keep the Mice / Mouse Pads / Desk Mats / Wrist Rests / Accessories stubs (hidden) for future additions (Mike, 2026-10-07).
+7. Spam protection: Turnstile stays off; the trap field is on. Turn it on if spam requests reach hello@ (README).
 
 ## From the earlier plan (Sept 17), and where each item stands
 
