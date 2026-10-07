@@ -57,7 +57,8 @@ hero media frame.
 
 ## 6. Layout
 
-- Content max width about 1240px; side padding `clamp(16px, 4vw, 40px)`.
+- One content column on every rebuilt page and the header: max width `--max` (1380px) with a 24px gutter (18px on
+  phones). The header's medallion and keys sit on the content edges at every width, ultrawide included.
 - Header (rebuilt 2026-10-06, option C): the bottom row of a keyboard. Medallion left; a black braided USB-C cable
   (patina-copper collars and plug, a coiled section) runs from behind it to the keys, its straight runs stretching
   with the window, the plug tucked under the first key; copper LED beads travel through it. Then four rendered

@@ -2745,7 +2745,7 @@ main:not(.section-shell),
    key shows pressed. LED: beads of copper light travel inside the cable (script.js), revealing a glow render of the
    same cable through a moving mask. Below 1180px the coil goes, below 1000px the cable, and at 860px and below the
    links fold into a panel under the bar. */
-.site-header{position:sticky;top:var(--space-0);z-index:100;display:flex;align-items:center;min-height:92px;padding:var(--space-4) var(--space-pattern-029);background:var(--cast);color:var(--bright);border-bottom:var(--border-width) solid var(--line)}
+.site-header{position:sticky;top:var(--space-0);z-index:100;display:flex;align-items:center;min-height:92px;padding:var(--space-4) max(var(--space-24),calc((100% - var(--max)) / 2 + var(--space-24)));background:var(--cast);color:var(--bright);border-bottom:var(--border-width) solid var(--line)}
 .brand{position:relative;z-index:2;display:block;flex-shrink:0;border-radius:var(--radius-circle)}
 .brand-mark{display:block;width:64px;height:64px}
 .cable{position:relative;flex:1;display:flex;min-width:0;margin:calc(var(--space-2) * -1.1) calc(var(--space-26) * -1) var(--space-0) calc(var(--space-24) * -1)}   /* lines the cable up with the keys' plate */
@@ -2836,7 +2836,9 @@ button.k{padding:var(--space-0);font:inherit;text-align:left;background:none;bor
 /* Homepage (Verdigris, from mockups/home.html): the 75% drawing in a frame lit faintly from below ("light from a
    pour"), the headline in Aboreto, the copper Enter key, two entry links and the build sheet beside them; section
    keys; the deep sound band; a ruled standards list; layouts at true relative scale; the closing line. */
-.home-wrap{max-width:1240px;margin:var(--space-0) var(--space-auto);padding:var(--space-0) var(--space-pattern-029)}
+/* every page's content shares one width and gutter with the header (var(--max), 24px; 18px on phones) */
+.home-wrap{max-width:var(--max);margin:var(--space-0) var(--space-auto);padding:var(--space-0) var(--space-24)}
+@media(max-width:680px){.site-header{padding-left:var(--space-18);padding-right:var(--space-18)}.home-wrap,.band-inner{padding-left:var(--space-18);padding-right:var(--space-18)}}
 .home h2{margin:var(--space-0);font-family:var(--font-display);font-size:var(--type-fluid-06);font-weight:700;line-height:1.05;color:var(--bright);text-wrap:balance}
 .home h3{margin:var(--space-0);font-family:var(--font-display);font-size:var(--type-21);font-weight:700;line-height:1.2;color:var(--bright)}
 .home p{margin:var(--space-0);max-width:62ch}
