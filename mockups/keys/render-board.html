@@ -1,0 +1,112 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:transparent}canvas{display:block}</style>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+</head><body>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+// A whole 75% keyboard (units: mm): case, plate and every keycap. window.renderBoard({pressed:{id:mm}}) -> PNG.
+const W = 3000, H = 1500;
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H);
+renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.15;
+renderer.shadowMap.enabled = true; renderer.localClippingEnabled = true; renderer.shadowMap.type = THREE.VSMShadowMap;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = 0.32;
+
+const P = 19.05, HGT = 8.0, DISH = 0.55, N = 72;
+function outline(hw, hd, r, z, dy) { const pts = [], per = N / 4;
+  for (const [cx, cy, a0] of [[hw - r, hd - r, 0], [-hw + r, hd - r, Math.PI / 2], [-hw + r, -hd + r, Math.PI], [hw - r, -hd + r, 1.5 * Math.PI]])
+    for (let i = 0; i < per; i++) { const a = a0 + (i / per) * Math.PI / 2; pts.push(new THREE.Vector3(cx + r * Math.cos(a), cy + dy + r * Math.sin(a), z)); }
+  return pts; }
+const geoCache = {};
+function capGeo(u) {
+  if (geoCache[u]) return geoCache[u];
+  const B = { w: u * P - 1.06, d: 18.2 }, T = { w: u * P - 6.26, d: 13.6 }, r0 = 1.0, r1 = 1.3, FIL = 0.7;
+  const rings = [];
+  for (let i = 0; i <= 10; i++) { const t = i / 10, z = t * (HGT - FIL);
+    rings.push(outline(B.w / 2 + (T.w / 2 + FIL - B.w / 2) * t, B.d / 2 + (T.d / 2 + FIL - B.d / 2) * t, r0 + (r1 - r0) * t, z, 0.7 * t)); }
+  for (let i = 1; i <= 6; i++) { const a = (i / 6) * Math.PI / 2, inset = FIL * (1 - Math.cos(a)), z = HGT - FIL + FIL * Math.sin(a);
+    rings.push(outline(T.w / 2 + FIL - inset, T.d / 2 + FIL - inset, Math.max(0.6, r1 - inset), z, 0.7)); }
+  const wp = [];
+  for (let r = 0; r < rings.length - 1; r++) for (let i = 0; i < N; i++) { const a = rings[r][i], b = rings[r][(i + 1) % N], c = rings[r + 1][(i + 1) % N], d = rings[r + 1][i];
+    wp.push(a.x, a.y, a.z, b.x, b.y, b.z, c.x, c.y, c.z, a.x, a.y, a.z, c.x, c.y, c.z, d.x, d.y, d.z); }
+  const wallGeo = new THREE.BufferGeometry(); wallGeo.setAttribute('position', new THREE.Float32BufferAttribute(wp, 3)); wallGeo.computeVertexNormals();
+  const top = rings[rings.length - 1], R = 14, cy = 0.7, tx = T.w / 2, ty = T.d / 2, tp = [], tu = [], tn = [];
+  const pt = (k, i) => { const s = 1 - k / R, p = top[i % N], x = p.x * s, y = cy + (p.y - cy) * s, nx = x / tx, ny = (y - cy) / ty, q = nx * nx * 0.85 + ny * ny * 0.6;
+    return [x, y, HGT - DISH * (1 - Math.min(1, q)), (x + tx) / (2 * tx), (y - cy + ty) / (2 * ty), q < 1 ? -DISH * 1.7 * nx / tx : 0, q < 1 ? -DISH * 1.2 * ny / ty : 0]; };
+  for (let k = 0; k < R; k++) for (let i = 0; i < N; i++) { const q = [pt(k, i), pt(k, i + 1), pt(k + 1, i + 1), pt(k + 1, i)];
+    for (const j of [0, 1, 2, 0, 2, 3]) { tp.push(q[j][0], q[j][1], q[j][2]); tu.push(q[j][3], q[j][4]); const n = new THREE.Vector3(q[j][5], q[j][6], 1).normalize(); tn.push(n.x, n.y, n.z); } }
+  const topGeo = new THREE.BufferGeometry(); topGeo.setAttribute('position', new THREE.Float32BufferAttribute(tp, 3));
+  topGeo.setAttribute('uv', new THREE.Float32BufferAttribute(tu, 2)); topGeo.setAttribute('normal', new THREE.Float32BufferAttribute(tn, 3));
+  return (geoCache[u] = { wallGeo, topGeo, T });
+}
+let seed = 7; function grain(size) { const c = document.createElement('canvas'); c.width = c.height = size; const g = c.getContext('2d'), im = g.createImageData(size, size);
+  for (let i = 0; i < im.data.length; i += 4) { seed = (seed * 1664525 + 1013904223) >>> 0; const v = 118 + (seed / 4294967296) * 20; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; }
+  g.putImageData(im, 0, 0); const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(3, 3); return t; }
+const bump = grain(256);
+// legend: {big:"J"} centred letter, {small:"Tab"} top-left small, {lines:["Trust the","Process"]} centred lines
+function legendTex(T, face, ink, lg) {
+  const c = document.createElement('canvas'); c.width = Math.round(T.w * 40); c.height = Math.round(T.d * 40); const g = c.getContext('2d');
+  g.fillStyle = face; g.fillRect(0, 0, c.width, c.height); g.fillStyle = ink;
+  if (lg.big) { g.font = '700 290px Cinzel'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(lg.big, c.width / 2, c.height / 2 + 14); }
+  if (lg.small) { g.font = '700 118px Cinzel'; g.textBaseline = 'top'; g.fillText(lg.small, 50, 44); }
+  if (lg.lines) { g.font = `700 ${lg.size || 150}px Cinzel`; g.textAlign = 'center'; g.textBaseline = 'middle'; const n = lg.lines.length, lh = (lg.size || 150) * 1.12;
+    lg.lines.forEach((l, i) => g.fillText(l, c.width / 2, c.height / 2 + (i - (n - 1) / 2) * lh + 10)); }
+  if (lg.arrow) { g.strokeStyle = ink; g.lineWidth = 18; g.lineCap = 'round'; g.lineJoin = 'round'; const ax = c.width - 120, ay = c.height - 130;
+    g.beginPath(); g.moveTo(ax, ay - 130); g.lineTo(ax, ay); g.lineTo(ax - 210, ay); g.moveTo(ax - 155, ay - 55); g.lineTo(ax - 210, ay); g.lineTo(ax - 155, ay + 55); g.stroke(); }
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t;
+}
+const clip = [new THREE.Plane(new THREE.Vector3(0, 0, 1), 0)];
+const keys = {};
+window.build = async (layout) => {
+  await document.fonts.load('700 100px Cinzel');
+  const totalU = 16, rowsY = layout.rows.map((r, i) => -(i * P + (i > 0 ? 0.25 * P : 0)));
+  const midY = (rowsY[0] + rowsY[rowsY.length - 1]) / 2;
+  layout.rows.forEach((row, ri) => { let x = -totalU * P / 2;
+    for (const k of row) { const u = k.u || 1, { wallGeo, topGeo, T } = capGeo(u), face = k.face || layout.face, ink = k.ink || layout.ink;
+      const mat = new THREE.MeshPhysicalMaterial({ color: face, roughness: 0.5, bumpMap: bump, bumpScale: 0.6, sheen: 0.25, sheenRoughness: 0.8, sheenColor: new THREE.Color(face), clippingPlanes: clip, clipShadows: true });
+      const topMat = mat.clone(); topMat.color = new THREE.Color(0xffffff); topMat.map = legendTex(T, face, ink, k.lg || {});
+      const grp = new THREE.Group(); const wm = new THREE.Mesh(wallGeo, mat), tm = new THREE.Mesh(topGeo, topMat);
+      for (const m of [wm, tm]) { m.castShadow = m.receiveShadow = true; grp.add(m); }
+      grp.position.set(x + u * P / 2, rowsY[ri] - midY, 0); scene.add(grp);
+      if (k.id) (keys[k.id] ||= []).push({ grp, u, T });
+      x += u * P; } });
+  // case: anodized aluminium tray around the plate
+  const cw = totalU * P + 2 * 11, ch = (6.25 * P) + 2 * 11, ow = cw / 2, oh = ch / 2, iw = totalU * P / 2 + 1.2, ih = 6.25 * P / 2 + 1.2;
+  const shape = new THREE.Shape(); const rr = (s, w, h, r) => { s.moveTo(-w + r, -h); s.lineTo(w - r, -h); s.quadraticCurveTo(w, -h, w, -h + r); s.lineTo(w, h - r); s.quadraticCurveTo(w, h, w - r, h); s.lineTo(-w + r, h); s.quadraticCurveTo(-w, h, -w, h - r); s.lineTo(-w, -h + r); s.quadraticCurveTo(-w, -h, -w + r, -h); };
+  rr(shape, ow, oh, 7); const hole = new THREE.Path(); rr(hole, iw, ih, 1.5); shape.holes.push(hole);
+  const caseGeo = new THREE.ExtrudeGeometry(shape, { depth: 22, bevelEnabled: true, bevelThickness: 1.2, bevelSize: 1.2, bevelSegments: 4, curveSegments: 24 });
+  const caseMat = new THREE.MeshPhysicalMaterial({ color: layout.caseColor, metalness: 0.75, roughness: 0.42, clearcoat: 0.1 });
+  const kase = new THREE.Mesh(caseGeo, caseMat); kase.position.z = -21; kase.castShadow = kase.receiveShadow = true; scene.add(kase);
+  const plate = new THREE.Mesh(new THREE.PlaneGeometry(iw * 2, ih * 2), new THREE.MeshStandardMaterial({ color: '#0C1010', metalness: 0.3, roughness: 0.7 }));
+  plate.position.z = -0.4; plate.receiveShadow = true; scene.add(plate);
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), new THREE.ShadowMaterial({ opacity: 0.55 })); ground.position.z = -22.3; ground.receiveShadow = true; scene.add(ground);
+};
+const key = new THREE.DirectionalLight(0xfff1e2, 2.3); key.position.set(-160, 120, 300); key.castShadow = true;
+key.shadow.mapSize.set(4096, 4096); key.shadow.radius = 7; key.shadow.blurSamples = 16; key.shadow.bias = -0.0003;
+Object.assign(key.shadow.camera, { left: -260, right: 260, top: 200, bottom: -200, near: 1, far: 900 }); scene.add(key);
+const fill = new THREE.DirectionalLight(0xdfe8ff, 0.45); fill.position.set(200, -80, 160); scene.add(fill);
+const front = new THREE.DirectionalLight(0xffe9d6, 0.9); front.position.set(-40, -330, 90); scene.add(front);
+scene.add(new THREE.AmbientLight(0xffffff, 0.12));
+const camera = new THREE.PerspectiveCamera(17, W / H, 10, 3000); camera.up.set(0, 0, 1);
+camera.position.set(0, -430, 640); camera.lookAt(0, 6, 0);
+window.renderBoard = ({ pressed = {} } = {}) => {
+  for (const [id, list] of Object.entries(keys)) for (const k of list) k.grp.position.z = -(pressed[id] || 0);
+  renderer.render(scene, camera);
+  // screen boxes of each linked key's top face (for the link hit areas)
+  const boxes = {};
+  for (const [id, list] of Object.entries(keys)) { let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+    for (const k of list) for (const [sx, sy] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) {
+      const v = new THREE.Vector3(k.grp.position.x + sx * (k.u * P - 1.06) / 2, k.grp.position.y + sy * 9.1, sy < 0 ? 0 : 8).project(camera);
+      const px = (v.x + 1) / 2 * W, py = (1 - v.y) / 2 * H; x0 = Math.min(x0, px); y0 = Math.min(y0, py); x1 = Math.max(x1, px); y1 = Math.max(y1, py); }
+    boxes[id] = [x0, y0, x1, y1].map(Math.round); }
+  window.lastBoxes = boxes;
+  return renderer.domElement.toDataURL('image/png');
+};
+window.ready = true;
+</script></body></html>
