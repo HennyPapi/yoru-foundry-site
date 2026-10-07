@@ -1,0 +1,110 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Footer options</title>
+<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Cinzel:wght@400..900&family=Alegreya:ital,wght@0,400..800;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<style>
+/* Mockup only. Footer options for Phase 9: the underside of a keyboard. */
+body{margin:0;background:var(--cast);color:var(--bright);font-family:var(--font-body)}
+.opt-name{max-width:var(--max);margin:0 auto;padding:56px 24px 14px;font-family:var(--font-display);font-weight:700;font-size:15px;color:var(--pewter)}
+.opt-name b{color:var(--bright)}
+/* the case bottom */
+.plate{position:relative;background:var(--green-sand);border-top:1px solid var(--line-strong);padding:56px 24px 48px}
+.plate::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:linear-gradient(var(--deep),transparent);opacity:.55}
+.plate-in{position:relative;max-width:var(--max);margin:0 auto}
+.screw{position:absolute;width:22px;height:22px}
+.screw.tl{left:-4px;top:-28px}.screw.tr{right:-4px;top:-28px}.screw.bl{left:-4px;bottom:-24px}.screw.br{right:-4px;bottom:-24px}
+.foot{position:absolute;height:14px;width:120px;border-radius:7px;background:var(--deep);border:1px solid var(--line)}
+/* paper spec label */
+.label-p{background:var(--bright);color:var(--ink);border-radius:3px;padding:16px 18px 14px;font-family:var(--font-body)}
+.label-p h4{margin:0 0 10px;font-family:var(--font-display);font-weight:700;font-size:15px;display:flex;justify-content:space-between;gap:12px;border-bottom:1.5px solid var(--ink);padding-bottom:8px}
+.label-p h4 small{font-family:var(--font-body);font-weight:500;font-size:13px;color:var(--muted-on-bright)}
+.spec{display:grid;grid-template-columns:86px 1fr;gap:6px 14px;font-size:15px;align-items:baseline}
+.spec dt{font-family:var(--font-display);font-weight:700;font-size:12px;color:var(--muted-on-bright)}
+.spec dd{margin:0;display:flex;flex-wrap:wrap;gap:4px 16px}
+.label-p a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--copper-deep);text-underline-offset:3px}
+.bar{display:flex;align-items:end;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid var(--muted-on-bright);font-size:13px;color:var(--muted-on-bright)}
+.barcode{height:26px;width:130px}
+a.label-p{display:block;text-decoration:none;transition:transform .2s ease}
+a.label-p:hover{transform:translateY(-2px)}
+/* holographic seal: in-palette foil (pewter, verdigris, copper, bright) */
+.holo{display:grid;place-items:center;text-align:center;color:var(--ink);text-decoration:none;font-family:var(--font-display);font-weight:700;font-size:13px;line-height:1.15;
+ background:conic-gradient(from 210deg at 40% 45%,#C9D3CF,#8FD0C2,#E9C2A8,#EEF0EC,#A7B2AE,#9CCFC4,#F0B994,#C9D3CF);
+ border:1px solid var(--pewter);transition:transform .2s ease,filter .2s ease;position:relative;overflow:hidden}
+.holo::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,transparent 0 6px,rgba(238,240,236,.35) 6px 7px);mix-blend-mode:soft-light}
+.holo:hover{transform:translateY(-2px);filter:hue-rotate(40deg) saturate(1.15)}
+.holo span{position:relative;z-index:1}
+.holo small{display:block;font-family:var(--font-body);font-weight:500;font-size:12px;color:var(--ink)}
+.etch{font-family:var(--font-display);font-weight:600;font-size:13px;color:var(--pewter-deep)}
+/* A */
+.A .plate-in{display:grid;grid-template-columns:1fr minmax(0,620px) 1fr;align-items:center;gap:32px}
+.A .label-p{grid-column:2}
+.A .holo{width:104px;height:104px;border-radius:50%;justify-self:start}
+.A .left{justify-self:end;text-align:right}
+/* B */
+.B .plate-in{display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start;justify-content:center}
+.B .label-p{width:250px}
+.B .label-p:nth-child(1){transform:rotate(-.6deg)}.B .label-p:nth-child(3){transform:rotate(.5deg)}
+.B a.label-p:hover{transform:translateY(-2px)}
+.B .linklist{display:grid;gap:6px;font-size:16px}
+.B .holo{width:150px;height:96px;border-radius:4px;align-self:center}
+.B .under{flex-basis:100%;display:flex;justify-content:space-between;margin-top:18px}
+/* C */
+.C .plate-in{display:grid;grid-template-columns:repeat(4,1fr) auto;gap:28px}
+.C h5{margin:0 0 12px;font-family:var(--font-display);font-weight:700;font-size:13px;color:var(--pewter-deep)}
+.C ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.C ul a{font-family:var(--font-display);font-weight:600;font-size:15px;color:var(--bright);text-decoration:none}
+.C ul a:hover{color:var(--raw-copper)}
+.C .serial{grid-column:1/-1;display:flex;align-items:center;gap:20px;margin-top:18px;padding-top:18px;border-top:var(--border-width) solid var(--line)}
+.C .serial .label-p{padding:8px 12px;display:flex;gap:18px;align-items:center;font-size:13px}
+.C .holo{width:64px;height:64px;border-radius:50%;font-size:11px}
+@media(max-width:700px){
+ .A .plate-in{grid-template-columns:1fr}.A .label-p,.A .left,.A .holo{grid-column:1;justify-self:stretch;text-align:left}.A .holo{justify-self:center}
+ .spec{grid-template-columns:1fr}.B .label-p{width:100%;transform:none!important}
+ .C .plate-in{grid-template-columns:1fr 1fr}.C .serial{flex-wrap:wrap}
+}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+ <radialGradient id="metal" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#C9D3CF"/><stop offset=".55" stop-color="#7E8A86"/><stop offset="1" stop-color="#3A4442"/></radialGradient>
+ <symbol id="screw" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10.5" fill="#0C1010"/><circle cx="11" cy="11" r="9.5" fill="url(#metal)"/><polygon points="11,6.6 14.8,8.8 14.8,13.2 11,15.4 7.2,13.2 7.2,8.8" fill="#151A1A"/></symbol>
+ <symbol id="barcode" viewBox="0 0 130 26"><g fill="#151A1A"><rect x="0" width="2" height="26"/><rect x="4" width="1" height="26"/><rect x="7" width="3" height="26"/><rect x="12" width="1" height="26"/><rect x="15" width="2" height="26"/><rect x="19" width="1" height="26"/><rect x="22" width="3" height="26"/><rect x="27" width="1" height="26"/><rect x="30" width="2" height="26"/><rect x="34" width="1" height="26"/><rect x="36" width="1" height="26"/><rect x="39" width="3" height="26"/><rect x="44" width="2" height="26"/><rect x="48" width="1" height="26"/><rect x="51" width="1" height="26"/><rect x="54" width="3" height="26"/><rect x="59" width="1" height="26"/><rect x="62" width="2" height="26"/><rect x="66" width="1" height="26"/><rect x="69" width="3" height="26"/><rect x="74" width="1" height="26"/><rect x="77" width="2" height="26"/><rect x="81" width="1" height="26"/><rect x="84" width="1" height="26"/><rect x="87" width="3" height="26"/><rect x="92" width="2" height="26"/><rect x="96" width="1" height="26"/><rect x="99" width="3" height="26"/><rect x="104" width="1" height="26"/><rect x="107" width="2" height="26"/><rect x="111" width="1" height="26"/><rect x="114" width="3" height="26"/><rect x="119" width="1" height="26"/><rect x="122" width="2" height="26"/><rect x="126" width="1" height="26"/><rect x="128" width="2" height="26"/></g></symbol>
+</defs></svg>
+
+<p class="opt-name"><b>A</b> Underside: one spec label in the middle, a holographic seal beside it</p>
+<footer class="plate A"><div class="plate-in">
+ <svg class="screw tl"><use href="#screw"/></svg><svg class="screw tr" style="transform:rotate(25deg)"><use href="#screw"/></svg><svg class="screw bl" style="transform:rotate(50deg)"><use href="#screw"/></svg><svg class="screw br" style="transform:rotate(12deg)"><use href="#screw"/></svg>
+ <div class="left etch">Built one at a time<br>in Miami.</div>
+ <div class="label-p">
+  <h4>Yoru Foundry <small>Refined by Craft.</small></h4>
+  <dl class="spec">
+   <dt>Pages</dt><dd><a href="#">Crafted Art</a><a href="#">Trust the Process</a><a href="#">Built to Taste</a><a href="#">Why Yoru</a><a href="#">About</a><a href="#">Journal</a><a href="#">Archive</a></dd>
+   <dt>Commission</dt><dd><a href="#">Request a Commission</a></dd>
+   <dt>Contact</dt><dd><a href="#">hello@yorufoundry.com</a></dd>
+   <dt>Follow</dt><dd><a href="#">Instagram @yorufoundry</a><a href="#">TikTok @yoru.foundry</a></dd>
+  </dl>
+  <div class="bar"><svg class="barcode"><use href="#barcode"/></svg><span>© 2026 Yoru Foundry</span></div>
+ </div>
+ <a class="holo" href="#"><span>Archive<small>Build records</small></span></a>
+</div></footer>
+
+<p class="opt-name"><b>B</b> Label sheet: each label is its own button group, the seal links to the Archive</p>
+<footer class="plate B"><div class="plate-in">
+ <svg class="screw tl"><use href="#screw"/></svg><svg class="screw tr" style="transform:rotate(25deg)"><use href="#screw"/></svg><svg class="screw bl" style="transform:rotate(50deg)"><use href="#screw"/></svg><svg class="screw br" style="transform:rotate(12deg)"><use href="#screw"/></svg>
+ <div class="label-p"><h4>Pages</h4><div class="linklist"><a href="#">Crafted Art</a><a href="#">Trust the Process</a><a href="#">Built to Taste</a><a href="#">Why Yoru</a><a href="#">About</a><a href="#">Journal</a></div></div>
+ <div class="label-p"><h4>Contact <small>Miami</small></h4><div class="linklist"><a href="#">Request a Commission</a><a href="#">hello@yorufoundry.com</a></div><div class="bar"><svg class="barcode"><use href="#barcode"/></svg></div></div>
+ <div class="label-p"><h4>Follow the Foundry</h4><div class="linklist"><a href="#">Instagram @yorufoundry</a><a href="#">TikTok @yoru.foundry</a></div></div>
+ <a class="holo" href="#"><span>Archive<small>Build records</small></span></a>
+ <div class="under etch"><span>Built one at a time in Miami.</span><span>© 2026 Yoru Foundry</span></div>
+</div></footer>
+
+<p class="opt-name"><b>C</b> Etched plate: four engraved columns, one small serial label and a small seal</p>
+<footer class="plate C"><div class="plate-in">
+ <svg class="screw tl"><use href="#screw"/></svg><svg class="screw tr" style="transform:rotate(25deg)"><use href="#screw"/></svg><svg class="screw bl" style="transform:rotate(50deg)"><use href="#screw"/></svg><svg class="screw br" style="transform:rotate(12deg)"><use href="#screw"/></svg>
+ <div><h5>The work</h5><ul><li><a href="#">Crafted Art</a></li><li><a href="#">Trust the Process</a></li><li><a href="#">Built to Taste</a></li><li><a href="#">Archive</a></li></ul></div>
+ <div><h5>The foundry</h5><ul><li><a href="#">Why Yoru</a></li><li><a href="#">About</a></li><li><a href="#">Journal</a></li></ul></div>
+ <div><h5>Commission</h5><ul><li><a href="#">Request a Commission</a></li><li><a href="#">hello@yorufoundry.com</a></li></ul></div>
+ <div><h5>Follow the Foundry</h5><ul><li><a href="#">Instagram @yorufoundry</a></li><li><a href="#">TikTok @yoru.foundry</a></li></ul></div>
+ <a class="holo" href="#"><span>Archive</span></a>
+ <div class="serial"><div class="label-p"><b style="font-family:var(--font-display)">Yoru Foundry</b><span>Built one at a time in Miami.</span><svg class="barcode" style="width:90px;height:18px"><use href="#barcode"/></svg></div><span class="etch">© 2026 Yoru Foundry</span></div>
+</div></footer>
+<div style="height:60px"></div>
+</body></html>
