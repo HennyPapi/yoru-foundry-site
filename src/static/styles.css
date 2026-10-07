@@ -2526,7 +2526,7 @@ main:not(.section-shell),
 .k{position:relative;display:inline-grid;flex-shrink:0;width:var(--w);margin-left:var(--ml);margin-right:var(--mr);line-height:1.12;color:var(--bright);text-decoration:none;border-radius:var(--radius-8px)}
 .k img{position:relative;grid-area:1/1;display:block;width:100%;height:auto}
 .k .h,.k .p{opacity:0}
-.k:hover img:first-child{opacity:0}
+.k:hover img:first-of-type{opacity:0}   /* first-of-type: the glow layers come before the frames in header keys */
 .k:hover .h{opacity:1}
 .k:active img:not(.p),.k[aria-current] img:not(.p){opacity:0}
 .k:active .p,.k[aria-current] .p{opacity:1}
