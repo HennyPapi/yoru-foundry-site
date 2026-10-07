@@ -1447,6 +1447,9 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
 .sound-slots{display:grid;gap:var(--space-12);margin:var(--space-14) var(--space-0) var(--space-0);padding:var(--space-0);list-style:none}
 .sound-slots li{display:grid;gap:var(--space-6)}
 .sound-slots audio{width:100%}
+.sound-slots .sound-empty{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-6) var(--space-12);min-height:72px;padding:var(--space-14) var(--space-22);background:var(--green-sand)}
+.sound-slots .sound-empty .sound-label{margin:var(--space-0);color:var(--bright)}
+.sound-slots .sound-empty span:last-child{font-family:var(--font-display);font-size:var(--step-3);font-weight:700;color:var(--pewter-deep)}
 
 /* Footer (Phase 9): a rendered 75% keyboard. Each link is a word spelled on the keys or a named wide key; the
    word's hover / pressed frames (rendered, lit) sit over the board and swap instantly by state. The linked keys'

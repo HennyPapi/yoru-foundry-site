@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-36-privacy",
+  stylesheetVersion: "vg-37-honest-sound",
   siteTitle: "Yoru Foundry",
   siteUrl: "https://yorufoundry.com",   // absolute links for the sitemap and share previews
   SITE_MODE: "live",
@@ -175,13 +175,15 @@ function renderDataBackedContent(html, content) {
   // Homepage sound band: up to four slots; a slot gets a player once it has a real recording.
   html = html.replace(/<ul class="sound-slots" data-sound-slots><\/ul>/, () => '<ul class="sound-slots">' + (content.HOME_SOUNDS || []).slice(0, 4).map((slot) => isRealMedia(slot.file)
     ? '<li><span class="sound-label">' + escapeHtml(slot.label) + '</span><audio controls preload="none" src="' + escapeHtml(slot.file) + '"></audio></li>'
-    : '<li><span class="sound-label">' + escapeHtml(slot.label) + ": recording coming soon</span></li>").join("") + "</ul>");
+    : '<li class="sound-empty"><span class="sound-label">' + escapeHtml(slot.label) + "</span><span>Recording coming soon</span></li>").join("") + "</ul>");
   // Page media written as <yf-media src="" label="..." class="portrait">: a frame now, a photo or video later.
   html = html.replace(/<yf-media([^>]*)><\/yf-media>/g, (_, attrs) => {
     const attr = (name) => (attrs.match(new RegExp(`${name}="([^"]*)"`)) || [])[1] || "";
     return mediaFrame(attr("src"), attr("class"), attr("label"), attr("alt"));
   });
-  // Placeholder waveform (a fixed shape, not a recording).
+  // Waveform: drawn only once a real recording exists; never a fake shape standing in for sound.
+  const hasRealSound = (content.HOME_SOUNDS || []).some((slot) => isRealMedia(slot.file));
+  if (!hasRealSound) html = html.replace(/<div class="sound-wave"><svg data-wave><\/svg><\/div>\s*/, "");
   html = html.replace(/<svg data-wave><\/svg>/, () => {
     let bars = "";
     for (let i = 0; i < 100; i++) {
@@ -204,7 +206,7 @@ function renderDataBackedContent(html, content) {
   html = html.replace(/(<section class="guide-index" data-story-grid="([^"]+)">)[\s\S]*?(<\/section>)/g, (_, open, type, close) => open + renderStoryGrid(type, stories) + close);
 
   // Build records: every published record, the first shown; script.js switches to the one named by ?id=.
-  html = html.replace(/<div class="records" data-build-records><\/div>/, () => '<div class="records">' + visible.map((item, n) => '<article class="record" data-record="' + escapeHtml(item.id) + '"' + (n ? " hidden" : "") + ">" + (n ? renderCommissionDetail(item, soundSamples).replace(/preload="metadata"/g, 'preload="none"') : renderCommissionDetail(item, soundSamples)) + "</article>").join("") + '<article class="record" data-record="none"' + (visible.length ? " hidden" : "") + '><section class="page-intro"><h1>This record is not published.</h1><p>I publish build records after the work is ready to document.</p></section></article></div>');
+  html = html.replace(/<div class="records" data-build-records><\/div>/, () => '<div class="records">' + visible.map((item, n) => '<article class="record" data-record="' + escapeHtml(item.id) + '"' + (n ? " hidden" : "") + ">" + (n ? renderCommissionDetail(item, soundSamples).replace(/preload="metadata"/g, 'preload="none"') : renderCommissionDetail(item, soundSamples)) + "</article>").join("") + '<article class="record" data-record="none"' + (visible.length ? " hidden" : "") + '><section class="page-intro"><h1>This record is not published.</h1><p>I publish build records after the work is ready to document.</p><p><a class="text-back" href="/crafted-art.html">Back to Layouts</a></p></section></article></div>');
 
   html = html.replace(/(<div class="compare-audio" data-sound-player="(\d+)">)[\s\S]*?(<\/div>)/g, (_, open, index, close) => open + renderSoundPlayer(soundSamples[Number(index)] || soundSamples[0]) + close);
 
