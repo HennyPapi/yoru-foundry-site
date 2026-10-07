@@ -3,7 +3,7 @@ Usage: python3 board-export.py <render dir> <repo root>
 Reads base.png (unlit), lit.png and <id>-h.png / <id>-p.png (hover / pressed, both lit) from render-board.js.
 Writes src/static/assets/footer-board/*.webp and the boxes in src/static/data/footer-board.json."""
 import json, sys
-from PIL import Image, ImageChops, ImageFilter
+from PIL import Image, ImageChops, ImageDraw, ImageFilter
 src, root = sys.argv[1], sys.argv[2]
 out = root + '/src/static/assets/footer-board'
 data_path = root + '/src/static/data/footer-board.json'
@@ -26,7 +26,13 @@ for id, key in data['keys'].items():
         diff = ImageChops.difference(im.convert('RGB'), L.convert('RGB'))
         mask = diff.split()[0]
         for ch in diff.split()[1:]: mask = ImageChops.lighter(mask, ch)
-        mask = mask.point(lambda v: 0 if v <= 2 else min(255, (v - 2) * 24)).filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.GaussianBlur(2))
+        mask = mask.point(lambda v: 0 if v <= 2 else min(255, (v - 2) * 24)).filter(ImageFilter.MaxFilter(5))
+        # fill the holes: a pressed cap's flat top barely changes, and a hole there lets the board's own legend
+        # (at the unpressed height) show through as a ghost. Solid inside, feathered only at the outer edge.
+        solid = mask.point(lambda v: 255 if v > 0 else 0)
+        outside = solid.copy(); ImageDraw.floodfill(outside, (0, 0), 128)
+        inside = outside.point(lambda v: 0 if v == 128 else 255)
+        mask = ImageChops.lighter(mask, inside).filter(ImageFilter.GaussianBlur(2))
         a = ImageChops.multiply(mask, im.getchannel('A'))
         im.putalpha(a)
         d = a.getbbox()
