@@ -50,6 +50,10 @@ To switch sending on (once):
    `RESEND_API_KEY`, value the key, Secret. Only versions uploaded after this see it; open `/api/commission` on a
    preview to check. Requests then arrive from `commissions@yorufoundry.com` (change with a
    `COMMISSION_FROM` variable; send elsewhere with `COMMISSION_TO`).
+   **Warning:** saving a secret in the dashboard deploys a new production version built from the *newest uploaded*
+   version, which is usually a design-branch preview. On 2026-10-07 this put the unfinished redesign live and it had
+   to be rolled back under Deployments. After any dashboard secret change, check yorufoundry.com and roll back if
+   needed.
 5. Optional spam check, **Turnstile → Add widget:** hostnames `yorufoundry.com` and `mllerenafinances.workers.dev`,
    mode Managed. Put the site key in `config.turnstileSiteKey` in `build.js`, and the secret key in the Worker under
    **Settings → Variables and Secrets** as `TURNSTILE_SECRET`. Set both or neither. A hidden trap field already stops
