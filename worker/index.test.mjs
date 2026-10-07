@@ -40,6 +40,10 @@ assert.equal(res.status, 303); assert.equal(res.headers.get("location"), "https:
 res = await handleCommission(post(good, false), {}, null);
 assert.equal(res.headers.get("location"), "https://yorufoundry.com/request-a-build.html#send-failed");
 res = await handleCommission(new Request("https://yorufoundry.com/api/commission"), {}, send);
+assert.match(await res.text(), /email is set up/);
+res = await handleCommission(new Request("https://yorufoundry.com/api/commission"), {}, null);
+assert.match(await res.text(), /not set/);
+res = await handleCommission(new Request("https://yorufoundry.com/api/commission", { method: "PUT" }), {}, send);
 assert.equal(res.status, 405);
 let call;
 globalThis.fetch = async (url, init) => { call = { url, init }; return new Response("{}", { status: 200 }); };

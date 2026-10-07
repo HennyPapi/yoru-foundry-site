@@ -56,7 +56,9 @@ export async function handleCommission(request, env, send) {
     ? Response.json(ok ? { ok } : { ok, error }, { status })
     : Response.redirect(new URL(ok ? "/request-a-build.html#sent" : "/request-a-build.html#send-failed", request.url), 303);
 
-  if (request.method !== "POST") return new Response("Method not allowed", { status: 405, headers: { allow: "POST" } });
+  // Opening the endpoint in a browser shows whether email is set up (no secrets revealed).
+  if (request.method === "GET") return new Response(send ? "Commission form: email is set up." : "Commission form: RESEND_API_KEY is not set, so the form falls back to a mail draft.", { headers: { "content-type": "text/plain; charset=utf-8" } });
+  if (request.method !== "POST") return new Response("Method not allowed", { status: 405, headers: { allow: "GET, POST" } });
   let form;
   try { form = await request.formData(); } catch { return reply(false, 400, "unreadable form"); }
   const parsed = readRequest(form);
