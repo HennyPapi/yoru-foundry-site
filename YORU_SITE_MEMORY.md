@@ -79,6 +79,8 @@ hero media frame.
   comparison"); each opens the shared guide panel (also used by Trust the Process) with "Step 1–3" and honest media
   frames; the A/B comparison as two raised panels; the material library (`MATERIALS`) as a ruled list with each
   definition shown under the name instead of a hover tooltip.
+- Trust the Process (rebuilt 2026-10-07): intro, then the four stages (`STORIES.process`) in one numbered column
+  ("Stage 1–4", a real sequence), each opening the shared guide panel.
 - Request a Commission (rebuilt 2026-10-06): status line with a verdigris dot, the H1 and intro on the canvas; the
   form on a raised Green Sand surface with inset Cast fields (Cinzel labels, Alegreya input text, Pewter chevrons);
   submit is the copper Enter keycap (`/assets/keys/c2.25*.webp`, legend as real text), the only copper key on the

@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-14-taste",
+  stylesheetVersion: "vg-15-process",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
 });
@@ -70,11 +70,11 @@ function renderSoundPlayer(sample) {
   return '<div class="sound-player-copy"><strong>' + escapeHtml(sample.name) + '</strong><p>' + escapeHtml(sample.description) + '</p></div><audio controls preload="metadata" src="' + escapeHtml(sample.file) + '" aria-label="' + escapeHtml(sample.name) + '"></audio>';
 }
 
-// Guide topics as a ruled index (topics are not a sequence, so no numbers); each opens its guide.
+// Guide topics as a ruled index; each opens its guide. Process stages are a sequence, so they are numbered.
 function renderStoryGrid(type, stories) {
   const group = (stories || {})[type] || {};
   const action = type === "process" ? "Open process" : "Explore comparison";
-  return Object.entries(group).map(([id, story]) => '<button class="guide-topic" type="button" data-story-type="' + escapeHtml(type) + '" data-story="' + escapeHtml(id) + '"><span class="guide-title">' + escapeHtml(story.title) + '</span><span class="guide-intro">' + escapeHtml(story.intro) + '</span><span class="guide-open">' + action + "</span></button>").join("");
+  return Object.entries(group).map(([id, story], i) => '<button class="guide-topic" type="button" data-story-type="' + escapeHtml(type) + '" data-story="' + escapeHtml(id) + '">' + (type === "process" ? '<span class="guide-step-num">Stage ' + (i + 1) + "</span>" : "") + '<span class="guide-title">' + escapeHtml(story.title) + '</span><span class="guide-intro">' + escapeHtml(story.intro) + '</span><span class="guide-open">' + action + "</span></button>").join("");
 }
 
 // One guide's steps (a real sequence): an honest media frame naming what will go there, then the step.
