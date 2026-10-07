@@ -138,6 +138,11 @@ commission-yf-001.
 - Sound references live in `SOUND_SAMPLES`; prelaunch audio is a 3-second silent MP3.
 - Known data fix: `content.js` labels "Ember" as a sound; it is a build name.
 
+## 8a. Header scrolls away (2026-10-07)
+
+- The header is not pinned: it scrolls away with the page (Mike). The footer keyboard carries every link at the end
+  of each page. If long pages or phones need it later, add a hide-on-scroll-down / slide-back-on-scroll-up header.
+
 ## 9a. Footer: the keyboard (2026-10-07)
 
 - Mike's concept: a rendered 75% board (matte black bead-blasted case, sharp chamfered edges, green-sand caps).
