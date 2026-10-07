@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-50-speed",
+  stylesheetVersion: "vg-51-copy",
   siteTitle: "Yoru Foundry",
   siteUrl: "https://yorufoundry.com",   // absolute links for the sitemap and share previews
   SITE_MODE: "live",
@@ -78,7 +78,7 @@ function renderSoundPlayer(sample) {
 // Guide topics as a ruled index; each opens its guide. Process stages are a sequence, so they are numbered.
 function renderStoryGrid(type, stories) {
   const group = (stories || {})[type] || {};
-  const action = type === "process" ? "Open process" : "Explore comparison";
+  const action = type === "process" ? "Open stage" : "Open guide";
   return Object.entries(group).map(([id, story], i) => '<button class="guide-topic" type="button" data-story-type="' + escapeHtml(type) + '" data-story="' + escapeHtml(id) + '">' + (type === "process" ? '<span class="guide-step-num">Stage ' + (i + 1) + "</span>" : "") + '<span class="guide-title">' + escapeHtml(story.title) + '</span><span class="guide-intro">' + escapeHtml(story.intro) + '</span><span class="guide-open">' + action + "</span></button>").join("");
 }
 
@@ -100,7 +100,7 @@ function mediaInner(src, label, alt = "", poster = "") {
   return '<img src="' + escapeHtml(src) + '" alt="' + escapeHtml(alt) + '" loading="lazy" decoding="async">';
 }
 
-function mediaFrame(src, cls, label = "Customer build photo", alt = "") {
+function mediaFrame(src, cls, label = "Build photo to come", alt = "") {
   return '<div class="build-media' + (cls ? " " + cls : "") + '">' + mediaInner(src, label, alt) + "</div>";
 }
 
@@ -208,7 +208,7 @@ function renderDataBackedContent(html, content) {
   html = html.replace(/(<section class="guide-index" data-story-grid="([^"]+)">)[\s\S]*?(<\/section>)/g, (_, open, type, close) => open + renderStoryGrid(type, stories) + close);
 
   // Build records: every published record, the first shown; script.js switches to the one named by ?id=.
-  html = html.replace(/<div class="records" data-build-records><\/div>/, () => '<div class="records">' + visible.map((item, n) => '<article class="record" data-record="' + escapeHtml(item.id) + '"' + (n ? " hidden" : "") + ">" + (n ? renderCommissionDetail(item, soundSamples).replace(/preload="metadata"/g, 'preload="none"') : renderCommissionDetail(item, soundSamples)) + "</article>").join("") + '<article class="record" data-record="none"' + (visible.length ? " hidden" : "") + '><section class="page-intro"><h1>This record is not published.</h1><p>I publish build records after the work is ready to document.</p><p><a class="text-back" href="/crafted-art.html">Back to Layouts</a></p></section></article></div>');
+  html = html.replace(/<div class="records" data-build-records><\/div>/, () => '<div class="records">' + visible.map((item, n) => '<article class="record" data-record="' + escapeHtml(item.id) + '"' + (n ? " hidden" : "") + ">" + (n ? renderCommissionDetail(item, soundSamples).replace(/preload="metadata"/g, 'preload="none"') : renderCommissionDetail(item, soundSamples)) + "</article>").join("") + '<article class="record" data-record="none"' + (visible.length ? " hidden" : "") + '><section class="page-intro"><h1>This record is not published.</h1><p>I publish build records after the work is ready to document.</p><p><a class="text-back" href="/crafted-art.html">Back to Crafted Art</a></p></section></article></div>');
 
   // A/B sides start on different options (A the first, B the second); each player is titled with its side's option.
   const initialCompare = Array.isArray(compareOptions.stabilizer) ? compareOptions.stabilizer : [];

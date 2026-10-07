@@ -248,7 +248,7 @@ const STORIES = {
   1:{title:"Switch Lubing",intro:"Hear and understand what lubrication changes — and what it does not.",steps:[
    ["Before","Sample audio/video — unlubed switch","A clean baseline shows the natural scratch, pitch and spring character of the switch."],
    ["After","Sample audio/video — lubed switch","The same switch after careful lubrication demonstrates the change in smoothness, consistency and sound."],
-   ["What You Feel","Sample close-up video","The goal is not simply 'quieter.' The difference can be in friction, return, texture and perceived refinement."]
+   ["What You Feel","Sample close-up video","The goal is not simply ‘quieter.’ The difference can be in friction, return, texture and perceived refinement."]
   ]},
   2:{title:"Stabilizer Tuning",intro:"Spacebars, shifts, enter and backspace reveal poor tuning immediately.",steps:[
    ["Untuned","Sample audio — rattle/tick","An untuned stabilizer can add wire rattle, ticking and uneven travel."],
@@ -263,14 +263,14 @@ const STORIES = {
   4:{title:"Mounting Style",intro:"How the plate and PCB are supported changes stiffness, movement and resonance.",steps:[
    ["Gasket Mount","Sample flex video","Gasket systems can isolate the assembly and provide a softer, more cushioned response depending on implementation."],
    ["Firmer Mounts","Sample flex video","Top, tray and other firmer systems can create a more direct response and different resonance."],
-   ["Side by Side","Sample audio/video comparison","The meaningful choice is not which mount is 'best,' but which behavior matches your preference."]
+   ["Side by Side","Sample audio/video comparison","The meaningful choice is not which mount is ‘best,’ but which behavior matches your preference."]
   ]},
   5:{title:"Plate Material",intro:"Plate material changes more than appearance.",steps:[
    ["Aluminum","Sample plate photo/audio","Typically firmer and more direct, with its own resonant character."],
    ["Polycarbonate / FR4","Sample plate comparison","Softer or more flexible materials can change rebound, pitch and perceived softness."],
    ["Choose by Feel","Sample typing comparison","The plate is selected as part of the full system, not in isolation."]
   ]},
-  6:{title:"Sound Profiles",intro:"Rather than vague internet labels, I use real recordings so you can choose by ear.",steps:[
+  6:{title:"Sound Profiles",intro:"Rather than vague internet labels, I am recording real examples so you can choose by ear.",steps:[
    ["Profile A","Sample audio — sound profile","A controlled recording with notes describing pitch, resonance and character."],
    ["Profile B","Sample audio — alternate profile","A contrasting tuning direction on comparable hardware."],
    ["Your Preference","Sample comparison player","These examples will become the vocabulary used in the build request form."]
