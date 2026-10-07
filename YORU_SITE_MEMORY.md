@@ -138,6 +138,14 @@ commission-yf-001.
 - Sound references live in `SOUND_SAMPLES`; prelaunch audio is a 3-second silent MP3.
 - Known data fix: `content.js` labels "Ember" as a sound; it is a build name.
 
+## 10a. Commission form and mail (2026-10-07)
+
+- Mail for yorufoundry.com (hello@, mike@) is hosted by **Zoho** (MX mx/mx2/mx3.zoho.com). **Never enable
+  Cloudflare Email Routing**: it would replace Zoho's MX records.
+- The request form posts to the Worker at `/api/commission` (`worker/index.js`), which sends through **Resend**
+  (domain verified 2026-10-06: `resend._domainkey` TXT, `send` and `rsend` CNAMEs, all DNS only; receiving off).
+  The key is the Worker secret `RESEND_API_KEY`. Without it, the form opens a pre-filled mail draft instead.
+
 ## 11. History
 
 - Before 2026-10-06 the site used **Yoru Nocturne**: cream `#F2EFE8` header and accent sections, near-black
