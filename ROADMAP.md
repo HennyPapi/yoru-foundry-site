@@ -66,7 +66,7 @@ Known small issues (fix when touching these areas):
 | 11 | Motion and reduced motion | Planned |
 | 12 | Image and page weight | Planned — partly pulled forward |
 | 13 | Cleanup: unused files, orphan pages, dead CSS | Planned |
-| 14 | One cream section per page | Planned (needs a decision) |
+| 14 | One cream section per page | Retired: Verdigris has no light sections (Mike, 2026-10-06) |
 | Launch | Checklist, then merge `design-pass` → `main` | — |
 
 ## Phase details
@@ -128,8 +128,8 @@ Known small issues (fix when touching these areas):
 ## Open decisions for Mike
 
 1. What were Phases 4 and 5? Are they done, or still to do?
-2. Are the current homepage textures the final choice?
-3. Cream rule: exactly one per page, or at most one?
+2. ~~Homepage textures~~ Answered: no texture (Mike, 2026-10-06).
+3. ~~Cream rule~~ Retired with the Verdigris direction.
 4. Form backend: Cloudflare Worker (recommended) or a form service?
-5. Archive and Journal: keep and link them, or remove them?
+5. ~~Archive and Journal~~ Kept and rebuilt (2026-10-07); Phase 9 puts their footer links into the HTML.
 6. The Mice / Mouse Pads / Desk Mats / Wrist Rests / Accessories pages are stubs. Keep them for launch, or hide them?
