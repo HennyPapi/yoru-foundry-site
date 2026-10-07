@@ -418,7 +418,7 @@
   --type-fluid-request: clamp(40px,5.4vw,78px);
   --type-fluid-04: clamp(21px,2.3vw,28px);
   --type-fluid-05: clamp(42px,5vw,66px);
-  --type-fluid-06: clamp(42px,5vw,64px);
+  --type-fluid-06: clamp(30px,3.6vw,46px);
   --type-fluid-section: clamp(26px,2.5vw,34px);   /* section heads inside a page: below the page's one display heading */
   --type-fluid-07: clamp(40px,4.5vw,58px);
   --type-fluid-08: clamp(34px,5vw,58px);
@@ -1325,7 +1325,9 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
 .layout-copy .scale-status{margin:var(--space-6) var(--space-0) var(--space-14);font-family:var(--font-display);font-size:var(--step-4);font-weight:700;color:var(--pewter)}
 .layout-copy .scale-status.is-live{color:var(--verdigris)}
 .layout-copy p:last-child{margin:var(--space-0);font-size:var(--type-17);color:var(--pewter)}
-.layout-row.is-later h2{color:var(--pewter)}
+.layout-row.is-later h2{font-size:var(--type-fluid-section);color:var(--pewter)}
+.layout-row.is-later{padding:var(--space-24) var(--space-0)}
+.layout-row.is-later .layout-drawing .board{width:calc(var(--scale) * 70%)}
 
 /* 75% builds: the first build featured, the rest as a ruled list; photo frames are honest placeholders. */
 .build-media{display:grid;place-items:center;aspect-ratio:16/9;background:var(--green-sand);border-radius:var(--radius-square);text-decoration:none}
@@ -1356,6 +1358,7 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
 .story-overlay{position:absolute;inset:0;background:var(--deep);opacity:.86}
 .story-panel{position:relative;width:min(1100px,100%);max-height:calc(100vh - 48px);overflow:auto;padding:var(--space-40);background:var(--cast);border:var(--border-width) solid var(--line-strong);border-radius:var(--radius-8px)}
 .modal-close{position:absolute;top:var(--space-14);right:var(--space-14);width:44px;height:44px;min-height:0;padding:var(--space-0);font-size:var(--type-25);line-height:1;color:var(--bright);background:none;border:0;cursor:pointer}
+.story-modal-head h2{padding-right:var(--space-60)}   /* clear of the close button */
 .modal-close:hover{color:var(--raw-copper)}
 .modal-close:focus-visible{outline:2px solid var(--raw-copper)}
 .story-modal-head{max-width:62ch;margin-bottom:var(--space-24)}
@@ -1412,6 +1415,9 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
 .text-link{font-family:var(--font-display);font-size:var(--step-4);font-weight:700;color:var(--bright);text-decoration:underline;text-decoration-color:var(--raw-copper);text-decoration-thickness:1px;text-underline-offset:var(--space-6)}
 .label{margin:var(--space-0) var(--space-0) var(--space-10);font-family:var(--font-display);font-size:var(--step-3);font-weight:700;color:var(--pewter)}
 .build-media.portrait{aspect-ratio:4/5}
+/* Empty frames stay a short captioned strip; the locked ratio returns when real media drops in. */
+.build-media:not(:has(img,video)),.build-media.portrait:not(:has(img,video)),.build-media.square:not(:has(img,video)),.guide-media:not(:has(img,video)){aspect-ratio:3/1}
+.build-media.small:not(:has(img,video)){aspect-ratio:4/3}
 .build-media.square{aspect-ratio:1/1}
 .build-media img{display:block;width:100%;height:100%;object-fit:cover}
 .reason-list{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-0) var(--space-40);margin:var(--space-0) var(--space-0) var(--space-56);border-top:var(--border-width) solid var(--line-strong)}
@@ -1429,15 +1435,15 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
 .ab-chapter>h2{max-width:22ch;margin:var(--space-0) var(--space-0) var(--space-40);font-family:var(--font-display);font-size:var(--type-fluid-06);font-weight:700;line-height:1.05;color:var(--bright)}
 .ab-body{display:grid;grid-template-columns:1fr 1.3fr;gap:var(--space-40);align-items:start}
 .ab-body .ab-text{grid-column:2}
-.ab-media{position:sticky;top:var(--space-40)}
+.ab-media{margin-bottom:var(--space-30)}
 .ab-media .byline{margin-top:var(--space-14)}
 .ab-text p{max-width:56ch;margin:var(--space-0) var(--space-0) var(--space-16);font-size:var(--type-17);line-height:1.6;color:var(--pewter)}
 .ab-text h3{margin:var(--space-40) var(--space-0) var(--space-14);font-family:var(--font-display);font-size:var(--type-23);font-weight:700;line-height:1.15;color:var(--bright)}
 .ab-text .ab-motto{margin:var(--space-40) var(--space-0);font-family:var(--font-display);font-size:var(--type-25);font-weight:700;color:var(--bright)}
 .ab-text .ab-close{margin-top:var(--space-40);font-size:var(--type-25);font-style:italic;line-height:1.35;color:var(--bright)}
 .ab-quote-band{padding:var(--space-90) var(--space-0);background:var(--deep)}
-.ab-quote-band blockquote{max-width:28ch;margin:var(--space-0);font-family:var(--font-body);font-size:var(--type-fluid-06);font-style:italic;line-height:1.2;color:var(--bright)}
-@media(max-width:860px){.ab-body{grid-template-columns:1fr}.ab-body .ab-text{grid-column:auto}.ab-media{position:static}.ab-chapter.ab-split{grid-template-columns:1fr;gap:var(--space-0)}.ab-split>h2{position:static;margin-bottom:var(--space-40)}.ab-chapter{padding:var(--space-56) var(--space-0)}.ab-quote-band{padding:var(--space-60) var(--space-0)}}
+.ab-quote-band blockquote{max-width:28ch;margin:var(--space-0);font-family:var(--font-body);font-size:var(--type-fluid-05);font-style:italic;line-height:1.2;color:var(--bright)}
+@media(max-width:860px){.ab-body{grid-template-columns:1fr}.ab-body .ab-text{grid-column:auto}.ab-chapter.ab-split{grid-template-columns:1fr;gap:var(--space-0)}.ab-split>h2{position:static;margin-bottom:var(--space-40)}.ab-chapter{padding:var(--space-56) var(--space-0)}.ab-quote-band{padding:var(--space-60) var(--space-0)}}
 .note-list{margin:var(--space-0) var(--space-0) var(--space-90);padding:var(--space-0);list-style:none;border-top:var(--border-width) solid var(--line-strong)}
 .note-list li{display:grid;grid-template-columns:1fr 1.3fr;gap:var(--space-8) var(--space-40);padding:var(--space-28) var(--space-0);border-bottom:var(--border-width) solid var(--line-strong)}
 .note-list .build-id{grid-column:1/-1;margin:var(--space-0)}
