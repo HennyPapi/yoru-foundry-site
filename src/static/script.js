@@ -63,15 +63,15 @@ const form=document.getElementById("buildForm");if(form){const params=new URLSea
   // a bright head with a long soft tail, easing toward the scroll position; at the keyboard the keys light and the
   // cable's light fades out
   if(art&&!still&&getComputedStyle(art).display!=="none"){
-    const svg=art.querySelector(".hub-led"),route=svg.querySelector(".hub-route"),head=svg.querySelector(".hub-head"),tail=svg.querySelector(".hub-tail");
-    const total=route.getTotalLength(),HEAD=150,TAIL=620;let end=total,target=0,cur=0,done=false,raf=0;
+    const svg=art.querySelector(".hub-led"),route=svg.querySelector(".hub-route"),pulse=[...svg.querySelectorAll(".hub-pulse")];
+    const total=route.getTotalLength(),LEN={p1:70,p2:150,p3:260};let end=total,target=0,cur=0,done=false,raf=0,idle=0;
     const scale=()=>art.getBoundingClientRect().width/svg.viewBox.baseVal.width;
     const pageY=l=>art.getBoundingClientRect().top+scrollY+route.getPointAtLength(l).y*scale();
     const measure=()=>{const r=board.getBoundingClientRect(),top=r.top+scrollY+r.height*.07;end=total;for(let l=0;l<=total;l+=4)if(pageY(l)>=top){end=l;break}};
     const seg=(el,len,b)=>{el.style.strokeDasharray=`${len} 100000`;el.style.strokeDashoffset=`${len-b}`};
     const step=()=>{
       raf=0;cur+=(target-cur)*.14;if(target-cur<1)cur=target;
-      seg(head,HEAD,cur);seg(tail,TAIL,cur);
+      pulse.forEach(el=>seg(el,LEN[el.classList[1]],cur));
       if(cur>=end-1){done=true;svg.classList.add("done");lightUp();return}
       if(cur<target)raf=requestAnimationFrame(step);
     };
@@ -79,7 +79,7 @@ const form=document.getElementById("buildForm");if(form){const params=new URLSea
       if(done)return;
       const vh=innerHeight,start=pageY(0)-vh*.85,stop=Math.min(document.documentElement.scrollHeight-vh,pageY(end)-vh*.3);
       const b=Math.max(0,Math.min(1,(scrollY-start)/Math.max(1,stop-start)))*end;
-      if(b>target){target=b;if(!raf)raf=requestAnimationFrame(step)}
+      if(b>target){target=b;if(!raf)raf=requestAnimationFrame(step);svg.classList.remove("idle");clearTimeout(idle);idle=setTimeout(()=>svg.classList.add("idle"),700)}
     };
     measure();addEventListener("resize",()=>{measure();ride()});addEventListener("load",()=>{measure();ride()});
     addEventListener("scroll",ride,{passive:true});ride();
