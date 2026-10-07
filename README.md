@@ -45,8 +45,10 @@ To switch sending on (once):
    `resend._domainkey`, so Zoho's records are untouched; do not edit or delete any existing record. Wait until Resend
    shows the domain as Verified.
 3. **Resend → API Keys → Create:** permission "Sending access", domain `yorufoundry.com`. Copy the key (starts `re_`).
-4. **Cloudflare → Workers & Pages → yoru-foundry-site → Settings → Variables and Secrets → Add:** type Secret, name
-   `RESEND_API_KEY`, value the key. Requests then arrive from `commissions@yorufoundry.com` (change with a
+4. **Cloudflare → Workers & Pages → yoru-foundry-site → Settings → Runtime variables and secrets → Add** (not the
+   Build section's variables, which the Worker cannot read): tick both **Production** and **Previews**, key
+   `RESEND_API_KEY`, value the key, Secret. Only versions uploaded after this see it; open `/api/commission` on a
+   preview to check. Requests then arrive from `commissions@yorufoundry.com` (change with a
    `COMMISSION_FROM` variable; send elsewhere with `COMMISSION_TO`).
 5. Optional spam check, **Turnstile → Add widget:** hostnames `yorufoundry.com` and `mllerenafinances.workers.dev`,
    mode Managed. Put the site key in `config.turnstileSiteKey` in `build.js`, and the secret key in the Worker under
