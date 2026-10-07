@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-38-form",
+  stylesheetVersion: "vg-40-rhythm2",
   siteTitle: "Yoru Foundry",
   siteUrl: "https://yorufoundry.com",   // absolute links for the sitemap and share previews
   SITE_MODE: "live",
@@ -195,7 +195,7 @@ function renderDataBackedContent(html, content) {
 
   // The archive: every published build as a ruled entry.
   html = html.replace(/<section class="archive-list" data-archive-list><\/section>/, () => {
-    if (!visible.length) return '<section class="archive-list"><div class="chapter"><h2>I will add finished commissions here as they are completed and documented.</h2></div></section>';
+    if (!visible.length) return '<section class="archive-list"><p class="archive-empty">I will add finished commissions here as they are completed and documented.</p></section>';
     return '<ul class="build-list archive-list">' + visible.map((item) => '<li><a href="' + buildHref(item) + '" tabindex="-1" aria-hidden="true">' + mediaFrame(item.images?.[0], "small") + "</a><div>" + buildIdLine(item) + '<h3><a href="' + buildHref(item) + '">' + escapeHtml(item.name) + "</a></h3><p>" + escapeHtml(item.summary) + '</p><dl class="mini-specs">' + [["case", "Case"], ["switches", "Switches"], ["mount", "Mount"]].map(([k, l]) => "<div><dt>" + l + "</dt><dd>" + escapeHtml(item.specs?.[k] || "") + "</dd></div>").join("") + "</dl></div></li>").join("") + "</ul>";
   });
 

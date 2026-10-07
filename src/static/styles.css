@@ -419,6 +419,7 @@
   --type-fluid-04: clamp(21px,2.3vw,28px);
   --type-fluid-05: clamp(42px,5vw,66px);
   --type-fluid-06: clamp(42px,5vw,64px);
+  --type-fluid-section: clamp(26px,2.5vw,34px);   /* section heads inside a page: below the page's one display heading */
   --type-fluid-07: clamp(40px,4.5vw,58px);
   --type-fluid-08: clamp(34px,5vw,58px);
   --type-fluid-09: clamp(72px,8vw,116px);
@@ -1267,9 +1268,9 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
 .board.live rect{fill:var(--green-sand);stroke:var(--verdigris)}
 .board.live rect.esc{fill:var(--raw-copper);stroke:var(--raw-copper-edge)}
 .forge-frame .board.live rect:not(.esc){fill:var(--cast)}
-.forge-close{display:grid;grid-template-columns:1.4fr 1fr;gap:var(--space-40);align-items:end;padding:var(--space-56) var(--space-0) var(--space-90);border-top:2px solid var(--bright)}
-.home .forge-close p{margin-bottom:var(--space-24);color:var(--pewter)}
-.home .forge-close p:last-child{margin:var(--space-12) var(--space-0) var(--space-0)}
+.forge-close{display:grid;grid-template-columns:1.2fr 1fr;gap:var(--space-40);align-items:center;padding:var(--space-56) var(--space-0) var(--space-90);border-top:2px solid var(--bright)}
+.home .forge-close p{max-width:52ch;margin:var(--space-24) var(--space-0) var(--space-0);color:var(--pewter)}
+.forge-close .hub{justify-self:end;width:100%;margin-top:var(--space-0)}
 @media(max-width:860px){
   .forge-hero,.sound-band .home-wrap,.standards-list,.forge-close{grid-template-columns:1fr}
   .build-sheet{grid-column:1;grid-row:auto}
@@ -1392,9 +1393,11 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
    a two-column chapter (heading left, prose right) on a hairline; ruled lists instead of rows of identical cards;
    small plain labels only where they carry meaning (a byline, which word a heading explains). */
 .chapter{display:grid;grid-template-columns:1fr 1.3fr;gap:var(--space-40);align-items:start;padding:var(--space-56) var(--space-0);border-top:var(--border-width) solid var(--line-strong)}
-.chapter h2,.name-pair h2,.note-list h2,.founder-intro h2{margin:var(--space-0);font-family:var(--font-display);font-size:var(--type-fluid-06);font-weight:700;line-height:1.05;color:var(--bright);text-wrap:balance}
+.chapter h2,.name-pair h2,.note-list h2,.founder-intro h2{margin:var(--space-0);font-family:var(--font-display);font-size:var(--type-fluid-section);font-weight:700;line-height:1.05;color:var(--bright);text-wrap:balance}
 .chapter p,.name-pair p,.founder-intro p:not(.byline){margin:var(--space-0) var(--space-0) var(--space-16);font-size:var(--type-17);line-height:1.6;color:var(--pewter)}
 .chapter p:last-child{margin-bottom:var(--space-0)}
+.chapter p,.name-pair p,.founder-intro p:not(.byline){max-width:68ch}
+.archive-empty{max-width:62ch;margin:var(--space-0);padding:var(--space-40) var(--space-0);border-top:var(--border-width) solid var(--line-strong);font-size:var(--type-21);line-height:1.5;color:var(--pewter)}
 .chapter.with-photo{grid-template-columns:1.3fr 1fr;align-items:center}
 .chapter.with-photo h2{margin-bottom:var(--space-20)}
 .text-link{font-family:var(--font-display);font-size:var(--step-4);font-weight:700;color:var(--bright);text-decoration:underline;text-decoration-color:var(--raw-copper);text-decoration-thickness:1px;text-underline-offset:var(--space-6)}

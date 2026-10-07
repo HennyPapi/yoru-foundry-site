@@ -58,6 +58,9 @@ const form=document.getElementById("buildForm");if(form){const params=new URLSea
   const lightUp=()=>board.classList.add("lit");
   // homepage: the hub's display fades on as it comes into view
   const hub=document.querySelector("[data-hub]"),art=hub&&hub.querySelector(".hub-art");
+  // the hub's cable ends under the keyboard: clip the drawing just inside the board's top edge so no cable shows past it
+  const clipCable=()=>{if(!art)return;art.style.clipPath="";const a=art.getBoundingClientRect(),b=board.getBoundingClientRect();if(!a.width||!b.width)return;const cut=a.bottom-(b.top+b.height*.12);if(cut>0)art.style.clipPath=`inset(0 0 ${cut}px 0)`};
+  if(art){clipCable();addEventListener("resize",clipCable);addEventListener("load",clipCable)}
   if(hub){if(still||!canWatch)hub.classList.add("on");else new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){hub.classList.add("on");o.disconnect()}},{threshold:.5}).observe(hub)}
   // homepage: copper light runs down inside the hub's cable once, following the scroll going down (never back up):
   // a bright head with a long soft tail, easing toward the scroll position; at the keyboard the keys light and the
