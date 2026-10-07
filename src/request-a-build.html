@@ -17,7 +17,7 @@
   <p>This route is intentionally more open-ended. If you are not sure what layout, switch, mount, or sound profile you want yet, tell me what you use the keyboard for and what you want it to feel like. We can work through the technical choices together.</p>
   <p class="request-contact">General: <a href="mailto:hello@yorufoundry.com">hello@yorufoundry.com</a><br>Founder: <a href="mailto:mike@yorufoundry.com">mike@yorufoundry.com</a></p>
 </div>
-<form id="buildForm" class="request-form">
+<form id="buildForm" class="request-form" method="post" action="/api/commission">
 <label>Name<input required name="name" type="text" placeholder="Your name" autocomplete="name"></label>
 <label>Email<input required name="email" type="email" placeholder="you@example.com" autocomplete="email"></label>
 <label>Layout<select name="layout"><option value="Not sure yet">Not sure yet</option><option value="65%">65%</option><option value="75%" selected>75%</option><option value="TKL">TKL / 80%</option></select></label>
@@ -26,9 +26,13 @@
 <label>Sound preference<select name="sound"><option selected>We’ll define these next</option></select></label>
 <label data-products-lock style="display:none">Selected product layout<input data-layout-locked type="text" readonly></label>
 <label class="wide">Build details<textarea name="details" rows="7" placeholder="Tell me about your setup, what you use the keyboard for, colors or materials you like, wired/wireless goals, examples you have seen, features you care about, and anything you absolutely do or do not want."></textarea></label>
+<label class="trap" aria-hidden="true">Leave this empty<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+<yf-turnstile></yf-turnstile>
 <div class="request-send">
   <yf-key cap="c2.25" type="submit" class="copper">Create Commission <br>Request</yf-key>
-  <p class="request-note">This opens a pre-filled email draft to hello@yorufoundry.com.</p>
+  <p class="request-note">Your request comes straight to me at hello@yorufoundry.com.</p>
+  <p class="form-status is-sent" id="sent" role="status">Request sent. I’ll reply by email.</p>
+  <p class="form-status is-failed" id="send-failed" role="alert">It didn’t send. Please email <a href="mailto:hello@yorufoundry.com">hello@yorufoundry.com</a> directly.</p>
 </div>
 </form></section>
 <section class="commission-steps" aria-labelledby="steps-title">

@@ -63,7 +63,7 @@ Known small issues (fix when touching these areas):
 | — | Inner pages in Verdigris | Done (2026-10-07): request, Crafted Art + 75%, Built to Taste, Trust the Process, Why Yoru, About, Journal, Archive, build records. Still old: the five hidden product stub pages |
 | 8 | Media and sound readiness | Done (2026-10-07): every media spot takes a real file with no layout change; see `MEDIA.md`. Waiting on Mike's media |
 | 9 | Footer redesign (four columns) | Planned |
-| 10 | Commission form sends without `mailto:` | Planned (needs a decision). Request page fully rebuilt in Verdigris (2026-10-06) |
+| 10 | Commission form sends without `mailto:` | Built (2026-10-07): Cloudflare Worker at `/api/commission`, trap field, optional Turnstile, sent and failed messages, works without JavaScript, falls back to the mail draft. Waiting on Mike to switch on email (README, "Commission form email") |
 | 11 | Motion and reduced motion | Planned |
 | 12 | Image and page weight | Planned — partly pulled forward |
 | 13 | Cleanup: unused files, orphan pages, dead CSS | Planned |

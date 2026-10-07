@@ -2,9 +2,11 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-20-keyhover",
+  stylesheetVersion: "vg-21-form",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
+  // Cloudflare Turnstile site key (public). Empty = no widget; the Worker's TURNSTILE_SECRET must be set with it.
+  turnstileSiteKey: "",
 });
 
 const ROOT = __dirname;
@@ -358,6 +360,9 @@ function renderPage(entry, partials, content, headerKeys) {
     const attr = (name) => (attrs.match(new RegExp(`${name}="([^"]*)"`)) || [])[1];
     return renderKey({ cap: attr("cap"), href: attr("href"), type: attr("type"), legend }, page, headerKeys, attr("class") || "", false);
   });
+  html = html.replace(/<yf-turnstile><\/yf-turnstile>/g, config.turnstileSiteKey
+    ? `<div class="cf-turnstile wide" data-sitekey="${config.turnstileSiteKey}" data-theme="dark" data-appearance="interaction-only"></div><script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`
+    : "");
   html = renderDataBackedContent(html, content);
   if (!html.trim()) fail(`${label}: produced no output`);
   return `${GENERATED_HEADER}\n${html}`;
