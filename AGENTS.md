@@ -22,7 +22,7 @@ These rules are standing constraints for all future work in this repository. Rea
 
 ### Product and brand posture
 
-- Yoru Foundry is a solo, commission-first workshop. One person hand-builds custom mechanical keyboards to order.
+- Yoru Foundry is a solo, commission-first workshop. One person hand-builds custom keyboards to order (mechanical now; Hall effect or TMR magnetic boards may come later).
 - The site must read as a workshop / atelier and portfolio, **not** as a conventional ecommerce store.
 - Low volume and long lead times are part of the operating model; do not introduce UI that implies mass retail, instant fulfillment, or a large team.
 - The Verdigris direction is approved. Systematize and refine it; do not repaint or redesign it from scratch unless Mike explicitly asks.
@@ -150,7 +150,7 @@ Also avoid ecommerce patterns that imply inventory scale, urgency, discounting, 
 ### Layout and hero guardrails
 
 - Follow the approved homepage composition in `mockups/home.html`: media frame with the 75% layout drawing (until real footage exists), headline and line beneath, one copper commission button, two entry links, and a build sheet beside it.
-- The homepage H1 is "Forged by night." with "After dark, the forge is lit and a keyboard is made." beneath it (Mike, 2026-10-06). The page `<title>` and meta description say "custom mechanical keyboards".
+- The homepage H1 is "Forged by night." with "After dark, the forge is lit and a keyboard is made." beneath it (Mike, 2026-10-06). The page `<title>` and meta description say "custom keyboards" (not "mechanical": Mike may build Hall effect or TMR boards too, 2026-10-07).
 - Avoid the AI-template tells: eyebrow labels, details joined with dots, "→" on links, 01/02/03 on non-sequences, and rows of identical cards.
 - Do not convert the site to a generic centered landing-page template. The hero must not become a centered H1 with two CTAs.
 - Product photography and real build media will become the visual artwork. UI chrome stays restrained enough to support it.

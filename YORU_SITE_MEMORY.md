@@ -9,7 +9,7 @@ direction and the reasoning behind it.
 - Brand: **Yoru Foundry**. "Yoru" means night.
 - Motto: **Refined by Craft.** (footer). EST. 2026.
 - Homepage headline: **"Forged by night."** with "After dark, the forge is lit and a keyboard is made." beneath it.
-- Positioning: one builder in Miami, commission-first custom mechanical keyboards. Newcomers first, enthusiasts
+- Positioning: one builder in Miami, commission-first custom keyboards (not only mechanical: Hall effect or TMR may follow). Newcomers first, enthusiasts
   second. Full builds from $250; bring-your-own-parts is priced after Mike checks the parts.
 - Builds are **named one-of-ones** (YF-001 "Ember" is the placeholder), so each reads as a personal piece.
 - Feel: a forge at night. Dark, quiet, hand-made, lit by hot copper. Not gaming RGB, not SaaS, not generic

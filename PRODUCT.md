@@ -18,7 +18,7 @@ web
 ## Product Purpose
 
 Yoru Foundry is a one-person, commission-first workshop in Miami. Mike hand-builds and tunes custom
-mechanical keyboards to order. The site exists to:
+keyboards to order (mechanical now; Hall effect or TMR magnetic boards may follow). The site exists to:
 - explain what a custom build is,
 - show the bench work behind it,
 - help a visitor choose by ear and feel,

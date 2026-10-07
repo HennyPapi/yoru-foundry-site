@@ -299,7 +299,7 @@ function parsePage(file) {
 const pageUrl = (page) => `${config.siteUrl}/${page.output === "index.html" ? "" : page.output}`;
 function shareMeta(page) {
   const title = escapeHtml(page.output === "index.html" ? page.title : `${page.title} | ${config.siteTitle}`);
-  const description = escapeHtml(page.description || "Custom mechanical keyboards, hand-built, tuned and named one at a time in a small Miami workshop.");
+  const description = escapeHtml(page.description || "Custom keyboards, hand-built, tuned and named one at a time in a small Miami workshop.");
   const image = `${config.siteUrl}/assets/share.jpg?v=${config.stylesheetVersion}`;
   return (page.noindex ? '<meta name="robots" content="noindex">' : `<link rel="canonical" href="${pageUrl(page)}">`) +
     `<meta property="og:type" content="website"><meta property="og:site_name" content="${config.siteTitle}"><meta property="og:title" content="${title}">` +
