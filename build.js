@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-45-next",
+  stylesheetVersion: "vg-46-about-draft",
   siteTitle: "Yoru Foundry",
   siteUrl: "https://yorufoundry.com",   // absolute links for the sitemap and share previews
   SITE_MODE: "live",
