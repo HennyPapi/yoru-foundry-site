@@ -159,8 +159,8 @@ Known small issues (fix when touching these areas):
 - Merge `design-pass` into `main` (fast-forward), then check the live site at three widths.
 - **The real gate:** real photography, video and audio in every media block.
 - Alt text on every image; submit the sitemap to Google Search Console; Cloudflare Web Analytics.
-- ~~Privacy policy~~ Done: `/privacy.html` (2026-10-07). Commission policy: drafted in `drafts/commission-policy.md`,
-  waiting on Mike's numbers and approval. Social links confirmed (YouTube maybe later).
+- ~~Privacy policy~~ Done: `/privacy.html` (2026-10-07). Commission policy: done, `/commission-policy.html` (Mike
+  approved, 2026-10-07). Payment method still open (see decisions). Social links confirmed (YouTube maybe later).
 
 ## Open decisions for Mike
 
@@ -170,6 +170,9 @@ Known small issues (fix when touching these areas):
 4. ~~Form backend~~ Answered: Cloudflare Worker, sending through Resend (mail is on Zoho).
 5. ~~Archive and Journal~~ Kept and rebuilt (2026-10-07); Phase 9 puts their footer links into the HTML.
 6. ~~Product stub pages~~ Answered: keep the Mice / Mouse Pads / Desk Mats / Wrist Rests / Accessories stubs (hidden) for future additions (Mike, 2026-10-07).
+8. Payment method: not chosen yet. Recommendation: free invoices (Zoho Invoice) with Zelle or bank transfer; card
+   via a payment link with the ~3% fee added, only on request. The policy says only "I send an invoice", so it
+   stays true whatever Mike picks. No shop on the site for now.
 7. Spam protection: Turnstile stays off; the trap field is on. Turn it on if spam requests reach hello@ (README).
 
 ## From the earlier plan (Sept 17), and where each item stands
