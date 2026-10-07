@@ -159,8 +159,8 @@ Known small issues (fix when touching these areas):
 - Merge `design-pass` into `main` (fast-forward), then check the live site at three widths.
 - **The real gate:** real photography, video and audio in every media block.
 - Alt text on every image; submit the sitemap to Google Search Console; Cloudflare Web Analytics.
-- A privacy policy (the form collects names and emails) and a commission policy (deposit, lead time, revisions,
-  shipping, returns). Copy is Mike's.
+- ~~Privacy policy~~ Done: `/privacy.html` (2026-10-07). Commission policy: drafted in `drafts/commission-policy.md`,
+  waiting on Mike's numbers and approval. Social links confirmed (YouTube maybe later).
 
 ## Open decisions for Mike
 
