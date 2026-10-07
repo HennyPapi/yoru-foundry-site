@@ -194,6 +194,7 @@ Also avoid ecommerce patterns that imply inventory scale, urgency, discounting, 
 - A stylesheet version bump is one edit to `config.stylesheetVersion`; `node build.js` propagates it to every generated page.
 - Active navigation is rendered from each page's `activeNav` metadata. Do not restore client-side pathname-based active-nav detection.
 - `src/static/data/content.js` has a dual role: `build.js` evaluates it at build time for prerendering, and the built copy is also available for client-side hydration. **Critical content must exist in generated HTML at build time; client-side JavaScript may hydrate/enhance it but must never be required for the content to exist.** Do not regress to empty client-side shells.
+- A page's closing link is its PAGE `next` field (`{"href", "text"}`), rendered by the build at the end of `<main>`. The links form one path (Mike, 2026-10-07): About → Why Yoru → Trust the Process → Built to Taste → Crafted Art → (layout page) → Request a Commission; Journal joins it at Built to Taste, Archive goes to the request page. Do not hand-write closing links in page HTML.
 - Every page has the one footer (`footerVariant: standard`), the Phase 9 keyboard footer (2026-10-07). Do not add footer variants.
 - Every generated HTML page must begin with `<!-- GENERATED FILE — DO NOT EDIT. Edit /src and run node build.js. -->`.
 - The build must fail with a non-zero exit code for missing placeholders, invalid navigation values, duplicate/invalid outputs, or any source page that fails to create a non-empty output file.

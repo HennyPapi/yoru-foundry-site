@@ -285,6 +285,9 @@ function parsePage(file) {
   if (page.layout === "default" && !VALID_FOOTERS.has(page.footerVariant)) {
     fail(`${path.basename(file)}: invalid or missing footerVariant "${page.footerVariant}"`);
   }
+  if (page.next && !(page.next.text && /^\/[\w-]+\.html$/.test(page.next.href || "") && fs.existsSync(path.join(SRC, page.next.href.slice(1))))) {
+    fail(`${path.basename(file)}: "next" needs text and an href to a source page`);
+  }
   if (path.basename(page.output) !== page.output || !page.output.endsWith(".html")) {
     fail(`${path.basename(file)}: output must be a top-level .html filename`);
   }
@@ -418,6 +421,8 @@ function renderPage(entry, partials, content, headerKeys, footerBoard) {
     ? `<div class="cf-turnstile wide" data-sitekey="${config.turnstileSiteKey}" data-theme="dark" data-appearance="interaction-only"></div><script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`
     : "");
   html = renderDataBackedContent(html, content);
+  // The page's closing link (PAGE "next"): the reader's next stop along the site's path.
+  if (page.next) html = html.replace(/<\/div><\/div><\/main>(?![\s\S]*<\/main>)/, '<p class="page-next"><a class="text-link" href="' + escapeHtml(page.next.href) + '">' + escapeHtml(page.next.text) + "</a></p>\n</div></div></main>");
   if (!html.trim()) fail(`${label}: produced no output`);
   return `${GENERATED_HEADER}\n${html}`;
 }
