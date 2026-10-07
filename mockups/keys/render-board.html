@@ -49,14 +49,23 @@ let seed = 7; function grain(size) { const c = document.createElement('canvas');
   for (let i = 0; i < im.data.length; i += 4) { seed = (seed * 1664525 + 1013904223) >>> 0; const v = 118 + (seed / 4294967296) * 20; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; }
   g.putImageData(im, 0, 0); const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(3, 3); return t; }
 const bump = grain(256);
+const LED = '#E8834D';
+function glowTex(u) { const w = 256 * (u * P + 6) / (P + 6), h = 256, c = document.createElement('canvas'); c.width = Math.round(w); c.height = h; const g = c.getContext('2d');
+  g.filter = 'blur(16px)'; g.fillStyle = '#fff'; const m = 26; g.beginPath(); g.roundRect(m, m, c.width - 2 * m, h - 2 * m, 30); g.fill();
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; }
+const wallGlow = (() => { const c = document.createElement('canvas'); c.width = 4; c.height = 64; const g = c.getContext('2d'); const gr = g.createLinearGradient(0, 0, 0, 64);
+  gr.addColorStop(0, '#000'); gr.addColorStop(1, '#000'); g.fillStyle = gr; g.fillRect(0, 0, 4, 64); return new THREE.CanvasTexture(c); })();
 // legend: {big:"J"} centred letter, {small:"Tab"} top-left small, {lines:["Trust the","Process"]} centred lines
-function legendTex(T, face, ink, lg) {
+function legendTex(T, face, ink, lg, mask) {
+  if (mask) { face = '#000'; ink = '#fff'; }
   const c = document.createElement('canvas'); c.width = Math.round(T.w * 40); c.height = Math.round(T.d * 40); const g = c.getContext('2d');
   g.fillStyle = face; g.fillRect(0, 0, c.width, c.height); g.fillStyle = ink;
   if (lg.big) { g.font = '700 290px Cinzel'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(lg.big, c.width / 2, c.height / 2 + 14); }
   if (lg.small) { g.font = '700 118px Cinzel'; g.textBaseline = 'top'; g.fillText(lg.small, 50, 44); }
   if (lg.lines) { g.font = `700 ${lg.size || 150}px Cinzel`; g.textAlign = 'center'; g.textBaseline = 'middle'; const n = lg.lines.length, lh = (lg.size || 150) * 1.12;
     lg.lines.forEach((l, i) => g.fillText(l, c.width / 2, c.height / 2 + (i - (n - 1) / 2) * lh + 10)); }
+  if (lg.dir) { g.strokeStyle = ink; g.lineWidth = 22; g.lineCap = 'round'; g.lineJoin = 'round'; g.save(); g.translate(c.width / 2, c.height / 2 + 8);
+    g.rotate({ up: 0, right: Math.PI / 2, down: Math.PI, left: -Math.PI / 2 }[lg.dir]); g.beginPath(); g.moveTo(0, 95); g.lineTo(0, -95); g.moveTo(-60, -35); g.lineTo(0, -95); g.lineTo(60, -35); g.stroke(); g.restore(); }
   if (lg.arrow) { g.strokeStyle = ink; g.lineWidth = 18; g.lineCap = 'round'; g.lineJoin = 'round'; const ax = c.width - 120, ay = c.height - 130;
     g.beginPath(); g.moveTo(ax, ay - 130); g.lineTo(ax, ay); g.lineTo(ax - 210, ay); g.moveTo(ax - 155, ay - 55); g.lineTo(ax - 210, ay); g.lineTo(ax - 155, ay + 55); g.stroke(); }
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t;
@@ -71,17 +80,27 @@ window.build = async (layout) => {
     for (const k of row) { const u = k.u || 1, { wallGeo, topGeo, T } = capGeo(u), face = k.face || layout.face, ink = k.ink || layout.ink;
       const mat = new THREE.MeshPhysicalMaterial({ color: face, roughness: 0.5, bumpMap: bump, bumpScale: 0.6, sheen: 0.25, sheenRoughness: 0.8, sheenColor: new THREE.Color(face), clippingPlanes: clip, clipShadows: true });
       const topMat = mat.clone(); topMat.color = new THREE.Color(0xffffff); topMat.map = legendTex(T, face, ink, k.lg || {});
+      if (k.id) { topMat.emissiveMap = legendTex(T, face, ink, k.lg || {}, true); topMat.emissive = new THREE.Color(LED); topMat.emissiveIntensity = 0;
+        if (k.id === 'commission') topMat.emissiveMap = null, topMat.emissive = new THREE.Color(0);   // copper cap: keep its dark legend
+        mat.emissive = new THREE.Color(LED); mat.emissiveIntensity = 0;
+        // light from under the cap: the walls glow at the bottom and fade by ~3.5mm up
+        mat.onBeforeCompile = (sh) => { sh.vertexShader = 'varying float vZ;\n' + sh.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\nvZ = position.z;');
+          sh.fragmentShader = 'varying float vZ;\n' + sh.fragmentShader.replace('#include <emissivemap_fragment>', 'totalEmissiveRadiance *= 1.0 - smoothstep(0.0, 3.5, vZ);'); };
+        mat.customProgramCacheKey = () => 'wallglow'; }
       const grp = new THREE.Group(); const wm = new THREE.Mesh(wallGeo, mat), tm = new THREE.Mesh(topGeo, topMat);
       for (const m of [wm, tm]) { m.castShadow = m.receiveShadow = true; grp.add(m); }
       grp.position.set(x + u * P / 2, rowsY[ri] - midY, 0); scene.add(grp);
-      if (k.id) (keys[k.id] ||= []).push({ grp, u, T });
+      let glow = null;
+      if (k.id) { glow = new THREE.Mesh(new THREE.PlaneGeometry(u * P + 6, P + 6), new THREE.MeshBasicMaterial({ map: glowTex(u), color: LED, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }));
+        glow.position.set(x + u * P / 2, rowsY[ri] - midY, -0.25); scene.add(glow); }
+      if (k.id) (keys[k.id] ||= []).push({ grp, u, T, glow, topMat, mat });
       x += u * P; } });
   // case: anodized aluminium tray around the plate
-  const cw = totalU * P + 2 * 11, ch = (6.25 * P) + 2 * 11, ow = cw / 2, oh = ch / 2, iw = totalU * P / 2 + 1.2, ih = 6.25 * P / 2 + 1.2;
+  const cw = totalU * P + 2 * 11, ch = (6.25 * P) + 2 * 11, ow = cw / 2, oh = ch / 2, iw = totalU * P / 2 + 0.6, ih = 6.25 * P / 2 + 0.6;
   const shape = new THREE.Shape(); const rr = (s, w, h, r) => { s.moveTo(-w + r, -h); s.lineTo(w - r, -h); s.quadraticCurveTo(w, -h, w, -h + r); s.lineTo(w, h - r); s.quadraticCurveTo(w, h, w - r, h); s.lineTo(-w + r, h); s.quadraticCurveTo(-w, h, -w, h - r); s.lineTo(-w, -h + r); s.quadraticCurveTo(-w, -h, -w + r, -h); };
   rr(shape, ow, oh, 7); const hole = new THREE.Path(); rr(hole, iw, ih, 1.5); shape.holes.push(hole);
   const caseGeo = new THREE.ExtrudeGeometry(shape, { depth: 22, bevelEnabled: true, bevelThickness: 1.2, bevelSize: 1.2, bevelSegments: 4, curveSegments: 24 });
-  const caseMat = new THREE.MeshPhysicalMaterial({ color: layout.caseColor, metalness: 0.75, roughness: 0.42, clearcoat: 0.1 });
+  const caseMat = new THREE.MeshPhysicalMaterial({ color: layout.caseColor, metalness: 0.7, roughness: 0.52 });
   const kase = new THREE.Mesh(caseGeo, caseMat); kase.position.z = -21; kase.castShadow = kase.receiveShadow = true; scene.add(kase);
   const plate = new THREE.Mesh(new THREE.PlaneGeometry(iw * 2, ih * 2), new THREE.MeshStandardMaterial({ color: '#0C1010', metalness: 0.3, roughness: 0.7 }));
   plate.position.z = -0.4; plate.receiveShadow = true; scene.add(plate);
@@ -95,8 +114,9 @@ const front = new THREE.DirectionalLight(0xffe9d6, 0.9); front.position.set(-40,
 scene.add(new THREE.AmbientLight(0xffffff, 0.12));
 const camera = new THREE.PerspectiveCamera(17, W / H, 10, 3000); camera.up.set(0, 0, 1);
 camera.position.set(0, -430, 640); camera.lookAt(0, 6, 0);
-window.renderBoard = ({ pressed = {} } = {}) => {
-  for (const [id, list] of Object.entries(keys)) for (const k of list) k.grp.position.z = -(pressed[id] || 0);
+window.renderBoard = ({ pressed = {}, lit = 0, boost = {} } = {}) => {
+  for (const [id, list] of Object.entries(keys)) for (const k of list) { k.grp.position.z = -(pressed[id] || 0); const b = lit * (boost[id] || 1);
+    k.glow.material.opacity = Math.min(1, 0.24 * b); k.topMat.emissiveIntensity = 0.5 * b; k.mat.emissiveIntensity = 0.32 * b; }
   renderer.render(scene, camera);
   // screen boxes of each linked key's top face (for the link hit areas)
   const boxes = {};
