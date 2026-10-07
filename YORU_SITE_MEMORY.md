@@ -149,6 +149,14 @@ commission-yf-001.
 - Files: `src/static/data/footer-board.json` (links + boxes), `/assets/footer-board/`, renderer
   `mockups/keys/render-board.html` + `board-layout.json`, export `mockups/keys/board-export.py`.
 
+## 9b. Homepage close: hub and cable (2026-10-07)
+
+- The closing section keeps "One builder. One conversation. One considered result." and its paragraph; the copper
+  key and Why Yoru link were removed (the footer keyboard covers both). The line "The forge is lit. Pick a key, and
+  I’ll meet you at the anvil." (Mike) is on the display of a rendered space-grey USB dock (Mike's Anker-style
+  reference, no branding). A braided cable drops from behind the hub into the keyboard; a copper bead follows the
+  scroll and lights the board when it arrives.
+
 ## 10a. Commission form and mail (2026-10-07)
 
 - Mail for yorufoundry.com (hello@, mike@) is hosted by **Zoho** (MX mx/mx2/mx3.zoho.com). **Never enable

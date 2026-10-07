@@ -1,0 +1,92 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:transparent}canvas{display:block}</style>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+</head><body>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+// A whole 75% keyboard (units: mm): case, plate and every keycap. window.renderBoard({pressed:{id:mm}}) -> PNG.
+const W = 3000, H = 1500;
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H);
+renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.15;
+renderer.shadowMap.enabled = true; renderer.localClippingEnabled = true; renderer.shadowMap.type = THREE.VSMShadowMap;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = 0.32;
+
+
+// USB hub with a display (units: mm), same camera direction, lights and case finish as the footer keyboard.
+let seed = 11; function grain(size) { const c = document.createElement('canvas'); c.width = c.height = size; const g = c.getContext('2d'), im = g.createImageData(size, size);
+  for (let i = 0; i < im.data.length; i += 4) { seed = (seed * 1664525 + 1013904223) >>> 0; const v = 118 + (seed / 4294967296) * 20; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; }
+  g.putImageData(im, 0, 0); const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; return t; }
+const LED = '#E8834D';
+const rr = (s, w, h, r) => { s.moveTo(-w + r, -h); s.lineTo(w - r, -h); s.quadraticCurveTo(w, -h, w, -h + r); s.lineTo(w, h - r); s.quadraticCurveTo(w, h, w - r, h); s.lineTo(-w + r, h); s.quadraticCurveTo(-w, h, -w, h - r); s.lineTo(-w, -h + r); s.quadraticCurveTo(-w, -h, -w + r, -h); };
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+// upright dock: rounded aluminium shell, glossy black glass front with the display, ports on the glass, a stand below
+const BW = 130, BD = 46, BH = 58, BR = 13, BASE = 7;
+const blast = grain(256); blast.repeat.set(0.045, 0.045);
+const metal = new THREE.MeshPhysicalMaterial({ color: '#5A6066', metalness: 0.6, roughness: 0.38, bumpMap: blast, bumpScale: 0.15, envMapIntensity: 1.4 });
+const shell = new THREE.Mesh(new RoundedBoxGeometry(BW, BD, BH, 6, BR), metal); shell.position.z = BASE + BH / 2; shell.castShadow = shell.receiveShadow = true; scene.add(shell);
+const stand = new THREE.Mesh(new RoundedBoxGeometry(BW - 22, BD + 6, BASE + 2, 4, 2.5), new THREE.MeshPhysicalMaterial({ color: '#1A1D1F', metalness: 0.1, roughness: 0.85 }));
+stand.position.set(0, -2, (BASE + 2) / 2 - 1); stand.castShadow = stand.receiveShadow = true; scene.add(stand);
+// front glass: a rounded panel standing just proud of the shell's front face
+const GW = BW / 2 - 6, GH = BH / 2 - 6; const gShape = new THREE.Shape(); rr(gShape, GW, GH, BR - 5);
+const glassMat = new THREE.MeshPhysicalMaterial({ color: '#020303', roughness: 0.08, metalness: 0, specularIntensity: 0.7, clearcoat: 1, clearcoatRoughness: 0.04, envMapIntensity: 0.55 });
+const glass = new THREE.Mesh(new THREE.ShapeGeometry(gShape, 24), glassMat); glass.rotation.x = Math.PI / 2; glass.position.set(0, -BD / 2 - 0.05, BASE + BH / 2); glass.receiveShadow = true; scene.add(glass);
+const onGlass = (mesh, x, z, d = 0.1) => { mesh.rotation.x = Math.PI / 2; mesh.position.set(x, -BD / 2 - 0.05 - d, BASE + BH / 2 + z); scene.add(mesh); return mesh; };
+// ports: TF and SD slots on the left, two USB-C on the right (dark slots with a faint lit rim)
+const slotMat = new THREE.MeshBasicMaterial({ color: '#000000' }), rimMat = new THREE.MeshStandardMaterial({ color: '#3A4442', metalness: 0.8, roughness: 0.35 });
+const slot = (x, z, w, h, r) => { const o = new THREE.Shape(); rr(o, w / 2 + 0.5, h / 2 + 0.5, r + 0.5); onGlass(new THREE.Mesh(new THREE.ShapeGeometry(o, 12), rimMat), x, z, 0.06);
+  const i = new THREE.Shape(); rr(i, w / 2, h / 2, r); onGlass(new THREE.Mesh(new THREE.ShapeGeometry(i, 12), slotMat), x, z, 0.12); };
+slot(-51, -8, 9, 1.4, 0.6); slot(-47, -13, 17, 1.8, 0.6); slot(40, -13, 8.6, 2.8, 1.35); slot(51, -13, 8.6, 2.8, 1.35);
+const tongueMat = new THREE.MeshStandardMaterial({ color: '#4A5250', metalness: 0.4, roughness: 0.5 });
+for (const x of [40, 51]) { const t = new THREE.Shape(); rr(t, 3.3, 0.35, 0.2); onGlass(new THREE.Mesh(new THREE.ShapeGeometry(t, 8), tongueMat), x, -13, 0.16); }
+const panel = new THREE.Shape(); rr(panel, 43, 15, 3.5);
+onGlass(new THREE.Mesh(new THREE.ShapeGeometry(panel, 16), new THREE.MeshPhysicalMaterial({ color: '#070A0B', roughness: 0.2, clearcoat: 1, clearcoatRoughness: 0.05, envMapIntensity: 0.4 })), 0, 3, 0.08);
+// button on top
+const btn = new THREE.Mesh(new THREE.CylinderGeometry(4.2, 4.4, 1.2, 40), new THREE.MeshPhysicalMaterial({ color: '#2A3432', metalness: 0.9, roughness: 0.25 }));
+btn.rotation.x = Math.PI / 2; btn.position.set(0, 4, BASE + BH + 0.2); scene.add(btn);
+// display: lit text under the glass, with a soft glow around it
+const DW = 41, DH = 13;
+let screen, halo;
+function screenTex(lines, on) {
+  const c = document.createElement('canvas'); c.width = 2760; c.height = 900; const g = c.getContext('2d');
+  g.fillStyle = '#000'; g.fillRect(0, 0, c.width, c.height);
+  if (on) { g.fillStyle = '#fff'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.font = '700 260px Cinzel'; g.fillText(lines[0], c.width / 2, 300);
+    let sz = 200; g.font = `700 ${sz}px Cinzel`; while (g.measureText(lines[1]).width > c.width * 0.94) { sz -= 4; g.font = `700 ${sz}px Cinzel`; }
+    g.fillText(lines[1], c.width / 2, 630); }
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; }
+function haloTex() { const c = document.createElement('canvas'); c.width = 1024; c.height = 420; const g = c.getContext('2d');
+  const gr = g.createRadialGradient(512, 210, 40, 512, 210, 500); gr.addColorStop(0, '#fff'); gr.addColorStop(0.35, '#888'); gr.addColorStop(1, '#000');
+  g.setTransform(1, 0, 0, 0.42, 0, 122); g.fillStyle = gr; g.fillRect(0, 0, 1024, 1000); return new THREE.CanvasTexture(c); }
+const ao = (() => { const c = document.createElement('canvas'); c.width = 512; c.height = 256; const g = c.getContext('2d'); const gr = g.createRadialGradient(256, 128, 10, 256, 128, 250);
+  gr.addColorStop(0, 'rgba(0,0,0,0.9)'); gr.addColorStop(0.55, 'rgba(0,0,0,0.5)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); g.setTransform(1, 0, 0, 0.5, 0, 64); g.fillStyle = gr; g.fillRect(0, 0, 512, 512); return new THREE.CanvasTexture(c); })();
+const aoPlane = new THREE.Mesh(new THREE.PlaneGeometry(BW + 30, BD + 40), new THREE.MeshBasicMaterial({ map: ao, transparent: true, depthWrite: false })); aoPlane.position.z = 0.05; scene.add(aoPlane);
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), new THREE.ShadowMaterial({ opacity: 0.55 })); ground.receiveShadow = true; scene.add(ground);
+const key = new THREE.DirectionalLight(0xfff1e2, 2.3); key.position.set(-160, 120, 300); key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048); key.shadow.radius = 7; key.shadow.blurSamples = 16; key.shadow.bias = -0.0003;
+Object.assign(key.shadow.camera, { left: -150, right: 150, top: 150, bottom: -150, near: 1, far: 900 }); scene.add(key);
+const fill = new THREE.DirectionalLight(0xdfe8ff, 0.45); fill.position.set(200, -80, 160); scene.add(fill);
+const front = new THREE.DirectionalLight(0xffe9d6, 0.9); front.position.set(-40, -330, 90); scene.add(front);
+scene.add(new THREE.AmbientLight(0xffffff, 0.12));
+// same view direction as the keyboard camera, closer so the hub fills the frame at the same mm-per-pixel
+const camera = new THREE.PerspectiveCamera(17, W / H, 10, 3000); camera.up.set(0, 0, 1);
+camera.position.set(170, -560, 230); camera.lookAt(0, 0, 34);
+window.renderHub = async ({ on = true, lines = ['', ''] } = {}) => {
+  await document.fonts.load('700 100px Cinzel');
+  if (screen) scene.remove(screen, halo);
+  const add = (w, h, tex, opacity) => onGlass(new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: LED, alphaMap: tex, transparent: true, opacity, toneMapped: false, blending: THREE.AdditiveBlending, depthWrite: false })), 0, 3, 0.15);
+  halo = add(DW * 2.2, DH * 2.4, haloTex(), on ? 0.35 : 0);
+  screen = add(DW * 2, DH * 2, screenTex(lines, on), 1);
+  renderer.render(scene, camera);
+  const pr = (x, y, z) => { const v = new THREE.Vector3(x, y, z).project(camera); return [Math.round((v.x + 1) / 2 * W), Math.round((1 - v.y) / 2 * H)]; };
+  window.lastPort = pr(BW / 2 - 10, 0, BASE + BH / 2);   // where the cable leaves, behind the right end
+  return renderer.domElement.toDataURL('image/png');
+};
+window.ready = true;
+</script></body></html>

@@ -2808,3 +2808,23 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
   .kb-list a{font-family:var(--font-display);font-weight:600;font-size:var(--step-3);color:var(--bright);text-decoration:underline;text-decoration-color:var(--raw-copper);text-underline-offset:4px}
 }
 @media(prefers-reduced-motion:reduce){.kb-board>img.lit{transition:none}}
+
+/* Homepage close: a rendered USB hub whose display carries the closing line, and a braided cable from the hub down
+   into the footer keyboard. A copper bead rides the cable as the page scrolls; when it reaches the board the keys
+   light (script.js). The display flickers on once when the hub comes into view. Both are Mike's exceptions
+   (2026-10-07); with reduced motion the display is simply on and there is no bead. Phones: the line as text. */
+.hub{position:relative;z-index:2;max-width:440px;margin-top:var(--space-30)}
+.hub img{display:block;width:100%;height:auto}
+.hub .hub-on{position:absolute;inset:0;opacity:0}
+.hub.on .hub-on{opacity:1;animation:hub-flicker 700ms steps(1,end) 1}
+@keyframes hub-flicker{0%{opacity:0}12%{opacity:1}22%{opacity:.15}34%{opacity:1}44%{opacity:.4}56%{opacity:1}}
+.home .hub .hub-line{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:var(--space-0)}
+.drop-cable{position:absolute;width:60px;pointer-events:none;--b:-200px}   /* no z-index: the glow must blend with the page */
+.drop-cable .strip{position:absolute;left:0;top:0;height:60px;transform-origin:0 0;transform:rotate(90deg) scaleY(-1);background:url(/assets/cable/tile.webp) repeat-x 0 0/88px 60px}
+.drop-cable .glow{background-color:transparent;mix-blend-mode:screen;filter:brightness(1.6);background:url(/assets/cable/tile-glow.webp) repeat-x 0 0/88px 60px;
+  -webkit-mask-image:linear-gradient(to right,transparent calc(var(--b) - 150px),#000 calc(var(--b) - 6px),#000 var(--b),transparent calc(var(--b) + 14px));mask-image:linear-gradient(to right,transparent calc(var(--b) - 150px),#000 calc(var(--b) - 6px),#000 var(--b),transparent calc(var(--b) + 14px))}
+.drop-cable .bead{position:absolute;left:13px;top:var(--b);width:34px;height:34px;margin-top:-17px;border-radius:var(--radius-circle);mix-blend-mode:screen;opacity:0;transition:opacity var(--duration-base) ease;background:radial-gradient(closest-side,var(--led-bloom),var(--led-bloom-clear))}
+.drop-cable.moving .bead{opacity:1}
+.site-footer .kb-board{z-index:2}
+@media(max-width:700px){.hub img{display:none}.home .hub .hub-line{position:static;width:auto;height:auto;overflow:visible;clip-path:none;font-family:var(--font-display);font-weight:700;font-size:var(--step-4);color:var(--raw-copper)}.hub{margin-top:var(--space-18)}}
+@media(prefers-reduced-motion:reduce){.hub.on .hub-on{animation:none}}

@@ -54,8 +54,38 @@ const form=document.getElementById("buildForm");if(form){const params=new URLSea
 ;(()=>{
   // Footer keyboard: the linked keys' underglow rises once when the board is half in view (at once with reduced motion)
   const board=document.querySelector(".site-footer .kb-board");if(!board)return;
-  if(matchMedia("(prefers-reduced-motion: reduce)").matches||!("IntersectionObserver" in window)){board.classList.add("lit");return}
-  new IntersectionObserver((entries,obs)=>{if(entries[0].isIntersecting){board.classList.add("lit");obs.disconnect()}},{threshold:.5}).observe(board);
+  const still=matchMedia("(prefers-reduced-motion: reduce)").matches,canWatch="IntersectionObserver" in window;
+  const lightUp=()=>board.classList.add("lit");
+  // homepage: the hub's display flickers on once when it comes into view
+  const hub=document.querySelector("[data-hub]");
+  if(hub){if(still||!canWatch)hub.classList.add("on");else new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){hub.classList.add("on");o.disconnect()}},{threshold:.6}).observe(hub)}
+  // homepage: a copper bead rides the cable from the hub to the board as the page scrolls; the board lights when it arrives
+  const cable=document.querySelector(".drop-cable");
+  if(cable&&hub&&!still){
+    const strips=cable.querySelectorAll(".strip");let top=0,len=0,on=false;
+    const place=()=>{
+      const img=hub.querySelector(".hub-off"),h=img.getBoundingClientRect(),b=board.getBoundingClientRect();
+      const x=h.left+h.width*.2,y=h.top+h.height*.45,end=b.top+b.height*.07;
+      on=h.width>0&&b.width>0&&x>b.left+b.width*.1&&x<b.right-b.width*.1&&end-y>120;
+      cable.hidden=!on;if(!on)return;
+      const p=cable.offsetParent.getBoundingClientRect();
+      top=y+scrollY;len=end-y;
+      Object.assign(cable.style,{left:`${x-p.left-30}px`,top:`${y-p.top}px`,height:`${len}px`});strips.forEach(el=>el.style.width=`${len}px`);
+    };
+    const ride=()=>{
+      if(!on)return;
+      const vh=innerHeight,start=top-vh*.7,stop=Math.min(document.documentElement.scrollHeight-vh,top+len-vh*.6);
+      const t=Math.max(0,Math.min(1,(scrollY-start)/Math.max(1,stop-start)));
+      cable.style.setProperty("--b",`${t*len}px`);cable.classList.toggle("moving",t>0&&t<1);
+      if(t>=1)lightUp();
+    };
+    const update=()=>{place();ride()};
+    addEventListener("scroll",()=>requestAnimationFrame(ride),{passive:true});addEventListener("resize",update);addEventListener("load",update);update();
+    if(!on&&canWatch)new IntersectionObserver((e,o)=>{if(e[0].isIntersecting&&!on){lightUp();o.disconnect()}},{threshold:.5}).observe(board);
+    return;
+  }
+  if(still||!canWatch){lightUp();return}
+  new IntersectionObserver((entries,obs)=>{if(entries[0].isIntersecting){lightUp();obs.disconnect()}},{threshold:.5}).observe(board);
 })();
 
 ;(()=>{
