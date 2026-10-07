@@ -1504,7 +1504,7 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
   .site-footer{padding:var(--space-30) var(--space-18) var(--space-30)}
   .kb-board a{display:none}
   .kb-list{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-12) var(--space-20);list-style:none;margin:var(--space-22) var(--space-0) var(--space-0);padding:var(--space-0)}
-  .kb-list a{font-family:var(--font-display);font-weight:600;font-size:var(--step-3);color:var(--bright);text-decoration:underline;text-decoration-color:var(--raw-copper);text-underline-offset:4px}
+  .kb-list a{display:inline-block;padding:var(--space-10) var(--space-0);font-family:var(--font-display);font-weight:600;font-size:var(--step-3);color:var(--bright);text-decoration:underline;text-decoration-color:var(--raw-copper);text-underline-offset:4px}
 }
 @media(prefers-reduced-motion:reduce){.kb-board>img.lit{transition:none}}
 
@@ -1534,3 +1534,5 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
   .home .hub .hub-line{position:static;width:auto;height:auto;overflow:visible;clip-path:none;font-family:var(--font-display);font-weight:700;font-size:var(--step-4);color:var(--raw-copper)}
 }
 @media(prefers-reduced-motion:reduce){.hub-art .hub-on{transition:none}}
+/* Print: the page text in ink on paper; the rendered hardware stays on screen */
+@media print{body,.section-shell{background:none!important}body,body *{color:var(--ink)!important}.site-header .cable,.site-header nav,.site-header .menu-toggle,.skip-link,.site-footer nav,.hub-art,.forge-media,.build-media,.guide-media{display:none!important}}

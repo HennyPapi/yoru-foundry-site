@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-49-form",
+  stylesheetVersion: "vg-50-speed",
   siteTitle: "Yoru Foundry",
   siteUrl: "https://yorufoundry.com",   // absolute links for the sitemap and share previews
   SITE_MODE: "live",
@@ -338,7 +338,7 @@ function renderFooterBoard(data) {
   const keys = Object.entries(data.keys).map(([id, k]) => {
     if (!k.hit || !k.h || !k.p) fail(`footer-board.json: key "${id}" has no boxes`);
     // hover/press frames only show on desktop; 1x screens take the half-size copy
-    const img = (st) => `<img class="${st}" src="${src(`${id}-${st}-1x`)}" srcset="${src(`${id}-${st}-1x`)} 1x, ${src(`${id}-${st}`)} 2x" alt="" loading="lazy" decoding="async" style="${box(k[st])}">`;
+    const img = (st) => `<img class="${st}" data-srcset="${src(`${id}-${st}-1x`)} 1x, ${src(`${id}-${st}`)} 2x" alt="" decoding="async" style="${box(k[st])}">`;   // frames load on first approach (script.js)
     return `<a href="${k.href}" aria-label="${escapeHtml(k.name)}"${ext(k.href)}>${img("h")}${img("p")}<span class="hit" style="${box(k.hit)}"></span></a>`;
   });
   const list = data.list.map((id) => {
@@ -452,6 +452,8 @@ function build() {
   if (!files.length) fail("No source pages found in /src");
 
   const entries = files.map((name) => parsePage(path.join(SRC, name)));
+  // The build-record page stays out of search until a record is published.
+  for (const e of entries) if (e.page.output === "commission.html" && !visibleBuilds(content).length) e.page.noindex = true;
   const outputs = new Set();
   const rendered = entries.map((entry) => {
     if (outputs.has(entry.page.output)) fail(`Duplicate output: ${entry.page.output}`);

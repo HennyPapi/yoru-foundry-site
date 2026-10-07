@@ -1,0 +1,12 @@
+# Cache rules for Cloudflare static assets.
+# styles.css, script.js and data/ are always requested with ?v=<stylesheetVersion>, so a new
+# version is a new URL and they can be cached for a year. /assets/* is also referenced from
+# CSS without a version, so it keeps a short cache that revalidates in the background.
+/styles.css
+  Cache-Control: public, max-age=31536000, immutable
+/script.js
+  Cache-Control: public, max-age=31536000, immutable
+/data/*
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800

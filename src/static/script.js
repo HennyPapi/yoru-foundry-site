@@ -153,3 +153,4 @@ function yfVideos(root){
   (root||document).querySelectorAll("video[data-autoplay]").forEach(v=>{v.muted=true;if(still){v.controls=true}else{v.play().catch(()=>{v.controls=true})}});
 }
 yfVideos();
+;(()=>{const board=document.querySelector(".kb-board");if(!board)return;const load=()=>{board.querySelectorAll("img[data-srcset]").forEach(i=>{i.srcset=i.dataset.srcset;i.removeAttribute("data-srcset")})};["pointerenter","focusin","touchstart"].forEach(t=>board.addEventListener(t,load,{once:true,passive:true}))})();   // footer hover/press frames load on first approach
