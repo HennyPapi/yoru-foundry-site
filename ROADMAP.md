@@ -66,7 +66,7 @@ Known small issues (fix when touching these areas):
 | 10 | Commission form sends without `mailto:` | Done (2026-10-07): Worker at `/api/commission` sends through Resend to hello@ (Zoho); test request delivered to the inbox. Trap field on; Turnstile ready but off (README) |
 | 11 | Motion and reduced motion | Done (2026-10-07): every duration tokenized; interactions 180–220ms on `--ease`; long light fades on `--ease-glow`; one global reduced-motion rule plus each JS effect checks it (tested in a browser) |
 | 12 | Image and page weight | Done (2026-10-07): homepage 987 → 710 KB on a 1x desktop, 546 → 415 KB on a phone; about page 759 → ~600 / 446 → 351 KB (local files, before compression) |
-| 13 | Cleanup: unused files, orphan pages, dead CSS | Planned |
+| 13 | Cleanup: unused files, orphan pages, dead CSS | Done (2026-10-07): styles.css 133 → 84 KB (screenshot-verified, 0 pixel changes); unused files out; product stubs rebuilt; see report below |
 | 14 | One cream section per page | Retired: Verdigris has no light sections (Mike, 2026-10-06) |
 | Launch | Checklist, then merge `design-pass` → `main` | — |
 
@@ -124,13 +124,27 @@ Known small issues (fix when touching these areas):
   and the same file the header already loaded). No PNG is used by any page; the three left in `assets/` go in Phase 13.
 - Largest remaining: `styles.css` (130 KB raw, much of it dead old-design CSS: Phase 13) and the footer keyboard.
 
-### 13 — Cleanup and report
-- Report what was skipped, what breaks at 10+ builds, and anything in the repo that shouldn't be public
-  (stray files or partials in `/public`, unused CSS selectors).
-- Delete the 6 unused files in `assets/` (only `yoru-foundry-logo-v5.webp` is referenced).
-- Orphan pages: link `archive.html` / `journal.html` from the HTML, or remove them (Mike decides).
-- `styles.css` is ~170 KB and still carries stacked historical "lock" blocks with `!important`. Remove the
-  dead ones in small commits, with before/after screenshots at three widths per commit.
+### 13 — Cleanup and report (done, 2026-10-07)
+- **Dead CSS:** 694 selectors naming 58 classes no page or script uses (old hero, portal cards, education tiles,
+  showpiece, manifesto, grain/paper textures, old modal, status chips, layout tiles, old page hero, eyebrows) are
+  removed: 133 KB → 84 KB. Proof: full-page screenshots of every page at 1440/900/390 (reduced motion, so frames
+  are stable) are pixel-identical before and after each pass (54/54, then 51/51). A Chrome coverage run at ten
+  widths found no further rule that never matches, apart from conditional ones (reduced motion, the open guide
+  modal, the phone menu, media-ready states, Turnstile), which stay.
+- **Unused files:** six logo/emblem variants moved to `brand/` (kept, not published); one placeholder SVG deleted;
+  the build-only JSON data files are no longer copied into `/public`.
+- **Pages:** the five hidden product stubs use the current page intro (no PRODUCTS eyebrow) and link to Crafted Art.
+  The old `products-keyboards.html` duplicated Crafted Art in the old design; it now 301-redirects there. The site
+  check lists the five stubs as orphans: intended, they are hidden until Mike adds those categories.
+- **Skipped on purpose:** consolidating the remaining layered `!important` overrides on live classes. Every
+  remaining rule applies somewhere; merging them is restyling with real regression risk for a few KB.
+- **What strains at 10+ builds:** `commission.html` renders every visible build into the page (one shown, the rest
+  hidden, audio set to load nothing until opened), so it grows linearly; past ~20 builds give each build its own
+  generated page (the data shape already supports it). The archive list is fine at that size. Media files should
+  follow `MEDIA.md` sizes or page weight climbs fast.
+- **Repo vs public:** `/public` holds only pages, `styles.css`, `script.js`, `data/content.js`, `_redirects`, images,
+  the placeholder SVGs and the silent test audio. Mockups, render scripts, `brand/` and the Worker source are not
+  published.
 
 ### 14 — Cream rule
 - Normalize each page to the agreed number of Bone sections.

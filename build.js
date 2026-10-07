@@ -438,7 +438,8 @@ function build() {
   if (!fs.existsSync(STATIC)) fail("Missing required directory: src/static");
   fs.rmSync(OUTPUT, { recursive: true, force: true });
   fs.mkdirSync(OUTPUT, { recursive: true });
-  fs.cpSync(STATIC, OUTPUT, { recursive: true });
+  // the .json data files are read at build time only; content.js is also used in the browser, so it ships
+  fs.cpSync(STATIC, OUTPUT, { recursive: true, filter: (src) => !(src.startsWith(path.join(STATIC, "data")) && src.endsWith(".json")) });
   injectSiteMode();
 
   for (const [output, html] of rendered) {
