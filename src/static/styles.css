@@ -452,20 +452,15 @@ html{font-synthesis:none}
 
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:var(--space-0);background:radial-gradient(circle at 78% -10%,var(--alpha-surface-080),transparent 36rem),var(--night-void);color:var(--bone-text);font-family:var(--font-body);line-height:1.65;-webkit-font-smoothing:antialiased}body.modal-open{overflow:hidden}a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
 
-.eyebrow{color:var(--patina);font-size:var(--type-11);font-weight:700;letter-spacing:var(--space-pattern-006);text-transform:uppercase}
-.page-hero h1{font-family:var(--font-display);font-weight:600;letter-spacing:var(--space-pattern-007);line-height:.92;margin:var(--space-pattern-008)}
+.button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:var(--space-pattern-009);border-radius:var(--radius-8px);font-size:var(--type-13);font-weight:700}
 
-.button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:var(--space-pattern-009);border-radius:var(--radius-8px);font-size:var(--type-13);font-weight:700}.secondary{border:var(--border-width-accent) solid var(--line-accent);background:var(--alpha-bone-015)}
-
-.page-main{max-width:var(--max);margin:var(--space-auto);padding:var(--space-pattern-010)}.page-hero{padding:var(--space-pattern-013);max-width:940px}.page-hero.narrow{max-width:820px}.page-hero h1{font-size:var(--type-fluid-03);color:var(--patina)}.page-hero>p:last-child{font-family:var(--font-body);font-size:var(--type-fluid-04);line-height:1.5;color:var(--copper)}
-.layout-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-18)}.layout-tile{background:var(--panel);border:var(--border-width) solid var(--line);border-radius:var(--radius-18px);overflow:hidden;transition:transform var(--duration-base) var(--ease),border-color var(--duration-base) var(--ease)}.layout-tile.active:hover{transform:translateY(-3px);border-color:var(--line-accent)}.layout-tile.coming{opacity:.68}.tile-copy{padding:var(--space-22)}.tile-copy h2{font-family:var(--font-display);font-size:var(--type-38);margin:var(--space-pattern-014)}.tile-copy p{color:var(--muted-dark);font-size:var(--step-3)}.tile-copy b{color:var(--copper);font-size:var(--step-2)}.status{display:inline-block;font-size:var(--step-1);letter-spacing:var(--space-pattern-015);text-transform:uppercase;color:var(--muted-dark)}.status.live{color:var(--muted-dark)}
-.keyboard-diagram{position:relative;min-height:220px;padding:var(--space-pattern-016);background:linear-gradient(145deg,var(--night),var(--night-deep));border-bottom:var(--border-width) solid var(--line);display:flex;flex-direction:column;justify-content:center;gap:var(--space-5)}.diagram-label{position:absolute;top:var(--space-16);left:var(--space-18);color:var(--alpha-bone-720);font-size:var(--type-11);letter-spacing:var(--space-pattern-017)}.key-row{display:flex;gap:var(--space-4);justify-content:center}.key{width:18px;height:18px;border:var(--border-width) solid var(--line);border-radius:var(--radius-3px);background:var(--night-deep)}.key.wide{width:34px}
+.page-main{max-width:var(--max);margin:var(--space-auto);padding:var(--space-pattern-010)}
+.status{display:inline-block;font-size:var(--step-1);letter-spacing:var(--space-pattern-015);text-transform:uppercase;color:var(--muted-dark)}.status.live{color:var(--muted-dark)}
+.key{width:18px;height:18px;border:var(--border-width) solid var(--line);border-radius:var(--radius-3px);background:var(--night-deep)}.key.wide{width:34px}
 
 label{display:grid;gap:var(--space-8);margin-bottom:var(--space-14);color:var(--copper-text);font-size:var(--step-2);font-weight:600}input,select,textarea{width:100%;padding:var(--space-pattern-024);border:var(--border-width) solid var(--line);border-radius:var(--radius-8px);background:var(--night-deep);color:var(--bone-text);font:inherit;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--line-accent);box-shadow:none}
 
-@media(max-width:1120px){.layout-grid{grid-template-columns:repeat(2,1fr)}}
-
-@media(max-width:680px){.page-main{padding-left:var(--space-18);padding-right:var(--space-18)}.layout-grid{grid-template-columns:1fr}}
+@media(max-width:680px){.page-main{padding-left:var(--space-18);padding-right:var(--space-18)}}
 
 /* 2026-09-10 refinement pass */
 
@@ -473,41 +468,11 @@ label{display:grid;gap:var(--space-8);margin-bottom:var(--space-14);color:var(--
 
 .compare-audio{margin:var(--space-pattern-042);padding:var(--space-pattern-043);border:var(--border-width-accent) dashed var(--line-accent);border-radius:var(--radius-10px);text-align:center;color:var(--muted-dark);font-size:var(--step-2)}
 
-/* Warm ivory editorial tile system */
-
-/* Homepage gateway cards */
-
-/* Crafted Art + Products layout tiles */
-.layout-tile{
-  background:linear-gradient(180deg,var(--bone),var(--bone));
-  color:var(--ink);
-  border-color:var(--line);
-  box-shadow:none;
-}
-.layout-tile .tile-copy p{color:var(--muted-light)}
-.layout-tile .tile-copy b{color:var(--gunmetal)}
-.layout-tile .status{color:var(--muted-dark)}
-.layout-tile .status.live{color:var(--gunmetal)}
-.layout-tile.active:hover{border-color:var(--line-strong)}
-.layout-tile.coming{opacity:.72}
-.layout-tile .keyboard-diagram{
-  background:
-    radial-gradient(circle at 50% 10%,var(--alpha-patina-160),transparent 58%),
-    linear-gradient(145deg,var(--night-deep),var(--night-deep));
-  border-bottom-color:var(--line);
-}
-.layout-tile .diagram-label{color:var(--patina)}
-
 /* Trust the Process + Built to Taste tiles */
 
 /* Built to Taste comparison cards */
 
 /* Keep hierarchy clean on smaller screens */
-@media(max-width:680px){
-  .layout-tile{
-    box-shadow:none;
-  }
-}
 
 /* Dark cards that were disappearing into the background now use ivory surfaces */
 
@@ -516,10 +481,6 @@ label{display:grid;gap:var(--space-8);margin-bottom:var(--space-14);color:var(--
 /* Sharper separation for remaining dark interactive tiles */
 
 /* Make green accents legible on black without becoming bright/neon */
-.eyebrow,
-.layout-tile .status.live{
-  color:var(--patina);
-}
 
 /* ===== YORU GILDED EARTH / ATELIER PASS ===== */
 
@@ -533,11 +494,6 @@ body{
 /* Cinematic editorial hero */
 
 /* CTA treatment */
-
-.button.secondary{
-  border-color:var(--line-accent);
-  color:var(--bone);
-}
 
 /* Cream editorial rhythm */
 
@@ -568,41 +524,11 @@ body{
 
 /* Hero: warm dark metal + champagne typography */
 
-.page-hero h1{
-  color:var(--copper-text)!important;
-}
-.eyebrow{
-  color:var(--copper)!important;
-}
-.page-hero>p:last-child{
-  color:var(--bone)!important;
-}
-
 /* Hero image placeholder uses charcoal bronze instead of green */
 
 /* Buttons */
 
-.button.secondary{
-  background:var(--night-deep)!important;
-  border-color:var(--line-accent)!important;
-  color:var(--bone)!important;
-}
-
 /* Light cards: keep ivory, warm all text */
-.layout-tile{
-  background:var(--bone)!important;
-  color:var(--ink)!important;
-  border-color:var(--line)!important;
-}
-.layout-tile h2{
-  color:var(--ink)!important;
-}
-.layout-tile p{
-  color:var(--copper-deep)!important;
-}
-.layout-tile .status.live{
-  color:var(--copper-deep)!important;
-}
 
 /* What’s Included / Why Yoru cream panels */
 
@@ -625,42 +551,11 @@ body{
 
 /* Hero */
 
-.page-hero h1{
-  color:var(--bone)!important;
-}
-.eyebrow{
-  color:var(--muted-dark)!important;
-}
-.page-hero>p:last-child{
-  color:var(--bone)!important;
-}
-
 /* Hero media / product showroom */
 
 /* Buttons */
 
-.button.secondary{
-  background:var(--night-deep)!important;
-  border-color:var(--line-strong)!important;
-  color:var(--bone)!important;
-}
-
 /* Structural cards */
-.layout-tile{
-  background:var(--bone)!important;
-  color:var(--ink)!important;
-  border-color:var(--line-quiet)!important;
-  box-shadow:none;
-}
-.layout-tile h2{
-  color:var(--night-deep)!important;
-}
-.layout-tile p{
-  color:var(--muted-dark)!important;
-}
-.layout-tile .status.live{
-  color:var(--muted-dark)!important;
-}
 
 /* Light editorial blocks */
 
@@ -681,26 +576,10 @@ body,
 }
 
 /* Dark media placeholders / showroom blocks */
-.layout-tile .keyboard-diagram{
-  background:
-    linear-gradient(180deg,var(--alpha-bone-012),var(--alpha-night-deep-160)),
-    linear-gradient(145deg,var(--night),var(--night-deep))!important;
-  border-color:var(--line)!important;
-  box-shadow:none;
-}
 
 /* Remove residual green glows from image placeholders */
 
 /* Dark sections use soft off-white + silver only */
-.page-hero h1{
-  color:var(--bone)!important;
-}
-.page-hero>p:last-child{
-  color:var(--bone-text)!important;
-}
-.eyebrow{
-  color:var(--muted-dark)!important;
-}
 
 /* Clean borders across dark regions */
 
@@ -717,152 +596,43 @@ body,
 }
 
 /* Remove green radial glow from all media placeholders */
-.layout-tile .keyboard-diagram{
-  background:linear-gradient(145deg,var(--night),var(--night-deep))!important;
-  border-color:var(--line)!important;
-  box-shadow:none;
-}
 
 /* Modal backgrounds match the site instead of pure black */
 
 /* Copper interaction language */
-.layout-tile .status.live{
-  color:var(--copper)!important;
-}
 
 /* Keep the rest restrained */
-.eyebrow{
-  color:var(--muted-dark)!important;
-}
-.page-hero h1{
-  color:var(--bone)!important;
-}
 
 /* Copper remains interaction-only, not structural labeling */
 
 /* 3) Tactile linen rather than flat light gray.
    Tiny tonal variation + micro paper grain, intentionally almost invisible. */
-.layout-tile{
-  background-color:var(--bone)!important;
-  background-image:
-    radial-gradient(circle at 12% 18%,var(--alpha-night-deep-018) 0 1px,transparent 1.2px),
-    radial-gradient(circle at 71% 62%,var(--alpha-night-deep-014) 0 1px,transparent 1.2px),
-    linear-gradient(118deg,var(--alpha-bone-340),var(--alpha-bone-160) 48%,var(--alpha-bone-200))!important;
-  background-size:11px 11px,13px 13px,100% 100%!important;
-}
 
 /* Cards remain understated with blueprint-like precision */
-.layout-tile{
-  border:var(--border-width) solid var(--line)!important;
-  box-shadow:none;
-}
 
 /* 4) Occasional copper hairlines between editorial transitions */
 
 /* 5) Dark media stays clean, matte and neutral — product photography supplies color */
-.layout-tile .keyboard-diagram{
-  background:linear-gradient(145deg,var(--night),var(--night-deep))!important;
-  background-image:linear-gradient(145deg,var(--night),var(--night-deep))!important;
-  border-color:var(--line)!important;
-  box-shadow:none;
-}
 
 /* Copper stays at roughly 10% of the visual system: interactions and micro-details */
 
 /* ===== LAYOUT STATUS BADGES — MONOCHROMATIC ARCHITECTURAL =====
    Remove the remaining green status treatment from keyboard layout cards.
    Active availability uses full-opacity neutral ink; coming-soon states recede. */
-.product-layouts .layout-tile .status{
-  color:var(--alpha-night-deep-420)!important;
-  background:transparent!important;
-  border:0!important;
-  text-transform:uppercase!important;letter-spacing:var(--space-pattern-074)!important;
-  font-weight:600!important;
-}
-.product-layouts .layout-tile .status.live{
-  color:var(--night)!important;
-  opacity:1!important;
-}
-.product-layouts .layout-tile.coming .status{
-  color:var(--alpha-night-deep-380)!important;
-  opacity:1!important;
-}
 
 /* Also neutralize the small layout diagram labels so no green lingers. */
-.product-layouts .diagram-label{
-  color:var(--alpha-bone-620)!important;
-}
 
 /* ===== YORU FOUNDRY LOGO — SINGLE SOURCE OF TRUTH =====
    One static image element. No CSS image swapping, no data URI, no JS overrides. */
 
 /* ===== KEYBOARD LAYOUT CARDS — FINAL NEUTRAL LOCK =====
    No green/patina is permitted in the 75%, 65%, or TKL schematics/status UI. */
-.product-layouts .layout-tile .keyboard-diagram{
-  background:linear-gradient(145deg,var(--night),var(--night-deep))!important;
-  background-image:linear-gradient(145deg,var(--night),var(--night-deep))!important;
-  border-color:var(--line)!important;
-}
-.product-layouts .layout-tile .diagram-label{
-  color:var(--alpha-bone-720)!important;
-}
-.product-layouts .layout-tile .key{
-  background:var(--night-deep)!important;
-  border-color:var(--line)!important;
-  box-shadow:none;
-}
-.product-layouts .layout-tile .status{
-  color:var(--alpha-steel-450)!important;
-  opacity:1!important;
-  background:transparent!important;
-  border:0!important;
-}
-.product-layouts .layout-tile .status.live{
-  color:var(--muted-dark)!important;
-  opacity:1!important;
-}
-.product-layouts .layout-tile .tile-copy b{
-  color:var(--copper)!important;
-}
-.product-layouts .layout-tile.active:hover{
-  border-color:var(--line)!important;
-}
 
 /* ===== CRAFTED ART LAYOUT CARDS — FINAL NEUTRAL LOCK =====
    The Crafted Art page uses .layout-grid rather than .product-layouts.
    Neutralize every remaining patina/green accent in these layout schematics. */
-.layout-grid .layout-tile .keyboard-diagram{
-  background:linear-gradient(145deg,var(--night),var(--night-deep))!important;
-  background-image:linear-gradient(145deg,var(--night),var(--night-deep))!important;
-  border-bottom-color:var(--line)!important;
-}
-.layout-grid .layout-tile .diagram-label{
-  color:var(--alpha-bone-720)!important;
-}
-.layout-grid .layout-tile .key{
-  background:var(--night-deep)!important;
-  border-color:var(--line)!important;
-  box-shadow:none;
-}
-.layout-grid .layout-tile .status{
-  color:var(--alpha-steel-450)!important;
-  opacity:1!important;
-  background:transparent!important;
-  border:0!important;
-}
-.layout-grid .layout-tile .status.live{
-  color:var(--muted-dark)!important;
-}
-.layout-grid .layout-tile.active:hover{
-  border-color:var(--line-strong)!important;
-}
 
 /* Remove the old green hover/active cues on these specific cards. */
-.layout-grid .layout-tile:hover .diagram-label,
-.layout-grid .layout-tile.active .diagram-label,
-.layout-grid .layout-tile.coming .diagram-label{
-  color:var(--alpha-bone-720)!important;
-}
 
 /* ===== DARK SURFACES — SUBTLE ANODIZED ALUMINUM TEXTURE =====
    Material-luxury treatment: microscopic grain + satin tonal variation.
@@ -870,8 +640,7 @@ body,
 
 /* Large structural dark fields only — not media/photo placeholders. */
 body,
-.page-main,
-.page-hero{
+.page-main{
   background-color:var(--night)!important;
   background-image:
     linear-gradient(118deg,var(--alpha-bone-012) 0%,var(--alpha-bone-000) 34%,var(--alpha-night-deep-028) 66%,var(--alpha-bone-010) 100%),
@@ -882,10 +651,6 @@ body,
 }
 
 /* Keep dark media areas deliberately matte and cleaner than the surrounding metal surface. */
-.layout-tile .keyboard-diagram{
-  background-image:linear-gradient(145deg,var(--night),var(--night-deep))!important;
-  background-color:var(--night)!important;
-}
 
 /* Modals get a whisper of the same finish, but remain visually quieter than full sections. */
 
@@ -893,8 +658,7 @@ body,
    Stronger than the first pass: visible at normal zoom, but still restrained.
    Fine noise simulates bead-blasted/anodized aluminum rather than concrete. */
 body,
-.page-main,
-.page-hero{
+.page-main{
   background-color:var(--night)!important;
   background-image:
     linear-gradient(118deg,var(--alpha-bone-028) 0%,var(--alpha-bone-006) 28%,var(--alpha-night-deep-050) 63%,var(--alpha-bone-018) 100%),
@@ -908,11 +672,6 @@ body,
 /* Dark modals use a slightly quieter version of the same material. */
 
 /* Keep photography/media zones smoother so the texture reads as architecture, not noise everywhere. */
-.layout-tile .keyboard-diagram{
-  background-color:var(--night)!important;
-  background-image:linear-gradient(145deg,var(--night),var(--night-deep))!important;
-  background-blend-mode:normal!important;
-}
 
 /* The secondary hero action stays quieter so the copper-outline CTA leads. */
 
@@ -931,16 +690,14 @@ body,
 
 /* --- DARK ARCHITECTURE: Yoru = night --- */
 body,
-.page-main,
-.page-hero{
+.page-main{
   background-color:var(--night)!important;
   color:var(--bone)!important;
 }
 
 /* Keep the anodized-metal grain, but tint it to Night Iron rather than green-charcoal. */
 body,
-.page-main,
-.page-hero{
+.page-main{
   background-image:
     linear-gradient(118deg,var(--alpha-bone-020),var(--alpha-bone-004) 33%,var(--alpha-night-deep-050) 66%,var(--alpha-bone-012)),
     linear-gradient(180deg,var(--night-deep) 0%,var(--night) 60%,var(--night-deep) 100%)!important;
@@ -950,97 +707,30 @@ body,
 }
 
 /* Dark media blocks = Gunmetal: physical, machined, separate from the night canvas. */
-.layout-tile .keyboard-diagram{
-  background-color:var(--gunmetal)!important;
-  background-image:linear-gradient(145deg,var(--gunmetal) 0%,var(--gunmetal) 50%,var(--night-deep) 100%)!important;
-  border-color:var(--line)!important;
-  color:var(--muted-dark)!important;
-  box-shadow:none;
-}
 
 /* --- LIGHT ARCHITECTURE: handmade paper / atelier --- */
-.layout-tile{
-  background-color:var(--bone)!important;
-  background-image:
-    radial-gradient(circle at 12% 18%,var(--alpha-night-deep-020) 0 1px,transparent 1.2px),
-    radial-gradient(circle at 71% 62%,var(--alpha-night-deep-014) 0 1px,transparent 1.2px),
-    linear-gradient(118deg,var(--alpha-bone-380),var(--alpha-bone-160) 48%,var(--alpha-bone-180))!important;
-  background-size:11px 11px,13px 13px,100% 100%!important;
-  color:var(--ink)!important;
-  border-color:var(--line)!important;
-}
 
 /* Strong light-surface typography. */
-.layout-tile h2{
-  color:var(--ink)!important;
-}
-.layout-tile p{
-  color:var(--muted-dark)!important;
-}
 
 /* Dark-surface hierarchy. */
-.page-hero h1{
-  color:var(--bone)!important;
-}
-.page-hero>p:last-child{
-  color:var(--copper-text)!important;
-}
 
 /* Patina becomes a secret brand color: only tiny labels / micro-details. */
-.eyebrow{
-  color:var(--patina)!important;
-}
 
 /* --- COPPER = heat / foundry / action --- */
 
 /* Dark hero button harmony. */
-
-.button.secondary{
-  background:transparent!important;
-  color:var(--bone)!important;
-  border-color:var(--line-strong)!important;
-}
-.button.secondary:hover{
-  background:var(--alpha-bone-045)!important;
-  border-color:var(--line-strong)!important;
-}
 
 /* Editorial copper links and separators. */
 
 /* --- FORMS --- */
 
 /* --- KEYBOARD LAYOUT UI: neutral metal, no random green --- */
-.layout-grid .layout-tile .keyboard-diagram,
-.product-layouts .layout-tile .keyboard-diagram{
-  background:linear-gradient(145deg,var(--gunmetal),var(--gunmetal))!important;
-  border-color:var(--line)!important;
-}
-.layout-grid .layout-tile .diagram-label,
-.product-layouts .layout-tile .diagram-label{
-  color:var(--alpha-bone-700)!important;
-}
-.layout-grid .layout-tile .key,
-.product-layouts .layout-tile .key{
-  background:var(--night-deep)!important;
-  border-color:var(--line-strong)!important;
-}
-.layout-grid .layout-tile .status.live,
-.product-layouts .layout-tile .status.live{
-  color:var(--gunmetal)!important;
-}
-.layout-grid .layout-tile .status,
-.product-layouts .layout-tile .status{
-  color:var(--alpha-surface-540)!important;
-}
 
 /* --- MODALS --- */
 
 /* --- FOOTER --- */
 
 /* Light-card selected/active affordances use copper, not patina. */
-.tile-copy b{
-  color:var(--copper)!important;
-}
 
 /* Mobile inherits the same palette. */
 
@@ -1057,20 +747,11 @@ body,
       Large light fields receive the richest paper treatment. */
 
 /* Light cards/forms use a quieter paper grain so text remains the focus. */
-.layout-tile{
-  background-color:var(--bone)!important;
-  background-image:
-    linear-gradient(125deg,var(--alpha-bone-240),var(--alpha-bone-080) 54%,var(--alpha-accent-hi-035))!important;
-  background-size:112px 112px,100% 100%!important;
-  background-repeat:repeat,no-repeat!important;
-  background-blend-mode:soft-light,normal!important;
-}
 
 /* 2) NIGHT IRON — visible-but-refined anodized/bead-blasted texture.
       This is the primary dark "material" of the site. */
 body,
-.page-main,
-.page-hero{
+.page-main{
   background-color:var(--night)!important;
   background-image:
     radial-gradient(ellipse at 72% 14%,var(--alpha-muted-040),transparent 38%),
@@ -1085,22 +766,8 @@ body,
 
 /* 3) GUNMETAL — photo/media zones stay deliberately smooth and matte.
       No noise here: future product photography must provide the visual richness. */
-.layout-tile .keyboard-diagram{
-  background-color:var(--gunmetal)!important;
-  background-image:
-    radial-gradient(ellipse at 68% 18%,var(--alpha-bone-035),transparent 36%),
-    linear-gradient(145deg,var(--gunmetal) 0%,var(--gunmetal) 52%,var(--night) 100%)!important;
-  background-size:100% 100%,100% 100%!important;
-  background-repeat:no-repeat,no-repeat!important;
-  background-blend-mode:normal,normal!important;
-}
 
 /* Keyboard schematics are clean technical matte surfaces, not textured cards. */
-.layout-grid .layout-tile .keyboard-diagram,
-.product-layouts .layout-tile .keyboard-diagram{
-  background-color:var(--gunmetal)!important;
-  background-image:linear-gradient(145deg,var(--gunmetal),var(--gunmetal) 58%,var(--night))!important;
-}
 
 /* 4) BURNISHED COPPER — smooth satin treatment only when copper fills.
       No grain: it should read as machined metal, not rust or leather. */
@@ -1109,20 +776,13 @@ body,
 
 /* 5) AGED PATINA — intentionally restricted to micro typography/icon accents.
       Never use it as a large background, card fill, button fill, or status badge. */
-.eyebrow{
-  color:var(--patina)!important;
-}
 
 /* Material hierarchy: textures should never interfere with readability. */
-.layout-tile{
-  -webkit-font-smoothing:antialiased;
-}
 
 /* Mobile: keep texture density but soften it slightly on smaller screens. */
 @media(max-width:860px){
   body,
-  .page-main,
-  .page-hero{
+  .page-main{
     background-blend-mode:soft-light,soft-light,normal,normal,normal!important;
   }
 }
@@ -1150,8 +810,7 @@ body{
 /* Dark structural sections become transparent windows onto that one canvas.
    Their max-width still controls the content, not the background material. */
 main,
-.page-main,
-.page-hero{
+.page-main{
   background:transparent!important;
   background-color:transparent!important;
   background-image:none!important;
@@ -1187,14 +846,6 @@ main,
    Paper grain is now stronger and includes faint directional fibers. */
 
 /* Cards get the same material at lower strength. */
-.layout-tile{
-  background-color:var(--bone)!important;
-  background-image:
-    linear-gradient(180deg,var(--bone),var(--bone))!important;
-  background-size:104px 104px,100% 100%,100% 100%!important;
-  background-repeat:repeat,no-repeat,no-repeat!important;
-  background-blend-mode:multiply,normal,normal!important;
-}
 
 /* NIGHT IRON — strengthen the material read.
    The grain is still fine, but now survives normal browser rendering. */
@@ -1211,23 +862,8 @@ body{
 
 /* GUNMETAL — make media panels clearly distinct from Night Iron.
    Keep them matte; no obvious texture competing with future photography. */
-.layout-tile .keyboard-diagram{
-  background-color:var(--gunmetal)!important;
-  background-image:
-    radial-gradient(ellipse at 72% 16%,var(--alpha-bone-055),transparent 40%),
-    linear-gradient(145deg,var(--iron) 0%,var(--gunmetal) 56%,var(--night) 100%)!important;
-  background-size:100% 100%,100% 100%!important;
-  background-repeat:no-repeat,no-repeat!important;
-  background-blend-mode:normal,normal!important;
-  border-color:var(--line)!important;
-}
 
 /* Technical keyboard media uses the same true Gunmetal value. */
-.layout-grid .layout-tile .keyboard-diagram,
-.product-layouts .layout-tile .keyboard-diagram{
-  background-color:var(--gunmetal)!important;
-  background-image:linear-gradient(145deg,var(--iron) 0%,var(--gunmetal) 58%,var(--night) 100%)!important;
-}
 
 /* Avoid visible separator lines where the material change already does the work. */
 
@@ -1279,92 +915,15 @@ html,body{
   color:var(--bone)!important;
 }
 main,
-.page-main,
-.page-hero{
+.page-main{
   background:transparent!important;
   background-color:transparent!important;
   background-image:none!important;
 }
 
 /* Page introductions / hero typography. */
-.page-hero h1{
-  color:var(--bone)!important;
-}
-.page-hero>p:last-child{
-  color:var(--bone-text)!important;
-}
-.eyebrow{
-  color:var(--patina)!important;
-}
-
-/* PRODUCT / PORTFOLIO CARDS:
-   Crafted Art + Products use neutral Gunmetal from top to bottom.
-   This removes the old brown lower panel seen on Crafted Art. */
-.layout-grid .layout-tile,
-.product-layouts .layout-tile,
-.layout-tile.active,
-.layout-tile.coming{
-  background-color:var(--gunmetal)!important;
-  background-image:
-    radial-gradient(ellipse at 74% 12%,var(--alpha-bone-032),transparent 38%),
-    linear-gradient(145deg,var(--gunmetal) 0%,var(--gunmetal) 58%,var(--gunmetal) 100%)!important;
-  color:var(--bone)!important;
-  border:var(--border-width) solid var(--line)!important;
-  box-shadow:none;
-  opacity:1!important;
-}
-.layout-grid .layout-tile .keyboard-diagram,
-.product-layouts .layout-tile .keyboard-diagram{
-  background-color:var(--gunmetal)!important;
-  background-image:linear-gradient(145deg,var(--gunmetal) 0%,var(--gunmetal) 62%,var(--gunmetal) 100%)!important;
-  border-bottom:var(--border-width) solid var(--line)!important;
-}
-.layout-grid .layout-tile .tile-copy,
-.product-layouts .layout-tile .tile-copy{
-  background:transparent!important;
-  background-image:none!important;
-  color:var(--bone)!important;
-}
-.layout-grid .layout-tile h2,
-.product-layouts .layout-tile h2{
-  color:var(--bone)!important;
-}
-.layout-grid .layout-tile p,
-.product-layouts .layout-tile p{
-  color:var(--muted-dark)!important;
-}
-.layout-grid .layout-tile .diagram-label,
-.product-layouts .layout-tile .diagram-label{
-  color:var(--muted-dark)!important;
-}
-.layout-grid .layout-tile .status,
-.product-layouts .layout-tile .status{
-  color:var(--muted-dark)!important;
-  background:transparent!important;
-}
-.layout-grid .layout-tile .status.live,
-.product-layouts .layout-tile .status.live{
-  color:var(--copper-text)!important;
-}
-.layout-grid .layout-tile.coming .tile-copy,
-.product-layouts .layout-tile.coming .tile-copy,
-.layout-grid .layout-tile.coming .keyboard-diagram,
-.product-layouts .layout-tile.coming .keyboard-diagram{
-  opacity:.58!important;
-}
-.layout-grid .layout-tile.active:hover,
-.product-layouts .layout-tile.active:hover{
-  border-color:var(--line-accent)!important;
-  transform:translateY(-2px)!important;
-}
 
 /* Keys remain technical and neutral. */
-.layout-grid .key,
-.product-layouts .key{
-  background:var(--night-deep)!important;
-  border-color:var(--line-strong)!important;
-  box-shadow:none;
-}
 
 /* EDITORIAL / EDUCATION CARDS:
    paper material for reading-oriented content. */
@@ -1412,47 +971,21 @@ body{
 
 /* Keep structural dark sections transparent so the Night Iron texture is continuous. */
 main,
-.page-main,
-.page-hero{
+.page-main{
   background-color:transparent!important;
   background-image:none!important;
 }
 
 /* C — GUNMETAL: same family, smoother / tighter / lower contrast.
    Used for technical cards and media placeholders so copy stays crisp. */
-.layout-grid .layout-tile,
-.product-layouts .layout-tile,
-.layout-tile.active,
-.layout-tile.coming{
-  background-color:var(--gunmetal)!important;
-  background-image:
-    linear-gradient(145deg,var(--alpha-bone-016),var(--alpha-night-deep-018))!important;
-  background-size:132px 132px,100% 100%!important;
-  background-repeat:repeat,no-repeat!important;
-  background-blend-mode:soft-light,normal!important;
-}
 
 /* Keyboard schematic panel is even smoother than the surrounding Gunmetal card. */
-.layout-grid .layout-tile .keyboard-diagram,
-.product-layouts .layout-tile .keyboard-diagram{
-  background-color:var(--gunmetal)!important;
-  background-image:
-    linear-gradient(145deg,var(--alpha-bone-012),var(--alpha-night-deep-014))!important;
-  background-size:148px 148px,100% 100%!important;
-  background-repeat:repeat,no-repeat!important;
-  background-blend-mode:soft-light,normal!important;
-}
 
 /* D — COPPER: no grain. Only a satin highlight when copper becomes a fill. */
 
 /* Copper hairlines / text accents remain perfectly crisp. */
 
 /* E — PATINA: color-only micro accent. Never a material field. */
-.eyebrow{
-  color:var(--patina)!important;
-  background:transparent!important;
-  background-image:none!important;
-}
 
 /* Texture intensity reduction for small/mobile screens. */
 @media(max-width:860px){
@@ -1473,10 +1006,8 @@ main,
 
 /* Phase 3 geometry and border rules */
 *,*::before,*::after{box-shadow:none!important}
-img,.layout-tile{border-radius:var(--radius-square)!important}
+img{border-radius:var(--radius-square)!important}
 button:not(.guide-topic),.button,input,select,textarea{border-radius:var(--radius-control)!important}   /* guide topics are ruled rows */
-
-.layout-tile{border-width:var(--border-width)!important}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:var(--duration-none)!important;animation-duration:var(--duration-none)!important;animation-iteration-count:1!important}}
 /* Approved accessibility/state corrections — 2026-09-14 */
@@ -1533,8 +1064,7 @@ main,
   padding-left:24px;
   padding-right:24px;
 }
-.page-main,
-.page-hero{
+.page-main{
   background:var(--night)!important;
   background-color:var(--night)!important;
   background-image:none!important;
@@ -1555,8 +1085,7 @@ body{
   background-image:none!important;
 }
 main:not(.section-shell),
-.page-main,
-.page-hero{
+.page-main{
   background-color:transparent!important;
   background-image:none!important;
 }
@@ -1566,12 +1095,6 @@ main:not(.section-shell),
 
 .status{color:var(--status-coming-soon)!important}
 .status.live{color:var(--status-available)!important}
-
-.layout-tile.coming .status{opacity:.58!important}
-.layout-grid .layout-tile p,
-.product-layouts .layout-tile p{color:var(--muted-dark)!important}
-.layout-grid .layout-tile .tile-copy b,
-.product-layouts .layout-tile .tile-copy b{color:var(--copper-text)!important}
 
 /* Bone-only accent pairing. */
 

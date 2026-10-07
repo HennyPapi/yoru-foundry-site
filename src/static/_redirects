@@ -1,3 +1,6 @@
 # Old address of the commission page (renamed 2026-10-07)
 /request-a-build.html /request-a-commission.html 301
 /request-a-build /request-a-commission 301
+
+# Old product listing; the layouts live in Crafted Art (2026-10-07)
+/products-keyboards.html /crafted-art.html 301
