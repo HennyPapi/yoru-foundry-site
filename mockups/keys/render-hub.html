@@ -1,6 +1,6 @@
 <!doctype html>
 <html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Aboreto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Aboreto&family=Michroma&family=Chakra+Petch:wght@600&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
 <style>html,body{margin:0;background:transparent}canvas{display:block}</style>
 <script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
 </head><body>
@@ -182,7 +182,7 @@ function screenTex(lines, on, scale = 1) {
   g.scale(scale, scale); g.fillStyle = '#000'; g.fillRect(0, 0, 2760, 900);
   if (on) { g.fillStyle = '#fff'; g.strokeStyle = '#fff'; g.textBaseline = 'middle';
     // status bar: charging port on the left, a full battery on the right, a hairline under it
-    g.font = '400 86px Aboreto'; g.textAlign = 'left';
+    g.font = FONT.status; g.textAlign = 'left';
     g.beginPath(); g.moveTo(150, 72); g.lineTo(108, 134); g.lineTo(140, 134); g.lineTo(122, 184); g.lineTo(176, 112); g.lineTo(142, 112); g.lineTo(166, 72); g.closePath(); g.fill();   // bolt
     g.fillText('C2  30W', 210, 132);
     g.textAlign = 'right'; g.fillText('100%', 2370, 132);
@@ -190,8 +190,8 @@ function screenTex(lines, on, scale = 1) {
     for (let i = 0; i < 4; i++) g.fillRect(2438 + i * 48, 106, 38, 56);                                                              // four full bars
     g.globalAlpha = 0.45; g.fillRect(100, 225, 2560, 5); g.globalAlpha = 1;
     g.textAlign = 'center';
-    g.font = '400 220px Aboreto'; g.fillText(lines[0].toUpperCase(), 1380, 440);
-    let sz = 150; g.font = `400 ${sz}px Aboreto`; while (g.measureText(lines[1].toUpperCase()).width > 2760 * 0.93) { sz -= 4; g.font = `400 ${sz}px Aboreto`; }
+    g.font = FONT.l1; g.fillText(lines[0].toUpperCase(), 1380, 440);
+    let sz = FONT.l2size; g.font = `${FONT.l2} ${sz}px ${FONT.l2family}`; while (g.measureText(lines[1].toUpperCase()).width > 2760 * 0.93) { sz -= 4; g.font = `${FONT.l2} ${sz}px ${FONT.l2family}`; }
     g.fillText(lines[1].toUpperCase(), 1380, 700); }
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; }
 function haloTex() { const c = document.createElement('canvas'); c.width = 1024; c.height = 420; const g = c.getContext('2d');
@@ -226,14 +226,17 @@ scene.add(new THREE.AmbientLight(0xffffff, 0.12));
 const camera = new THREE.PerspectiveCamera(2 * Math.atan(3 * Math.tan(8.5 * Math.PI / 180)) * 180 / Math.PI, 3000 / 4500, 10, 3000); camera.up.set(0, 0, 1);
 camera.setViewOffset(3000, 4500, 0, 1800, 3000, 2700);
 camera.position.set(170, -560, 230); camera.lookAt(0, 0, 34);
-window.renderHub = async ({ on = true, glow = false, lines = ['', ''] } = {}) => {
-  await document.fonts.load('400 100px Aboreto');
+// the display's lettering: Chakra Petch, a squared digital face (Mike, 2026-10-07); it exists only inside this render
+let FONT = { status: '600 92px "Chakra Petch"', l1: '600 235px "Chakra Petch"', l2: '600', l2family: '"Chakra Petch"', l2size: 175 }, SHARP = 0.7;
+window.renderHub = async ({ on = true, glow = false, lines = ['', ''], font, sharp } = {}) => {
+  if (font) FONT = { ...FONT, ...font }; if (sharp) SHARP = sharp;
+  for (const f of [FONT.status, FONT.l1, `${FONT.l2} 100px ${FONT.l2family}`]) await document.fonts.load(f);
   if (screen) scene.remove(screen, halo, halo2, backlight, depth);
   backlight = onGlass(new THREE.Mesh(new THREE.PlaneGeometry(DW * 2 + 10, DH * 2 + 8), new THREE.MeshBasicMaterial({ color: '#2A1A12', alphaMap: backlightTex(), transparent: true, opacity: on ? 0.85 : 0, toneMapped: false, blending: THREE.AdditiveBlending, depthWrite: false })), 0, 3, 0.11);
   const add = (tex, color, opacity) => onGlass(new THREE.Mesh(new THREE.PlaneGeometry(DW * 2, DH * 2), new THREE.MeshBasicMaterial({ color, alphaMap: tex, transparent: true, opacity, toneMapped: false, blending: THREE.AdditiveBlending, depthWrite: false })), 0, 3, 0.15);
   // bloom: the same text drawn small and stretched back up (soft light around each letter), two radii
   halo = add(screenTex(lines, on, 0.08), LED, 0.55); halo2 = add(screenTex(lines, on, 0.025), LED, 0.35);
-  screen = add(screenTex(lines, on, 0.45), '#F09A62', 0.95);                      // LCD letters: soft, even amber, not a neon core
+  screen = add(screenTex(lines, on, SHARP), '#F09A62', 0.95);                     // LCD letters: soft, even amber, not a neon core
   // the glass sits in front of the panel: a thin shadow under the display's top edge
   depth = onGlass(new THREE.Mesh(new THREE.PlaneGeometry(DW * 2 + 10, DH * 2 + 8), new THREE.MeshBasicMaterial({ color: '#000000', alphaMap: depthTex(), transparent: true, opacity: on ? 0.7 : 0, depthWrite: false })), 0, 3, 0.2);
   // glow pass: only the braid's inner light shows, everything else black (neutral under a screen blend)

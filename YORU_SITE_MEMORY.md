@@ -159,7 +159,7 @@ commission-yf-001.
 - The closing section keeps "One builder. One conversation. One considered result." and its paragraph; the copper
   key and Why Yoru link were removed (the footer keyboard covers both). The line "The forge is lit. Pick a key, and
   I’ll meet you at the anvil." (Mike) is on the backlit display of a rendered space-grey USB dock (Mike's
-  Anker-style reference, no branding; Aboreto letters, a status bar with a C2 30W readout and a full battery). The
+  Anker-style reference, no branding; Chakra Petch letters (Mike picked option D from `mockups/hub-fonts.png`), a status bar with a C2 30W readout and a full battery). The
   braided cable is plugged into the front-right port and hangs in a loose S into the keyboard. The display fades on;
   a copper bead travels the cable once going down (never back up) and lights the board when it arrives.
 

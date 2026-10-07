@@ -78,6 +78,7 @@ Rules:
 - Body copy, long-form, captions, and notes: **Alegreya**.
 - Spec numbers use tabular figures. No monospace font as a "technical" costume.
 - Do not add **Inter**. Cormorant Garamond, Manrope, Archivo and Source Serif 4 are retired.
+- **Exception: the hub display** (Mike, 2026-10-07). The lettering on the homepage hub's rendered screen is **Chakra Petch** 600, a squared digital face. It exists only baked into that render (`mockups/keys/render-hub.html`); never load it as a page font or use it anywhere else.
 - Cinzel and Aboreto are capital-only faces, so headings and labels read as capitals; keep body copy in Alegreya so pages never become all capitals. No extra letter-spacing on labels (no spaced-capital eyebrows).
 - Minimum text size 12px. `font-synthesis: none` so single-weight faces are never faked bold.
 - Chosen by Mike on 2026-10-06 after five font rounds (`mockups/fonts.html`, `mockups/fonts-home-*.png`).
