@@ -1191,6 +1191,7 @@ button.k{padding:var(--space-0);font:inherit;text-align:left;background:none;bor
 .k.copper .legend{font-size:var(--step-4);color:var(--cast)}
 .k.copper:focus-visible{outline:2px solid var(--raw-copper);outline-offset:var(--space-4)}
 .request-note{margin:var(--space-0);max-width:28ch;font-size:var(--step-3);color:var(--pewter)}
+.request-note a{display:block;margin-top:var(--space-4);color:var(--bright);text-decoration:underline;text-decoration-color:var(--raw-copper);text-underline-offset:var(--space-4)}
 .request-form .trap{position:absolute;clip-path:inset(50%);overflow:hidden;width:var(--space-0);height:var(--space-0)}
 .request-form .cf-turnstile{grid-column:1/-1}
 button.k:disabled{cursor:progress}

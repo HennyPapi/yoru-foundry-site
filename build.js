@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-35-css-clean2",
+  stylesheetVersion: "vg-36-privacy",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
   // Cloudflare Turnstile site key (public). Empty = no widget; the Worker's TURNSTILE_SECRET must be set with it.
