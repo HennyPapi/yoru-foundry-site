@@ -43,6 +43,8 @@ medallion printed on Esc, and the linked keys' copper underglow. `renderBoard({l
    (`node render-board.js <scratch> '<jobs json>'`), so every frame shares the same grain.
 3. `python3 board-export.py <scratch> <repo>` crops everything into `src/static/assets/footer-board/` and writes the
    boxes into `src/static/data/footer-board.json`. To change a link's target or name, edit that JSON only.
+4. `python3 half-size.py <repo>/src/static/assets/footer-board` writes the half-size `-1x` copies the page uses on
+   phones and 1x screens.
 
 ## Homepage hub (`render-hub.html`)
 

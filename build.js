@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-32-motion",
+  stylesheetVersion: "vg-33-weight",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
   // Cloudflare Turnstile site key (public). Empty = no widget; the Worker's TURNSTILE_SECRET must be set with it.
@@ -301,7 +301,7 @@ function renderHub() {
   return `<div class="hub" data-hub style="aspect-ratio:${h.w}/${h.hubH}"><div class="hub-art" style="aspect-ratio:${h.w}/${h.h}">${img("hub-off")}${img("hub-on")}` +
     `<svg class="hub-led" viewBox="0 0 ${h.w} ${h.h}" aria-hidden="true"><defs><filter id="hub-soft"><feGaussianBlur stdDeviation="7"/></filter>` +
     `<mask id="hub-light-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="${h.w}" height="${h.h}"><path class="hub-pulse p3" d="${h.d}" filter="url(#hub-soft)"/><path class="hub-pulse p2" d="${h.d}" filter="url(#hub-soft)"/><path class="hub-pulse p1" d="${h.d}" filter="url(#hub-soft)"/></mask></defs>` +
-    `<image class="hub-light" href="/assets/hub/hub-glow.webp?v=${config.stylesheetVersion}" width="${h.w}" height="${h.h}" mask="url(#hub-light-mask)"/><path class="hub-route" d="${h.d}"/></svg></div>` +
+    `<image class="hub-light" data-href="/assets/hub/hub-glow.webp?v=${config.stylesheetVersion}" width="${h.w}" height="${h.h}" mask="url(#hub-light-mask)"/><path class="hub-route" d="${h.d}"/></svg></div>` +
     `<p class="hub-line">The forge is lit. Pick a key, and I’ll meet you at the anvil.</p></div>`;
 }
 
@@ -309,10 +309,15 @@ function renderHub() {
 function renderFooterBoard(data) {
   if (!data.w) fail("src/static/data/footer-board.json: no board size; run mockups/keys/board-export.py");
   const box = (r) => `left:${r[0]}%;top:${r[1]}%;width:${r[2]}%;height:${r[3]}%`;
+  // every image has a half-size -1x copy (mockups/keys/half-size.py); the board picks by width (phones show it small)
+  const src = (name) => `/assets/footer-board/${name}.webp?v=${config.stylesheetVersion}`;
+  const set = (name) => `${src(`${name}-1x`)} 1200w, ${src(name)} ${data.w}w`;   // the -1x copy covers the board's full 1180px at 1x
+  const sizes = "(max-width: 1228px) calc(100vw - 36px), 1180px";
   const ext = (href) => (/^https?:/.test(href) ? ' target="_blank" rel="noopener"' : "");
   const keys = Object.entries(data.keys).map(([id, k]) => {
     if (!k.hit || !k.h || !k.p) fail(`footer-board.json: key "${id}" has no boxes`);
-    const img = (st) => `<img class="${st}" src="/assets/footer-board/${id}-${st}.webp?v=${config.stylesheetVersion}" alt="" loading="lazy" decoding="async" style="${box(k[st])}">`;
+    // hover/press frames only show on desktop; 1x screens take the half-size copy
+    const img = (st) => `<img class="${st}" src="${src(`${id}-${st}-1x`)}" srcset="${src(`${id}-${st}-1x`)} 1x, ${src(`${id}-${st}`)} 2x" alt="" loading="lazy" decoding="async" style="${box(k[st])}">`;
     return `<a href="${k.href}" aria-label="${escapeHtml(k.name)}"${ext(k.href)}>${img("h")}${img("p")}<span class="hit" style="${box(k.hit)}"></span></a>`;
   });
   const list = data.list.map((id) => {
@@ -321,7 +326,7 @@ function renderFooterBoard(data) {
     return `<li><a href="${k.href}"${ext(k.href)}>${escapeHtml(k.name)}</a></li>`;
   });
   return {
-    board: `<img src="/assets/footer-board/board.webp?v=${config.stylesheetVersion}" alt="" width="${data.w}" height="${data.h}" loading="lazy" decoding="async"><img class="lit" src="/assets/footer-board/board-lit.webp?v=${config.stylesheetVersion}" alt="" loading="lazy" decoding="async">${keys.join("")}`,
+    board: `<img src="${src("board-1x")}" srcset="${set("board")}" sizes="${sizes}" alt="" width="${data.w}" height="${data.h}" loading="lazy" decoding="async"><img class="lit" src="${src("board-lit-1x")}" srcset="${set("board-lit")}" sizes="${sizes}" alt="" loading="lazy" decoding="async">${keys.join("")}`,
     list: list.join(""),
     ratio: `${data.w}/${data.h}`,
   };

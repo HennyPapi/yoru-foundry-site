@@ -15,7 +15,10 @@ c = (bb[0] - m, max(0, bb[1] - m), bb[2] + m, on.size[1])
 a = hub_only.crop((c[0], c[1], c[0] + (c[2] - c[0]) // 3, c[3])).point(lambda v: 255 if v > 220 else 0)
 hub_bottom = c[1] + a.getbbox()[3]
 W, H = c[2] - c[0], c[3] - c[1]
-for n, im in [('hub-on', on), ('hub-off', off), ('hub-glow', glow)]: im.crop(c).save(f'{out}/{n}.webp', quality=86, method=6)
+# saved at 900px wide: the hub shows at most 440 CSS px, so this covers 2x screens. hub.json keeps the full-frame
+# size, which the page uses only as the drawing's coordinate space.
+for n, im in [('hub-on', on), ('hub-off', off), ('hub-glow', glow)]:
+    im = im.crop(c); im.resize((900, round(im.height * 900 / im.width)), Image.LANCZOS).save(f'{out}/{n}.webp', quality=86, method=6)
 P = json.load(open(src + '/path.json'))
 d = 'M' + ' L'.join(f'{round(x - c[0], 1)} {round(y - c[1], 1)}' for x, y in P['path'])
 json.dump({'w': W, 'h': H, 'hubH': hub_bottom + m - c[1], 'd': d}, open(root + '/src/static/data/hub.json', 'w'))

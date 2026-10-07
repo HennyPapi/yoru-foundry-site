@@ -65,7 +65,7 @@ Known small issues (fix when touching these areas):
 | 9 | Footer redesign | Done (2026-10-07): a rendered 75% keyboard (Mike's concept). Links spelled on the keys press as a word, copper underglow rises on view, Esc = logo, home. Phone: picture plus link list. Links are in the HTML |
 | 10 | Commission form sends without `mailto:` | Done (2026-10-07): Worker at `/api/commission` sends through Resend to hello@ (Zoho); test request delivered to the inbox. Trap field on; Turnstile ready but off (README) |
 | 11 | Motion and reduced motion | Done (2026-10-07): every duration tokenized; interactions 180–220ms on `--ease`; long light fades on `--ease-glow`; one global reduced-motion rule plus each JS effect checks it (tested in a browser) |
-| 12 | Image and page weight | Planned — partly pulled forward |
+| 12 | Image and page weight | Done (2026-10-07): homepage 987 → 710 KB on a 1x desktop, 546 → 415 KB on a phone; about page 759 → ~600 / 446 → 351 KB (local files, before compression) |
 | 13 | Cleanup: unused files, orphan pages, dead CSS | Planned |
 | 14 | One cream section per page | Retired: Verdigris has no light sections (Mike, 2026-10-06) |
 | Launch | Checklist, then merge `design-pass` → `main` | — |
@@ -113,9 +113,16 @@ Known small issues (fix when touching these areas):
 - Old components (portal cards, education tiles, mini layouts, the old hero button) still carry 3–4px lifts but are on
   no page; Phase 13 deletes them.
 
-### 12 — Images and weight
-- Any remaining PNGs become WebP/AVIF, with no image over 500 KB.
-- Add `loading="lazy"` and intrinsic sizes everywhere, and measure homepage transfer size before and after.
+### 12 — Images and weight (done)
+- Measured with every lazy image loaded (scrolled to the bottom), local files only, before Cloudflare's compression;
+  Google Fonts not counted. Homepage: 987 KB → 710 KB (1x desktop), 546 KB → 415 KB (phone).
+- Footer keyboard: half-size `-1x` copies of every frame (`mockups/keys/half-size.py`); the board picks by width
+  (phones and 1x desktops take the half), hover/press frames by screen density.
+- Hub: frames saved at 900px wide (it shows at most 440 CSS px); its cable-light image loads only when the cable runs
+  (never on phones or with reduced motion).
+- Every image has intrinsic size; everything below the header is lazy except the copper commission key (in the hero,
+  and the same file the header already loaded). No PNG is used by any page; the three left in `assets/` go in Phase 13.
+- Largest remaining: `styles.css` (130 KB raw, much of it dead old-design CSS: Phase 13) and the footer keyboard.
 
 ### 13 — Cleanup and report
 - Report what was skipped, what breaks at 10+ builds, and anything in the repo that shouldn't be public

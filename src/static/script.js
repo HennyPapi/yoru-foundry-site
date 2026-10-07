@@ -64,6 +64,7 @@ const form=document.getElementById("buildForm");if(form){const params=new URLSea
   // cable's light fades out
   if(art&&!still&&getComputedStyle(art).display!=="none"){
     const svg=art.querySelector(".hub-led"),route=svg.querySelector(".hub-route"),pulse=[...svg.querySelectorAll(".hub-pulse")];
+    const glowImg=svg.querySelector(".hub-light");glowImg.setAttribute("href",glowImg.dataset.href);   // only fetched when the cable light runs
     const total=route.getTotalLength(),LEN={p1:70,p2:150,p3:260};let end=total,target=0,cur=0,done=false,raf=0,idle=0;
     const scale=()=>art.getBoundingClientRect().width/svg.viewBox.baseVal.width;
     const pageY=l=>art.getBoundingClientRect().top+scrollY+route.getPointAtLength(l).y*scale();
