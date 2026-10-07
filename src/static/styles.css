@@ -1400,10 +1400,10 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
    a two-column chapter (heading left, prose right) on a hairline; ruled lists instead of rows of identical cards;
    small plain labels only where they carry meaning (a byline, which word a heading explains). */
 .chapter{display:grid;grid-template-columns:1fr 1.3fr;gap:var(--space-40);align-items:start;padding:var(--space-56) var(--space-0);border-top:var(--border-width) solid var(--line-strong)}
-.chapter h2,.name-pair h2,.note-list h2,.founder-intro h2{margin:var(--space-0);font-family:var(--font-display);font-size:var(--type-fluid-section);font-weight:700;line-height:1.05;color:var(--bright);text-wrap:balance}
-.chapter p,.name-pair p,.founder-intro p:not(.byline){margin:var(--space-0) var(--space-0) var(--space-16);font-size:var(--type-17);line-height:1.6;color:var(--pewter)}
+.chapter h2,.note-list h2{margin:var(--space-0);font-family:var(--font-display);font-size:var(--type-fluid-section);font-weight:700;line-height:1.05;color:var(--bright);text-wrap:balance}
+.chapter p{margin:var(--space-0) var(--space-0) var(--space-16);font-size:var(--type-17);line-height:1.6;color:var(--pewter)}
 .chapter p:last-child{margin-bottom:var(--space-0)}
-.chapter p,.name-pair p,.founder-intro p:not(.byline){max-width:56ch}
+.chapter p{max-width:56ch}
 .archive-empty{max-width:62ch;margin:var(--space-0);padding:var(--space-40) var(--space-0);border-top:var(--border-width) solid var(--line-strong);font-size:var(--type-21);line-height:1.5;color:var(--pewter)}
 .chapter.with-photo{grid-template-columns:1.3fr 1fr;align-items:center}
 .chapter.with-photo h2{margin-bottom:var(--space-20)}
@@ -1418,16 +1418,9 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
 .reason-list div{padding:var(--space-24) var(--space-0);border-bottom:var(--border-width) solid var(--line-strong)}
 .reason-list dt{margin-bottom:var(--space-8);font-family:var(--font-display);font-size:var(--type-23);font-weight:700;color:var(--bright)}
 .reason-list dd{max-width:56ch;margin:var(--space-0);font-size:var(--type-17);line-height:1.55;color:var(--pewter)}
-.founder-intro{display:grid;grid-template-columns:1fr 1.3fr;gap:var(--space-40);align-items:center;padding-bottom:var(--space-56)}
 .byline{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-4) var(--space-12);margin:var(--space-0) var(--space-0) var(--space-14);font-family:var(--font-display);font-size:var(--step-4);font-weight:700;color:var(--bright)}
 .byline span{font-size:var(--step-3);color:var(--pewter)}
-.founder-intro h2{margin-bottom:var(--space-20)}
-.name-pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-40);padding:var(--space-56) var(--space-0);border-top:var(--border-width) solid var(--line-strong)}
-.name-pair h2{margin-bottom:var(--space-16)}
-.motto{padding:var(--space-70) var(--space-0);text-align:left;border-top:var(--border-width) solid var(--line-strong)}
-.motto p{margin:var(--space-0);font-family:var(--font-display);font-size:var(--type-fluid-03);font-weight:700;line-height:1.02;color:var(--bright)}
-.motto .motto-line{margin-top:var(--space-12);font-family:var(--font-body);font-size:var(--type-25);font-weight:400;line-height:1.3;color:var(--pewter)}
-/* About (draft): four chapters, titles full width, one reading column, one pull quote on the deep band */
+/* About: four chapters, titles full width, one reading column, one pull quote on the deep band */
 .ab-chapter{padding:var(--space-70) var(--space-0);border-top:var(--border-width) solid var(--line-strong)}
 .ab-chapter.ab-first,.page-main>.ab-chapter:first-child{border-top:var(--space-0)}
 .ab-chapter.ab-split{display:grid;grid-template-columns:1fr 1.3fr;gap:var(--space-40);align-items:start}
@@ -1445,8 +1438,6 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
 .ab-quote-band{padding:var(--space-90) var(--space-0);background:var(--deep)}
 .ab-quote-band blockquote{max-width:28ch;margin:var(--space-0);font-family:var(--font-body);font-size:var(--type-fluid-06);font-style:italic;line-height:1.2;color:var(--bright)}
 @media(max-width:860px){.ab-body{grid-template-columns:1fr}.ab-body .ab-text{grid-column:auto}.ab-media{position:static}.ab-chapter.ab-split{grid-template-columns:1fr;gap:var(--space-0)}.ab-split>h2{position:static;margin-bottom:var(--space-40)}.ab-chapter{padding:var(--space-56) var(--space-0)}.ab-quote-band{padding:var(--space-60) var(--space-0)}}
-.founder-close{display:grid;gap:var(--space-24);justify-items:start;padding:var(--space-56) var(--space-0) var(--space-40);border-top:2px solid var(--bright)}
-.founder-close blockquote{max-width:34ch;margin:var(--space-0);font-family:var(--font-body);font-size:var(--type-fluid-06);font-style:italic;line-height:1.2;color:var(--bright)}
 .note-list{margin:var(--space-0) var(--space-0) var(--space-90);padding:var(--space-0);list-style:none;border-top:var(--border-width) solid var(--line-strong)}
 .note-list li{display:grid;grid-template-columns:1fr 1.3fr;gap:var(--space-8) var(--space-40);padding:var(--space-28) var(--space-0);border-bottom:var(--border-width) solid var(--line-strong)}
 .note-list .build-id{grid-column:1/-1;margin:var(--space-0)}
@@ -1470,7 +1461,7 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
 .record-audio .sound-player-copy strong{font-family:var(--font-display);font-size:var(--step-4);color:var(--bright)}
 .record-audio .sound-player-copy p{margin:var(--space-4) var(--space-0) var(--space-0);font-size:var(--step-3);color:var(--pewter)}
 .record-audio audio{width:100%}
-@media(max-width:860px){.chapter,.chapter.with-photo,.founder-intro,.name-pair,.note-list li,.reason-list,.spec-sheet{grid-template-columns:1fr}.chapter{gap:var(--space-20)}.record-details{grid-template-columns:1fr 1fr}}
+@media(max-width:860px){.chapter,.chapter.with-photo,.note-list li,.reason-list,.spec-sheet{grid-template-columns:1fr}.chapter{gap:var(--space-20)}.record-details{grid-template-columns:1fr 1fr}}
 
 /* Media readiness (Phase 8): real photos and videos fill their frame edge to edge; frames keep their aspect
    ratio, so swapping a placeholder for real media never moves the layout. */
