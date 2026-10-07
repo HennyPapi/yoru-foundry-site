@@ -68,7 +68,7 @@ Known small issues (fix when touching these areas):
 | 12 | Image and page weight | Done (2026-10-07): homepage 987 → 710 KB on a 1x desktop, 546 → 415 KB on a phone; about page 759 → ~600 / 446 → 351 KB (local files, before compression) |
 | 13 | Cleanup: unused files, orphan pages, dead CSS | Done (2026-10-07): styles.css 133 → 84 KB (screenshot-verified, 0 pixel changes); unused files out; product stubs rebuilt; see report below |
 | 14 | One cream section per page | Retired: Verdigris has no light sections (Mike, 2026-10-06) |
-| Launch | Checklist, then merge `design-pass` → `main` | — |
+| Launch | Checklist, then merge `design-pass` → `main` | Merged (2026-10-07): `main` fast-forwarded 6571e7c → a2b073e; Cloudflare builds `main` with `node build.js` and `wrangler deploy`. Rollback: point `main` back to 6571e7c or roll back under Deployments |
 
 ## Phase details
 
