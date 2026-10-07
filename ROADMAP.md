@@ -64,7 +64,7 @@ Known small issues (fix when touching these areas):
 | 8 | Media and sound readiness | Done (2026-10-07): every media spot takes a real file with no layout change; see `MEDIA.md`. Waiting on Mike's media |
 | 9 | Footer redesign | Done (2026-10-07): a rendered 75% keyboard (Mike's concept). Links spelled on the keys press as a word, copper underglow rises on view, Esc = logo, home. Phone: picture plus link list. Links are in the HTML |
 | 10 | Commission form sends without `mailto:` | Done (2026-10-07): Worker at `/api/commission` sends through Resend to hello@ (Zoho); test request delivered to the inbox. Trap field on; Turnstile ready but off (README) |
-| 11 | Motion and reduced motion | Planned |
+| 11 | Motion and reduced motion | Done (2026-10-07): every duration tokenized; interactions 180–220ms on `--ease`; long light fades on `--ease-glow`; one global reduced-motion rule plus each JS effect checks it (tested in a browser) |
 | 12 | Image and page weight | Planned — partly pulled forward |
 | 13 | Cleanup: unused files, orphan pages, dead CSS | Planned |
 | 14 | One cream section per page | Retired: Verdigris has no light sections (Mike, 2026-10-06) |
@@ -104,9 +104,14 @@ Known small issues (fix when touching these areas):
 - ~~One name everywhere~~ Done (2026-10-07): the page is `request-a-commission.html`; the old
   `request-a-build.html` 301-redirects to it (`src/static/_redirects`).
 
-### 11 — Motion
-- Audit transitions against the 180–220ms spec and the canonical easing.
-- Make sure `prefers-reduced-motion` turns off nonessential motion everywhere.
+### 11 — Motion (done)
+- 20 transition declarations, all on duration tokens. Interactions use fast/base/slow (180/200/220ms) on `--ease`.
+  The long light fades (keys and board 2.6s, hub screen 1.4s, cable light 0.8s) use `--ease-glow` (plain ease) so a
+  slow rise stays gradual. Lifts are 1–3px (the 75% layout tile was 4px); key presses travel 2–4px by design.
+- Reduced motion: one global rule zeroes every CSS transition and animation; the header LED, hub cable light, hub
+  screen and both keyboards check it in JS and start lit, with nothing moving. Verified in a browser both ways.
+- Old components (portal cards, education tiles, mini layouts, the old hero button) still carry 3–4px lifts but are on
+  no page; Phase 13 deletes them.
 
 ### 12 — Images and weight
 - Any remaining PNGs become WebP/AVIF, with no image over 500 KB.
