@@ -56,32 +56,27 @@ const form=document.getElementById("buildForm");if(form){const params=new URLSea
   const board=document.querySelector(".site-footer .kb-board");if(!board)return;
   const still=matchMedia("(prefers-reduced-motion: reduce)").matches,canWatch="IntersectionObserver" in window;
   const lightUp=()=>board.classList.add("lit");
-  // homepage: the hub's display flickers on once when it comes into view
-  const hub=document.querySelector("[data-hub]");
-  if(hub){if(still||!canWatch)hub.classList.add("on");else new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){hub.classList.add("on");o.disconnect()}},{threshold:.6}).observe(hub)}
-  // homepage: a copper bead rides the cable from the hub to the board as the page scrolls; the board lights when it arrives
-  const cable=document.querySelector(".drop-cable");
-  if(cable&&hub&&!still){
-    const strips=cable.querySelectorAll(".strip");let top=0,len=0,on=false;
-    const place=()=>{
-      const img=hub.querySelector(".hub-off"),h=img.getBoundingClientRect(),b=board.getBoundingClientRect();
-      const x=h.left+h.width*.2,y=h.top+h.height*.45,end=b.top+b.height*.07;
-      on=h.width>0&&b.width>0&&x>b.left+b.width*.1&&x<b.right-b.width*.1&&end-y>120;
-      cable.hidden=!on;if(!on)return;
-      const p=cable.offsetParent.getBoundingClientRect();
-      top=y+scrollY;len=end-y;
-      Object.assign(cable.style,{left:`${x-p.left-30}px`,top:`${y-p.top}px`,height:`${len}px`});strips.forEach(el=>el.style.width=`${len}px`);
-    };
+  // homepage: the hub's display fades on as it comes into view
+  const hub=document.querySelector("[data-hub]"),art=hub&&hub.querySelector(".hub-art");
+  if(hub){if(still||!canWatch)hub.classList.add("on");else new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){hub.classList.add("on");o.disconnect()}},{threshold:.5}).observe(hub)}
+  // homepage: a copper bead travels the hub's cable once, in step with the scroll going down (never back up);
+  // when it reaches the keyboard the keys light and the bead goes out
+  if(art&&!still&&getComputedStyle(art).display!=="none"){
+    const svg=art.querySelector(".hub-led"),route=svg.querySelector(".hub-route"),mask=svg.querySelector(".hub-bead-path"),bead=svg.querySelector(".hub-bead");
+    const total=route.getTotalLength(),TAIL=240;let end=total,best=0,done=false;
+    const scale=()=>art.getBoundingClientRect().width/svg.viewBox.baseVal.width;
+    const pageY=l=>art.getBoundingClientRect().top+scrollY+route.getPointAtLength(l).y*scale();
+    const measure=()=>{const top=board.getBoundingClientRect().top+scrollY+board.getBoundingClientRect().height*.07;end=total;for(let l=0;l<=total;l+=4)if(pageY(l)>=top){end=l;break}};
+    const draw=b=>{mask.style.strokeDasharray=`${TAIL} 100000`;mask.style.strokeDashoffset=`${TAIL-b}`;const pt=route.getPointAtLength(b);bead.setAttribute("cx",pt.x);bead.setAttribute("cy",pt.y);svg.classList.toggle("moving",b>0&&!done)};
     const ride=()=>{
-      if(!on)return;
-      const vh=innerHeight,start=top-vh*.7,stop=Math.min(document.documentElement.scrollHeight-vh,top+len-vh*.6);
-      const t=Math.max(0,Math.min(1,(scrollY-start)/Math.max(1,stop-start)));
-      cable.style.setProperty("--b",`${t*len}px`);cable.classList.toggle("moving",t>0&&t<1);
-      if(t>=1)lightUp();
+      if(done)return;
+      const vh=innerHeight,start=pageY(0)-vh*.85,stop=Math.min(document.documentElement.scrollHeight-vh,pageY(end)-vh*.3);
+      const b=Math.max(0,Math.min(1,(scrollY-start)/Math.max(1,stop-start)))*end;
+      if(b<=best)return;best=b;draw(best);
+      if(best>=end-1){done=true;lightUp();svg.classList.remove("moving");mask.style.strokeDasharray="0 100000"}
     };
-    const update=()=>{place();ride()};
-    addEventListener("scroll",()=>requestAnimationFrame(ride),{passive:true});addEventListener("resize",update);addEventListener("load",update);update();
-    if(!on&&canWatch)new IntersectionObserver((e,o)=>{if(e[0].isIntersecting&&!on){lightUp();o.disconnect()}},{threshold:.5}).observe(board);
+    measure();addEventListener("resize",()=>{measure();ride()});addEventListener("load",()=>{measure();ride()});
+    addEventListener("scroll",()=>requestAnimationFrame(ride),{passive:true});ride();
     return;
   }
   if(still||!canWatch){lightUp();return}

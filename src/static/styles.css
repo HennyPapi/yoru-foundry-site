@@ -16,6 +16,7 @@
   --led-bloom-clear: rgba(232,131,77,0);
   --led-under: rgba(232,131,77,0.5);         /* header keys' underglow once the LED reaches them; never behind text */
   --duration-led-rise: 2600ms;
+  --duration-screen-on: 1400ms;
   --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23A7B2AE' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");   /* select arrow, Pewter */
   --verdigris: #4FB3A0;
   --verdigris-deep: #2B6E62;
@@ -2809,22 +2810,28 @@ a.scale-board:hover .scale-name{text-decoration:underline;text-decoration-color:
 }
 @media(prefers-reduced-motion:reduce){.kb-board>img.lit{transition:none}}
 
-/* Homepage close: a rendered USB hub whose display carries the closing line, and a braided cable from the hub down
-   into the footer keyboard. A copper bead rides the cable as the page scrolls; when it reaches the board the keys
-   light (script.js). The display flickers on once when the hub comes into view. Both are Mike's exceptions
-   (2026-10-07); with reduced motion the display is simply on and there is no bead. Phones: the line as text. */
-.hub{position:relative;z-index:2;max-width:440px;margin-top:var(--space-30)}
-.hub img{display:block;width:100%;height:auto}
-.hub .hub-on{position:absolute;inset:0;opacity:0}
-.hub.on .hub-on{opacity:1;animation:hub-flicker 700ms steps(1,end) 1}
-@keyframes hub-flicker{0%{opacity:0}12%{opacity:1}22%{opacity:.15}34%{opacity:1}44%{opacity:.4}56%{opacity:1}}
+/* Homepage close: a rendered USB dock whose display carries the closing line, with a braided cable plugged into its
+   front port and hanging down into the footer keyboard. The display fades on as the hub comes into view. A copper
+   bead travels the cable once, in step with the scroll going down (never back up); when it reaches the board the
+   keys light and the bead goes out (script.js). Mike's exceptions (2026-10-07). Reduced motion: display on, no bead.
+   Phones: the line as text. */
+.hub{position:relative;z-index:1;max-width:440px;margin-top:var(--space-30)}
+.hub-art{position:absolute;left:0;top:0;width:100%;pointer-events:none}
+.hub-art img{display:block;width:100%;height:auto}
+.hub-art .hub-on{position:absolute;inset:0;opacity:0;transition:opacity var(--duration-screen-on) ease}
+.hub.on .hub-on{opacity:1}
+.hub-led{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:screen;overflow:visible}
+.hub-bead-path{fill:none;stroke:var(--bright);stroke-width:46;stroke-linecap:round;stroke-dasharray:0 100000}
+.hub-route{fill:none;stroke:none}
+.hub-bead{opacity:0;transition:opacity var(--duration-slow) ease}
+.hub-led.moving .hub-bead{opacity:.9}
+.hub-bead-core{stop-color:var(--raw-copper);stop-opacity:.85}
+.hub-bead-edge{stop-color:var(--raw-copper);stop-opacity:0}
 .home .hub .hub-line{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:var(--space-0)}
-.drop-cable{position:absolute;width:60px;pointer-events:none;--b:-200px}   /* no z-index: the glow must blend with the page */
-.drop-cable .strip{position:absolute;left:0;top:0;height:60px;transform-origin:0 0;transform:rotate(90deg) scaleY(-1);background:url(/assets/cable/tile.webp) repeat-x 0 0/88px 60px}
-.drop-cable .glow{background-color:transparent;mix-blend-mode:screen;filter:brightness(1.6);background:url(/assets/cable/tile-glow.webp) repeat-x 0 0/88px 60px;
-  -webkit-mask-image:linear-gradient(to right,transparent calc(var(--b) - 150px),var(--cast) calc(var(--b) - 6px),var(--cast) var(--b),transparent calc(var(--b) + 14px));mask-image:linear-gradient(to right,transparent calc(var(--b) - 150px),var(--cast) calc(var(--b) - 6px),var(--cast) var(--b),transparent calc(var(--b) + 14px))}
-.drop-cable .bead{position:absolute;left:13px;top:var(--b);width:34px;height:34px;margin-top:-17px;border-radius:var(--radius-circle);mix-blend-mode:screen;opacity:0;transition:opacity var(--duration-base) ease;background:radial-gradient(closest-side,var(--led-bloom),var(--led-bloom-clear))}
-.drop-cable.moving .bead{opacity:1}
 .site-footer .kb-board{z-index:2}
-@media(max-width:700px){.hub img{display:none}.home .hub .hub-line{position:static;width:auto;height:auto;overflow:visible;clip-path:none;font-family:var(--font-display);font-weight:700;font-size:var(--step-4);color:var(--raw-copper)}.hub{margin-top:var(--space-18)}}
-@media(prefers-reduced-motion:reduce){.hub.on .hub-on{animation:none}}
+@media(max-width:700px){
+  .hub{aspect-ratio:auto!important;margin-top:var(--space-18)}
+  .hub-art{display:none}
+  .home .hub .hub-line{position:static;width:auto;height:auto;overflow:visible;clip-path:none;font-family:var(--font-display);font-weight:700;font-size:var(--step-4);color:var(--raw-copper)}
+}
+@media(prefers-reduced-motion:reduce){.hub-art .hub-on{transition:none}}

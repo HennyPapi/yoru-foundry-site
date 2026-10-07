@@ -43,3 +43,11 @@ medallion printed on Esc, and the linked keys' copper underglow. `renderBoard({l
    (`node render-board.js <scratch> '<jobs json>'`), so every frame shares the same grain.
 3. `python3 board-export.py <scratch> <repo>` crops everything into `src/static/assets/footer-board/` and writes the
    boxes into `src/static/data/footer-board.json`. To change a link's target or name, edit that JSON only.
+
+## Homepage hub (`render-hub.html`)
+
+The USB dock (space-grey shell, black glass front, backlit display with a status bar and the closing line, ports,
+stand) with a braided cable plugged into its front-right USB-C port and hanging down past the table edge. It renders
+`hub-on`, `hub-off` and `hub-glow` (only the braid's inner light, for the bead) through a tall camera window, and
+`path.json` (the cable's centreline). Serve this folder on port 8767 with `node_modules/three`, run
+`node render-hub.js <scratch> '<jobs json>'`, then `python3 hub-export.py <scratch> <repo>`.

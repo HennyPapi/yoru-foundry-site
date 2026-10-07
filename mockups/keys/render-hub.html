@@ -1,14 +1,15 @@
 <!doctype html>
 <html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Aboreto&display=swap" rel="stylesheet">
 <style>html,body{margin:0;background:transparent}canvas{display:block}</style>
 <script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
 </head><body>
 <script type="module">
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 // A whole 75% keyboard (units: mm): case, plate and every keycap. window.renderBoard({pressed:{id:mm}}) -> PNG.
-const W = 3000, H = 1500;
+const W = 3000, H = 2700;
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
 renderer.setPixelRatio(1); renderer.setSize(W, H);
 renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.15;
@@ -16,7 +17,7 @@ renderer.shadowMap.enabled = true; renderer.localClippingEnabled = true; rendere
 document.body.appendChild(renderer.domElement);
 const scene = new THREE.Scene();
 const pmrem = new THREE.PMREMGenerator(renderer);
-scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = 0.32;
+const envMap = pmrem.fromScene(new RoomEnvironment(), 0.04).texture; scene.environment = envMap; scene.environmentIntensity = 0.32;
 
 
 // USB hub with a display (units: mm), same camera direction, lights and case finish as the footer keyboard.
@@ -24,42 +25,174 @@ let seed = 11; function grain(size) { const c = document.createElement('canvas')
   for (let i = 0; i < im.data.length; i += 4) { seed = (seed * 1664525 + 1013904223) >>> 0; const v = 118 + (seed / 4294967296) * 20; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; }
   g.putImageData(im, 0, 0); const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; return t; }
 const LED = '#E8834D';
+// ---- braid: 16 carriers (8 each way), 2-over-2 twill, fibres along each strand; one texture = one period P ----
+const R = 2.0, P = 2.8;                          // cable radius, braid period along the cable (mm)
+const N = 12, M = 3;                              // strands per direction around (24 carriers); twists per period
+let bseed = 7; const rnd = () => (bseed = (bseed * 16807) % 2147483647) / 2147483647;
+const strandTone = Array.from({ length: 2 * N }, () => 0.85 + 0.3 * rnd());
+function braidCanvases() {
+  const w = 512, h = 1024, mk = () => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
+  const col = mk(), hgt = mk(), glo = mk();
+  const ci = col.getContext('2d').createImageData(w, h), hi = hgt.getContext('2d').createImageData(w, h), gi = glo.getContext('2d').createImageData(w, h);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const u = x / w, v = y / h, a1 = v * N + u * M, a2 = v * N - u * M + 64;
+    const i1 = Math.floor(a1), i2 = Math.floor(a2), t1 = a1 - i1, t2 = a2 - i2;
+    const first = ((i1 + i2) % 4 + 4) % 4 < 2;   // 2-over-2 twill: which family is on top here
+    const t = first ? t1 : t2, along = first ? t2 : t1, idx = first ? i1 % N : N + (i2 % N);
+    const crown = Math.pow(Math.sin(Math.PI * t), 0.55);                       // strand cross-section
+    const dip = 0.75 + 0.25 * Math.sin(Math.PI * along);                       // strand dives under at the crossings
+    const fib = 0.82 + 0.18 * Math.pow(Math.sin(t * Math.PI * 9), 2);          // individual fibres
+    const height = crown * dip;
+    const lum = 0.10 * strandTone[idx] * fib * (0.35 + 0.65 * height);         // near-black PET
+    const k = (y * w + x) * 4;
+    ci.data[k] = ci.data[k + 1] = ci.data[k + 2] = Math.min(255, lum * 255 * 1.35); ci.data[k + 3] = 255;
+    hi.data[k] = hi.data[k + 1] = hi.data[k + 2] = 255 * height * fib; hi.data[k + 3] = 255;
+    const g = Math.pow(1 - height, 2.2) + 0.18 * height * fib;                 // light leaks through the gaps
+    gi.data[k] = 255 * g; gi.data[k + 1] = 150 * g; gi.data[k + 2] = 82 * g; gi.data[k + 3] = 255;
+  }
+  col.getContext('2d').putImageData(ci, 0, 0); hgt.getContext('2d').putImageData(hi, 0, 0); glo.getContext('2d').putImageData(gi, 0, 0);
+  return { col, hgt, glo };
+}
+const BR = braidCanvases();
+function tex(canvas, srgb, reps) {
+  const t = new THREE.CanvasTexture(canvas); if (srgb) t.colorSpace = THREE.SRGBColorSpace;
+  t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 16; t.repeat.set(reps, 1); return t;
+}
+
+// ---- patina copper: copper with verdigris settled in patches, rough and non-metallic where it has turned ----
+function noise2(sz, oct, f0 = 4) {                 // tileable value-noise fbm
+  const out = new Float32Array(sz * sz); let tot = 0;
+  for (let o = 0, amp = 1, f = f0; o < oct; o++, amp *= 0.5, f *= 2) {
+    const g = Array.from({ length: f * f }, () => rnd()), s = q => q * q * (3 - 2 * q), at = (i, j) => g[((j % f) * f) + (i % f)];
+    for (let y = 0; y < sz; y++) for (let x = 0; x < sz; x++) {
+      const fx = x / sz * f, fy = y / sz * f, x0 = Math.floor(fx), y0 = Math.floor(fy), sx = fx - x0, sy = fy - y0;
+      const a = at(x0, y0) + (at(x0 + 1, y0) - at(x0, y0)) * s(sx), b = at(x0, y0 + 1) + (at(x0 + 1, y0 + 1) - at(x0, y0 + 1)) * s(sx);
+      out[y * sz + x] += amp * (a + (b - a) * s(sy));
+    }
+    tot += amp;
+  }
+  for (let i = 0; i < out.length; i++) out[i] /= tot;
+  return out;
+}
+// Patina computed in the shader from each part's own 3D position (object space, mm), so it never stretches across
+// a face or seams at a UV edge. Aged satin copper (cuprite brown) with crisp chalky verdigris patches, fine flecks,
+// and a darker tarnish rim around each patch. amount: how far the verdigris has spread (0-1).
+const PATINA_GLSL = `
+varying vec3 vObjPos;
+uniform float uAmount;
+float h3(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
+float vn(vec3 x) {
+  vec3 i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(mix(h3(i), h3(i + vec3(1,0,0)), f.x), mix(h3(i + vec3(0,1,0)), h3(i + vec3(1,1,0)), f.x), f.y),
+             mix(mix(h3(i + vec3(0,0,1)), h3(i + vec3(1,0,1)), f.x), mix(h3(i + vec3(0,1,1)), h3(i + vec3(1,1,1)), f.x), f.y), f.z);
+}
+float fbm(vec3 x) { float v = 0.0, a = 0.5; for (int i = 0; i < 5; i++) { v += a * vn(x); x = x * 2.03 + 11.7; a *= 0.5; } return v; }
+`;
+function patinaMat(amount) {
+  const m = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.4, metalness: 1 });
+  m.onBeforeCompile = sh => {
+    sh.uniforms.uAmount = { value: amount };
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vObjPos;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvObjPos = position;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\n' + PATINA_GLSL)
+      .replace('#include <map_fragment>', `
+        vec3 q = vObjPos;
+        float broad = fbm(q * 0.45), mid = fbm(q * 1.9 + 5.3), fine = vn(q * 11.0), grain = vn(q * 34.0);
+        float field = broad * 0.62 + mid * 0.38;
+        float patP = smoothstep(0.50, 0.555, field + (fine - 0.5) * 0.06);          // crisp-edged patches
+        patP = max(patP, smoothstep(0.80, 0.86, fine) * smoothstep(0.42, 0.5, field)); // flecks near the patches
+        patP = uAmount >= 1.0 ? 1.0 : patP * smoothstep(0.0, 0.15, uAmount) * min(1.0, uAmount * 1.4);
+        float rim = smoothstep(0.43, 0.5, field) * (1.0 - patP);                       // tarnish around a patch
+        vec3 copper = mix(vec3(0.10, 0.038, 0.018), vec3(0.21, 0.075, 0.034), smoothstep(0.3, 0.7, mid));   // aged brown copper
+        copper *= (1.0 - rim * 0.55) * (0.96 + 0.04 * grain);
+        vec3 verd = mix(vec3(0.05, 0.22, 0.16), vec3(0.16, 0.40, 0.31), smoothstep(0.2, 0.85, mid * 0.5 + fine * 0.5)) * (0.95 + 0.1 * grain);
+        diffuseColor.rgb = mix(copper, verd, patP);`)
+      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = mix(0.46 + 0.12 * rim + 0.06 * grain, 0.92, patP);')
+      .replace('#include <metalnessmap_fragment>', '#include <metalnessmap_fragment>\nmetalnessFactor = mix(1.0, 0.0, patP);');
+  };
+  return m;
+}
+const patina = patinaMat(0.55);
+const housing = patinaMat(0.5);
+const verdigrisFill = patinaMat(1);
+const steel = new THREE.MeshPhysicalMaterial({ color: 0x6f7774, metalness: 1, roughness: 0.5 });
+const rubber = new THREE.MeshPhysicalMaterial({ color: 0x141617, roughness: 0.55, sheen: 0.3, sheenColor: new THREE.Color(0x667070) });
+const BLACK = new THREE.MeshBasicMaterial({ color: 0x000000 });
+
+function cableMesh(curve, segs) {
+  const len = curve.getLength(), reps = Math.max(1, Math.round(len / P));   // whole periods: braid phase 0 at both ends
+  const m = new THREE.Mesh(new THREE.TubeGeometry(curve, segs, R, 48, false), new THREE.MeshPhysicalMaterial({
+    map: tex(BR.col, true, reps), bumpMap: tex(BR.hgt, false, reps), bumpScale: 2.2,
+    roughness: 0.42, sheen: 0.7, sheenRoughness: 0.45, sheenColor: new THREE.Color(0x8e9a98), clearcoat: 0.15, clearcoatRoughness: 0.5 }));
+  m.userData.glow = new THREE.MeshBasicMaterial({ map: tex(BR.glo, true, reps) });
+  m.castShadow = m.receiveShadow = true; return m;
+}
+function lathe(profile, x, mat) {                  // profile: [radius, length] pairs along the cable (+x)
+  const g = new THREE.LatheGeometry(profile.map(([r, l]) => new THREE.Vector2(r, l)), 64);
+  g.rotateZ(-Math.PI / 2);
+  const m = new THREE.Mesh(g, mat); m.position.set(x, 0, R); m.castShadow = m.receiveShadow = true; return m;
+}
+const collarProfile = [[R, 0], [R + 0.45, 0], [R + 0.85, 0.4], [R + 0.85, 1.6], [R + 0.7, 1.8], [R + 0.7, 2.2], [R + 0.85, 2.4], [R + 0.85, 5.1], [R + 0.45, 5.5], [R, 5.5]];
+
+
 const rr = (s, w, h, r) => { s.moveTo(-w + r, -h); s.lineTo(w - r, -h); s.quadraticCurveTo(w, -h, w, -h + r); s.lineTo(w, h - r); s.quadraticCurveTo(w, h, w - r, h); s.lineTo(-w + r, h); s.quadraticCurveTo(-w, h, -w, h - r); s.lineTo(-w, -h + r); s.quadraticCurveTo(-w, -h, -w + r, -h); };
-import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 // upright dock: rounded aluminium shell, glossy black glass front with the display, ports on the glass, a stand below
-const BW = 130, BD = 46, BH = 58, BR = 13, BASE = 7;
+const BW = 130, BD = 46, BH = 58, BRAD = 13, BASE = 7;
 const blast = grain(256); blast.repeat.set(0.045, 0.045);
 const metal = new THREE.MeshPhysicalMaterial({ color: '#5A6066', metalness: 0.6, roughness: 0.38, bumpMap: blast, bumpScale: 0.15, envMapIntensity: 1.4 });
-const shell = new THREE.Mesh(new RoundedBoxGeometry(BW, BD, BH, 6, BR), metal); shell.position.z = BASE + BH / 2; shell.castShadow = shell.receiveShadow = true; scene.add(shell);
+const shell = new THREE.Mesh(new RoundedBoxGeometry(BW, BD, BH, 6, BRAD), metal); shell.position.z = BASE + BH / 2; shell.castShadow = shell.receiveShadow = true; scene.add(shell);
 const stand = new THREE.Mesh(new RoundedBoxGeometry(BW - 22, BD + 6, BASE + 2, 4, 2.5), new THREE.MeshPhysicalMaterial({ color: '#1A1D1F', metalness: 0.1, roughness: 0.85 }));
 stand.position.set(0, -2, (BASE + 2) / 2 - 1); stand.castShadow = stand.receiveShadow = true; scene.add(stand);
 // front glass: a rounded panel standing just proud of the shell's front face
-const GW = BW / 2 - 6, GH = BH / 2 - 6; const gShape = new THREE.Shape(); rr(gShape, GW, GH, BR - 5);
+const GW = BW / 2 - 6, GH = BH / 2 - 6; const gShape = new THREE.Shape(); rr(gShape, GW, GH, BRAD - 5);
 const glassMat = new THREE.MeshPhysicalMaterial({ color: '#020303', roughness: 0.08, metalness: 0, specularIntensity: 0.7, clearcoat: 1, clearcoatRoughness: 0.04, envMapIntensity: 0.55 });
 const glass = new THREE.Mesh(new THREE.ShapeGeometry(gShape, 24), glassMat); glass.rotation.x = Math.PI / 2; glass.position.set(0, -BD / 2 - 0.05, BASE + BH / 2); glass.receiveShadow = true; scene.add(glass);
+const onGlassRef = [];
 const onGlass = (mesh, x, z, d = 0.1) => { mesh.rotation.x = Math.PI / 2; mesh.position.set(x, -BD / 2 - 0.05 - d, BASE + BH / 2 + z); scene.add(mesh); return mesh; };
 // ports: TF and SD slots on the left, two USB-C on the right (dark slots with a faint lit rim)
 const slotMat = new THREE.MeshBasicMaterial({ color: '#000000' }), rimMat = new THREE.MeshStandardMaterial({ color: '#3A4442', metalness: 0.8, roughness: 0.35 });
 const slot = (x, z, w, h, r) => { const o = new THREE.Shape(); rr(o, w / 2 + 0.5, h / 2 + 0.5, r + 0.5); onGlass(new THREE.Mesh(new THREE.ShapeGeometry(o, 12), rimMat), x, z, 0.06);
   const i = new THREE.Shape(); rr(i, w / 2, h / 2, r); onGlass(new THREE.Mesh(new THREE.ShapeGeometry(i, 12), slotMat), x, z, 0.12); };
+{ const refl = new THREE.Mesh(new THREE.ShapeGeometry(gShape, 24), new THREE.MeshBasicMaterial({ color: '#C8D2D6', alphaMap: reflectionTex(), transparent: true, opacity: 0.11, blending: THREE.AdditiveBlending, depthWrite: false }));
+  refl.geometry.computeBoundingBox(); const bb = refl.geometry.boundingBox, uv = refl.geometry.attributes.uv; const pos = refl.geometry.attributes.position;
+  for (let i = 0; i < uv.count; i++) uv.setXY(i, (pos.getX(i) - bb.min.x) / (bb.max.x - bb.min.x), (pos.getY(i) - bb.min.y) / (bb.max.y - bb.min.y));
+  onGlass(refl, 0, 0, 0.3); window.reflMesh = refl; }
 slot(-51, -8, 9, 1.4, 0.6); slot(-47, -13, 17, 1.8, 0.6); slot(40, -13, 8.6, 2.8, 1.35); slot(51, -13, 8.6, 2.8, 1.35);
 const tongueMat = new THREE.MeshStandardMaterial({ color: '#4A5250', metalness: 0.4, roughness: 0.5 });
 for (const x of [40, 51]) { const t = new THREE.Shape(); rr(t, 3.3, 0.35, 0.2); onGlass(new THREE.Mesh(new THREE.ShapeGeometry(t, 8), tongueMat), x, -13, 0.16); }
-const panel = new THREE.Shape(); rr(panel, 43, 15, 3.5);
-onGlass(new THREE.Mesh(new THREE.ShapeGeometry(panel, 16), new THREE.MeshPhysicalMaterial({ color: '#070A0B', roughness: 0.2, clearcoat: 1, clearcoatRoughness: 0.05, envMapIntensity: 0.4 })), 0, 3, 0.08);
 // button on top
 const btn = new THREE.Mesh(new THREE.CylinderGeometry(4.2, 4.4, 1.2, 40), new THREE.MeshPhysicalMaterial({ color: '#2A3432', metalness: 0.9, roughness: 0.25 }));
 btn.rotation.x = Math.PI / 2; btn.position.set(0, 4, BASE + BH + 0.2); scene.add(btn);
 // display: lit text under the glass, with a soft glow around it
 const DW = 41, DH = 13;
-let screen, halo;
-function screenTex(lines, on) {
-  const c = document.createElement('canvas'); c.width = 2760; c.height = 900; const g = c.getContext('2d');
-  g.fillStyle = '#000'; g.fillRect(0, 0, c.width, c.height);
-  if (on) { g.fillStyle = '#fff'; g.textAlign = 'center'; g.textBaseline = 'middle';
-    g.font = '700 260px Cinzel'; g.fillText(lines[0], c.width / 2, 300);
-    let sz = 200; g.font = `700 ${sz}px Cinzel`; while (g.measureText(lines[1]).width > c.width * 0.94) { sz -= 4; g.font = `700 ${sz}px Cinzel`; }
-    g.fillText(lines[1], c.width / 2, 630); }
+let screen, halo, halo2, backlight, depth;
+function depthTex() { const c = document.createElement('canvas'); c.width = 8; c.height = 256; const g = c.getContext('2d'); const gr = g.createLinearGradient(0, 0, 0, 256);
+  gr.addColorStop(0, '#fff'); gr.addColorStop(0.1, '#555'); gr.addColorStop(0.22, '#000'); gr.addColorStop(0.92, '#000'); gr.addColorStop(1, '#333'); g.fillStyle = gr; g.fillRect(0, 0, 8, 256); return new THREE.CanvasTexture(c); }
+function backlightTex() { const c = document.createElement('canvas'); c.width = 1024; c.height = 340; const g = c.getContext('2d'); const im = g.createImageData(1024, 340);
+  for (let y = 0; y < 340; y++) for (let x = 0; x < 1024; x++) {           // even glow, brighter toward the edges (backlight bleed), soft rounded corners
+    const dx = Math.max(0, Math.abs(x - 511.5) - 470) / 41, dy = Math.max(0, Math.abs(y - 169.5) - 128) / 41, d = Math.hypot(dx, dy);
+    const inside = d < 1 ? 1 - Math.pow(d, 6) : 0, ex = Math.min(x, 1023 - x) / 1024, ey = Math.min(y, 339 - y) / 340, edge = Math.exp(-Math.min(ex * 9, ey * 5) * 3);
+    const v = inside * (0.55 + 0.45 * edge) * 255, i = (y * 1024 + x) * 4; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; }
+  g.putImageData(im, 0, 0); return new THREE.CanvasTexture(c); }
+function reflectionTex() { const c = document.createElement('canvas'); c.width = 1024; c.height = 512; const g = c.getContext('2d');
+  const gr = g.createLinearGradient(0, 0, 1024, 512); gr.addColorStop(0.18, '#000'); gr.addColorStop(0.32, '#fff'); gr.addColorStop(0.44, '#000'); gr.addColorStop(0.6, '#000'); gr.addColorStop(0.66, '#777'); gr.addColorStop(0.72, '#000');
+  g.fillStyle = gr; g.fillRect(0, 0, 1024, 512); return new THREE.CanvasTexture(c); }
+function screenTex(lines, on, scale = 1) {
+  const c = document.createElement('canvas'); c.width = Math.round(2760 * scale); c.height = Math.round(900 * scale); const g = c.getContext('2d');
+  g.scale(scale, scale); g.fillStyle = '#000'; g.fillRect(0, 0, 2760, 900);
+  if (on) { g.fillStyle = '#fff'; g.strokeStyle = '#fff'; g.textBaseline = 'middle';
+    // status bar: charging port on the left, a full battery on the right, a hairline under it
+    g.font = '400 86px Aboreto'; g.textAlign = 'left';
+    g.beginPath(); g.moveTo(150, 72); g.lineTo(108, 134); g.lineTo(140, 134); g.lineTo(122, 184); g.lineTo(176, 112); g.lineTo(142, 112); g.lineTo(166, 72); g.closePath(); g.fill();   // bolt
+    g.fillText('C2  30W', 210, 132);
+    g.textAlign = 'right'; g.fillText('100%', 2370, 132);
+    g.lineWidth = 10; g.beginPath(); g.roundRect(2420, 88, 210, 92, 18); g.stroke(); g.fillRect(2638, 114, 18, 40);                   // battery shell + nub
+    for (let i = 0; i < 4; i++) g.fillRect(2438 + i * 48, 106, 38, 56);                                                              // four full bars
+    g.globalAlpha = 0.45; g.fillRect(100, 225, 2560, 5); g.globalAlpha = 1;
+    g.textAlign = 'center';
+    g.font = '400 220px Aboreto'; g.fillText(lines[0].toUpperCase(), 1380, 440);
+    let sz = 150; g.font = `400 ${sz}px Aboreto`; while (g.measureText(lines[1].toUpperCase()).width > 2760 * 0.93) { sz -= 4; g.font = `400 ${sz}px Aboreto`; }
+    g.fillText(lines[1].toUpperCase(), 1380, 700); }
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; }
 function haloTex() { const c = document.createElement('canvas'); c.width = 1024; c.height = 420; const g = c.getContext('2d');
   const gr = g.createRadialGradient(512, 210, 40, 512, 210, 500); gr.addColorStop(0, '#fff'); gr.addColorStop(0.35, '#888'); gr.addColorStop(1, '#000');
@@ -67,7 +200,21 @@ function haloTex() { const c = document.createElement('canvas'); c.width = 1024;
 const ao = (() => { const c = document.createElement('canvas'); c.width = 512; c.height = 256; const g = c.getContext('2d'); const gr = g.createRadialGradient(256, 128, 10, 256, 128, 250);
   gr.addColorStop(0, 'rgba(0,0,0,0.9)'); gr.addColorStop(0.55, 'rgba(0,0,0,0.5)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); g.setTransform(1, 0, 0, 0.5, 0, 64); g.fillStyle = gr; g.fillRect(0, 0, 512, 512); return new THREE.CanvasTexture(c); })();
 const aoPlane = new THREE.Mesh(new THREE.PlaneGeometry(BW + 30, BD + 40), new THREE.MeshBasicMaterial({ map: ao, transparent: true, depthWrite: false })); aoPlane.position.z = 0.05; scene.add(aoPlane);
-const ground = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), new THREE.ShadowMaterial({ opacity: 0.55 })); ground.receiveShadow = true; scene.add(ground);
+const EDGE = -46;
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(900, 500), new THREE.ShadowMaterial({ opacity: 0.55 })); ground.position.y = EDGE + 250; ground.receiveShadow = true; scene.add(ground);
+// plug in the front-right USB-C port, cable over the table's front edge, hanging in a loose S toward the keyboard
+const PORT = new THREE.Vector3(51, -BD / 2 - 0.05, BASE + BH / 2 - 13);
+const plug = new THREE.Group();
+plug.add(lathe([[R, 0], [R + 0.25, 0], [R + 0.4, 5], [R + 0.9, 8], [R + 0.9, 9]], 0, rubber));
+{ const body = new THREE.Mesh(new RoundedBoxGeometry(15, 8.6, 5.8, 5, 1.8), housing); body.position.set(16.2, 0, R); body.castShadow = body.receiveShadow = true; plug.add(body);
+  const shell = new THREE.Mesh(new RoundedBoxGeometry(6.6, 8.3, 2.5, 5, 1.1), steel); shell.position.set(26.9, 0, R); plug.add(shell); }
+plug.rotation.z = Math.PI / 2; plug.position.set(PORT.x, PORT.y + 4 - 30.2, PORT.z - R); scene.add(plug);
+const y0 = PORT.y + 4 - 30.2, zc = PORT.z;
+// the plug reaches past the table's front edge, so the cable leaves it in the air and sags straight into a loose S
+const cableCurve = new THREE.CatmullRomCurve3([[PORT.x, y0 + 0.5, zc], [PORT.x, y0 - 4, zc - 0.3], [50.8, y0 - 9, zc - 2.2], [50.2, y0 - 13, zc - 7],
+  [49.2, y0 - 15.5, zc - 16], [47.5, y0 - 16.5, zc - 32], [43, y0 - 17, zc - 62], [37, y0 - 17, zc - 100], [42, y0 - 16, zc - 142], [49, y0 - 14.5, zc - 186],
+  [44, y0 - 13.5, zc - 232], [38, y0 - 13, zc - 280], [40, y0 - 13, zc - 340]].map(p => new THREE.Vector3(...p)), false, 'centripetal');
+const cable = cableMesh(cableCurve, 900); scene.add(cable);
 const key = new THREE.DirectionalLight(0xfff1e2, 2.3); key.position.set(-160, 120, 300); key.castShadow = true;
 key.shadow.mapSize.set(2048, 2048); key.shadow.radius = 7; key.shadow.blurSamples = 16; key.shadow.bias = -0.0003;
 Object.assign(key.shadow.camera, { left: -150, right: 150, top: 150, bottom: -150, near: 1, far: 900 }); scene.add(key);
@@ -75,17 +222,29 @@ const fill = new THREE.DirectionalLight(0xdfe8ff, 0.45); fill.position.set(200, 
 const front = new THREE.DirectionalLight(0xffe9d6, 0.9); front.position.set(-40, -330, 90); scene.add(front);
 scene.add(new THREE.AmbientLight(0xffffff, 0.12));
 // same view direction as the keyboard camera, closer so the hub fills the frame at the same mm-per-pixel
-const camera = new THREE.PerspectiveCamera(17, W / H, 10, 3000); camera.up.set(0, 0, 1);
+// same scale as a 3000x1500 frame at 17deg: a 3x-tall virtual frame, rendering the window that holds the hub and the hanging cable
+const camera = new THREE.PerspectiveCamera(2 * Math.atan(3 * Math.tan(8.5 * Math.PI / 180)) * 180 / Math.PI, 3000 / 4500, 10, 3000); camera.up.set(0, 0, 1);
+camera.setViewOffset(3000, 4500, 0, 1800, 3000, 2700);
 camera.position.set(170, -560, 230); camera.lookAt(0, 0, 34);
-window.renderHub = async ({ on = true, lines = ['', ''] } = {}) => {
-  await document.fonts.load('700 100px Cinzel');
-  if (screen) scene.remove(screen, halo);
-  const add = (w, h, tex, opacity) => onGlass(new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: LED, alphaMap: tex, transparent: true, opacity, toneMapped: false, blending: THREE.AdditiveBlending, depthWrite: false })), 0, 3, 0.15);
-  halo = add(DW * 2.2, DH * 2.4, haloTex(), on ? 0.35 : 0);
-  screen = add(DW * 2, DH * 2, screenTex(lines, on), 1);
+window.renderHub = async ({ on = true, glow = false, lines = ['', ''] } = {}) => {
+  await document.fonts.load('400 100px Aboreto');
+  if (screen) scene.remove(screen, halo, halo2, backlight, depth);
+  backlight = onGlass(new THREE.Mesh(new THREE.PlaneGeometry(DW * 2 + 10, DH * 2 + 8), new THREE.MeshBasicMaterial({ color: '#2A1A12', alphaMap: backlightTex(), transparent: true, opacity: on ? 0.85 : 0, toneMapped: false, blending: THREE.AdditiveBlending, depthWrite: false })), 0, 3, 0.11);
+  const add = (tex, color, opacity) => onGlass(new THREE.Mesh(new THREE.PlaneGeometry(DW * 2, DH * 2), new THREE.MeshBasicMaterial({ color, alphaMap: tex, transparent: true, opacity, toneMapped: false, blending: THREE.AdditiveBlending, depthWrite: false })), 0, 3, 0.15);
+  // bloom: the same text drawn small and stretched back up (soft light around each letter), two radii
+  halo = add(screenTex(lines, on, 0.08), LED, 0.55); halo2 = add(screenTex(lines, on, 0.025), LED, 0.35);
+  screen = add(screenTex(lines, on, 0.45), '#F09A62', 0.95);                      // LCD letters: soft, even amber, not a neon core
+  // the glass sits in front of the panel: a thin shadow under the display's top edge
+  depth = onGlass(new THREE.Mesh(new THREE.PlaneGeometry(DW * 2 + 10, DH * 2 + 8), new THREE.MeshBasicMaterial({ color: '#000000', alphaMap: depthTex(), transparent: true, opacity: on ? 0.7 : 0, depthWrite: false })), 0, 3, 0.2);
+  // glow pass: only the braid's inner light shows, everything else black (neutral under a screen blend)
+  scene.traverse(o => { if (o.isMesh) { o.userData.lit ??= o.material; o.material = glow ? (o === cable ? cable.userData.glow : BLACK) : o.userData.lit; } });
+  for (const m of [screen, halo, halo2, backlight, depth, window.reflMesh]) m.visible = !glow;
+  scene.environment = glow ? null : envMap; ground.visible = aoPlane.visible = !glow;
+  renderer.toneMapping = glow ? THREE.NoToneMapping : THREE.NeutralToneMapping;
   renderer.render(scene, camera);
-  const pr = (x, y, z) => { const v = new THREE.Vector3(x, y, z).project(camera); return [Math.round((v.x + 1) / 2 * W), Math.round((1 - v.y) / 2 * H)]; };
-  window.lastPort = pr(BW / 2 - 10, 0, BASE + BH / 2);   // where the cable leaves, behind the right end
+  const pr = (v) => { const p = v.clone().project(camera); return [Math.round((p.x + 1) / 2 * W * 10) / 10, Math.round((1 - p.y) / 2 * H * 10) / 10]; };
+  window.lastPath = cableCurve.getSpacedPoints(400).map(pr);
+  window.lastEdge = pr(new THREE.Vector3(49, EDGE, 0));
   return renderer.domElement.toDataURL('image/png');
 };
 window.ready = true;

@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-23-hub",
+  stylesheetVersion: "vg-24-hubcable",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
   // Cloudflare Turnstile site key (public). Empty = no widget; the Worker's TURNSTILE_SECRET must be set with it.
@@ -294,6 +294,18 @@ function parsePage(file) {
   return { file, page, template };
 }
 
+// Homepage close: the rendered hub (screen off / on) with its cable, and the cable's centreline for the LED bead.
+function renderHub() {
+  const h = JSON.parse(read(path.join(SRC, "static", "data", "hub.json")));
+  const img = (cls) => `<img class="${cls}" src="/assets/hub/${cls}.webp" alt="" width="${h.w}" height="${h.h}" loading="lazy" decoding="async">`;
+  return `<div class="hub" data-hub style="aspect-ratio:${h.w}/${h.hubH}"><div class="hub-art" style="aspect-ratio:${h.w}/${h.h}">${img("hub-off")}${img("hub-on")}` +
+    `<svg class="hub-led" viewBox="0 0 ${h.w} ${h.h}" aria-hidden="true"><defs><filter id="hub-soft"><feGaussianBlur stdDeviation="7"/></filter>` +
+    `<mask id="hub-bead-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="${h.w}" height="${h.h}"><path class="hub-bead-path" d="${h.d}" filter="url(#hub-soft)"/></mask>` +
+    `<radialGradient id="hub-bead-light"><stop offset="0" class="hub-bead-core"/><stop offset="1" class="hub-bead-edge"/></radialGradient></defs>` +
+    `<image href="/assets/hub/hub-glow.webp" width="${h.w}" height="${h.h}" mask="url(#hub-bead-mask)"/><circle class="hub-bead" r="40" fill="url(#hub-bead-light)"/><path class="hub-route" d="${h.d}"/></svg></div>` +
+    `<p class="hub-line">The forge is lit. Pick a key, and I’ll meet you at the anvil.</p></div>`;
+}
+
 // Footer: a rendered keyboard whose linked words press on hover (desktop), and the same links as a list (phone).
 function renderFooterBoard(data) {
   if (!data.w) fail("src/static/data/footer-board.json: no board size; run mockups/keys/board-export.py");
@@ -378,6 +390,7 @@ function renderPage(entry, partials, content, headerKeys, footerBoard) {
     const attr = (name) => (attrs.match(new RegExp(`${name}="([^"]*)"`)) || [])[1];
     return renderKey({ cap: attr("cap"), href: attr("href"), type: attr("type"), legend }, page, headerKeys, attr("class") || "", false);
   });
+  html = html.replace(/<yf-hub><\/yf-hub>/g, () => renderHub());
   html = html.replace(/<yf-turnstile><\/yf-turnstile>/g, config.turnstileSiteKey
     ? `<div class="cf-turnstile wide" data-sitekey="${config.turnstileSiteKey}" data-theme="dark" data-appearance="interaction-only"></div><script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`
     : "");
