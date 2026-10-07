@@ -1,6 +1,6 @@
 // Commission form handler: validates a request and emails it. Node can test it with a stand-in sender.
-const FIELDS = { name: 100, email: 254, layout: 60, budget: 60, feel: 60, sound: 60, details: 5000 };
-const LABELS = { name: "Name", email: "Email", layout: "Layout", budget: "Budget range", feel: "Switch feel", sound: "Sound preference" };
+const FIELDS = { name: 100, email: 254, layout: 60, budget: 60, feel: 60, details: 5000 };
+const LABELS = { name: "Name", email: "Email", layout: "Layout", budget: "Budget range", feel: "Switch feel" };
 const EMAIL = /^[^\s@<>"(),;:\\]+@[^\s@<>"(),;:\\]+\.[^\s@<>"(),;:\\]+$/;
 
 export function readRequest(form) {

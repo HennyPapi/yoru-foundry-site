@@ -415,6 +415,7 @@
   --type-fluid-01: clamp(70px,10vw,124px);
   --type-fluid-02: clamp(23px,2.5vw,31px);
   --type-fluid-03: clamp(40px,7vw,88px);
+  --type-fluid-request: clamp(40px,5.4vw,78px);
   --type-fluid-04: clamp(21px,2.3vw,28px);
   --type-fluid-05: clamp(42px,5vw,66px);
   --type-fluid-06: clamp(42px,5vw,64px);
@@ -1200,6 +1201,7 @@ button.k:disabled{cursor:progress}
 .form-status.is-sent{color:var(--verdigris)}
 .form-status.is-failed{color:var(--state-error)}
 .form-status a{color:inherit}
+@media(min-width:901px){.request-intro h1{font-size:var(--type-fluid-request)}}   /* the two-column intro is narrower than the page: keep "Commission." inside it */
 @media(max-width:900px){.request{grid-template-columns:1fr;gap:var(--space-40);padding-top:var(--space-40)}}
 @media(max-width:600px){.request-form{grid-template-columns:1fr;padding:var(--space-20)}}
 @media(prefers-reduced-motion:reduce){.request-form input,.request-form select,.request-form textarea{transition:none}}
