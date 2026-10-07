@@ -31,20 +31,24 @@ with the request filled in, so nothing is lost.
 
 ## Commission form email
 
-The Worker only answers `/api/commission`; every page is still served as a static file. Test the handler with
-`node worker/commission.test.mjs`.
+The Worker only answers `/api/commission`; every page is still served as a static file. It sends each request
+through [Resend](https://resend.com) to `hello@yorufoundry.com` (Zoho Mail), with Reply-To set to the client. Test the
+handler with `node worker/index.test.mjs`.
 
-To switch sending on (Cloudflare dashboard, once):
+Mail for yorufoundry.com is hosted by Zoho. **Never turn on Cloudflare Email Routing**: it replaces Zoho's MX records.
 
-1. **yorufoundry.com → Email → Email Routing.** If it already shows routing rules for `hello@yorufoundry.com`, it is
-   on; go to step 2. If `hello@` is hosted somewhere else (Google Workspace, Zoho, iCloud), stop and say so first:
-   turning Email Routing on replaces the domain's mail (MX) records.
-2. **Destination addresses:** the inbox that should receive requests must be listed and verified. This is the real
-   inbox `hello@` forwards to (for example a Gmail address), not `hello@` itself.
-3. In `wrangler.jsonc`, uncomment the `send_email` line. If the verified inbox is not `hello@yorufoundry.com`, add
-   `"vars": { "COMMISSION_TO": "that-inbox@example.com" }`. Requests arrive from `commissions@yorufoundry.com`
-   (change with `COMMISSION_FROM`).
-4. Optional spam check, **Turnstile → Add widget:** hostnames `yorufoundry.com` and `mllerenafinances.workers.dev`,
+To switch sending on (once):
+
+1. Make a free account at resend.com.
+2. **Resend → Domains → Add domain:** `yorufoundry.com`. Add the records it lists in Cloudflare → yorufoundry.com →
+   DNS → Records, exactly as shown, as **DNS only** (grey cloud). They sit on the `send` subdomain and
+   `resend._domainkey`, so Zoho's records are untouched; do not edit or delete any existing record. Wait until Resend
+   shows the domain as Verified.
+3. **Resend → API Keys → Create:** permission "Sending access", domain `yorufoundry.com`. Copy the key (starts `re_`).
+4. **Cloudflare → Workers & Pages → yoru-foundry-site → Settings → Variables and Secrets → Add:** type Secret, name
+   `RESEND_API_KEY`, value the key. Requests then arrive from `commissions@yorufoundry.com` (change with a
+   `COMMISSION_FROM` variable; send elsewhere with `COMMISSION_TO`).
+5. Optional spam check, **Turnstile → Add widget:** hostnames `yorufoundry.com` and `mllerenafinances.workers.dev`,
    mode Managed. Put the site key in `config.turnstileSiteKey` in `build.js`, and the secret key in the Worker under
    **Settings → Variables and Secrets** as `TURNSTILE_SECRET`. Set both or neither. A hidden trap field already stops
    simple bots.

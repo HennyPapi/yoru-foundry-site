@@ -4,11 +4,10 @@
   "compatibility_date": "2026-09-10",
   "preview_urls": true,
   // Static files are served first; the Worker handles only the commission form (/api/commission).
+  // It sends through Resend once the RESEND_API_KEY secret is set (README, "Commission form email").
   "main": "worker/index.js",
   "assets": {
     "directory": "./public",
     "binding": "ASSETS"
   }
-  // Turn on after Email Routing is enabled for yorufoundry.com (see README, "Commission form email"):
-  // ,"send_email": [{ "name": "COMMISSION_EMAIL" }]
 }

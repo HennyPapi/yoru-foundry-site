@@ -1,6 +1,6 @@
-// Run: node worker/commission.test.mjs
+// Run: node worker/index.test.mjs
 import assert from "node:assert/strict";
-import { handleCommission } from "./commission.js";
+import { handleCommission, resendSender } from "./index.js";
 
 const post = (fields, json = true) => {
   const body = new FormData();
@@ -9,15 +9,16 @@ const post = (fields, json = true) => {
 };
 const good = { name: "Ada Lovelace", email: "ada@example.com", layout: "75%", budget: "$250–$400", details: "Thocky — please." };
 let sent;
-const send = async (from, to, raw) => { sent = { from, to, raw }; };
+const send = async (email) => { sent = email; };
 
 let res = await handleCommission(post(good), {}, send);
 assert.equal(res.status, 200);
-assert.equal(sent.to, "hello@yorufoundry.com");
-assert.match(sent.raw, /^Reply-To: ada@example.com\r$/m);
-const body = Buffer.from(sent.raw.split("\r\n\r\n")[1].replace(/\s/g, ""), "base64").toString("utf8");
-assert.match(body, /Budget range: \$250–\$400/);
-assert.match(body, /Thocky — please\./);
+assert.deepEqual(sent.to, ["hello@yorufoundry.com"]);
+assert.equal(sent.reply_to, "ada@example.com");
+assert.equal(sent.subject, "Commission request — Ada Lovelace");
+assert.match(sent.text, /Budget range: \$250–\$400/);
+assert.match(sent.text, /Thocky — please\./);
+assert.equal(resendSender(undefined), null, "no key means fallback");
 
 sent = null;
 res = await handleCommission(post({ ...good, website: "spam" }), {}, send);
@@ -40,4 +41,14 @@ res = await handleCommission(post(good, false), {}, null);
 assert.equal(res.headers.get("location"), "https://yorufoundry.com/request-a-build.html#send-failed");
 res = await handleCommission(new Request("https://yorufoundry.com/api/commission"), {}, send);
 assert.equal(res.status, 405);
+let call;
+globalThis.fetch = async (url, init) => { call = { url, init }; return new Response("{}", { status: 200 }); };
+res = await handleCommission(post(good), {}, resendSender("re_test"));
+assert.equal(res.status, 200);
+assert.equal(call.url, "https://api.resend.com/emails");
+assert.equal(call.init.headers.authorization, "Bearer re_test");
+assert.equal(JSON.parse(call.init.body).reply_to, "ada@example.com");
+globalThis.fetch = async () => new Response("domain not verified", { status: 403 });
+res = await handleCommission(post(good), {}, resendSender("re_test"));
+assert.equal(res.status, 502, "Resend error reaches the page as a failed send");
 console.log("commission handler: all checks pass");
