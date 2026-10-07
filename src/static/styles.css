@@ -2326,7 +2326,7 @@ main{
 body,
 main,
 .section-shell{
-  background-color:var(--night)!important;
+  background-color:var(--cast)!important;   /* one page canvas: Cast on every page, homepage included */
 }
 .site-footer{
   margin-top:auto;
@@ -2351,8 +2351,8 @@ main,
   max-width:none;
   margin-left:0;
   margin-right:0;
-  background:var(--night)!important;
-  background-color:var(--night)!important;
+  background:var(--cast)!important;
+  background-color:var(--cast)!important;
   background-image:none!important;
 }
 .section-shell-frame{width:100%;max-width:none}
@@ -2427,7 +2427,7 @@ main:not(.section-shell),
   background-color:transparent!important;
   background-image:none!important;
 }
-.section-shell{background-color:var(--night)!important}
+.section-shell{background-color:var(--cast)!important}
 .site-footer{
   background-color:var(--night-void)!important;
   border-top:var(--border-width) solid var(--line)!important;

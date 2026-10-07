@@ -56,11 +56,12 @@ Known small issues (fix when touching these areas):
 | 2 | Content as data (`content.js`, `SITE_MODE`) | Done |
 | 3 | Tokenized CSS system | Done |
 | 3.5 | Surface/texture system, footer normalization, first paint | Done: no texture (Mike), one footer on all 17 pages (measured identical: 245px desktop, 410px phone), Cast first paint |
-| 4–5 | *Not defined in the repo; Mike to confirm what these were* | ? |
+| 4 | Type scale (section tier, `clamp()` on display) | Done in the redesign: Aboreto / Cinzel / Alegreya, fluid display sizes |
+| 5 | Button system | Done in the redesign: keycap buttons, the rendered Enter key, section keys |
 | 6 | Header: one header on every page | Done: keyboard-row header with the LED cable (2026-10-06) |
 | 7 | Homepage hero and message | Done: rebuilt from `mockups/home.html` (2026-10-06); "keyboards" lives in the title and meta description |
 | — | Inner pages in Verdigris | Done (2026-10-07): request, Crafted Art + 75%, Built to Taste, Trust the Process, Why Yoru, About, Journal, Archive, build records. Still old: the five hidden product stub pages |
-| 8 | Media and sound readiness | Planned |
+| 8 | Media and sound readiness | Next |
 | 9 | Footer redesign (four columns) | Planned |
 | 10 | Commission form sends without `mailto:` | Planned (needs a decision). Request page fully rebuilt in Verdigris (2026-10-06) |
 | 11 | Motion and reduced motion | Planned |
@@ -85,6 +86,7 @@ Known small issues (fix when touching these areas):
 - Mike writes or approves the headline. Keep the asymmetric layout, never a centered H1 with two CTAs.
 
 ### 8 — Media and sound
+- Homepage sound band: four sample slots from `SOUND_SAMPLES`; iOS-safe audio (tap to play, never autoplay with sound).
 - Players and placeholders already lock aspect ratios (16:9 / 4:5 / 3:2 / 1:1).
 - Add a video-loop slot for the hero. Nothing autoplays with sound (blocked on iPhone).
 - Write a short "how to drop in real photos/audio" note so new content needs no code changes.
@@ -98,6 +100,9 @@ Known small issues (fix when touching these areas):
 - Recommended: a small Cloudflare Worker endpoint that emails Mike. It stays on the current host and
   needs no third-party form service. Alternatives: Formspree, Basin.
 - Add spam protection (Cloudflare Turnstile), success/error states, and a no-JS fallback.
+- Confirm hello@yorufoundry.com actually receives mail (Cloudflare Email Routing).
+- One name everywhere: the nav says "Request a Commission" but the file is `request-a-build.html` and README says
+  "Request a Build". If the file is renamed, redirect the old URL.
 
 ### 11 — Motion
 - Audit transitions against the 180–220ms spec and the canonical easing.
@@ -107,7 +112,9 @@ Known small issues (fix when touching these areas):
 - Any remaining PNGs become WebP/AVIF, with no image over 500 KB.
 - Add `loading="lazy"` and intrinsic sizes everywhere, and measure homepage transfer size before and after.
 
-### 13 — Cleanup
+### 13 — Cleanup and report
+- Report what was skipped, what breaks at 10+ builds, and anything in the repo that shouldn't be public
+  (stray files or partials in `/public`, unused CSS selectors).
 - Delete the 6 unused files in `assets/` (only `yoru-foundry-logo-v5.webp` is referenced).
 - Orphan pages: link `archive.html` / `journal.html` from the HTML, or remove them (Mike decides).
 - `styles.css` is ~170 KB and still carries stacked historical "lock" blocks with `!important`. Remove the
@@ -124,12 +131,28 @@ Known small issues (fix when touching these areas):
 - Real social links, `SITE_MODE: "live"` in `build.js`, and real builds replacing placeholders.
 - Confirm Cloudflare's **production** build command is `node build.js` (`main` currently deploys with no build step).
 - Merge `design-pass` into `main` (fast-forward), then check the live site at three widths.
+- **The real gate:** real photography, video and audio in every media block.
+- Alt text on every image; submit the sitemap to Google Search Console; Cloudflare Web Analytics.
+- A privacy policy (the form collects names and emails) and a commission policy (deposit, lead time, revisions,
+  shipping, returns). Copy is Mike's.
 
 ## Open decisions for Mike
 
-1. What were Phases 4 and 5? Are they done, or still to do?
+1. ~~Phases 4 and 5~~ Type scale and button system (from Mike's earlier plan); both done in the redesign.
 2. ~~Homepage textures~~ Answered: no texture (Mike, 2026-10-06).
 3. ~~Cream rule~~ Retired with the Verdigris direction.
 4. Form backend: Cloudflare Worker (recommended) or a form service?
 5. ~~Archive and Journal~~ Kept and rebuilt (2026-10-07); Phase 9 puts their footer links into the HTML.
 6. The Mice / Mouse Pads / Desk Mats / Wrist Rests / Accessories pages are stubs. Keep them for launch, or hide them?
+
+## From the earlier plan (Sept 17), and where each item stands
+
+- **Done:** footer variants collapsed into one; theme-color and first-paint theme on the new tokens; the stretched
+  filler tier (inner pages painted `--night` above a Cast footer; now Cast everywhere, 2026-10-07); type scale and
+  buttons (Phases 4–5); header and hero (rebuilt to Mike's newer choices: the medallion stays, the keyboard-row
+  header, "keyboards" in the title, the hero keeps its frame).
+- **Retired by the Verdigris direction:** grain opacity tests, site-wide grain, cream sections and the cream rule,
+  portal card hairlines, the surface flip.
+- **Excluded by the motion rules in `AGENTS.md`:** Lenis smooth scrolling, scroll reveals and a sticky hero
+  (scroll-jacking and decorative motion). Hover crossfades are fine. Mike can reverse this.
+- **Still open:** material library swatches and status colors (fold into Phase 8 when real media arrives).
