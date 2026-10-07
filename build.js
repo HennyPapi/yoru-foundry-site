@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const config = Object.freeze({
-  stylesheetVersion: "vg-26-cable-light",
+  stylesheetVersion: "vg-27-img-version",
   siteTitle: "Yoru Foundry",
   SITE_MODE: "prelaunch",
   // Cloudflare Turnstile site key (public). Empty = no widget; the Worker's TURNSTILE_SECRET must be set with it.
@@ -297,11 +297,11 @@ function parsePage(file) {
 // Homepage close: the rendered hub (screen off / on) with its cable, and the cable's centreline for the LED bead.
 function renderHub() {
   const h = JSON.parse(read(path.join(SRC, "static", "data", "hub.json")));
-  const img = (cls) => `<img class="${cls}" src="/assets/hub/${cls}.webp" alt="" width="${h.w}" height="${h.h}" loading="lazy" decoding="async">`;
+  const img = (cls) => `<img class="${cls}" src="/assets/hub/${cls}.webp?v=${config.stylesheetVersion}" alt="" width="${h.w}" height="${h.h}" loading="lazy" decoding="async">`;
   return `<div class="hub" data-hub style="aspect-ratio:${h.w}/${h.hubH}"><div class="hub-art" style="aspect-ratio:${h.w}/${h.h}">${img("hub-off")}${img("hub-on")}` +
     `<svg class="hub-led" viewBox="0 0 ${h.w} ${h.h}" aria-hidden="true"><defs><filter id="hub-soft"><feGaussianBlur stdDeviation="7"/></filter>` +
     `<mask id="hub-light-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="${h.w}" height="${h.h}"><path class="hub-tail" d="${h.d}" filter="url(#hub-soft)"/><path class="hub-head" d="${h.d}" filter="url(#hub-soft)"/></mask></defs>` +
-    `<image class="hub-light" href="/assets/hub/hub-glow.webp" width="${h.w}" height="${h.h}" mask="url(#hub-light-mask)"/><path class="hub-route" d="${h.d}"/></svg></div>` +
+    `<image class="hub-light" href="/assets/hub/hub-glow.webp?v=${config.stylesheetVersion}" width="${h.w}" height="${h.h}" mask="url(#hub-light-mask)"/><path class="hub-route" d="${h.d}"/></svg></div>` +
     `<p class="hub-line">The forge is lit. Pick a key, and I’ll meet you at the anvil.</p></div>`;
 }
 
@@ -312,7 +312,7 @@ function renderFooterBoard(data) {
   const ext = (href) => (/^https?:/.test(href) ? ' target="_blank" rel="noopener"' : "");
   const keys = Object.entries(data.keys).map(([id, k]) => {
     if (!k.hit || !k.h || !k.p) fail(`footer-board.json: key "${id}" has no boxes`);
-    const img = (st) => `<img class="${st}" src="/assets/footer-board/${id}-${st}.webp" alt="" loading="lazy" decoding="async" style="${box(k[st])}">`;
+    const img = (st) => `<img class="${st}" src="/assets/footer-board/${id}-${st}.webp?v=${config.stylesheetVersion}" alt="" loading="lazy" decoding="async" style="${box(k[st])}">`;
     return `<a href="${k.href}" aria-label="${escapeHtml(k.name)}"${ext(k.href)}>${img("h")}${img("p")}<span class="hit" style="${box(k.hit)}"></span></a>`;
   });
   const list = data.list.map((id) => {
@@ -321,7 +321,7 @@ function renderFooterBoard(data) {
     return `<li><a href="${k.href}"${ext(k.href)}>${escapeHtml(k.name)}</a></li>`;
   });
   return {
-    board: `<img src="/assets/footer-board/board.webp" alt="" width="${data.w}" height="${data.h}" loading="lazy" decoding="async"><img class="lit" src="/assets/footer-board/board-lit.webp" alt="" loading="lazy" decoding="async">${keys.join("")}`,
+    board: `<img src="/assets/footer-board/board.webp?v=${config.stylesheetVersion}" alt="" width="${data.w}" height="${data.h}" loading="lazy" decoding="async"><img class="lit" src="/assets/footer-board/board-lit.webp?v=${config.stylesheetVersion}" alt="" loading="lazy" decoding="async">${keys.join("")}`,
     list: list.join(""),
     ratio: `${data.w}/${data.h}`,
   };
