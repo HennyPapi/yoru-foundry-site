@@ -13,8 +13,9 @@ Before making any visual, CSS, layout, branding, navigation, responsive, or comp
    - text and nav text: Bright `#EEF0EC`
    - header CTA: Green Sand `#1F2726` keycap, Bright text
 8. Verify desktop, tablet, and mobile behavior after broad changes.
+9. For visual design, Impeccable's guidance takes priority over the design rules in this file (Mike, 2026-10-08). "Skills in this repo" at the end says what that covers and what still holds.
 
-When in doubt, preserve the current approved appearance and ask before making a major visual departure.
+Outside Impeccable-led design work, when in doubt, preserve the current approved appearance and ask before making a major visual departure.
 
 ## Build rules
 
@@ -262,6 +263,19 @@ After any CSS architecture or token change, statically verify all of the followi
 
 Ponytail and Impeccable are stored in `.claude/skills/` so every session loads them; `frontend-design` is built into Claude. Sources and versions are in `.claude/skills/SOURCES.md`.
 
-- The skills are tools. Where one disagrees with this file (palette, fonts, shadows, texture, copy, redesign, branch rules), this file wins.
-- **Ponytail** is the default way to write code here: load the `ponytail` skill at the start of any coding task.
-- **Impeccable** (`/impeccable critique`, `audit`, `polish` and the rest) is for design review and refinement of the approved direction. Its redesign paths need Mike's explicit ask, like any redesign.
+### Impeccable leads on visual design (Mike, 2026-10-08)
+
+Impeccable is here to keep the site from looking AI-made. For visual design work, follow Impeccable first; Mike then adjusts what it produces.
+
+- **Where Impeccable wins.** When its guidance disagrees with a design rule in this file, follow Impeccable. That covers palette and tokens, type, texture, shadows and geometry, buttons, motion, layout and hero guardrails, and the design items on the never-add list. Do not tone its output down in advance to fit the older rule.
+- **Then Mike adjusts.** Build on a non-production branch, tell Mike which rules in this file the result departs from, and let him adjust it in the preview. Once he approves, update this file and `YORU_SITE_MEMORY.md` to match what shipped, so the rules never lag the site.
+- **What still holds.** The rules that are not about how the site looks:
+  - the build and branch workflow: never edit `/public`, nothing straight to `main`, real build output before calling anything verified;
+  - the logo medallion stays unaltered;
+  - Mike is the final authority on public-facing copy;
+  - no fabricated builds and no stock keyboard photos;
+  - the workshop-not-store posture: no cart, ratings, countdowns, trust badges or the other ecommerce patterns.
+
+### Ponytail
+
+Ponytail is the default way to write code here: load the `ponytail` skill at the start of any coding task. Where it disagrees with this file's build and workflow rules, this file wins.
