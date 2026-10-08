@@ -257,3 +257,11 @@ After any CSS architecture or token change, statically verify all of the followi
 - `design-pass` may have only one active AI writer at a time. If another agent is already writing there, remain read-only or use a separate explicitly assigned branch.
 - Keep each phase in its own reviewable commit; keep separate requested items in separate commits when Mike asks.
 - Do not proceed to a later phase when Mike has asked to review the current phase first.
+
+## Skills in this repo
+
+Ponytail and Impeccable are stored in `.claude/skills/` so every session loads them; `frontend-design` is built into Claude. Sources and versions are in `.claude/skills/SOURCES.md`.
+
+- The skills are tools. Where one disagrees with this file (palette, fonts, shadows, texture, copy, redesign, branch rules), this file wins.
+- **Ponytail** is the default way to write code here: load the `ponytail` skill at the start of any coding task.
+- **Impeccable** (`/impeccable critique`, `audit`, `polish` and the rest) is for design review and refinement of the approved direction. Its redesign paths need Mike's explicit ask, like any redesign.
